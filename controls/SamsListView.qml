@@ -11,6 +11,7 @@ SamsListView : ListView {
 
 	onPullDownChanged: {
 		log("pull down " + this.pullDown);
+		samsListViewItem.anchors.topMargin = this.pullDown * this.pullLenght;
 	}
 	
 	Timer {
@@ -18,7 +19,6 @@ SamsListView : ListView {
 		interval: 400;
 
 		onTriggered: {
-			log("TIMER TRIGGERED");
 			samsListViewItem.pullDown = 0;
 		}
 	}
@@ -36,16 +36,18 @@ SamsListView : ListView {
 		this.currentIndex--;
 	}
 	
-	//onDownPressed: {
-		//if (count == 0)
-			//return false;
+	onDownPressed: {
+		if (this.count == 0)
+			return false;
 
-		//if (currentIndex == this.count - 1) {
-			//pullTimer.Restart();
-			//pullDown = -2;
-			//return true;
-		//}
-	//}
+		if (this.currentIndex == this.count - 1) {
+			pullTimer.restart();
+			this.pullDown = -2;
+			return true;
+		}
+
+		this.currentIndex++;
+	}
 		
 	Behavior on y { animation: Animation { duration: 250; } }
 	//Behavior on height { animation: Animation { duration: 250; } }
