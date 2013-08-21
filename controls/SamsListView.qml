@@ -45,5 +45,7 @@ SamsListView : ListView {
 	}
 		
 	Behavior on y { animation: Animation { duration: 250; } }
-	//Behavior on height { animation: Animation { duration: 250; } }
+	Behavior on height { animation: Animation { duration: 300; } }
+	Behavior on contentX { animation: Animation { duration: 400; } }
+	Behavior on contentY { animation: Animation { duration: 400; } }
 }
