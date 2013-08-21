@@ -1,19 +1,14 @@
 SamsListView : ListView {
 	id: samsListViewItem;
-	
+
 	keyNavigationWraps: false;
 	positionMode: ListView.Center;
-	anchors.topMargin: samsListViewItem.pullDown * 50;//(samsListViewItem.pullLenght * samsListViewItem.pullDown) + Math.max(samsListViewItem.topMargin - samsListViewItem.contentY, 0);
-	
+	anchors.topMargin: (samsListViewItem.pullLenght * samsListViewItem.pullDown) + Math.max(samsListViewItem.topMargin - samsListViewItem.contentY, 0);
+
 	property int pullDown;
 	property int pullLenght: 50;
 	property int topMargin;
 
-	onPullDownChanged: {
-		log("pull down " + this.pullDown);
-		samsListViewItem.anchors.topMargin = this.pullDown * this.pullLenght;
-	}
-	
 	Timer {
 		id: pullTimer;
 		interval: 400;
