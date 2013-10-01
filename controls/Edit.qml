@@ -51,7 +51,7 @@ Edit : Item {
 		anchors.bottom: borderRect.bottom;
 		anchors.horizontalCenter: borderRect.horizontalCenter;
 		opacity: 1;
-		color: colorTheme.disabledTextColor; 
+		color: colorTheme.textColor; 
 		opacity: editText.text == "" ? 0.8 : 0;
 		text: editItem.hint;
 
@@ -103,6 +103,7 @@ Edit : Item {
 		opacity: borderRect.opacity;
 		width: 2;
 		color: editText.color;
+		visible: false;
 	}
 
 	Timer {
