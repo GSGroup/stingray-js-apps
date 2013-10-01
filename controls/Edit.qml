@@ -12,6 +12,7 @@ Edit : Item {
 	//property Validator validator;
 	property string ignoreChars: "#*";
 	property string mask: "*";
+	property string hint;
 	property bool alwaysShowCursor: false;
 	property bool handleDelete: true;
 	property bool passwordMode: false;
@@ -42,6 +43,21 @@ Edit : Item {
 		Behavior on borderColor {
 			animation: Animation {
 				duration: 200;
+			}
+		}
+	}
+
+	MainText {
+		anchors.bottom: borderRect.bottom;
+		anchors.horizontalCenter: borderRect.horizontalCenter;
+		opacity: 1;
+		color: colorTheme.disabledTextColor; 
+		opacity: editText.text == "" ? 0.8 : 0;
+		text: editItem.hint;
+
+		Behavior on opacity {
+			animation: Animation {
+				duration: 500;
 			}
 		}
 	}
