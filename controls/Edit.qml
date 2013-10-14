@@ -117,6 +117,9 @@ Edit : Item {
 	}
 
 	onKeyPressed: {
+		if (!recursiveVisible)
+			return false;
+
 		var keyUsed = false;
 
 		if ((key == "Backspace" || key == "Left") && editItem.handleDelete) {
