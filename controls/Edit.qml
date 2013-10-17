@@ -5,6 +5,7 @@ Edit : Item {
 	height: 40;
 	clip: true;
 
+	//property Font font;
 	property bool showBackground: true;
 	property string text;
 	property int maxLen;
@@ -54,6 +55,7 @@ Edit : Item {
 		color: colorTheme.textColor; 
 		opacity: editText.text == "" ? 0.8 : 0;
 		text: editItem.hint;
+		font: smallFont;
 
 		Behavior on opacity {
 			animation: Animation {
@@ -68,6 +70,7 @@ Edit : Item {
 		anchors.horizontalCenter: borderRect.horizontalCenter;
 		opacity: 1;
 		color: editItem.textColor; 
+		font: smallFont;
 
 		Behavior on opacity {
 			animation: Animation {
