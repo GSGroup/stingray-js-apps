@@ -32,7 +32,7 @@ SmoothImage : Item {
 
 	onSourceChanged: {
 		log("source changed to " + smoothImageItem.source);
-		updateSource();
+		smoothImageItem.updateSource();
 	}
 
 	function updateSource() {
@@ -49,6 +49,6 @@ SmoothImage : Item {
 	}
 
 	onCompleted: {
-		updateSource();
+		smoothImageItem.updateSource();
 	}
 }
