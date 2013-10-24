@@ -1,19 +1,22 @@
 PageStack : Item {
-	property int currentIndex: 0;
-	property int previousIndex: 0;
+	id: pageStackItem;
+	property int currentIndex;
+	property int previousIndex;
 	property bool animated; // page stack will use opacity property
 	focus: false;
 
 	onCurrentIndexChanged: {
-		log("current index changed " + this.currentIndex);
-		if (this.previousIndex == this.currentIndex)
+		log("current index changed " + pageStackItem.currentIndex);
+		if (pageStackItem.previousIndex == pageStackItem.currentIndex) {
+			log("skip visibility update");
 			return;
+		}
 
-		if (this.previousIndex > -1)
-			this.children[this.previousIndex].visible = false;
+		if (pageStackItem.previousIndex > -1)
+			pageStackItem.children[pageStackItem.previousIndex].visible = false;
 
-		this.previousIndex = this.currentIndex;
-		this.children[this.currentIndex].visible = true;
+		pageStackItem.previousIndex = pageStackItem.currentIndex;
+		pageStackItem.children[pageStackItem.currentIndex].visible = true;
 	}
 
 	onCompleted: {
