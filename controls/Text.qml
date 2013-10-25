@@ -22,13 +22,13 @@ ShadowText : Text {
 	color: colorTheme.activeTextColor;
 	font: mainFont;
 
-	style: Style.Shadow;
+	style: Shadow;
 	styleColor: "#333";
 }
 
 Legend : Text {
 	color: colorTheme.activeTextColor;
-	style: Style.Sunken;
+	style: Sunken;
 	font: mainFont;
 
 	Rectangle {
