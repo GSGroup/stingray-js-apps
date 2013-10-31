@@ -1,0 +1,5 @@
+{
+	"id": "controls",
+	"display": { "name": "Controls library", "system": true },
+	"purpose": "library"
+}
