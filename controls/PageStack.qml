@@ -6,11 +6,8 @@ PageStack : Item {
 	focus: false;
 
 	onCurrentIndexChanged: {
-		log("current index changed " + pageStackItem.currentIndex);
-		if (pageStackItem.previousIndex == pageStackItem.currentIndex) {
-			log("skip visibility update");
+		if (pageStackItem.previousIndex == pageStackItem.currentIndex)
 			return;
-		}
 
 		if (pageStackItem.previousIndex > -1)
 			pageStackItem.children[pageStackItem.previousIndex].visible = false;
