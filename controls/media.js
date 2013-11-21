@@ -43,6 +43,13 @@ Player.prototype = {
 		return 0;
 	},
 
+	getSeekableProgress: function() {
+		if (this.session)
+			return this.session.GetSeekableRange().GetEnd();
+
+		return 0;
+	},
+
 	_onFinished: function() {
 		this.finished();
 	}
