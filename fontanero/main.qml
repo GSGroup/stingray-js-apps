@@ -33,12 +33,11 @@ Application {
 		delegate: CellDelegate { }
 	}
 
-	MainText {
+	SmallText {
 		id: logText;
 		anchors.left: parent.left;
 		anchors.right: parent.right;
 		anchors.bottom: parent.bottom;
-		height: 100;
 	}
 
 	SmallText {

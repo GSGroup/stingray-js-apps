@@ -19,7 +19,7 @@ this.cellsModel = null;
 this.sound = function(name) {}
 
 this.log = function(text) {
-	this.logText.text += text + "\n";
+	this.logText.text = (this.logText.text + text + "\n").split("\n").slice(-8).join("\n")
 }
 
 var actions = null;
