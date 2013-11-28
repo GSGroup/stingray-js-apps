@@ -2,6 +2,15 @@ import "ui.js" as ui
 import "game.js" as game
 import controls.Text
 
+CellDelegate : Item {
+	width: 16;
+	height: 16;
+	Image {
+		anchors.fill: parent;
+		source: "apps/fontanero/t/" + model.tile + ".png";
+	}
+}
+
 Application {
 	anchors.fill: mainWindow;
 	id: fontanero;
@@ -9,6 +18,20 @@ Application {
 	color: "#055";
 
 	AlphaControl {}
+
+	ListModel {
+		id: cellsModel;
+	}
+
+	GridView {
+		id: cells;
+		model: cellsModel;
+		cellWidth: 16;
+		cellHeight: 16;
+		anchors.centerIn: parent;
+		delegate: CellDelegate { }
+	}
+
 	MainText {
 		id: logText;
 		anchors.left: parent.left;
@@ -38,9 +61,15 @@ Application {
 
 	onVisibleChanged: {
 		if (visible) {
+
 			var w = 40, h = 24;
 			var map = new game.dungeon_map(w, h);
 			this.map = map;
+
+			cells.width = w * cells.cellWidth;
+			cells.height = h * cells.cellHeight;
+			for(var i = 0; i < w * h; ++i)
+				cellsModel.append({ 'tile': i % 25 });
 
 			map.repaint = ui.repaint;
 			map.repaint_all = ui.repaint_all;
