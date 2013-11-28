@@ -11,6 +11,10 @@
 /** @const */ var WEARABLE = 16;
 /** @const */ var FIXABLE = 32;
 
+function in_range(x, a, b) {
+	return x >= a && x < b;
+}
+
 this.map = null;
 this.logText = null;
 this.overlayPanel = null;
@@ -172,6 +176,22 @@ var panel = function() {
 		text += 'nothing'
 	}
 	overlayPanel.text = text;
+
+	menuPanel.text = "";
+	if (objects) {
+		for(var i = 0; i < objects.length; ++i) {
+			var object = objects[i][0];
+			var key = String.fromCharCode(48 + i);
+			menuPanel.text += "[" + key + "] " + object.name + "\n";
+		}
+	} else {
+		actions.forEach(function(action) {
+			var name = action.name.replace("<em>", "[").replace("</em>", "]");
+			menuPanel.text += "[" + action.key + "] " + name + "\n";
+		});
+	}
+
+
 }.bind(this);
 
 this.panel = panel;
@@ -293,27 +313,6 @@ function on_key(key) {
 }
 this.on_key = on_key;
 
-var tick = function(dt)
-{
-	if (objects) {
-		for(var i = 0; i < objects.length; ++i) {
-			var object = objects[i][0];
-			var key = String.fromCharCode(97 + i);
-			var label = small_font.render("[" + key + "] " + object.name, 255, 255, 255);
-			//output object
-			y += small_font.height;
-		}
-	} else {
-		actions.forEach(function(action) {
-			var name = action.name.replace("<em>", "[").replace("</em>", "]");
-			var label = small_font.render(name, 255, 255, 255);
-			//output action
-			y += small_font.height;
-		});
-	}
-	overlay.render(rootWindow);
-	rootWindow.flip();
-}
 
 this.gameOver = function() {
 	log("GAME OVER STUB");
