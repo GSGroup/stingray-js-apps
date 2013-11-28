@@ -48,6 +48,13 @@ Application {
 		height: 100;
 	}
 
+	SmallText {
+		id: menuPanel;
+		anchors.right: parent.right;
+		anchors.verticalCenter: parent.verticalCenter;
+		height: 250;
+	}
+
 	Item {
 		focus: true;
 

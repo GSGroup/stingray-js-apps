@@ -510,31 +510,31 @@ function hero() {
 		mask |= this.inv.get_actions();
 		var a = [];
 		if (mask & PICKABLE)
-			a.push(new hero_action(this, 'p', '<em>P</em>ickup', PICKABLE, this.pickup));
+			a.push(new hero_action(this, '1', '<em>P</em>ickup', PICKABLE, this.pickup));
 		if (mask & EDIBLE) {
-			a.push(new hero_action(this, 'e', '<em>E</em>at', EDIBLE, this.eat));
-			var t = new hero_action(this, 't', '<em>T</em>hrow', EDIBLE, this.throw_obj)
+			a.push(new hero_action(this, '2', '<em>E</em>at', EDIBLE, this.eat));
+			var t = new hero_action(this, '6', '<em>T</em>hrow', EDIBLE, this.throw_obj)
 			t.need_dir = true;
 			a.push(t);
 			if (mask & DRINKABLE) {
-				var ha = new hero_action(this, 'a', '<em>A</em>lchemy', EDIBLE | DRINKABLE, this.combine);
+				var ha = new hero_action(this, '4', '<em>A</em>lchemy', EDIBLE | DRINKABLE, this.combine);
 				ha.combine = true;
 				a.push(ha);
 			}
 		}
 		if (mask & READABLE)
-			a.push(new hero_action(this, 'r', '<em>R</em>ead', READABLE, this.read));
+			a.push(new hero_action(this, '5', '<em>R</em>ead', READABLE, this.read));
 		if (mask & DRINKABLE)
-			a.push(new hero_action(this, 'd', '<em>D</em>rink', DRINKABLE, this.drink));
+			a.push(new hero_action(this, '3', '<em>D</em>rink', DRINKABLE, this.drink));
 		if (mask & FIXABLE)
-			a.push(new hero_action(this, 'f', '<em>F</em>ix', FIXABLE, this.fix));
+			a.push(new hero_action(this, '7', '<em>F</em>ix', FIXABLE, this.fix));
 		
-		a.push(new hero_action(this, 's', '<em>S</em>earch', 0, this.search));
-		a.push(new hero_action(this, 'h', 'C<em>h</em>eat', 0, this.cheat));
+		a.push(new hero_action(this, '8', '<em>S</em>earch', 0, this.search));
+		a.push(new hero_action(this, '9', 'C<em>h</em>eat', 0, this.cheat));
 		
 		var ct = cell.type;
 		if (ct == CELL_EXIT || ct == CELL_ENTRANCE)
-			a.push(new hero_action(this, 'x', 'E<em>x</em>it', 0, this.exit));
+			a.push(new hero_action(this, '0', 'E<em>x</em>it', 0, this.exit));
 		return a;
 	}
 	
