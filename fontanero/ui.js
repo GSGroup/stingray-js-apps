@@ -136,6 +136,22 @@ var gettile = function(cell) {
 	}
 }.bind(this);
 
+var menu = function() {
+	menuPanel.text = "";
+	if (objects) {
+		log(objects);
+		for(var i = 0; i < objects.length; ++i) {
+			var object = objects[i][0];
+			menuPanel.text += "[" + i + "] " + object.name + "\n";
+		}
+	} else {
+		actions.forEach(function(action) {
+			var name = action.name.replace("<em>", "[").replace("</em>", "]");
+			menuPanel.text += "[" + action.key + "] " + name + "\n";
+		});
+	}
+}.bind(this);
+
 var panel = function() {
 	if (this.map == null)
 		return;
@@ -152,9 +168,11 @@ var panel = function() {
 	if (throw_obj) {
 		text += 'Choose direction: Press up, down, left or right to throw ' + first_object.name;
 		overlayPanel.text = text;
+		menu();
 		return;
 	} else if (objects) {
 		overlayPanel.text = text;
+		menu();
 		return;
 	} else {
 		text += 'You are carrying: ' + hero.inv;
@@ -177,19 +195,7 @@ var panel = function() {
 	}
 	overlayPanel.text = text;
 
-	menuPanel.text = "";
-	if (objects) {
-		for(var i = 0; i < objects.length; ++i) {
-			var object = objects[i][0];
-			menuPanel.text += "[" + i + "] " + object.name + "\n";
-		}
-	} else {
-		actions.forEach(function(action) {
-			var name = action.name.replace("<em>", "[").replace("</em>", "]");
-			menuPanel.text += "[" + action.key + "] " + name + "\n";
-		});
-	}
-
+	menu();
 
 }.bind(this);
 
@@ -243,7 +249,7 @@ function on_key(key) {
 		var key_char = key.charAt(0);
 
 		if (objects != null) {
-			var i = key.charCodeAt(0) - 0x61; //ord('a');
+			var i = key.charCodeAt(0) - 0x31; //ord('a');
 			if (in_range(i, 0, objects.length)) {
 				var o = objects[i];
 				var a = o[1], obj = o[0];
