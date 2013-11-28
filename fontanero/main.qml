@@ -12,8 +12,8 @@ CellDelegate : Item {
 }
 
 Application {
-	anchors.fill: mainWindow;
 	id: fontanero;
+	anchors.fill: mainWindow;
 	focus: true;
 	color: "#055";
 
@@ -49,38 +49,37 @@ Application {
 	}
 
 	onKeyPressed: {
-		var key = key.toLowerCase();
-		ui.on_key(key);
+		if (key == "Back") {
+			visible = false;
+			return true;
+		}
+		ui.on_key(key.toLowerCase());
 		return true;
 	}
 
 	onCompleted: {
 		ui.logText = logText;
 		ui.overlayPanel = overlayPanel;
+		ui.cellsModel = cellsModel;
 	}
 
 	onVisibleChanged: {
-		if (visible) {
+		if (visible && !ui.map) {
+			var map = new game.dungeon_map(40, 24);
+			cells.width = map.width * cells.cellWidth;
+			cells.height = map.height * cells.cellHeight;
+			game.set_map(map);
 
-			var w = 40, h = 24;
-			var map = new game.dungeon_map(w, h);
-			this.map = map;
-
-			cells.width = w * cells.cellWidth;
-			cells.height = h * cells.cellHeight;
-			for(var i = 0; i < w * h; ++i)
-				cellsModel.append({ 'tile': i % 25 });
-
-			map.repaint = ui.repaint;
-			map.repaint_all = ui.repaint_all;
-			map.win = ui.win;
 			ui.map = map;
-
-			log("Fontanero HD. Adventure for Gold and Glory. v4 argile qml");
+			ui.map.repaint = ui.repaint;
+			ui.map.repaint_all = ui.repaint_all;
+			ui.map.win = ui.win;
 
 			ui.intro();
 			ui.map.generate();
 			ui.panel();
+			fontanero.focus = true;
+			log("Fontanero HD. Adventure for Gold and Glory. v4 argile qml");
 		}
 	}
 }
