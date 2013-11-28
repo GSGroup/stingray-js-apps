@@ -181,8 +181,7 @@ var panel = function() {
 	if (objects) {
 		for(var i = 0; i < objects.length; ++i) {
 			var object = objects[i][0];
-			var key = String.fromCharCode(48 + i);
-			menuPanel.text += "[" + key + "] " + object.name + "\n";
+			menuPanel.text += "[" + i + "] " + object.name + "\n";
 		}
 	} else {
 		actions.forEach(function(action) {
