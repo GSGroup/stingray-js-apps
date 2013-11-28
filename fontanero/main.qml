@@ -7,7 +7,8 @@ CellDelegate : Item {
 	height: 16;
 	Image {
 		anchors.fill: parent;
-		source: "apps/fontanero/t/" + model.tile + ".png";
+		source: model.tile >= 0? "apps/fontanero/t/" + model.tile + ".png": "";
+		visible: model.tile >= 0;
 	}
 }
 
