@@ -33,7 +33,7 @@ Button : FocusablePanel {
 			simpleButton.color = colorTheme.activeBorderColor;
 			//simpleButton.color.ResetAnimation();
 			simpleButton.color = colorTheme.activeBackgroundColor;
-			return false;
+			event.accepted = false;
 		}
 	}
 
