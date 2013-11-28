@@ -172,7 +172,8 @@ var panel = function() {
 		text += 'nothing'
 	}
 	overlayPanel.text = text;
-}
+}.bind(this);
+
 this.panel = panel;
 
 function on_key(key) {
