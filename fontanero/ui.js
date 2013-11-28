@@ -318,12 +318,6 @@ function on_key(key) {
 }
 this.on_key = on_key;
 
-
-this.gameOver = function() {
-	log("GAME OVER STUB");
-	this.map.restart();
-}
-
 this.repaint = function(cell)
 {
 	var map = this.map;
