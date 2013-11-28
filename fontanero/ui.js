@@ -176,8 +176,6 @@ var panel = function() {
 this.panel = panel;
 
 function on_key(key) {
-	log("on_key", key);
-
 	var h = this.map.hero;
 	if (h.hp <= 0)
 		return;
@@ -287,7 +285,6 @@ function on_key(key) {
 	if (used) {
 		if (call_tick)
 		{
-			log("TICK");
 			this.map.tick();
 		}
 		panel();

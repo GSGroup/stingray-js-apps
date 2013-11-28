@@ -49,13 +49,17 @@ Application {
 		height: 100;
 	}
 
-	onKeyPressed: {
-		if (key == "Back") {
-			visible = false;
+	Item {
+		focus: true;
+
+		onKeyPressed: {
+			if (key == "Back") {
+				visible = false;
+				return true;
+			}
+			ui.on_key(key.toLowerCase());
 			return true;
 		}
-		ui.on_key(key.toLowerCase());
-		return true;
 	}
 
 	onCompleted: {
