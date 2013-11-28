@@ -1,67 +1,25 @@
+/** @const */ var CELL_VOID = 0;
+/** @const */ var CELL_FLOOR = 1;
+/** @const */ var CELL_WALL = 2;
+/** @const */ var CELL_ENTRANCE = 3;
+/** @const */ var CELL_EXIT = 4;
+
+/** @const */ var PICKABLE = 1;
+/** @const */ var EDIBLE = 2;
+/** @const */ var READABLE = 4;
+/** @const */ var DRINKABLE = 8;
+/** @const */ var WEARABLE = 16;
+/** @const */ var FIXABLE = 32;
+
 this.map = null;
 this.logText = null;
 this.overlayPanel = null;
+this.cellsModel = null;
 
-this.repaint = function() {} //not needed
-this.repaint_all = function() {} //not needed
+this.sound = function(name) {}
 
-this.sound = function(name) {
-	sound.sound(name);
-}
 this.log = function(text) {
-	log(text);
-}
-
-this.win = function() {
-/*
-	core.setContext("win");
-	var hero = map.hero;
-	var logo = large_font.render(hero.dead? "YOU WON!": "PURE WIN!!111", 255, 255, 255);
-
-	var score = new ui.Text(small_font, {
-		color: [255, 255, 255],
-		text: "Got $" + hero.cash + "\nBeing dead " + hero.dead + " times.\n\nProgrammed by:\nVladimir Menshakov\n&\nVladimir Zhuravlev\n\nВ©2010-2013"
-	});
-*/
-}
-
-var intro_text = "You've entered the <s>dungeon</s> cellar to fix all broken pipes and vents.";
-this.intro = function() {
-	/*
-	core.setContext("intro");
-
-	var win_ui = new ui.Item({
-		width: rootWindow.w,
-		height: rootWindow.h,
-
-		logo: new ui.Text(large_font, {
-				text: "FONTANERO",
-				color: [255, 255, 255],
-				anchors: { centerIn: function() { return win_ui; }}
-			}),
-		text: new ui.Text(small_font, {
-				text: intro_text,
-				color: [255, 255, 255],
-				anchors: { centerIn: function() { return win_ui; } , topMargin: function() { return 3 * win_ui.logo.height / 2; }}
-			})
-	});
-
-	var tile = 5 + Math.floor(Math.random() * 17);
-	core.addTimer(5000, function() { tile = 5 + Math.floor(Math.random() * 17); } , true);
-	core.addTickHandler(function() {
-		rootWindow.clear(0x47 / 4, 0x5b / 4, 0x7a / 4);
-		var zoom = 12;
-		tileset.renderTile(rootWindow, 32, 32, 4, 0, zoom);
-		tileset.renderTile(rootWindow, rootWindow.w - 32 - tileset.tileWidth * zoom, 32, tile, 0, zoom);
-		//var y = rootWindow.h / 2 - logo.h / 2;
-		//rootWindow.renderTile(rootWindow.w / 2 - logo.w / 2, y, logo);
-		//rootWindow.renderTile(rootWindow.w / 2 - text.w / 2, y + 3 * logo.h / 2, text);
-		win_ui.render(rootWindow);
-		rootWindow.flip();
-	})
-	core.addKeyHandler(function(key, pressed) { if (!pressed) core.setContext(""); });
-	*/
-	this.log(intro_text);
+	this.logText.text += text + "\n";
 }
 
 var actions = null;
@@ -74,7 +32,7 @@ var render_thrown = null;
 this.run_mini_game = function() { log("run-mini-game: STUB, no bonus"); }
 
 this.animate_throw = function(x, y, obj, actor, message) {
-	var c = map.hero.cell, dx = x - c.x, dy = y - c.y;
+	var c = this.map.hero.cell, dx = x - c.x, dy = y - c.y;
 	distance = Math.max(Math.abs(dx), Math.abs(dy));
 	//function(x, y) { render_thrown = [x, y]; },
 	var finalize = function() {
@@ -82,22 +40,22 @@ this.animate_throw = function(x, y, obj, actor, message) {
 		ui_log(message);
 		if (obj) {
 			obj.type |= PICKABLE;
-			map.insert_object(obj, x, y);
+			this.map.insert_object(obj, x, y);
 		}
 		if (actor) {
-			map.hero.attack(actor, true);
+			this.map.hero.attack(actor, true);
 		}
-		map.tick();
+		this.map.tick();
 	}
 	finalize();
 }
 
 
-function gettile(cell) {
+var gettile = function(cell) {
 	if (!cell.visited)
 		return -1;
 	var actor = cell.actor;
-	var hero = map.hero;
+	var hero = this.map.hero;
 	var blinded = hero.blinded > 0;
 
 	if (actor == hero)
@@ -172,12 +130,12 @@ function gettile(cell) {
 	default:
 		return -1;
 	}
-}
+}.bind(this);
 
 var panel = function() {
-	if (map == null)
+	if (this.map == null)
 		return;
-	var hero = map.hero, level = hero.level;
+	var hero = this.map.hero, level = hero.level;
 
 	var text = hero.name + " the Fontanero; Level: " + hero.level + " (" + hero.levels[level-1] + ") ";
 	text += "HP: " + hero.hp + " (" + hero.max_hp() +  ")" + 
@@ -185,7 +143,7 @@ var panel = function() {
 	(hero.blinded? " [BLINDED]":"") + 
 	(hero.confused? " [CONFUSED]":"") + "\n" + 
 	"Cash: $" + hero.cash + " / " + hero.level_cap() +" " + 
-	"Pipes found: " + map.pipes + " Pipes fixed: " + map.fixed;
+	"Pipes found: " + this.map.pipes + " Pipes fixed: " + this.map.fixed;
 	text += "\n"
 	if (throw_obj) {
 		text += 'Choose direction: Press up, down, left or right to throw ' + first_object.name;
@@ -217,11 +175,10 @@ var panel = function() {
 }
 this.panel = panel;
 
-function on_key(key, pressed) {
-	if (!pressed)
-		return;
+function on_key(key) {
+	log("on_key", key);
 
-	var h = map.hero;
+	var h = this.map.hero;
 	if (h.hp <= 0)
 		return;
 
@@ -329,7 +286,10 @@ function on_key(key, pressed) {
 	}
 	if (used) {
 		if (call_tick)
-			map.tick();
+		{
+			log("TICK");
+			this.map.tick();
+		}
 		panel();
 	}
 }
@@ -359,6 +319,74 @@ var tick = function(dt)
 
 this.gameOver = function() {
 	log("GAME OVER STUB");
-	map.restart();
+	this.map.restart();
+}
+
+this.repaint = function(cell)
+{
+	var map = this.map;
+	var idx = cell.y * map.width + cell.x;
+	this.cellsModel.setProperty(idx, 'tile', gettile(cell));
+}.bind(this);
+
+this.repaint_all = function() {
+	this.cellsModel.reset();
+	var map = this.map;
+	for(var y = 0; y < this.map.height; ++y)
+		for(var x = 0; x < this.map.width; ++x) {
+			this.cellsModel.append( { 'tile': gettile(map.cells[y][x]) })
+		}
+}.bind(this);
+
+this.win = function() {
+/*
+	core.setContext("win");
+	var hero = this.map.hero;
+	var logo = large_font.render(hero.dead? "YOU WON!": "PURE WIN!!111", 255, 255, 255);
+
+	var score = new ui.Text(small_font, {
+		color: [255, 255, 255],
+		text: "Got $" + hero.cash + "\nBeing dead " + hero.dead + " times.\n\nProgrammed by:\nVladimir Menshakov\n&\nVladimir Zhuravlev\n\n©2010-2013"
+	});
+*/
+}
+
+var intro_text = "You've entered the <s>dungeon</s> cellar to fix all broken pipes and vents.";
+this.intro = function() {
+	/*
+	core.setContext("intro");
+
+	var win_ui = new ui.Item({
+		width: rootWindow.w,
+		height: rootWindow.h,
+
+		logo: new ui.Text(large_font, {
+				text: "FONTANERO",
+				color: [255, 255, 255],
+				anchors: { centerIn: function() { return win_ui; }}
+			}),
+		text: new ui.Text(small_font, {
+				text: intro_text,
+				color: [255, 255, 255],
+				anchors: { centerIn: function() { return win_ui; } , topMargin: function() { return 3 * win_ui.logo.height / 2; }}
+			})
+	});
+
+	var tile = 5 + Math.floor(Math.random() * 17);
+	core.addTimer(5000, function() { tile = 5 + Math.floor(Math.random() * 17); } , true);
+	core.addTickHandler(function() {
+		rootWindow.clear(0x47 / 4, 0x5b / 4, 0x7a / 4);
+		var zoom = 12;
+		tileset.renderTile(rootWindow, 32, 32, 4, 0, zoom);
+		tileset.renderTile(rootWindow, rootWindow.w - 32 - tileset.tileWidth * zoom, 32, tile, 0, zoom);
+		//var y = rootWindow.h / 2 - logo.h / 2;
+		//rootWindow.renderTile(rootWindow.w / 2 - logo.w / 2, y, logo);
+		//rootWindow.renderTile(rootWindow.w / 2 - text.w / 2, y + 3 * logo.h / 2, text);
+		win_ui.render(rootWindow);
+		rootWindow.flip();
+	})
+	core.addKeyHandler(function(key, pressed) { if (!pressed) core.setContext(""); });
+	*/
+	this.log(intro_text);
 }
 

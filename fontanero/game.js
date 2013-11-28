@@ -1,3 +1,6 @@
+/*==global==*/
+var map = null;
+
 /** @const */ var CELL_VOID = 0;
 /** @const */ var CELL_FLOOR = 1;
 /** @const */ var CELL_WALL = 2;
@@ -45,8 +48,8 @@ var monster_list = [
 	["ghost"]
 ];
 
-/*==global==*/var map = null;
-this.map = map;
+
+this.set_map = function(new_map) { map = new_map; }
 
 var floor = Math.floor, random = Math.random, abs = Math.abs;
 
