@@ -511,7 +511,7 @@ function hero() {
 		var a = [];
 		if (mask & PICKABLE)
 			a.push(new hero_action(this, '1', '<em>P</em>ickup', PICKABLE, this.pickup));
-		if (mask & EDIBLE) {
+		if (mask & EDIBLE)
 			a.push(new hero_action(this, '2', '<em>E</em>at', EDIBLE, this.eat));
 		if (mask & DRINKABLE)
 			a.push(new hero_action(this, '3', '<em>D</em>rink', DRINKABLE, this.drink));
