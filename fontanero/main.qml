@@ -3,14 +3,12 @@ import "game.js" as game
 import controls.Button
 import controls.Text
 
-CellDelegate : Item {
+CellDelegate : Image {
 	width: 16;
 	height: 16;
-	Image {
-		anchors.fill: parent;
-		source: model.tile >= 0? "apps/fontanero/t/" + model.tile + ".png": "";
-		visible: model.tile >= 0;
-	}
+	anchors.fill: parent;
+	source: model.tile >= 0? "apps/fontanero/t/" + model.tile + ".png": "";
+	visible: model.tile >= 0;
 }
 
 Application {
