@@ -15,7 +15,6 @@ CellDelegate : Item {
 
 Application {
 	id: fontanero;
-	anchors.fill: mainWindow;
 	focus: true;
 	color: "#055";
 
