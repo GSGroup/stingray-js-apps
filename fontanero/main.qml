@@ -30,20 +30,33 @@ Application {
 		delegate: CellDelegate { }
 	}
 
-	Image {
-		id: throwingObject;
-		width: 16;
-		height: 16;
-		source: "apps/fontanero/t/7.png";
-		visible: false;
-		Behavior on x {
-			animation: Animation {
-				duration: 300;
+	Item {
+		anchors.fill: cells;
+		Image {
+			id: throwingObject;
+			width: 16;
+			height: 16;
+			source: "apps/fontanero/t/7.png";
+			visible: false;
+			Behavior on x {
+				animation: Animation {
+					duration: 200;
+				}
 			}
-		}
-		Behavior on y {
-			animation: Animation {
-				duration: 300;
+			Behavior on y {
+				animation: Animation {
+					duration: 200;
+				}
+			}
+			Timer {
+				id: throwingObjectTimer;
+				running: throwingObject.visible;
+				interval: 200;
+				onTriggered: {
+					throwingObject.visible = false;
+					if (this.finalize)
+						this.finalize();
+				}
 			}
 		}
 	}
@@ -208,8 +221,10 @@ Application {
 		ui.overlayPanel = overlayPanel;
 		ui.cellsModel = cellsModel;
 		ui.winPanel = winPanel;
-		ui.gameOver = this.gameOver;
-		ui.hintPanel = this.hintPanel;
+		ui.gameOver = gameOver;
+		ui.hintPanel = hintPanel;
+		ui.throwingObject = throwingObject
+		ui.throwingObjectTimer = throwingObjectTimer;
 		log("Fontanero HD. Adventure for Gold and Glory. v4 argile qml");
 	}
 

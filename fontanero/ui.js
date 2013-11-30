@@ -34,7 +34,6 @@ var objects = null;
 var combine = false;
 var first_object = null;
 var throw_obj = false;
-var render_thrown = null;
 
 this.run_mini_game = function() { log("run-mini-game: STUB, no bonus"); }
 
@@ -43,9 +42,14 @@ this.animate_throw = function(x, y, obj, actor, message) {
 	var distance = Math.max(Math.abs(dx), Math.abs(dy));
 	var map = this.map;
 
+	throwingObject.x = x * 16;
+	throwingObject.y = y * 16;
+	throwingObject.visible = true;
+
+	var ui = this;
 	var finalize = function() {
-		render_thrown = null;
-		this.log(message);
+		throwingObject.visible = false;
+		ui.log(message);
 		if (obj) {
 			obj.type |= PICKABLE;
 			map.insert_object(obj, x, y);
@@ -55,7 +59,7 @@ this.animate_throw = function(x, y, obj, actor, message) {
 		}
 		map.tick();
 	}
-	finalize();
+	throwingObjectTimer.finalize = finalize;
 }.bind(this);
 
 
@@ -243,7 +247,11 @@ function on_key(key) {
 			h.throw_obj(first_object, dx, dy);
 			call_tick = false;
 		} else
+		{
 			h.move(dx, dy);
+			throwingObject.x = h.cell.x * 16;
+			throwingObject.y = h.cell.y * 16;
+		}
 		used = true;
 		throw_obj = false;
 		first_object = null;
