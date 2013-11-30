@@ -21,6 +21,7 @@ this.overlayPanel = null;
 this.cellsModel = null;
 this.winPanel = null;
 this.hintPanel = null;
+this.throwingObject = null;
 
 this.sound = function(name) {}
 

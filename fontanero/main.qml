@@ -36,6 +36,16 @@ Application {
 		height: 16;
 		source: "apps/fontanero/t/7.png";
 		visible: false;
+		Behavior on x {
+			animation: Animation {
+				duration: 300;
+			}
+		}
+		Behavior on y {
+			animation: Animation {
+				duration: 300;
+			}
+		}
 	}
 
 	SmallText {
