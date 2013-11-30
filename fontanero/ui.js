@@ -20,6 +20,7 @@ this.logText = null;
 this.overlayPanel = null;
 this.cellsModel = null;
 this.winPanel = null;
+this.hintPanel = null;
 
 this.sound = function(name) {}
 
@@ -168,8 +169,10 @@ var panel = function() {
 	"Cash: $" + hero.cash + " / " + hero.level_cap() +" " + 
 	"Pipes found: " + this.map.pipes + " Pipes fixed: " + this.map.fixed;
 	text += "\n"
+	this.hintPanel.visible = false;
 	if (throw_obj) {
-		text += 'Choose direction: Press up, down, left or right to throw ' + first_object.name;
+		this.hintPanel.text = 'Choose direction: Press up, down, left or right to throw ' + first_object.name;
+		this.hintPanel.visible = true;
 		overlayPanel.text = text;
 		menu();
 		return;

@@ -109,6 +109,20 @@ Application {
 			}
 		}
 	}
+	Rectangle {
+		id: hintPanel;
+		visible: false;
+
+		property string text;
+
+		anchors.fill: mainWindow;
+		color: "#333c";
+
+		BigText {
+			anchors.centerIn: parent;
+			text: parent.text;
+		}
+	}
 
 	Rectangle {
 		id: winPanel;
@@ -185,6 +199,7 @@ Application {
 		ui.cellsModel = cellsModel;
 		ui.winPanel = winPanel;
 		ui.gameOver = this.gameOver;
+		ui.hintPanel = this.hintPanel;
 		log("Fontanero HD. Adventure for Gold and Glory. v4 argile qml");
 	}
 
