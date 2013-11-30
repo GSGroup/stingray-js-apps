@@ -41,20 +41,19 @@ this.run_mini_game = function() { log("run-mini-game: STUB, no bonus"); }
 this.animate_throw = function(x, y, obj, actor, message) {
 	var c = this.map.hero.cell, dx = x - c.x, dy = y - c.y;
 	var distance = Math.max(Math.abs(dx), Math.abs(dy));
-	log("THROW distance = ", distance);
-	return;
-	//function(x, y) { render_thrown = [x, y]; },
+	var map = this.map;
+
 	var finalize = function() {
 		render_thrown = null;
 		this.log(message);
 		if (obj) {
 			obj.type |= PICKABLE;
-			this.map.insert_object(obj, x, y);
+			map.insert_object(obj, x, y);
 		}
 		if (actor) {
-			this.map.hero.attack(actor, true);
+			map.hero.attack(actor, true);
 		}
-		this.map.tick();
+		map.tick();
 	}
 	finalize();
 }.bind(this);
