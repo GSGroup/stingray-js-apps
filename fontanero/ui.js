@@ -150,7 +150,7 @@ var menu = function() {
 		log(objects);
 		for(var i = 0; i < objects.length; ++i) {
 			var object = objects[i][0];
-			menuPanel.text += "[" + i + "] " + object.name + "\n";
+			menuPanel.text += "[" + (i + 1) + "] " + object.name + "\n";
 		}
 	} else {
 		actions.forEach(function(action) {
@@ -263,7 +263,7 @@ function on_key(key) {
 		var key_char = key.charAt(0);
 
 		if (objects != null) {
-			var i = key.charCodeAt(0) - 0x31; //ord('a');
+			var i = key.charCodeAt(0) - 0x31; //ord('1');
 			if (in_range(i, 0, objects.length)) {
 				var o = objects[i];
 				var a = o[1], obj = o[0];
