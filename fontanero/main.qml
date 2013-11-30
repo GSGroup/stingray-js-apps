@@ -88,8 +88,12 @@ Application {
 		id: fontaneroInput;
 
 		onKeyPressed: {
-			ui.on_key(key.toLowerCase());
-			return true;
+			if (key != "Back") {
+				ui.on_key(key.toLowerCase());
+				return true;
+			}
+			else
+				return false;
 		}
 	}
 
