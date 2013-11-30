@@ -346,42 +346,7 @@ this.win = function() {
 	this.winPanel.focus = true;
 }.bind(this);
 
-var intro_text = "You've entered the <s>dungeon</s> cellar to fix all broken pipes and vents.";
 this.intro = function() {
-	/*
-	core.setContext("intro");
-
-	var win_ui = new ui.Item({
-		width: rootWindow.w,
-		height: rootWindow.h,
-
-		logo: new ui.Text(large_font, {
-				text: "FONTANERO",
-				color: [255, 255, 255],
-				anchors: { centerIn: function() { return win_ui; }}
-			}),
-		text: new ui.Text(small_font, {
-				text: intro_text,
-				color: [255, 255, 255],
-				anchors: { centerIn: function() { return win_ui; } , topMargin: function() { return 3 * win_ui.logo.height / 2; }}
-			})
-	});
-
-	var tile = 5 + Math.floor(Math.random() * 17);
-	core.addTimer(5000, function() { tile = 5 + Math.floor(Math.random() * 17); } , true);
-	core.addTickHandler(function() {
-		rootWindow.clear(0x47 / 4, 0x5b / 4, 0x7a / 4);
-		var zoom = 12;
-		tileset.renderTile(rootWindow, 32, 32, 4, 0, zoom);
-		tileset.renderTile(rootWindow, rootWindow.w - 32 - tileset.tileWidth * zoom, 32, tile, 0, zoom);
-		//var y = rootWindow.h / 2 - logo.h / 2;
-		//rootWindow.renderTile(rootWindow.w / 2 - logo.w / 2, y, logo);
-		//rootWindow.renderTile(rootWindow.w / 2 - text.w / 2, y + 3 * logo.h / 2, text);
-		win_ui.render(rootWindow);
-		rootWindow.flip();
-	})
-	core.addKeyHandler(function(key, pressed) { if (!pressed) core.setContext(""); });
-	*/
-	this.log(intro_text);
+	this.log("You've entered the <s>dungeon</s> cellar to fix all broken pipes and vents.");
 }
 
