@@ -19,6 +19,7 @@ this.map = null;
 this.logText = null;
 this.overlayPanel = null;
 this.cellsModel = null;
+this.winPanel = null;
 
 this.sound = function(name) {}
 
@@ -37,11 +38,13 @@ this.run_mini_game = function() { log("run-mini-game: STUB, no bonus"); }
 
 this.animate_throw = function(x, y, obj, actor, message) {
 	var c = this.map.hero.cell, dx = x - c.x, dy = y - c.y;
-	distance = Math.max(Math.abs(dx), Math.abs(dy));
+	var distance = Math.max(Math.abs(dx), Math.abs(dy));
+	log("THROW distance = ", distance);
+	return;
 	//function(x, y) { render_thrown = [x, y]; },
 	var finalize = function() {
 		render_thrown = null;
-		ui_log(message);
+		this.log(message);
 		if (obj) {
 			obj.type |= PICKABLE;
 			this.map.insert_object(obj, x, y);
@@ -52,7 +55,7 @@ this.animate_throw = function(x, y, obj, actor, message) {
 		this.map.tick();
 	}
 	finalize();
-}
+}.bind(this);
 
 
 var gettile = function(cell) {
@@ -335,17 +338,13 @@ this.repaint_all = function() {
 }.bind(this);
 
 this.win = function() {
-/*
-	core.setContext("win");
 	var hero = this.map.hero;
-	var logo = large_font.render(hero.dead? "YOU WON!": "PURE WIN!!111", 255, 255, 255);
-
-	var score = new ui.Text(small_font, {
-		color: [255, 255, 255],
-		text: "Got $" + hero.cash + "\nBeing dead " + hero.dead + " times.\n\nProgrammed by:\nVladimir Menshakov\n&\nVladimir Zhuravlev\n\n©2010-2013"
-	});
-*/
-}
+	var text = hero.dead? "YOU WON!": "PURE WIN!!111";
+	text += "\n\nGot $" + hero.cash + "\nBeing dead " + hero.dead + " times.\n\nProgrammed by:\nVladimir Menshakov\n&\nVladimir Zhuravlev\n\n©2010-2013"
+	this.winPanel.text = text;
+	this.winPanel.visible = true;
+	this.winPanel.focus = true;
+}.bind(this);
 
 var intro_text = "You've entered the <s>dungeon</s> cellar to fix all broken pipes and vents.";
 this.intro = function() {
