@@ -30,6 +30,14 @@ Application {
 		delegate: CellDelegate { }
 	}
 
+	Image {
+		id: throwingObject;
+		width: 16;
+		height: 16;
+		source: "apps/fontanero/t/7.png";
+		visible: false;
+	}
+
 	SmallText {
 		id: logText;
 		anchors.left: parent.left;
@@ -57,10 +65,6 @@ Application {
 		id: fontaneroInput;
 
 		onKeyPressed: {
-			if (key == "Back") {
-				visible = false;
-				return true;
-			}
 			ui.on_key(key.toLowerCase());
 			return true;
 		}
@@ -106,6 +110,52 @@ Application {
 		}
 	}
 
+	Rectangle {
+		id: winPanel;
+		visible: false;
+
+		property string text;
+		property int tile: 4;
+
+		anchors.fill: mainWindow;
+		color: "#333c";
+
+		BigText {
+			id: winText;
+			anchors.centerIn: parent;
+			text: parent.text;
+		}
+
+		Image {
+			id: winPanelImage;
+			anchors.right: winText.left;
+			anchors.verticalCenter: winText.verticalCenter;
+			anchors.margins: 64;
+
+			width: 128;
+			height: 128;
+			fillMode: Stretch;
+			source: "apps/fontanero/t/" + parent.tile + ".png";
+		}
+		Timer {
+			running: winPanel.visible;
+			repeat: true;
+			interval: 2000;
+			onTriggered: {
+				winPanel.tile = (winPanel.tile + 1) % 24
+				if (winPanel.tile < 4)
+					winPanel.tile = 4;
+			}
+		}
+		onKeyPressed: {
+			if (key == "Back" || key == "Select") {
+				winPanel.visible = false;
+				fontanero.startGame();
+				return true;
+			}
+		}
+	}
+
 	gameOver: {
 		log("game over");
 		restartDialog.visible = true;
@@ -133,6 +183,7 @@ Application {
 		ui.logText = logText;
 		ui.overlayPanel = overlayPanel;
 		ui.cellsModel = cellsModel;
+		ui.winPanel = winPanel;
 		ui.gameOver = this.gameOver;
 		log("Fontanero HD. Adventure for Gold and Glory. v4 argile qml");
 	}
