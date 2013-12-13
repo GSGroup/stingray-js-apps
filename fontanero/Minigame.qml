@@ -78,7 +78,7 @@ Minigame : Item {
 		onTriggered: {
 			var sub = 1 + Math.floor(Math.random() * minigameItem.bonus / 100);
 			var r = minigameItem.bonus - sub;
-			minigameItem.bonus = r > 0? r: 0;
+			minigameItem.bonus = r > 1? r: 1;
 		}
 	}
 
