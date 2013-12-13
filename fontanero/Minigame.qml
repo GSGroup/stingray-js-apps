@@ -95,7 +95,7 @@ Minigame : Item {
 			var idx = Math.floor(n * n * Math.random());
 			this.toggle(idx);
 		}
-		//minigameView.currentIndex = n * n / 2;//does not work, find out why
+		minigameView.currentIndex = n * n / 2;
 		bonusTimer.running = true;
 		this.visible = true;
 	}
