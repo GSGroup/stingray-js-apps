@@ -48,7 +48,7 @@ Minigame : Item {
 	function toggle(index) {
 		var n = this.size;
 		var x = index % n, y = Math.floor(index / n);
-		log("toggle index", index, x, y);
+		//log("toggle index", index, x, y);
 		for(var i = 0; i < n; ++i) {
 			var idx = n * y + i;
 			var row = minigameModel.get(idx);
