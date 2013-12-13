@@ -4,9 +4,8 @@ MinigameDelegate : Rectangle {
 	width: parent.cellWidth;
 	height: parent.cellHeight;
 	borderWidth: 5;
-	borderColor: focused? "#fff": "#222";
+	borderColor: activeFocus? "#fff": "#222";
 	color: model.fixed? "#0e0": "#e00";
-	focus: true;
 }
 
 Minigame : Item {
@@ -16,6 +15,7 @@ Minigame : Item {
 	property int bonus;
 
 	visible: false;
+	focus: true;
 
 	Rectangle {
 		anchors.fill: mainWindow;
@@ -98,6 +98,7 @@ Minigame : Item {
 		minigameView.currentIndex = n * n / 2;
 		bonusTimer.running = true;
 		this.visible = true;
+		minigameView.focus = true;
 	}
 
 	onKeyPressed: {
