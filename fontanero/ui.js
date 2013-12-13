@@ -35,7 +35,12 @@ var combine = false;
 var first_object = null;
 var throw_obj = false;
 
-this.run_mini_game = function() { log("run-mini-game: STUB, no bonus"); }
+this.run_mini_game = function(size, level_cap) {
+	log("run_mini_game", size, level_cap);
+	this.minigame.size = size;
+	this.minigame.bonus = Math.floor(level_cap * (1 + Math.random()) * 5);
+	this.minigame.start();
+}
 
 this.animate_throw = function(x, y, obj, actor, message) {
 	var c = this.map.hero.cell, dx = x - c.x, dy = y - c.y;
