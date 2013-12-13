@@ -38,7 +38,7 @@ var throw_obj = false;
 this.run_mini_game = function(size, level_cap) {
 	log("run_mini_game", size, level_cap);
 	this.minigame.size = size;
-	this.minigame.bonus = Math.floor(level_cap * (1 + Math.random()) * 5);
+	this.minigame.bonus = Math.floor(level_cap * (1 + Math.random()) * 1);
 	this.minigame.start();
 }
 
