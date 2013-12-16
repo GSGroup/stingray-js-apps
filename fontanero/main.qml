@@ -88,6 +88,9 @@ Application {
 		id: fontaneroInput;
 
 		onKeyPressed: {
+			if (!fontanero.visible)
+				return false;
+
 			if (key != "Back") {
 				ui.on_key(key.toLowerCase());
 				return true;
