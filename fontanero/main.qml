@@ -2,6 +2,7 @@ import "ui.js" as ui
 import "game.js" as game
 import controls.Button
 import controls.Text
+import Minigame
 
 CellDelegate : Image {
 	width: 16;
@@ -139,6 +140,18 @@ Application {
 			}
 		}
 	}
+
+	Minigame {
+		id: minigame;
+		anchors.fill: parent;
+		onVisibleChanged: {
+			if (!visible) {
+				ui.map.hero.add_cash(this.bonus);
+				this.bonus = 0;
+			}
+		}
+	}
+
 	Rectangle {
 		id: hintPanel;
 		visible: false;
@@ -232,6 +245,7 @@ Application {
 		ui.hintPanel = hintPanel;
 		ui.throwingObject = throwingObject
 		ui.throwingObjectTimer = throwingObjectTimer;
+		ui.minigame = minigame;
 		log("Fontanero HD. Adventure for Gold and Glory. v4 argile qml");
 	}
 
