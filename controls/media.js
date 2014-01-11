@@ -36,6 +36,14 @@ Player.prototype = {
 		this.session.reset();
 	},
 
+	seek: function(msDelta) {
+		if (!this.session)
+			return;
+
+		log("seeking to " + msDelta + "ms from current pos");
+		this.session.Seek(Math.max(0, this.session.GetProgress() + msDelta));
+	},
+
 	getProgress: function() {
 		if (this.session)
 			return this.session.GetProgress();
