@@ -47,8 +47,8 @@ this.animate_throw = function(x, y, obj, actor, message) {
 	var distance = Math.max(Math.abs(dx), Math.abs(dy));
 	var map = this.map;
 
-	throwingObject.x = x * 16;
-	throwingObject.y = y * 16;
+	throwingObject.x = x * 32;
+	throwingObject.y = y * 32;
 	throwingObject.visible = true;
 
 	var ui = this;
@@ -254,8 +254,8 @@ function on_key(key) {
 		} else
 		{
 			h.move(dx, dy);
-			throwingObject.x = h.cell.x * 16;
-			throwingObject.y = h.cell.y * 16;
+			throwingObject.x = h.cell.x * 32;
+			throwingObject.y = h.cell.y * 32;
 		}
 		used = true;
 		throw_obj = false;

@@ -5,8 +5,8 @@ import controls.Text
 import Minigame
 
 CellDelegate : Image {
-	width: 16;
-	height: 16;
+	width: 32;
+	height: 32;
 	source: model.tile >= 0? "apps/fontanero/t/" + model.tile + ".png": "";
 	visible: model.tile >= 0;
 }
@@ -25,8 +25,8 @@ Application {
 	GridView {
 		id: cells;
 		model: cellsModel;
-		cellWidth: 16;
-		cellHeight: 16;
+		cellWidth: 32;
+		cellHeight: 32;
 		anchors.centerIn: parent;
 		delegate: CellDelegate { }
 	}
@@ -35,8 +35,8 @@ Application {
 		anchors.fill: cells;
 		Image {
 			id: throwingObject;
-			width: 16;
-			height: 16;
+			width: 32;
+			height: 32;
 			source: "apps/fontanero/t/7.png";
 			visible: false;
 			Behavior on x {
