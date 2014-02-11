@@ -1,0 +1,5 @@
+{
+	"id": "sudoku",
+	"display": { "name": "Sudoku Game", "icon": "sudoku.png" },
+	"purpose": "application"
+}
