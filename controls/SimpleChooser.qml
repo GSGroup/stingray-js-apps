@@ -93,7 +93,7 @@ SimpleChooser : Item {
 
 	function append(text) {
 		log("appending to chooser " + text);
-		listView.model.append({"text": text});
+		this.listView.model.append({"text": text});
 	}
 	
 	Behavior on opacity {
