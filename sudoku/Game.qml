@@ -5,8 +5,7 @@ Cell : Rectangle {
 	color: "#008888";
 	borderColor: "#432100";
 	borderWidth: 1;
-
-
+	text: "T";
 }
 
 Game :  Grid {
@@ -29,7 +28,7 @@ Game :  Grid {
 
 	Rectangle {
 		id:cursor;
-		color: "#008888";
+		color: "#00000000";//"#008888";
 		borderWidth: 5;
 		borderColor: "#fff";
 		radius: 5;
