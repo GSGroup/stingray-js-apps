@@ -5,6 +5,8 @@ GameMenu : Item {
         id: mainMenu;
 		focus: true;
 
+		event playEvent();
+		event helpEvent();
         SimpleChooser {
                 id: difficultyChooser;
                 anchors.left: parent.left;
@@ -52,7 +54,7 @@ GameMenu : Item {
 			
 			onSelectPressed: {
 				log("playButton PRESSED!");
-			
+				parent.playEvent();
 			}
 		}
 
@@ -77,6 +79,7 @@ GameMenu : Item {
 			
 			onSelectPressed: {
 				log("helpButton PRESSED!");
+				parent.helpEvent();
 			
 			}
 		}
@@ -88,13 +91,13 @@ GameMenu : Item {
                 log("loading players..");
                 this.players = data ["players"];
                 for (var i = 0; i < this.players.length; ++i){
-                        playerChooser.append(this.players[i]);
+                        mainMenu.playerChooser.append(this.players[i]);
                 }
 
                 log("loading difficulty levels..");
 				this.difflevels = data ["difflevels"];
 				for (var  i= 0; i< this.difflevels.length; ++i ){
-					    difficultyChooser.append(this.difflevels[i]);
+					    mainMenu.difficultyChooser.append(this.difflevels[i]);
 				}
         }
 }
