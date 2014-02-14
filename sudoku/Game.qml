@@ -47,8 +47,8 @@ Game :  Grid {
 			log("y changed");
 		}
 
-		Behavior on x { animation: Animation { duration: 100; } }
-		Behavior on y { animation: Animation { duration: 100; } }
+//		Behavior on x { animation: Animation { duration: 100; } }
+//		Behavior on y { animation: Animation { duration: 100; } }
 	
 	}
 	onDownPressed: {
