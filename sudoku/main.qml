@@ -1,3 +1,4 @@
+import "generator.js" as gen
 import controls.Text
 import controls.Button
 import controls.FocusablePanel
@@ -79,28 +80,13 @@ SudokuModel: ListModel {
 	
 
 	onCompleted: {
-	
-		var game1 = [8, 5, 4, 1, 3, 6, 9, 7, 2,
-					 7, 9, 3, 8, 4, 2, 6, 5, 1,
-					 6, 2, 1, 5, 9, 7, 8, 4, 3,
-					 2, 3, 5, 7, 6, 8, 1, 9, 4,
-					 1, 8, 7, 4, 2, 9, 3, 6, 5,
-					 9, 4, 6, 3, 1, 5, 2, 8, 7,
-					 4, 1, 9, 6, 7, 3, 5, 2, 8,
-					 5, 7, 2, 9, 8, 1, 4, 3, 6,
-					 3, 6, 8, 2, 5, 4, 7, 1, 9 ];
-		var game1open = [1, 0, 1, 0, 1, 1, 1, 1, 1,
-						 0, 0, 1, 0, 0, 1, 0, 0, 1,
-						 1, 0, 1, 0, 1, 0, 0, 0, 0,
-						 0, 1, 0, 1, 1, 0, 0, 0, 0,
-						 0, 1, 1, 0, 0, 0, 1, 1, 0,
-						 0, 0, 0, 0, 1, 1, 0, 1, 0,
-						 0, 0, 0, 0, 1, 0, 1, 0, 1,
-						 1, 0, 0, 1, 0, 0, 1, 0, 0,
-						 1, 1, 1, 1, 1, 0, 1, 0, 1 ];
-		
-		for (var i = 0; i < 81; ++i) {
-			this.append({value: game1[i], opened: game1open[i]});
+
+		var sudokuMatrix = gen.getMatrix();
+		var hiddenMatrix = gen.getHiddenMatrix();
+
+		for (var i = 0; i < 9; ++i) {
+			for (var j = 0; j < 9; ++j)
+				this.append({value: sudokuMatrix[i][j], opened: hiddenMatrix[i][j]});
 		}
 	}
 }
