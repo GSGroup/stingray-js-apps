@@ -23,7 +23,7 @@ Application {
 
 			anchors.left: parent.left;
 			anchors.right: parent.right;
-//			anchors.topMargin: 50;
+			anchors.topMargin: 10;
 			anchors.leftMargin: control.width + control.anchors.leftMargin;
 			anchors.rightMargin: control.width + control.anchors.leftMargin;
 			anchors.horizontalCenter: parent.horizontalCenter;
