@@ -13,15 +13,16 @@ CellDelegate : Rectangle {
 		anchors.margins: 5;
 		anchors.bottom: parent.bottom;
 		horizontalAlignment: Text.AlignHCenter;
-		color: stationDelegateItem.activeFocus ? "#fff" : "#bbb";
-		text: "T";//model.name;
-
-		Behavior on color {
-			animation: Animation {
-				duration: 300;
-			}
-		}
+		text: parent.activeFocus?model.trueValue:"";
 	}
+}
+
+ListModel {
+	id: gameFieldModel;
+	property int trueValue: 0;
+	property int choosedValue: 0;
+	property bool isResolved: false;
+	
 }
 
 
@@ -30,20 +31,17 @@ Game: GridView {
 	focus: true;
 	cellWidth: width/9;
 	cellHeight: height/9;
-
-	model: ListModel{
-	ListElement {} ListElement {} ListElement {} ListElement {}	ListElement {} ListElement {} ListElement {} ListElement {} ListElement {} 
-	ListElement {} ListElement {} ListElement {} ListElement {} ListElement {} ListElement {} ListElement {} ListElement {} ListElement {} 
-	ListElement {} ListElement {} ListElement {} ListElement {} ListElement {} ListElement {} ListElement {} ListElement {} ListElement {} 
-	ListElement {} ListElement {} ListElement {} ListElement {}	ListElement {} ListElement {} ListElement {} ListElement {} ListElement {} 
-	ListElement {} ListElement {} ListElement {} ListElement {} ListElement {} ListElement {} ListElement {} ListElement {} ListElement {} 
-	ListElement {} ListElement {} ListElement {} ListElement {} ListElement {} ListElement {} ListElement {} ListElement {} ListElement {} 
-	ListElement {} ListElement {} ListElement {} ListElement {} ListElement {} ListElement {} ListElement {} ListElement {} ListElement {} 
-	ListElement {} ListElement {} ListElement {} ListElement {} ListElement {} ListElement {} ListElement {} ListElement {} ListElement {} 
-	ListElement {} ListElement {} ListElement {} ListElement {} ListElement {} ListElement {} ListElement {} ListElement {} ListElement {} 
-	}
+	model: gameFieldModel;
 
 	delegate: CellDelegate{} 
+
+	function generate(){
+		for(var i = 0; i < 9*9; ++i){
+			gameView.model.append({'trueValue': Math.floor(Math.random()*5)});
+		}
+	
+	}
+
 
 }
 
