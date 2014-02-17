@@ -36,6 +36,7 @@ Application {
 				onPlayEvent: {
 					log("onPlayEvent");
 					pageStack.currentIndex = 1;
+					game.generate();
 					game.setFocus();
 				}
 
@@ -84,4 +85,4 @@ Application {
 			            visible: parent.visible;
 		        }
 	    }
-
+}
