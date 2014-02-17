@@ -36,14 +36,12 @@ Application {
 				onPlayEvent: {
 					log("onPlayEvent");
 					pageStack.currentIndex = 1;
-					game.generate();
 					game.setFocus();
 				}
 
 				onHelpEvent: {
 					log("onHelpEvent");
 				}
-				
         	}
 
 			Game {
@@ -51,6 +49,7 @@ Application {
 				height: parent.width/1.5;
 				width: parent.width/1.5;
 				anchors.left: control.img.right;
+				anchors.leftMargin: 50;
 				anchors.top: parent.top;
 				onBackPressed: {
 					pageStack.currentIndex = 0;
@@ -67,7 +66,6 @@ Application {
 			            gameMenu.load(JSON.parse(this.data));
 		        }
 	    }
-
         
 	    SmallText {
 		        id: control;
