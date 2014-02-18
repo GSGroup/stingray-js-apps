@@ -1,10 +1,11 @@
 import controls.Text
+import "generator.js" as generator
 
 CellDelegate : Rectangle {
 	id: cellItemDelegate;
 	width: Math.floor(parent.width/9);
 	height: Math.floor(parent.width/9);
-	color: focused ? "#008888" : "#222200";
+	color: focused ? "#008888" : (model.warnColor?"#555500":"#222200");
 	borderColor: "#432100";
 	borderWidth: 1;
 	z: focused ? 50 : 0;
@@ -16,22 +17,31 @@ CellDelegate : Rectangle {
 		anchors.bottom: parent.bottom;
 		horizontalAlignment: Text.AlignHCenter;
 		verticalAlignment: Text.AlignVCenter;
-		color: (model.isHidden==0) ? "#770000": "#FFFFFF";
-		text: (model.isHidden==0) ? model.realValue : model.userChoosedValue;
+		color: model.isBase? "#770000": "#FFFFFF";
+		text:  model.shownValue;
 	}
 
 }
 
 GameFieldModel: ListModel {
 	id: gameFieldModel;
-	property int realValue;
-	property string userChoosedValue;
-	property int isHidden;
-	
+	property int shownValue;
+	property bool isBase;
+	property bool warnColor;
+
 	onCompleted: {
+		var svMatrix = generator.getMatrix();
+		var ibMatrix = generator.getHiddenMatrix();
+		log(svMatrix);
+		log("#################################");
+		log(ibMatrix)
 		for(var i = 0; i < 9; ++i){
 			for(var j = 0; j < 9; ++j){
-				this.append({'realValue': Math.floor(Math.random()*5),  'isHidden' : Math.floor(Math.random()*2), 'userChoosedValue' : ""});
+//				var tmpBase = (Math.floor(Math.random()*2)==0)?false:true;
+//				this.append({'shownValue':(tmpBase?Math.floor(Math.random()*9)+1:""),'isBase' : ibMatrix[i][j],'warnColor' : false});
+				var tmpBase = ibMatrix[i][j];	
+				this.append({'shownValue': (tmpBase?svMatrix[i][j]:""),'isBase' : tmpBase,'warnColor' : false});
+
 			}
 		}
 	}
@@ -71,9 +81,9 @@ Game: Rectangle{
 
 		onSelectPressed:{
 			this.visible = false;
-			log("ci = "+gameView.currentIndex);
-			gameView.model.setProperty(gameView.currentIndex, 'userChoosedValue', (currentIndex<9)?currentIndex + 1 : "");
-			gameItem.stateCheck();
+			gameView.model.setProperty(gameView.currentIndex, 'shownValue', (currentIndex<9)?currentIndex+1 : "");
+			if(currentIndex<9)
+				gameItem.stateCheck();
 		}
 	}
 
@@ -89,7 +99,7 @@ Game: Rectangle{
 		delegate: CellDelegate{} 
 
 		onSelectPressed: {
-			if(gameView.model.get(gameView.currentIndex)['isHidden']==1){
+			if(!gameView.model.get(gameView.currentIndex)['isBase']){
 				digitChooser.visible=true;
 				digitChooser.setFocus();
 			}
@@ -98,6 +108,104 @@ Game: Rectangle{
 
 	function stateCheck() {
 		log("STATE CHECK");
+		log("gridview current index = "+gameView.currentIndex);
+		if(this.checkRow(gameView.currentIndex)){
+			this.highlightRow(true,gameView.currentIndex);
+		}
+		if(this.checkColumn(gameView.currentIndex)){
+			this.highlightColumn(true,gameView.currentIndex);
+		}
+		if(this.checkSquare(gameView.currentIndex)){
+			this.highlightSquare(true,gameView.currentIndex);
+		}
 	}
+
+	function fullStateCheck()
+	{
+		for(var i=0; i<9; ++i){
+			this.highlightRow(this.checkRow(i*9),i*9);
+			this.highlightColumn(this.checkColumn(i),i);
+			this.highlightSquare(this.checkSquare(i),);//not forget!!!
+		}
+	}
+
+	function checkRow(index) {
+		log("check row")
+		this.row = Math.floor(index/9);
+		this.tmpArray=[];
+		for(var i = this.row*9; i<this.row*9+9; ++i){
+			this.tmpV = gameView.model.get(i)['shownValue'];
+			if(this.tmpArray.indexOf(this.tmpV)==-1){
+				this.tmpArray.push(this.tmpV);
+			}
+			else if (this.tmpV!=""){
+				return true;
+			}
+		}
+		log("false "+this.tmpArray);
+		return false;
+	}
+	
+	function checkColumn(index) {
+		log("check column")
+		this.column = index%9;
+		this.tmpArray=[];
+		for(var i = this.column; i < 9*9; i+=9){
+			this.tmpV = gameView.model.get(i)['shownValue'];
+			if(this.tmpArray.indexOf(this.tmpV)==-1){
+				this.tmpArray.push(this.tmpV);
+			}
+			else if (this.tmpV!=""){
+				return true;
+			}
+		}
+		log("false "+this.tmpArray);
+		return false;
+	}
+
+	function checkSquare(index) {
+		log("check square")
+		this.hSector = Math.floor((index % 9)/3);
+		this.vSector = Math.floor(Math.floor(index/9)/3);
+		this.tmpArray = [];
+		for(var j = this.vSector*3*9; j<this.vSector*3*9+3*9; j+=9){
+			for(var i = this.hSector*3; i <this.hSector*3+3 ; ++i){
+				this.tmpV=gameView.model.get(i+j)['shownValue'];
+				if(this.tmpArray.indexOf(this.tmpV)==-1 ){
+					this.tmpArray.push(this.tmpV);
+				}
+				else if (this.tmpV!=""){
+					return true;
+				}
+			}
+		}
+		log("false "+this.tmpArray);
+		return false;
+	}
+
+	function highlightRow(isHL, index) {
+		this.row = Math.floor(index/9);
+		for(var i =this.row*9; i<this.row*9+9; ++i){
+			gameView.model.setProperty(i,'warnColor', isHL);
+		}
+	}
+
+	function highlightColumn(isHL, index) {
+		this.column = index%9;
+		for(var i = this.column; i < 9*9; i+=9){
+			gameView.model.setProperty(i,'warnColor', isHL);
+		}
+	}
+
+	function highlightSquare(isHL,index) {
+		this.hSector = Math.floor((index % 9)/3);
+		this.vSector = Math.floor(Math.floor(index/9)/3);
+		for(var j = this.vSector*3*9; j<this.vSector*3*9+3*9; j+=9){
+			for(var i = this.hSector*3; i <this.hSector*3+3 ; ++i){
+				gameView.model.setProperty(i+j,'warnColor',isHL);
+			}
+		}
+	}
+
 
 }
