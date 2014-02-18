@@ -11,15 +11,15 @@ var sudokuMatrix = [
 ];
 
 var hiddenMatrix = [
-		[1, 1, 1, 1, 1, 1, 1, 1, 1],
-		[1, 1, 1, 1, 1, 1, 1, 1, 1],
-		[1, 1, 1, 1, 1, 1, 1, 1, 1],
-		[1, 1, 1, 1, 1, 1, 1, 1, 1],
-		[1, 1, 1, 1, 1, 1, 1, 1, 1],
-		[1, 1, 1, 1, 1, 1, 1, 1, 1],
-		[1, 1, 1, 1, 1, 1, 1, 1, 1],
-		[1, 1, 1, 1, 1, 1, 1, 1, 1],
-		[1, 1, 1, 1, 1, 1, 1, 1, 1]
+	[true, true, true, true, true, true, true, true, true],
+	[true, true, true, true, true, true, true, true, true],
+	[true, true, true, true, true, true, true, true, true],
+	[true, true, true, true, true, true, true, true, true],
+	[true, true, true, true, true, true, true, true, true],
+	[true, true, true, true, true, true, true, true, true],
+	[true, true, true, true, true, true, true, true, true],
+	[true, true, true, true, true, true, true, true, true],
+	[true, true, true, true, true, true, true, true, true]
 ];
 
 this.getMatrix = function () {
