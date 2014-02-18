@@ -17,21 +17,21 @@ CellDelegate : Rectangle {
 		horizontalAlignment: Text.AlignHCenter;
 		verticalAlignment: Text.AlignVCenter;
 		color: (model.isHidden==0) ? "#770000": "#FFFFFF";
-		text: (model.isHidden==0) ? model.trueValue : model.userChoosedValue;
+		text: (model.isHidden==0) ? model.realValue : model.userChoosedValue;
 	}
 
 }
 
 GameFieldModel: ListModel {
 	id: gameFieldModel;
-	property int trueValue;
+	property int realValue;
 	property string userChoosedValue;
 	property int isHidden;
 	
 	onCompleted: {
 		for(var i = 0; i < 9; ++i){
 			for(var j = 0; j < 9; ++j){
-				this.append({'trueValue': Math.floor(Math.random()*5),  'isHidden' : Math.floor(Math.random()*2), 'userChoosedValue' : ""});
+				this.append({'realValue': Math.floor(Math.random()*5),  'isHidden' : Math.floor(Math.random()*2), 'userChoosedValue' : ""});
 			}
 		}
 	}
@@ -41,10 +41,12 @@ DigitChooseModel : ListModel {
 	onCompleted: {
 		for(var i=1; i<10; ++i)
 			this.append({digit : i});
+		this.append({digit : 'x'});
 	}
 }
 
 Game: Rectangle{
+	id: gameItem;
 
 	ListView {
 		id: digitChooser;
@@ -70,8 +72,8 @@ Game: Rectangle{
 		onSelectPressed:{
 			this.visible = false;
 			log("ci = "+gameView.currentIndex);
-			gameView.model.setProperty(gameView.currentIndex, 'userChoosedValue', currentIndex + 1);
-
+			gameView.model.setProperty(gameView.currentIndex, 'userChoosedValue', (currentIndex<9)?currentIndex + 1 : "");
+			gameItem.stateCheck();
 		}
 	}
 
@@ -87,9 +89,15 @@ Game: Rectangle{
 		delegate: CellDelegate{} 
 
 		onSelectPressed: {
-			digitChooser.visible=true;
-			digitChooser.setFocus();
-		
+			if(gameView.model.get(gameView.currentIndex)['isHidden']==1){
+				digitChooser.visible=true;
+				digitChooser.setFocus();
+			}
 		}
 	}
+
+	function stateCheck() {
+		log("STATE CHECK");
+	}
+
 }
