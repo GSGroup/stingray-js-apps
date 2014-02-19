@@ -51,15 +51,53 @@ Application {
 				anchors.left: control.img.right;
 				anchors.leftMargin: 50;
 				anchors.top: parent.top;
+
 				onBackPressed: {
 					pageStack.currentIndex = 0;
 					gameMenu.setFocus();
 				}
+				
+				onKeyPressed:
+				{
+					if(key=="A")
+					{
+						game.gameOverEvent("test");
+					}
+				}
+
+				onGameOverEvent: {
+					log("GAME OVER EVENT "+result);
+					gameOverBox.subText.text=result;
+					pageStack.currentIndex = 2;
+					gameOverBox.setFocus();
+				}
 			}
+
+			 Item{
+				id: gameOverBox;
+				anchors.verticalCenter: parent.anchors.verticalCenter;
+				anchors.horizontalCenter: parent.anchors.horizontalCenter;
+				height:150;
+				width:350;
+				focus: true;
+				BigText{
+					id: subText;
+					anchors.topMargin:20;
+					anchors.verticalCenter: gameOverBox.anchors.verticalCenter;
+					anchors.horizontalCenter: gameOverBox.anchors.horizontalCenter;
+					
+					text:"";
+				}
+
+				onBackPressed: {
+					pageStack.currentIndex = 0;
+					gameMenu.setFocus();
+				}
+			}	
 		}
 
 	    Resource {
-		        id: playersResource;
+		        id: gameResource;
 		        url: "apps/sudoku/gameData.json";
 
 		        onDataChanged: {
