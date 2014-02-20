@@ -71,6 +71,10 @@ Application {
 					pageStack.currentIndex = 2;
 					gameOverBox.setFocus();
 				}
+
+				onFocusChanged: {
+					log("ACTIVE CHANGED!");
+				}
 			}
 
 			 Item{
@@ -90,8 +94,8 @@ Application {
 				}
 
 				onBackPressed: {
-					pageStack.currentIndex = 0;
-					gameMenu.setFocus();
+					pageStack.currentIndex = 1;
+					game.setFocus();
 				}
 			}	
 		}

@@ -99,11 +99,11 @@ Game: Rectangle{
 			if(!gameItem.timeIndicator.timer1.running) gameItem.timeIndicator.timer1.start();
 			this.visible = false;
 			gameView.model.setProperty(gameView.currentIndex, 'shownValue', (currentIndex<9)?currentIndex+1 : "");
-			var hasErrors = gameItem.fullStateCheck();
+			 			
 			if(gameItem.isFilled()){
 				gameItem.timeIndicator.timer1.stop();
 				var gameOverText = "YOU ";
-				(!hasErrors)?(gameOverText+="WIN!"):(gameOverText+="LOSE");
+				(!gameItem.fullStateCheck())?(gameOverText+="WIN!"):(gameOverText+="LOSE");
 				gameItem.gameOverEvent(gameOverText);
 			}
 		}
@@ -129,46 +129,11 @@ Game: Rectangle{
 		}
 	}
 
-
-
-/*
-	function stateCheck() {
-		//log("STATE CHECK");
-		var checkBool = this.checkSquare(gameView.currentIndex) || this.checkRow(gameView.currentIndex) || this.checkColumn(gameView.currentIndex);
-		gameView.model.setProperty(gameView.currentIndex,'warnColor',checkBool);
-	}
-
-	function isSolved()	{
-		for(var i=0;i<gameView.model.count; ++i){
-			if(gameView.model.get(i)['shownValue']!=gameView.model.get(i)['actualValue'])
-				return false;
-		}
-		return true;
-	}
-*/
-
-
 	function isFilled(){
 		var ctr=0;
 		for(var i =0;i<9*9; ++i)
 			if(gameView.model.get(i)['shownValue']==="") ++ctr;
 		return ctr==0;
-	}
-
-	function stateCheck() {
-		//log("STATE CHECK");
-		for(var i=0;i<9;++i){
-			this.highlightColumn(this.checkColumn(i),i);
-		}
-		for(var i=0;i<9;++i){
-			this.highlightRow(this.checkRow(i*9),i*9);
-		}
-
-		for(var i=0; i<3; ++i){
-			for(var j=0;j<3; ++j){
-				this.highlightSquare(this.checkSquare(i*3+j*3*9),i*3+j*3*9);
-			}
-		}
 	}
 
 	function fullStateCheck()
@@ -180,17 +145,14 @@ Game: Rectangle{
 			for(var j=0;j<3; ++j){
 				tmpBool = this.checkSquare(i*3+j*3*9);
 				errors = errors || tmpBool;
-				//this.highlightSquare(tmpBool,i*3+j*3*9);
 			}
 		}
 
 		for(var i=0; i<9; ++i){
 			tmpBool = this.checkRow(i*9);
 			errors = errors || tmpBool;
-			//this.highlightRow(tmpBool,i*9);
 			tmpBool = this.checkColumn(i);
 			errors = errors || tmpBool;
-			//this.highlightColumn(tmpBool,i);
 		}
 
 		return errors;
