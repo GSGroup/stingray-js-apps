@@ -36,6 +36,10 @@ Application {
 				onPlayEvent: {
 					log("onPlayEvent");
 					pageStack.currentIndex = 1;
+					if(game.timeIndicator.text!="0:0"){
+						game.timeIndicator.timer.restart();}
+//					game.gameView.model.reset();
+//					game.gameView.fillModel();
 					game.setFocus();
 				}
 
@@ -53,8 +57,12 @@ Application {
 				anchors.top: parent.top;
 
 				onBackPressed: {
-					pageStack.currentIndex = 0;
-					gameMenu.setFocus();
+					pageStack.currentIndex = 2;
+					game.timeIndicator.timer.stop();
+					game.digitChooser.visible=false;
+					gameSubMenu.setFocus();
+					gameSubMenu.gameInfoText.text=game.timeIndicator.text;
+
 				}
 				
 				onKeyPressed:
@@ -66,15 +74,45 @@ Application {
 				}
 
 				onGameOverEvent: {
+					this.timeIndicator.timer.restart();
+					this.timeIndicator.timer.stop();
+					this.timeIndicator.text="0:0"
 					log("GAME OVER EVENT "+result);
 					gameOverBox.subText.text=result;
-					pageStack.currentIndex = 2;
+					pageStack.currentIndex = 3;
+					log("model count befor reset "+game.gameView.model.count)
+					game.gameView.model.reset();
+					game.gameView.fillModel();
+					log("model count after reset "+game.gameView.model.count)
 					gameOverBox.setFocus();
 				}
 
-				onFocusChanged: {
-					log("ACTIVE CHANGED!");
+			}
+
+			GameSubMenu {
+				id: gameSubMenu;
+				focus: true;
+				anchors.fill: parent;
+
+				onContinueEvent: {
+					log("CONTINUE EVENT DETECTED");
+					pageStack.currentIndex = 1;
+					game.setFocus();
+					game.timeIndicator.timer.start();
+
 				}
+
+				onMenuCallEvent: {
+					log("MENUCALL EVENT DETECTED");
+					pageStack.currentIndex = 0;
+					gameMenu.setFocus();
+
+				}
+
+				/*onBackPressed: {
+					pageStack.currentIndex = 1;
+					game.setFocus();
+				}*/
 			}
 
 			 Item{
@@ -94,8 +132,8 @@ Application {
 				}
 
 				onBackPressed: {
-					pageStack.currentIndex = 1;
-					game.setFocus();
+					pageStack.currentIndex = 0;
+					gameMenu.setFocus();
 				}
 			}	
 		}
