@@ -31,17 +31,7 @@ GameFieldModel: ListModel {
 	property bool warnColor;
 
 	onCompleted: {
-		var svMatrix = generator.getMatrix();
-		var ibMatrix = generator.getHiddenMatrix();
-		for(var i = 0; i < 9; ++i){
-			for(var j = 0; j < 9; ++j){
-//				var tmpBase = (Math.floor(Math.random()*2)==0)?false:true;
-//				this.append({'shownValue':(tmpBase?Math.floor(Math.random()*9)+1:""),'isBase' : ibMatrix[i][j],'warnColor' : false});
-				var tmpBase = ibMatrix[i][j];	
-				this.append({'actualValue' : svMatrix[i][j], 'shownValue': (tmpBase?svMatrix[i][j]:""),'isBase' : tmpBase,'warnColor' : false});
-
-			}
-		}
+		gameItem.gameView.fillModel();
 	}
 }
 
@@ -60,11 +50,12 @@ Game: Rectangle{
 		id:timeIndicator;
 		anchors.top: parent.top;
 		anchors.left: parent.right;
+		anchors.leftMargin: 20;
 		property int sec: 0;
 		text: Math.floor(sec/60)+":"+sec%60;
 
 		Timer {
-			id:timer1;
+			id:timer;
 			repeat: true;
 			interval: 1000;
 			onTriggered: {
@@ -96,12 +87,12 @@ Game: Rectangle{
 		}
 
 		onSelectPressed:{
-			if(!gameItem.timeIndicator.timer1.running) gameItem.timeIndicator.timer1.start();
+			if(!gameItem.timeIndicator.timer.running) gameItem.timeIndicator.timer.start();
 			this.visible = false;
 			gameView.model.setProperty(gameView.currentIndex, 'shownValue', (currentIndex<9)?currentIndex+1 : "");
 			 			
 			if(gameItem.isFilled()){
-				gameItem.timeIndicator.timer1.stop();
+				gameItem.timeIndicator.timer.stop();
 				var gameOverText = "YOU ";
 				(!gameItem.fullStateCheck())?(gameOverText+="WIN!"):(gameOverText+="LOSE");
 				gameItem.gameOverEvent(gameOverText);
@@ -127,7 +118,22 @@ Game: Rectangle{
 				digitChooser.setFocus();
 			}
 		}
+
+		function fillModel()
+		{
+			var svMatrix = generator.getMatrix();
+			var ibMatrix = generator.getHiddenMatrix();
+			for(var i = 0; i < 9; ++i){
+				for(var j = 0; j < 9; ++j){
+					var tmpBase = ibMatrix[i][j];	
+					this.model.append({'actualValue' : svMatrix[i][j], 'shownValue': (tmpBase?svMatrix[i][j]:""),'isBase' : tmpBase,'warnColor' : false});
+
+				}
+			}		
+		}
 	}
+
+
 
 	function isFilled(){
 		var ctr=0;

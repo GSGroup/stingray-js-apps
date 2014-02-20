@@ -102,3 +102,77 @@ GameMenu : Item {
         }
 }
 
+
+GameSubMenu : Item {
+	    id: subMenu;
+		focus: true;
+
+		event continueEvent();
+		event menuCallEvent();
+
+		BigText {
+			id: playerInfoText;
+			anchors.topMargin: 40;
+			anchors.horizontalCenter: parent.horizontalCenter;
+			text: "player"+""
+		}
+
+		BigText {
+			id: gameInfoText;
+			anchors.top: playerInfoText.bottom;
+			anchors.topMargin: 40;
+			anchors.horizontalCenter: parent.horizontalCenter;
+		 
+		}
+
+		Button {
+			id: continueButton;
+			anchors.top: gameInfoText.bottom;
+			anchors.horizontalCenter: parent.horizontalCenter;
+			anchors.topMargin: 10;
+			anchors.bottomMargin: 10;
+			width: 250;
+			height: 50;
+			font: bigFont;
+			text: "continue";
+			
+			onUpPressed: {
+			}
+
+			onDownPressed: {
+				menuCallButton.setFocus();
+			}
+			
+			onSelectPressed: {
+				log("CONTINUE PRESSED!");
+				parent.continueEvent();
+			}
+		}
+
+
+		Button {
+			id: menuCallButton;
+			anchors.top: continueButton.bottom;
+			anchors.horizontalCenter: parent.horizontalCenter;
+			width: 250;
+			height: 50;
+			anchors.topMargin: 10;
+			anchors.bottomMargin: 10;
+			font: bigFont;
+			text: "to main menu";
+			
+			onUpPressed: {
+				continueButton.setFocus();
+			}
+
+			onDownPressed: {
+			}
+			
+			onSelectPressed: {
+				log("helpButton PRESSED!");
+				parent.menuCallEvent();
+			
+			}
+		}
+
+}
