@@ -16,7 +16,7 @@ Application {
 		        text: "sudoku";
         }
 		
-		PageStack{
+		PageStack {
 			id: pageStack;
 
             anchors.top: titleText.bottom;
@@ -34,12 +34,15 @@ Application {
 				visible: parent.visible;
 				
 				onPlayEvent: {
-					log("onPlayEvent");
+					log("onPlayEvent player "+player+ " diff "+difficulty);
 					pageStack.currentIndex = 1;
-					if(game.timeIndicator.text!="0:0"){
-						game.timeIndicator.timer.restart();}
-//					game.gameView.model.reset();
-//					game.gameView.fillModel();
+					if (game.timeIndicator.text!="0:0"){
+						game.timeIndicator.timer.restart();
+//					    game.gameView.model.reset();
+//					     game.gameView.fillModel();
+
+                    }
+                    game.difficultyIndicator.text = difficulty;
 					game.setFocus();
 				}
 
@@ -76,7 +79,7 @@ Application {
 				onGameOverEvent: {
 					this.timeIndicator.timer.restart();
 					this.timeIndicator.timer.stop();
-					this.timeIndicator.text="0:0"
+					this.timeIndicator.text="0:0";
 					log("GAME OVER EVENT "+result);
 					gameOverBox.subText.text=result;
 					pageStack.currentIndex = 3;
@@ -109,28 +112,24 @@ Application {
 
 				}
 
-				/*onBackPressed: {
-					pageStack.currentIndex = 1;
-					game.setFocus();
-				}*/
 			}
 
-			 Item{
+			 Item {
 				id: gameOverBox;
 				anchors.verticalCenter: parent.anchors.verticalCenter;
 				anchors.horizontalCenter: parent.anchors.horizontalCenter;
 				height:150;
 				width:350;
 				focus: true;
-				BigText{
+
+				BigText {
 					id: subText;
 					anchors.topMargin:20;
 					anchors.verticalCenter: gameOverBox.anchors.verticalCenter;
 					anchors.horizontalCenter: gameOverBox.anchors.horizontalCenter;
-					
 					text:"";
 				}
-
+                     
 				onBackPressed: {
 					pageStack.currentIndex = 0;
 					gameMenu.setFocus();
@@ -163,4 +162,13 @@ Application {
 			            visible: parent.visible;
 		        }
 	    }
+        
+        SmallText {
+                id: gameStats;
+                anchors.verticalCenter: parent.verticalCenter;
+                anchors.right: parent.right;
+                anchors.rightMargin: 70;
+                color: "#7c83ad";
+                text: "GameStats";
+        }
 }

@@ -35,7 +35,7 @@ GameFieldModel: ListModel {
 	}
 }
 
-DigitChooseModel : ListModel {
+DigitChooseModel: ListModel {
 	onCompleted: {
 		for(var i=1; i<10; ++i)
 			this.append({digit : i});
@@ -46,7 +46,7 @@ DigitChooseModel : ListModel {
 Game: Rectangle{
 	id: gameItem;
 	event gameOverEvent(result);
-	BigText{
+	BigText {
 		id:timeIndicator;
 		anchors.top: parent.top;
 		anchors.left: parent.right;
@@ -64,6 +64,14 @@ Game: Rectangle{
 			}
 		}
 	}
+
+    BigText {
+            id: difficultyIndicator;
+            anchors.top: timeIndicator.bottom;
+            anchors.left: parent.right;
+            anchors.leftMargin: 20;
+            text: "difficulty";
+    }
 	
 	ListView {
 		id: digitChooser;
@@ -87,11 +95,11 @@ Game: Rectangle{
 		}
 
 		onSelectPressed:{
-			if(!gameItem.timeIndicator.timer.running) gameItem.timeIndicator.timer.start();
+			if (!gameItem.timeIndicator.timer.running) gameItem.timeIndicator.timer.start();
 			this.visible = false;
 			gameView.model.setProperty(gameView.currentIndex, 'shownValue', (currentIndex<9)?currentIndex+1 : "");
 			 			
-			if(gameItem.isFilled()){
+			if (gameItem.isFilled()){
 				gameItem.timeIndicator.timer.stop();
 				var gameOverText = "YOU ";
 				(!gameItem.fullStateCheck())?(gameOverText+="WIN!"):(gameOverText+="LOSE");
@@ -113,7 +121,7 @@ Game: Rectangle{
 
 		onSelectPressed: {
 
-			if(!gameView.model.get(gameView.currentIndex)['isBase']){
+			if (!gameView.model.get(gameView.currentIndex)['isBase']){
 				digitChooser.visible=true;
 				digitChooser.setFocus();
 			}
@@ -133,17 +141,14 @@ Game: Rectangle{
 		}
 	}
 
-
-
 	function isFilled(){
 		var ctr=0;
 		for(var i =0;i<9*9; ++i)
-			if(gameView.model.get(i)['shownValue']==="") ++ctr;
+			if (gameView.model.get(i)['shownValue']==="") ++ctr;
 		return ctr==0;
 	}
 
-	function fullStateCheck()
-	{
+	function fullStateCheck(){
 		var errors = false;
 		var tmpBool = false;
 		//log("full state check");
@@ -170,10 +175,10 @@ Game: Rectangle{
 		this.tmpArray=[];
 		for(var i = this.row*9; i<this.row*9+9; ++i){
 			this.tmpV = gameView.model.get(i)['shownValue'];
-			if(this.tmpArray.indexOf(this.tmpV)==-1){
+			if (this.tmpArray.indexOf(this.tmpV)==-1){
 				this.tmpArray.push(this.tmpV);
 			}
-			else if (this.tmpV!=""){
+			else if  (this.tmpV!=""){
 				return true;
 			}
 		}
@@ -187,10 +192,10 @@ Game: Rectangle{
 		this.tmpArray=[];
 		for(var i = this.column; i < 9*9; i+=9){
 			this.tmpV = gameView.model.get(i)['shownValue'];
-			if(this.tmpArray.indexOf(this.tmpV)==-1){
+			if (this.tmpArray.indexOf(this.tmpV)==-1){
 				this.tmpArray.push(this.tmpV);
 			}
-			else if (this.tmpV!=""){
+			else if  (this.tmpV!=""){
 				return true;
 			}
 		}
@@ -206,7 +211,7 @@ Game: Rectangle{
 		for(var j = this.vSector*3*9; j<this.vSector*3*9+3*9; j+=9){
 			for(var i = this.hSector*3; i <this.hSector*3+3 ; ++i){
 				this.tmpV=gameView.model.get(i+j)['shownValue'];
-				if(this.tmpArray.indexOf(this.tmpV)==-1 ){
+				if (this.tmpArray.indexOf(this.tmpV)==-1 ){
 					this.tmpArray.push(this.tmpV);
 				}
 				else if (this.tmpV!=""){
@@ -224,7 +229,7 @@ Game: Rectangle{
 		for(var i =this.row*9; i<this.row*9+9; ++i){
 			//log("i = "+i+" isHL = "+isHL);
 			gameView.model.get(i)['warnColor'];
-			gameView.model.setProperty(i,'warnColor', isHL==true); //|| gameView.model.get(i)['warnColor']);
+			gameView.model.setProperty(i,'warnColor', isHL==true); // 
 			//log("i = "+i+" isHL = "+isHL);
 
 		}
@@ -236,7 +241,7 @@ Game: Rectangle{
 		for(var i = this.column; i < 9*9; i+=9){
 			//log("i = "+i+" isHL = "+isHL);
 			gameView.model.get(i)['warnColor'];
-			gameView.model.setProperty(i,'warnColor', isHL==true); // || gameView.model.get(i)['warnColor']);
+			gameView.model.setProperty(i,'warnColor', isHL==true); //
 			//log("i = "+i+" isHL = "+isHL);
 
 /*			var row = gameView.model.get(i);

@@ -4,22 +4,9 @@ import controls.Button;
 GameMenu : Item {
         id: mainMenu;
 		focus: true;
-
-		event playEvent();
+		event playEvent(difficulty,player);
 		event helpEvent();
-        SimpleChooser {
-                id: difficultyChooser;
-                anchors.left: parent.left;
-                anchors.right: parent.right;
-                anchors.top: playerChooser.bottom ; 
 
-				onUpPressed: {
-					playerChooser.setFocus();
-				}
-				onDownPressed: {
-					playButton.setFocus();
-				}
-        }
 
         SimpleChooser {
                 id: playerChooser;
@@ -31,7 +18,25 @@ GameMenu : Item {
 					difficultyChooser.setFocus();
 				
 				}
+
+
         }
+
+        SimpleChooser {
+                id: difficultyChooser;
+                anchors.left: parent.left;
+                anchors.right: parent.right;
+                anchors.top: playerChooser.bottom ; 
+                
+				onUpPressed: {
+					playerChooser.setFocus();
+				}
+
+				onDownPressed: {
+					playButton.setFocus();
+				}
+        }
+
 
 		Button {
 			id: playButton;
@@ -54,7 +59,8 @@ GameMenu : Item {
 			
 			onSelectPressed: {
 				log("playButton PRESSED!");
-				parent.playEvent();
+				parent.playEvent(mainMenu.difficultyChooser.listView.model.get(difficultyChooser.currentIndex).text,
+                    mainMenu.playerChooser.listView.model.get(playerChooser.currentIndex).text);
 			}
 		}
 
@@ -174,5 +180,4 @@ GameSubMenu : Item {
 			
 			}
 		}
-
 }
