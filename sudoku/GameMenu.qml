@@ -1,5 +1,6 @@
 import controls.SimpleChooser;
 import controls.Button;
+import EditPlayerNamePanel;
 
 GameMenu : Item {
         id: mainMenu;
@@ -21,9 +22,14 @@ GameMenu : Item {
 				
 				}
                 
+                onSelectPressed: {
+                        pNameEdit.show();
+                }
                 
 
         }
+
+
 
         SimpleChooser {
                 id: difficultyChooser;
@@ -123,6 +129,20 @@ GameMenu : Item {
 			}
 		}
 
+        EditPlayerNamePanel {
+                id: pNameEdit;
+                anchors.top: playerChooser.bottom;
+                anchors.horizontalCenter: parent.horizontalCenter;
+                opacity: 0.01;
+
+                onAccepted: {
+                        log("set player name");
+                        mainMenu.playerChooser.listView.model.setProperty(mainMenu.playerChooser.currentIndex,'text',text);
+                        this.opacity = 0.01;
+                        mainMenu.playerChooser.setFocus();
+                }
+
+        }
 
 
         function load(data)
