@@ -4,6 +4,8 @@ import controls.Button;
 GameMenu : Item {
         id: mainMenu;
 		focus: true;
+
+        event newGameEvent(difficulty, player);
 		event playEvent(difficulty,player);
 		event helpEvent();
 
@@ -18,7 +20,8 @@ GameMenu : Item {
 					difficultyChooser.setFocus();
 				
 				}
-
+                
+                
 
         }
 
@@ -33,13 +36,14 @@ GameMenu : Item {
 				}
 
 				onDownPressed: {
-					playButton.setFocus();
+					newGameButton.setFocus();
 				}
         }
 
 
+
 		Button {
-			id: playButton;
+			id: newGameButton;
 			anchors.top: difficultyChooser.bottom;
 			anchors.horizontalCenter: parent.horizontalCenter;
 			anchors.topMargin: 10;
@@ -47,10 +51,39 @@ GameMenu : Item {
 			width: 250;
 			height: 50;
 			font: bigFont;
-			text: "Play";
+			text: "New Game";
 			
 			onUpPressed: {
 				difficultyChooser.setFocus();
+			}
+
+			onDownPressed: {
+				playButton.enabled?playButton.setFocus():helpButton.setFocus();
+			}
+			
+			onSelectPressed: {
+				log("newGameButton PRESSED!");
+				parent.newGameEvent(mainMenu.difficultyChooser.listView.model.get(difficultyChooser.currentIndex).text,
+                    mainMenu.playerChooser.listView.model.get(playerChooser.currentIndex).text);
+
+			}
+		}
+
+
+		Button {
+			id: playButton;
+			anchors.top: newGameButton.bottom;
+			anchors.horizontalCenter: parent.horizontalCenter;
+			anchors.topMargin: 10;
+			anchors.bottomMargin: 10;
+			width: 250;
+			height: 50;
+			font: bigFont;
+			text: "Play";
+            enabled: false;
+			
+			onUpPressed: {
+				newGameButton.setFocus();
 			}
 
 			onDownPressed: {
@@ -77,7 +110,7 @@ GameMenu : Item {
 			text: "Help";
 			
 			onUpPressed: {
-				playButton.setFocus();
+                playButton.enabled?playButton.setFocus():newGameButton.setFocus();
 			}
 
 			onDownPressed: {

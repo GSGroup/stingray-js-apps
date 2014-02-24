@@ -33,17 +33,24 @@ Application {
 				anchors.fill: parent;
 				visible: parent.visible;
 				
-				onPlayEvent: {
-					log("onPlayEvent player "+player+ " diff "+difficulty);
+                onNewGameEvent: {
+                    log("onNewGameEvent player = "+player+" difficulty "+difficulty);
 					pageStack.currentIndex = 1;
-					if (game.timeIndicator.text!="0:0"){
-						game.timeIndicator.timer.restart();
-//					    game.gameView.model.reset();
-//					     game.gameView.fillModel();
-
-                    }
+                    game.gameReset();
                     game.difficultyIndicator.text = difficulty;
 					game.setFocus();
+
+                }
+
+				onPlayEvent: {
+					log("onPlayEvent player "+player+ " diff "+difficulty);
+                    if(game.isIncomplete){
+					    pageStack.currentIndex = 1;
+
+		                game.timeIndicator.timer.start();
+
+					    game.setFocus();
+                    }
 				}
 
 				onHelpEvent: {
@@ -58,11 +65,12 @@ Application {
 				anchors.left: control.img.right;
 				anchors.leftMargin: 50;
 				anchors.top: parent.top;
+                isIncomplete: false;
 
 				onBackPressed: {
 					pageStack.currentIndex = 2;
-					game.timeIndicator.timer.stop();
-					game.digitChooser.visible=false;
+					this.timeIndicator.timer.stop();
+					this.digitChooser.visible=false;
 					gameSubMenu.setFocus();
 					gameSubMenu.gameInfoText.text=game.timeIndicator.text;
 
@@ -72,21 +80,17 @@ Application {
 				{
 					if(key=="A")
 					{
-						game.gameOverEvent("test");
+						this.gameOverEvent("test");
 					}
 				}
 
 				onGameOverEvent: {
-					this.timeIndicator.timer.restart();
-					this.timeIndicator.timer.stop();
-					this.timeIndicator.text="0:0";
 					log("GAME OVER EVENT "+result);
+				    this.gameReset();
+                    this.isIncomplete = false;
+                    gameMenu.playButton.enabled = false;
 					gameOverBox.subText.text=result;
 					pageStack.currentIndex = 3;
-					log("model count befor reset "+game.gameView.model.count)
-					game.gameView.model.reset();
-					game.gameView.fillModel();
-					log("model count after reset "+game.gameView.model.count)
 					gameOverBox.setFocus();
 				}
 
@@ -101,7 +105,7 @@ Application {
 					log("CONTINUE EVENT DETECTED");
 					pageStack.currentIndex = 1;
 					game.setFocus();
-					game.timeIndicator.timer.start();
+					if(game.timeIndicator.sec>0) game.timeIndicator.timer.start();
 
 				}
 
@@ -109,7 +113,8 @@ Application {
 					log("MENUCALL EVENT DETECTED");
 					pageStack.currentIndex = 0;
 					gameMenu.setFocus();
-
+                    game.isIncomplete = true;
+                    gameMenu.playButton.enabled = true;
 				}
 
 			}
