@@ -1,6 +1,6 @@
-import controls.SimpleChooser;
 import controls.Button;
 import EditPlayerNamePanel;
+import Chooser;
 
 GameMenu : Item {
         id: mainMenu;
@@ -10,8 +10,7 @@ GameMenu : Item {
 		event playEvent(difficulty,player);
 		event helpEvent();
 
-
-        SimpleChooser {
+        PlayerChooser {
                 id: playerChooser;
                 anchors.left: parent.left;
                 anchors.right: parent.right;
@@ -25,13 +24,9 @@ GameMenu : Item {
                 onSelectPressed: {
                         pNameEdit.show();
                 }
-                
-
         }
 
-
-
-        SimpleChooser {
+        DifficultyChooser {
                 id: difficultyChooser;
                 anchors.left: parent.left;
                 anchors.right: parent.right;
@@ -45,8 +40,6 @@ GameMenu : Item {
 					newGameButton.setFocus();
 				}
         }
-
-
 
 		Button {
 			id: newGameButton;
@@ -70,11 +63,9 @@ GameMenu : Item {
 			onSelectPressed: {
 				log("newGameButton PRESSED!");
 				parent.newGameEvent(mainMenu.difficultyChooser.listView.model.get(difficultyChooser.currentIndex).text,
-                    mainMenu.playerChooser.listView.model.get(playerChooser.currentIndex).text);
-
+                    mainMenu.playerChooser.listView.model.get(playerChooser.currentIndex).player);
 			}
 		}
-
 
 		Button {
 			id: playButton;
@@ -137,7 +128,7 @@ GameMenu : Item {
 
                 onAccepted: {
                         log("set player name");
-                        mainMenu.playerChooser.listView.model.setProperty(mainMenu.playerChooser.currentIndex,'text',text);
+                        mainMenu.playerChooser.listView.model.setProperty(mainMenu.playerChooser.currentIndex,'player',text);
                         this.opacity = 0.01;
                         mainMenu.playerChooser.setFocus();
                 }
@@ -148,7 +139,7 @@ GameMenu : Item {
         function load(data)
         {
                 log("loading players..");
-                this.players = data ["players"];
+                this.players = data ["stats"];
                 for (var i = 0; i < this.players.length; ++i){
                         mainMenu.playerChooser.append(this.players[i]);
                 }

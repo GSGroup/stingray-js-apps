@@ -2,6 +2,7 @@ import controls.Text;
 import controls.PageStack;
 import GameMenu;
 import Game;
+import GameStats;
 
 Application {
 	    id: sudokuApplication;
@@ -37,7 +38,9 @@ Application {
                     log("onNewGameEvent player = "+player+" difficulty "+difficulty);
 					pageStack.currentIndex = 1;
                     game.gameReset();
-                    game.difficultyIndicator.text = difficulty;
+                    game.difficulty = difficulty;
+                    game.player = player;
+                    log("GAME.PLAYER "+game.player+ " PLAYER "+player);
 					game.setFocus();
 
                 }
@@ -85,15 +88,17 @@ Application {
 				}
 
 				onGameOverEvent: {
-					log("GAME OVER EVENT "+result);
+//					log("GAME OVER EVENT "+result);
+//                    log("befor reset player "+this.player+ " time "+this.timeIndicator.sec);
+                    gameStats.addNrestat({player: this.player, time: this.timeIndicator.sec});
 				    this.gameReset();
                     this.isIncomplete = false;
                     gameMenu.playButton.enabled = false;
 					gameOverBox.subText.text=result;
 					pageStack.currentIndex = 3;
 					gameOverBox.setFocus();
-				}
 
+				}
 			}
 
 			GameSubMenu {
@@ -148,6 +153,7 @@ Application {
 
 		        onDataChanged: {
 			            gameMenu.load(JSON.parse(this.data));
+                        gameStats.load(JSON.parse(this.data));
 		        }
 	    }
         
@@ -168,12 +174,11 @@ Application {
 		        }
 	    }
         
-        SmallText {
-                id: gameStats;
-                anchors.verticalCenter: parent.verticalCenter;
-                anchors.right: parent.right;
-                anchors.rightMargin: 70;
-                color: "#7c83ad";
-                text: "GameStats";
+        GameStats {
+            id: gameStats;
+            anchors.top: gameMenu.difficultyChooser.bottom;
+            anchors.right: parent.right;
+            anchors.rightMargin: 145;
         }
+
 }
