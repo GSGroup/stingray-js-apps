@@ -8,7 +8,7 @@ CellDelegate : Rectangle {
 	color: focused ? "#008888" :(Math.floor((modelIndex%9)/3)+Math.floor(Math.floor(modelIndex/9)/3))%2==0?"#D2B42A":"#D2B46C" ;
 	borderColor: "#D3D3D3";
 	borderWidth: 1;
-	z: focused ? 50 : 0;
+
 	BigText {
 		id: subText;
 		anchors.left: parent.left;
@@ -30,9 +30,6 @@ GameFieldModel: ListModel {
 	property bool isBase;
 	property bool warnColor;
 
-	onCompleted: {
-		gameItem.gameView.fillModel();
-	}
 }
 
 DigitChooseModel: ListModel {
@@ -46,6 +43,10 @@ DigitChooseModel: ListModel {
 Game: Rectangle{
 	id: gameItem;
 	event gameOverEvent(result);
+    property bool isIncomplete: false;
+    property string player;
+    property string difficulty;
+
 	BigText {
 		id:timeIndicator;
 		anchors.top: parent.top;
@@ -70,7 +71,7 @@ Game: Rectangle{
             anchors.top: timeIndicator.bottom;
             anchors.left: parent.right;
             anchors.leftMargin: 20;
-            text: "difficulty";
+            text: parent.difficulty;
     }
 	
 	ListView {
@@ -95,7 +96,8 @@ Game: Rectangle{
 		}
 
 		onSelectPressed:{
-			if (!gameItem.timeIndicator.timer.running) gameItem.timeIndicator.timer.start();
+			if (!gameItem.timeIndicator.timer.running) {gameItem.timeIndicator.timer.start();}
+            else { log("TIMER IS RUNNING");}
 			this.visible = false;
 			gameView.model.setProperty(gameView.currentIndex, 'shownValue', (currentIndex<9)?currentIndex+1 : "");
 			 			
@@ -127,8 +129,7 @@ Game: Rectangle{
 			}
 		}
 
-		function fillModel()
-		{
+		function fillModel(){
 			var svMatrix = generator.getMatrix();
 			var ibMatrix = generator.getHiddenMatrix();
 			for(var i = 0; i < 9; ++i){
@@ -140,6 +141,14 @@ Game: Rectangle{
 			}		
 		}
 	}
+
+    function gameReset(){
+        this.timeIndicator.timer.restart();
+        this.timeIndicator.timer.stop();
+        this.timeIndicator.sec = 0;
+        this.gameView.model.reset();
+        this.gameView.fillModel();
+    }
 
 	function isFilled(){
 		var ctr=0;
