@@ -40,7 +40,7 @@ DigitChooseModel: ListModel {
 	}
 }
 
-Game: Rectangle{
+Game: Rectangle {
 	id: gameItem;
 	event gameOverEvent(result);
     property bool isIncomplete: false;
