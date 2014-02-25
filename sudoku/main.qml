@@ -13,7 +13,10 @@ Application {
 	    MainText {
 		        id: titleText;
 		        anchors.top: parent.top;
-		        anchors.horizontalCenter: parent.horizontalCenter;
+		        anchors.horizontalCenter: pageStack.game.horizontalCenter;
+                color: "#A4A4A4";
+                style: Text.Outline;
+                styleColor: "#AA2222";
 		        text: "sudoku";
         }
 		
@@ -21,18 +24,18 @@ Application {
 			id: pageStack;
 
             anchors.top: titleText.bottom;
-
-			anchors.left: parent.left;
-			anchors.right: parent.right;
+			anchors.horizontalCenter: parent.horizontalCenter;
+            width: 700;
+//			anchors.left: parent.left;
+//			anchors.right: parent.right;
 			anchors.topMargin: 10;
 			anchors.leftMargin: control.width + control.anchors.leftMargin;
 			anchors.rightMargin: control.width + control.anchors.leftMargin;
-			anchors.horizontalCenter: parent.horizontalCenter;
+
 	
 	        GameMenu {
 	        	id: gameMenu;
 				anchors.fill: parent;
-				visible: parent.visible;
 				
                 onNewGameEvent: {
                     log("onNewGameEvent player = "+player+" difficulty "+difficulty);
@@ -47,10 +50,10 @@ Application {
 
 				onPlayEvent: {
 					log("onPlayEvent player "+player+ " diff "+difficulty);
-                    if(game.isIncomplete){
+                    if (game.isIncomplete){
 					    pageStack.currentIndex = 1;
 
-		                game.timeIndicator.timer.start();
+		                if(game.timeIndicator.sec!=0) game.timeIndicator.timer.start();
 
 					    game.setFocus();
                     }
@@ -65,9 +68,10 @@ Application {
 				id: game;
 				height: parent.width/1.5;
 				width: parent.width/1.5;
-				anchors.left: control.img.right;
-				anchors.leftMargin: 50;
-				anchors.top: parent.top;
+                anchors.horizontalCenter: parent.horizontalCenter;
+//				anchors.left: control.img.right;
+//				anchors.leftMargin: 50;
+//				anchors.top: parent.top;
                 isIncomplete: false;
 
 				onBackPressed: {
@@ -75,6 +79,7 @@ Application {
 					this.timeIndicator.timer.stop();
 					this.digitChooser.visible=false;
 					gameSubMenu.setFocus();
+                    gameSubMenu.playerInfoText.text+=game.player;
 					gameSubMenu.gameInfoText.text=game.timeIndicator.text;
 
 				}

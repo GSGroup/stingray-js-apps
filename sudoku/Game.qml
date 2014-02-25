@@ -5,16 +5,32 @@ CellDelegate : Rectangle {
 	id: cellItemDelegate;
 	width: Math.floor(parent.width/9);
 	height: Math.floor(parent.width/9);
-	color: focused ? "#008888" :(Math.floor((modelIndex%9)/3)+Math.floor(Math.floor(modelIndex/9)/3))%2==0?"#D2B42A":"#D2B46C" ;
+	color: focused ? "#008888" :(Math.floor((modelIndex%9)/3)+Math.floor(Math.floor(modelIndex/9)/3))%2==0?"#5E5E5E":"#AEAEAE" ;
 	borderColor: "#D3D3D3";
 	borderWidth: 1;
+    /*Gradient {
+            anchors.right: parent.right;
+            anchors.left: parent.left;
+            anchors.top: parent.top;
+            anchors.bottom: parent.bottom;
+            
+            GradientStop {
+                    position: 0;
+                    color: (Math.floor((cellItemDelegate.modelIndex%9)/3)+Math.floor(Math.floor(cellItemDelegate.modelIndex/9)/3))%2==0?"#AFAFAF":"#EFEFEF";
+            }
+            
+            GradientStop {
+                    position: 1;
+                    color: (Math.floor((cellItemDelegate.modelIndex%9)/3)+Math.floor(Math.floor(cellItemDelegate.modelIndex/9)/3))%2==0?"#5E5E5E":"#AEAEAE";
+            }
+    }*/
+
 
 	BigText {
 		id: subText;
-		anchors.left: parent.left;
-		anchors.right: parent.right;
+        anchors.horizontalCenter: parent.horizontalCenter;
+        anchors.verticalCenter: parent.verticalCenter;
 		anchors.margins: 5;
-		anchors.bottom: parent.bottom;
 		horizontalAlignment: Text.AlignHCenter;
 		verticalAlignment: Text.AlignVCenter;
 		color: model.isBase? "#000000": "#FFFFFF"; //(model.warnColor?"#A52A2A":"#FFFFFF");
@@ -74,7 +90,7 @@ Game: Rectangle {
             text: parent.difficulty;
     }
 	
-	ListView {
+/*	ListView {
 		id: digitChooser;
 		visible: false;
 		anchors.right: parent.left;
@@ -108,7 +124,46 @@ Game: Rectangle {
 				gameItem.gameOverEvent(gameOverText);
 			}
 		}
+	}*/
+
+	GridView {
+		id: digitChooser;
+		visible: false;
+		anchors.right: parent.left;
+		anchors.top: parent.top;
+        width: 51*3;
+        height: 51*4;
+		cellWidth: 51;
+		cellHeight: 51;
+		model: DigitChooseModel {}
+
+		delegate: Rectangle {
+			width: 50;
+			height: 50;
+			color: activeFocus ? "#5C656C" : "#fff" ;
+
+			Text {
+				font: bigFont;
+				anchors.centerIn: parent;
+				text: model.digit;
+			}
+		}
+
+		onSelectPressed:{
+			if (!gameItem.timeIndicator.timer.running) {gameItem.timeIndicator.timer.start();}
+            else { log("TIMER IS RUNNING");}
+			this.visible = false;
+			gameView.model.setProperty(gameView.currentIndex, 'shownValue', (currentIndex<9)?currentIndex+1 : "");
+			 			
+			if (gameItem.isFilled()){
+				gameItem.timeIndicator.timer.stop();
+				var gameOverText = "YOU ";
+				(!gameItem.fullStateCheck())?(gameOverText+="WIN!"):(gameOverText+="LOSE");
+				gameItem.gameOverEvent(gameOverText);
+			}
+		}
 	}
+
 
 	GridView {
 		id: gameView;
