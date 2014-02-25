@@ -8,22 +8,6 @@ CellDelegate : Rectangle {
 	color: focused ? "#008888" :(Math.floor((modelIndex%9)/3)+Math.floor(Math.floor(modelIndex/9)/3))%2==0?"#5E5E5E":"#AEAEAE" ;
 	borderColor: "#D3D3D3";
 	borderWidth: 1;
-    /*Gradient {
-            anchors.right: parent.right;
-            anchors.left: parent.left;
-            anchors.top: parent.top;
-            anchors.bottom: parent.bottom;
-            
-            GradientStop {
-                    position: 0;
-                    color: (Math.floor((cellItemDelegate.modelIndex%9)/3)+Math.floor(Math.floor(cellItemDelegate.modelIndex/9)/3))%2==0?"#AFAFAF":"#EFEFEF";
-            }
-            
-            GradientStop {
-                    position: 1;
-                    color: (Math.floor((cellItemDelegate.modelIndex%9)/3)+Math.floor(Math.floor(cellItemDelegate.modelIndex/9)/3))%2==0?"#5E5E5E":"#AEAEAE";
-            }
-    }*/
 
 
 	BigText {
@@ -33,8 +17,121 @@ CellDelegate : Rectangle {
 		anchors.margins: 5;
 		horizontalAlignment: Text.AlignHCenter;
 		verticalAlignment: Text.AlignVCenter;
-		color: model.isBase? "#000000": "#FFFFFF"; //(model.warnColor?"#A52A2A":"#FFFFFF");
+		color: model.isBase? "#000000": "#FFFFFF"; 
 		text:  model.shownValue;
+	}
+/*
+    SmallText {
+        id: hint1;
+        anchors.top: parent.top;
+        anchors.left: parent.left;
+        width: parent.width/15;
+        height: parent.height/15;
+        anchors.leftMargin:5;
+        anchors.topMargin:2;
+        text: model.isBase?"":(model.shownValue===""?(model.isHint1?"1":""):"");
+    }
+
+    SmallText {
+        id: hint2;
+        anchors.top: parent.top;
+        anchors.left: parent.left;
+        width: parent.width/14;
+        height: parent.height/14;
+        anchors.topMargin:2;
+        anchors.leftMargin:30;
+        text: model.isBase?"":(model.shownValue===""?(model.isHint2?"2":""):"");
+    }
+
+    SmallText {
+        id: hint3;
+        anchors.top: parent.top;
+        anchors.right: parent.right;
+        width: parent.width/15;
+        height: parent.height/15;
+        anchors.topMargin:2;
+        anchors.rightMargin:12;
+        text: model.isBase?"":(model.shownValue===""?(model.isHint3?"3":""):"");
+    }
+
+    SmallText {
+        id: hint4;
+        anchors.top: parent.top;
+        anchors.left: parent.left;
+        width: parent.width/15;
+        height: parent.height/15;
+        anchors.topMargin:22;
+        anchors.leftMargin:5;
+        text: model.isBase?"":(model.shownValue===""?(model.isHint4?"4":""):"");
+    }
+
+    SmallText {
+        id: hint5;
+        anchors.top: parent.top;
+        anchors.left: parent.left;
+        width: parent.width/14;
+        height: parent.height/14;
+        anchors.topMargin:22;
+        anchors.leftMargin:30;
+        text: model.isBase?"":(model.shownValue===""?(model.isHint5?"5":""):"");
+    }
+
+    SmallText {
+        id: hint6;
+        anchors.top: parent.top;
+        anchors.right: parent.right;
+        width: parent.width/15;
+        height: parent.height/15;
+        anchors.topMargin:22;
+        anchors.rightMargin:12;
+        text: model.isBase?"":(model.shownValue===""?(model.isHint6?"6":""):"");
+    }
+
+    SmallText {
+        id: hint7;
+        anchors.top: parent.top;
+        anchors.left: parent.left;
+        width: parent.width/15;
+        height: parent.height/15;
+        anchors.topMargin:42;
+        anchors.leftMargin:5;
+        text: model.isBase?"":(model.shownValue===""?(model.isHint7?"7":""):"");
+    }
+
+    SmallText {
+        id: hint8;
+        anchors.top: parent.top;
+        anchors.left: parent.left;
+        width: parent.width/14;
+        height: parent.height/14;
+        anchors.topMargin:42;
+        anchors.leftMargin:30;
+        text: model.isBase?"":(model.shownValue===""?(model.isHint8?"8":""):"");
+    }
+
+    SmallText {
+        id: hint9;
+        anchors.top: parent.top;
+        anchors.right: parent.right;
+        width: parent.width/15;
+        height: parent.height/15;
+        anchors.topMargin:42;
+        anchors.rightMargin:12;
+        text: model.isBase?"":(model.shownValue===""?(model.isHint9?"9":""):"");
+    }
+
+*/
+/*    GridView {
+       id: hint;
+       anchors.fill: parent;
+       model: ListModel {}
+       
+    }*/
+
+	Behavior on color {
+	    animation: Animation {
+		    duration: 300;
+		}
 	}
 
 }
@@ -44,8 +141,15 @@ GameFieldModel: ListModel {
 	property int shownValue;
 	property int actualValue;
 	property bool isBase;
-	property bool warnColor;
-
+/*  property bool isHint1;
+    property bool isHint2;
+    property bool isHint3;
+    property bool isHint4;
+    property bool isHint5;
+    property bool isHint6;
+    property bool isHint7;
+    property bool isHint8;
+    property bool isHint9;*/
 }
 
 DigitChooseModel: ListModel {
@@ -128,14 +232,13 @@ Game: Rectangle {
 
 	GridView {
 		id: digitChooser;
-		visible: false;
 		anchors.right: parent.left;
 		anchors.top: parent.top;
         width: 51*3;
         height: 51*4;
 		cellWidth: 51;
 		cellHeight: 51;
-//        opacity: 0.01;
+        opacity: 0.01;
 		model: DigitChooseModel {}
 
 		delegate: Rectangle {
@@ -144,17 +247,24 @@ Game: Rectangle {
 			color: activeFocus ? "#5C656C" : "#fff" ;
 
 			Text {
-				font: bigFont;
-				anchors.centerIn: parent;
+                anchors.horizontalCenter: parent.horizontalCenter;
+                anchors.verticalCenter: parent.verticalCenter;
+				font: smallFont;
 				text: model.digit;
 			}
+            
+            Behavior on color {
+			    animation: Animation {
+				     duration: 300;
+			    }
+		    }
 		}
 
 		onSelectPressed:{
 			if (!gameItem.timeIndicator.timer.running) {gameItem.timeIndicator.timer.start();}
             else { log("TIMER IS RUNNING");}
-//			this.opacity = 0.01;
-            this.visible=false;
+			this.opacity = 0.01;
+            gameView.setFocus(); 
 			gameView.model.setProperty(gameView.currentIndex, 'shownValue', (currentIndex<9)?currentIndex+1 : "");
 			 			
 			if (gameItem.isFilled()){
@@ -164,6 +274,12 @@ Game: Rectangle {
 				gameItem.gameOverEvent(gameOverText);
 			}
 		}
+
+        onBackPressed: {
+            this.opacity = 0.01;
+            gameView.setFocus();
+        }
+
 
 		Behavior on opacity {
 			animation: Animation {
@@ -188,8 +304,7 @@ Game: Rectangle {
 		onSelectPressed: {
 
 			if (!gameView.model.get(gameView.currentIndex)['isBase']){
-				digitChooser.visible=true;
-//                digitChooser.opacity=1;
+                digitChooser.opacity=1;
 				digitChooser.setFocus();
 			}
 		}
@@ -200,8 +315,19 @@ Game: Rectangle {
 			for(var i = 0; i < 9; ++i){
 				for(var j = 0; j < 9; ++j){
 					var tmpBase = ibMatrix[i][j];	
-					this.model.append({'actualValue' : svMatrix[i][j], 'shownValue': (tmpBase?svMatrix[i][j]:""),'isBase' : tmpBase,'warnColor' : false});
-
+					this.model.append({'actualValue' : svMatrix[i][j], 
+                            'shownValue': (tmpBase?svMatrix[i][j]:""),
+                            'isBase' : tmpBase /*,
+                            'isHint1' : false,
+                            'isHint2' : false,
+                            'isHint3' : false,
+                            'isHint4' : false,
+                            'isHint5' : false,
+                            'isHint6' : false,
+                            'isHint7' : false,
+                            'isHint8' : false,
+                            'isHint9' : false*/
+                    });
 				}
 			}		
 		}
@@ -242,6 +368,10 @@ Game: Rectangle {
 
 		return errors;
 	}
+
+    function checkCell(index){
+         
+    }
 
 	function checkRow(index) {
 		//log("check row")

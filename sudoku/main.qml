@@ -26,8 +26,6 @@ Application {
             anchors.top: titleText.bottom;
 			anchors.horizontalCenter: parent.horizontalCenter;
             width: 700;
-//			anchors.left: parent.left;
-//			anchors.right: parent.right;
 			anchors.topMargin: 10;
 			anchors.leftMargin: control.width + control.anchors.leftMargin;
 			anchors.rightMargin: control.width + control.anchors.leftMargin;
@@ -66,20 +64,16 @@ Application {
 
 			Game {
 				id: game;
-				height: parent.width/1.5;
-				width: parent.width/1.5;
+				height: parent.width/1.1;
+				width: parent.width/1.1;
                 anchors.horizontalCenter: parent.horizontalCenter;
-//				anchors.left: control.img.right;
-//				anchors.leftMargin: 50;
-//				anchors.top: parent.top;
                 isIncomplete: false;
 
 				onBackPressed: {
 					pageStack.currentIndex = 2;
 					this.timeIndicator.timer.stop();
-					this.digitChooser.visible=false;
 					gameSubMenu.setFocus();
-                    gameSubMenu.playerInfoText.text+=game.player;
+                    gameSubMenu.playerInfoText.text="player: "+game.player;
 					gameSubMenu.gameInfoText.text=game.timeIndicator.text;
 
 				}
@@ -93,8 +87,6 @@ Application {
 				}
 
 				onGameOverEvent: {
-//					log("GAME OVER EVENT "+result);
-//                    log("befor reset player "+this.player+ " time "+this.timeIndicator.sec);
                     gameStats.addNrestat({player: this.player, time: this.timeIndicator.sec});
 				    this.gameReset();
                     this.isIncomplete = false;
@@ -149,7 +141,7 @@ Application {
 					pageStack.currentIndex = 0;
 					gameMenu.setFocus();
 				}
-			}	
+			}
 		}
 
 	    Resource {
@@ -159,6 +151,7 @@ Application {
 		        onDataChanged: {
 			            gameMenu.load(JSON.parse(this.data));
                         gameStats.load(JSON.parse(this.data));
+             
 		        }
 	    }
         
