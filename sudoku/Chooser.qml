@@ -3,12 +3,10 @@
 ******/
 
 PlayerChooserDelegate : Rectangle {
-	color: activeFocus ? colorTheme.activeBorderColor : colorTheme.backgroundColor;
+	color: focused ? colorTheme.activeBorderColor : colorTheme.backgroundColor;
 	borderColor: activeFocus ? colorTheme.activeBorderColor : colorTheme.borderColor;
 	width: delegateText.width + 20;
 	height: 28;
-//	borderWidth: 2;
-//	radius: colorTheme.rounded ? 10 : 0;
 	anchors.verticalCenter: parent.verticalCenter;
 	focus: true;
 	
@@ -29,12 +27,10 @@ PlayerChooserDelegate : Rectangle {
 
 
 DifficultyChooserDelegate : Rectangle {
-	color: activeFocus ? colorTheme.activeBorderColor : colorTheme.backgroundColor;
+	color: focused ? colorTheme.activeBorderColor : colorTheme.backgroundColor;
 	borderColor: activeFocus ? colorTheme.activeBorderColor : colorTheme.borderColor;
 	width: delegateText.width + 20;
 	height: 28;
-//	borderWidth: 2;
-//	radius: colorTheme.rounded ? 10 : 0;
 	anchors.verticalCenter: parent.verticalCenter;
 	focus: true;
 	
@@ -54,21 +50,21 @@ DifficultyChooserDelegate : Rectangle {
 }
 
 PlayerChooser : Item {
-	id: chooserItem;
+	id: pChooserItem;
 	property bool showArrows: true;
 	property bool showAtCenter: true;
 	property bool onlyOneItemVisible: true;
 	height: 50;
 	property alias currentIndex: listView.currentIndex;
 	property alias count: listView.count;
-	property int spacing: 5;
+	property int spacing: 1;
 	
 	Image {
 		anchors.left: parent.left;
 		anchors.verticalCenter: listView.verticalCenter;
 		anchors.rightMargin: 8;
 		source: "res/style/" + colorTheme.name + "/left.png";
-		visible: chooserItem.showArrows;
+		visible: pChooserItem.showArrows;
 		opacity: parent.activeFocus ? 1 : 0.3;
 		width: 32;
 		
@@ -82,14 +78,14 @@ PlayerChooser : Item {
 	ListView {
 		id: listView;
 		anchors.fill: parent;
-		anchors.leftMargin: (chooserItem.showAtCenter ? Math.max((chooserItem.width - 60 - contentWidth) / 2, 0) : 0) + 30;
+		anchors.leftMargin: (pChooserItem.showAtCenter ? Math.max((pChooserItem.width - 60 - contentWidth) / 2, 0) : 0) + 30;
 		anchors.rightMargin: 30;
 		orientation: ListView.Horizontal;
 		keyNavigationWraps: true;
 		clip: true;
 		delegate: PlayerChooserDelegate { }
 		model: ListModel { }
-		spacing: chooserItem.spacing;
+		spacing: pChooserItem.spacing;
 
 		onCurrentIndexChanged: {
 			postPositioningTimer.restart();
@@ -101,7 +97,7 @@ PlayerChooser : Item {
 		anchors.verticalCenter: listView.verticalCenter;
 		anchors.rightMargin: 8;
 		source: "res/style/" + colorTheme.name + "/right.png";
-		visible: chooserItem.showArrows;
+		visible: pChooserItem.showArrows;
 		opacity: parent.activeFocus ? 1 : 0.3;
 		width: 32;
 		
@@ -134,21 +130,21 @@ PlayerChooser : Item {
 }
 
 DifficultyChooser : Item {
-	id: chooserItem;
+	id: dChooserItem;
 	property bool showArrows: true;
 	property bool showAtCenter: true;
 	property bool onlyOneItemVisible: true;
 	height: 50;
 	property alias currentIndex: listView.currentIndex;
 	property alias count: listView.count;
-	property int spacing: 5;
+	property int spacing: 1;
 	
 	Image {
 		anchors.left: parent.left;
 		anchors.verticalCenter: listView.verticalCenter;
 		anchors.rightMargin: 8;
 		source: "res/style/" + colorTheme.name + "/left.png";
-		visible: chooserItem.showArrows;
+		visible: dChooserItem.showArrows;
 		opacity: parent.activeFocus ? 1 : 0.3;
 		width: 32;
 		
@@ -162,14 +158,14 @@ DifficultyChooser : Item {
 	ListView {
 		id: listView;
 		anchors.fill: parent;
-		anchors.leftMargin: (chooserItem.showAtCenter ? Math.max((chooserItem.width - 60 - contentWidth) / 2, 0) : 0) + 30;
+		anchors.leftMargin: (dChooserItem.showAtCenter ? Math.max((dChooserItem.width - 60 - contentWidth) / 2, 0) : 0) + 30;
 		anchors.rightMargin: 30;
 		orientation: ListView.Horizontal;
 		keyNavigationWraps: true;
 		clip: true;
 		delegate: DifficultyChooserDelegate { }
 		model: ListModel { }
-		spacing: chooserItem.spacing;
+		spacing: dChooserItem.spacing;
 
 		onCurrentIndexChanged: {
 			postPositioningTimer.restart();
@@ -181,7 +177,7 @@ DifficultyChooser : Item {
 		anchors.verticalCenter: listView.verticalCenter;
 		anchors.rightMargin: 8;
 		source: "res/style/" + colorTheme.name + "/right.png";
-		visible: chooserItem.showArrows;
+		visible: dChooserItem.showArrows;
 		opacity: parent.activeFocus ? 1 : 0.3;
 		width: 32;
 		
