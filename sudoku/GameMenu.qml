@@ -164,7 +164,7 @@ GameSubMenu : Item {
 			id: playerInfoText;
 			anchors.topMargin: 40;
 			anchors.horizontalCenter: parent.horizontalCenter;
-			text: "player: ";
+			text: "";
 		}
 
 		BigText {
