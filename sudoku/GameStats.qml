@@ -67,21 +67,19 @@ GameStats : Item {
         }
 
         function addNrestat(obj){
-                this.tmpModel = [];
-
-                for(var i=0; i<listView.model.count; ++i)
+                var tmpModel = [];
+                for(var i=0; i<this.listView.model.count; ++i)
                 {
-                    this.tmpModel.push({player: this.listView.model.get(i)['player'], time: this.listView.model.get(i)['time']});
+                    tmpModel.push({player: this.listView.model.get(i)['player'], time: this.listView.model.get(i)['time']});
                 }
 
-//                this.tmpModel.push({player:"asd1", time: 2});
-                this.tmpModel.push(obj);
-                this.tmpModel.sort(this.statsCompare);
-
+                tmpModel.push(obj);
+                tmpModel.sort(this.statsCompare);
+                
                 this.listView.model.reset();
                 for(var i=0; i<5;++i)
                 {
-                        this.listView.model.append({'player': this.tmpModel[i].player, 'time': this.tmpModel[i].time});
+                        this.listView.model.append({'player': tmpModel[i].player, 'time': tmpModel[i].time});
                 }
 
         }

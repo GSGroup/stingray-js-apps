@@ -135,6 +135,7 @@ Game: Rectangle {
         height: 51*4;
 		cellWidth: 51;
 		cellHeight: 51;
+//        opacity: 0.01;
 		model: DigitChooseModel {}
 
 		delegate: Rectangle {
@@ -152,7 +153,8 @@ Game: Rectangle {
 		onSelectPressed:{
 			if (!gameItem.timeIndicator.timer.running) {gameItem.timeIndicator.timer.start();}
             else { log("TIMER IS RUNNING");}
-			this.visible = false;
+//			this.opacity = 0.01;
+            this.visible=false;
 			gameView.model.setProperty(gameView.currentIndex, 'shownValue', (currentIndex<9)?currentIndex+1 : "");
 			 			
 			if (gameItem.isFilled()){
@@ -162,6 +164,13 @@ Game: Rectangle {
 				gameItem.gameOverEvent(gameOverText);
 			}
 		}
+
+		Behavior on opacity {
+			animation: Animation {
+				duration: 300;
+			}
+		}
+
 	}
 
 
@@ -180,6 +189,7 @@ Game: Rectangle {
 
 			if (!gameView.model.get(gameView.currentIndex)['isBase']){
 				digitChooser.visible=true;
+//                digitChooser.opacity=1;
 				digitChooser.setFocus();
 			}
 		}
