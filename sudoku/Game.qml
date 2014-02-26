@@ -12,15 +12,15 @@ CellDelegate : Rectangle {
 
 	BigText {
 		id: subText;
-        anchors.horizontalCenter: parent.horizontalCenter;
-        anchors.verticalCenter: parent.verticalCenter;
+    	anchors.horizontalCenter: parent.horizontalCenter;
+    	anchors.verticalCenter: parent.verticalCenter;
 		anchors.margins: 5;
 		horizontalAlignment: Text.AlignHCenter;
 		verticalAlignment: Text.AlignVCenter;
 		color: model.isBase? "#000000": "#FFFFFF"; 
 		text:  model.shownValue;
 	}
-/*
+
     SmallText {
         id: hint1;
         anchors.top: parent.top;
@@ -29,104 +29,17 @@ CellDelegate : Rectangle {
         height: parent.height/15;
         anchors.leftMargin:5;
         anchors.topMargin:2;
-        text: model.isBase?"":(model.shownValue===""?(model.isHint1?"1":""):"");
+		color: "#BC8F8F";
+        text:  model.isBase?"":(model.shownValue===""?(model.isHint1?"1":"  "):"")+"   "+
+			  (model.isBase?"":(model.shownValue===""?(model.isHint2?"2":"   "):""))+"  "+
+			  (model.isBase?"":(model.shownValue===""?(model.isHint3?"3":"   "):""))+"\n"+
+			  (model.isBase?"":(model.shownValue===""?(model.isHint4?"4":"   "):""))+"  "+
+			  (model.isBase?"":(model.shownValue===""?(model.isHint5?"5":"   "):""))+"  "+
+			  (model.isBase?"":(model.shownValue===""?(model.isHint6?"6":"   "):""))+"\n"+
+			  (model.isBase?"":(model.shownValue===""?(model.isHint7?"7":"   "):""))+"  "+
+			  (model.isBase?"":(model.shownValue===""?(model.isHint8?"8":"   "):""))+"  "+
+			  (model.isBase?"":(model.shownValue===""?(model.isHint9?"9":"   "):""));
     }
-
-    SmallText {
-        id: hint2;
-        anchors.top: parent.top;
-        anchors.left: parent.left;
-        width: parent.width/14;
-        height: parent.height/14;
-        anchors.topMargin:2;
-        anchors.leftMargin:30;
-        text: model.isBase?"":(model.shownValue===""?(model.isHint2?"2":""):"");
-    }
-
-    SmallText {
-        id: hint3;
-        anchors.top: parent.top;
-        anchors.right: parent.right;
-        width: parent.width/15;
-        height: parent.height/15;
-        anchors.topMargin:2;
-        anchors.rightMargin:12;
-        text: model.isBase?"":(model.shownValue===""?(model.isHint3?"3":""):"");
-    }
-
-    SmallText {
-        id: hint4;
-        anchors.top: parent.top;
-        anchors.left: parent.left;
-        width: parent.width/15;
-        height: parent.height/15;
-        anchors.topMargin:22;
-        anchors.leftMargin:5;
-        text: model.isBase?"":(model.shownValue===""?(model.isHint4?"4":""):"");
-    }
-
-    SmallText {
-        id: hint5;
-        anchors.top: parent.top;
-        anchors.left: parent.left;
-        width: parent.width/14;
-        height: parent.height/14;
-        anchors.topMargin:22;
-        anchors.leftMargin:30;
-        text: model.isBase?"":(model.shownValue===""?(model.isHint5?"5":""):"");
-    }
-
-    SmallText {
-        id: hint6;
-        anchors.top: parent.top;
-        anchors.right: parent.right;
-        width: parent.width/15;
-        height: parent.height/15;
-        anchors.topMargin:22;
-        anchors.rightMargin:12;
-        text: model.isBase?"":(model.shownValue===""?(model.isHint6?"6":""):"");
-    }
-
-    SmallText {
-        id: hint7;
-        anchors.top: parent.top;
-        anchors.left: parent.left;
-        width: parent.width/15;
-        height: parent.height/15;
-        anchors.topMargin:42;
-        anchors.leftMargin:5;
-        text: model.isBase?"":(model.shownValue===""?(model.isHint7?"7":""):"");
-    }
-
-    SmallText {
-        id: hint8;
-        anchors.top: parent.top;
-        anchors.left: parent.left;
-        width: parent.width/14;
-        height: parent.height/14;
-        anchors.topMargin:42;
-        anchors.leftMargin:30;
-        text: model.isBase?"":(model.shownValue===""?(model.isHint8?"8":""):"");
-    }
-
-    SmallText {
-        id: hint9;
-        anchors.top: parent.top;
-        anchors.right: parent.right;
-        width: parent.width/15;
-        height: parent.height/15;
-        anchors.topMargin:42;
-        anchors.rightMargin:12;
-        text: model.isBase?"":(model.shownValue===""?(model.isHint9?"9":""):"");
-    }
-
-*/
-/*    GridView {
-       id: hint;
-       anchors.fill: parent;
-       model: ListModel {}
-       
-    }*/
 
 	Behavior on color {
 	    animation: Animation {
@@ -141,7 +54,7 @@ GameFieldModel: ListModel {
 	property int shownValue;
 	property int actualValue;
 	property bool isBase;
-/*  property bool isHint1;
+    property bool isHint1;
     property bool isHint2;
     property bool isHint3;
     property bool isHint4;
@@ -149,7 +62,7 @@ GameFieldModel: ListModel {
     property bool isHint6;
     property bool isHint7;
     property bool isHint8;
-    property bool isHint9;*/
+    property bool isHint9;
 }
 
 DigitChooseModel: ListModel {
@@ -266,7 +179,9 @@ Game: Rectangle {
 			this.opacity = 0.01;
             gameView.setFocus(); 
 			gameView.model.setProperty(gameView.currentIndex, 'shownValue', (currentIndex<9)?currentIndex+1 : "");
-			 			
+			parent.hintRow(gameView.currentIndex);
+			parent.hintColumn(gameView.currentIndex); 			
+			parent.hintSquare(gameView.currentIndex);
 			if (gameItem.isFilled()){
 				gameItem.timeIndicator.timer.stop();
 				var gameOverText = "YOU ";
@@ -286,7 +201,6 @@ Game: Rectangle {
 				duration: 300;
 			}
 		}
-
 	}
 
 
@@ -309,7 +223,7 @@ Game: Rectangle {
 			}
 		}
 
-		function fillModel(){
+		function fillModel(hintsBool){
 			var svMatrix = generator.getMatrix();
 			var ibMatrix = generator.getHiddenMatrix();
 			for(var i = 0; i < 9; ++i){
@@ -317,28 +231,29 @@ Game: Rectangle {
 					var tmpBase = ibMatrix[i][j];	
 					this.model.append({'actualValue' : svMatrix[i][j], 
                             'shownValue': (tmpBase?svMatrix[i][j]:""),
-                            'isBase' : tmpBase /*,
-                            'isHint1' : false,
-                            'isHint2' : false,
-                            'isHint3' : false,
-                            'isHint4' : false,
-                            'isHint5' : false,
-                            'isHint6' : false,
-                            'isHint7' : false,
-                            'isHint8' : false,
-                            'isHint9' : false*/
+                            'isBase' : tmpBase,
+                            'isHint1' : hintsBool,
+                            'isHint2' : hintsBool,
+                            'isHint3' : hintsBool,
+                            'isHint4' : hintsBool,
+                            'isHint5' : hintsBool,
+                            'isHint6' : hintsBool,
+                            'isHint7' : hintsBool,
+                            'isHint8' : hintsBool,
+                            'isHint9' : hintsBool
                     });
 				}
 			}		
 		}
 	}
 
-    function gameReset(){
+    function gameReset(difficulty){
         this.timeIndicator.timer.restart();
         this.timeIndicator.timer.stop();
         this.timeIndicator.sec = 0;
         this.gameView.model.reset();
-        this.gameView.fillModel();
+        this.gameView.fillModel(difficulty=="easy");
+		if(difficulty=="easy") this.setHints();
     }
 
 	function isFilled(){
@@ -369,9 +284,67 @@ Game: Rectangle {
 		return errors;
 	}
 
-    function checkCell(index){
-         
+	function setHints(){
+		var count =0;
+		for(var i=0;i<3;++i){
+			for(var j=0;j<3; ++j){
+				this.hintSquare(i*3+j*3*9);
+				this.hintRow(count);
+				this.hintColumn(count++)
+			}
+		}
+	}
+
+    function hintRow(index){
+		log("HINT ROW");
+		var row = Math.floor(index/9);
+		var tmpV = 0;
+		for(var i = row*9; i<row*9+9;++i)
+		{
+			tmpV = gameView.model.get(i)['shownValue'];
+			if(tmpV!=""){
+				for( var j = row*9; j<row*9+9; ++j){
+					 log(" set prprt isHint"+tmpV.toString()+" to "+j.toString+" false");
+					 gameView.model.setProperty(j,'isHint'+tmpV.toString(), false);
+				}
+				
+			}
+		}
     }
+
+
+	function hintColumn(index){
+		var column = index%9;
+		var tmpV = 0;
+		for(var i = column; i < 9*9; i+=9){
+			tmpV = gameView.model.get(i)['shownValue'];
+			if(tmpV!=""){
+				for(var j = column; j<9*9; j+=9){
+					gameView.model.setProperty(j,'isHint'+tmpV.toString(), false);						
+				}
+			}
+		}
+	}
+
+	function hintSquare(index){
+		var hSector = Math.floor((index % 9)/3);
+		var vSector = Math.floor(Math.floor(index/9)/3);
+		var tmpV =0;
+		for(var j = vSector*3*9; j<vSector*3*9+3*9; j+=9){
+			for(var i = hSector*3; i <hSector*3+3 ; ++i){
+				tmpV = gameView.model.get(i+j)['shownValue'];	
+				if(tmpV!=""){
+					for(var m = vSector*3*9; m<vSector*3*9+3*9; m+=9){
+						for(var n = hSector*3; n <hSector*3+3 ; ++n){
+							gameView.model.setProperty(m+n,'isHint'+tmpV.toString(),false);
+						}
+					}
+				}
+			}
+		}
+	}
+
+
 
 	function checkRow(index) {
 		//log("check row")
@@ -427,6 +400,8 @@ Game: Rectangle {
 		return false;
 	}
 
+	
+/*
 	function highlightRow(isHL, index) {
 		this.row = Math.floor(index/9);
 		//log("HIGHLIGHT ROW "+this.row+" "+isHL);
@@ -448,9 +423,9 @@ Game: Rectangle {
 			gameView.model.setProperty(i,'warnColor', isHL==true); //
 			//log("i = "+i+" isHL = "+isHL);
 
-/*			var row = gameView.model.get(i);
-			row.warnColor = isHL;
-			gameView.model.set(i,row);*/
+//			var row = gameView.model.get(i);
+//			row.warnColor = isHL;
+//			gameView.model.set(i,row);
 		}
 	}
 
@@ -464,7 +439,5 @@ Game: Rectangle {
 				//log("i = "+i+" isHL = "+isHL);
 			}
 		}
-	}
-
-
+	}*/
 }

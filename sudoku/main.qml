@@ -38,7 +38,7 @@ Application {
                 onNewGameEvent: {
                     log("onNewGameEvent player = "+player+" difficulty "+difficulty);
 					pageStack.currentIndex = 1;
-                    game.gameReset();
+                    game.gameReset(difficulty);
                     game.difficulty = difficulty;
                     game.player = player;
                     log("GAME.PLAYER "+game.player+ " PLAYER "+player);

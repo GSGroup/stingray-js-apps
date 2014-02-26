@@ -221,7 +221,6 @@ GameSubMenu : Item {
 			onSelectPressed: {
 				log("helpButton PRESSED!");
 				parent.menuCallEvent();
-			
 			}
 		}
 }
