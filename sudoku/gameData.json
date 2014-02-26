@@ -1,31 +1,36 @@
 {
-	"difflevels":
-	[
-		"easy",
-		"medium",
-		"hard"
-	],
+    "difflevels":
+    [
+	{"name" : "easy"  , "factor" : 1},
+	{"name" : "medium", "factor" : 2},
+	{"name" : "hard"  , "factor" : 3}
+    ],
     "stats":
     [
 	{
 	    "player" : "test1", 
-	    "time"  : 150
+	    "time"  : 150,
+	    "isBetter" : false
 	},
 	{
 	    "player" : "test2", 
-	    "time"  : 160
+	    "time"  : 160,
+	    "isBetter" : true
 	},
 	{
 	    "player" : "test3", 
-	    "time"  : 1120
+	    "time"  : 1120,
+	    "isBetter" : true
 	},
 	{
 	    "player" : "test4", 
-	    "time"  : 1350
+	    "time"  : 1350,
+	    "isBetter" : false
 	},
 	{
 	    "player" : "test5", 
-	    "time"  : 1220
+	    "time"  : 1220,
+	    "isBetter" : true
 	}
     ]
 }

@@ -39,7 +39,7 @@ DifficultyChooserDelegate : Rectangle {
 		x: 10;
 		anchors.verticalCenter: parent.verticalCenter;
 		color: parent.activeFocus ? colorTheme.activeTextColor : parent.parent.focused ? colorTheme.textColor : colorTheme.disabledTextColor;
-		text: model.text;
+		text: model.name;
 		
 		Behavior on color { animation: Animation { duration: 200; } }
 	}
@@ -197,9 +197,9 @@ DifficultyChooser : Item {
 		}
 	}
 
-	function append(text) {
+	function append(obj) {
 		log("appending to difficulty chooser " );
-		this.listView.model.append({"text": text});
+		this.listView.model.append(obj);
 	}
 	
 	Behavior on opacity {
