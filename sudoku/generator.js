@@ -11,15 +11,15 @@ var sudokuMatrix = [
 ];
 
 var hiddenMatrix = [
-		[1, 1, 1, 1, 1, 1, 1, 1, 1],
-		[1, 1, 1, 1, 1, 1, 1, 1, 1],
-		[1, 1, 1, 1, 1, 1, 1, 1, 1],
-		[1, 1, 1, 1, 1, 1, 1, 1, 1],
-		[1, 1, 1, 1, 1, 1, 1, 1, 1],
-		[1, 1, 1, 1, 1, 1, 1, 1, 1],
-		[1, 1, 1, 1, 1, 1, 1, 1, 1],
-		[1, 1, 1, 1, 1, 1, 1, 1, 1],
-		[1, 1, 1, 1, 1, 1, 1, 1, 1]
+	[true, true, true, true, true, true, true, true, true],
+	[true, true, true, true, true, true, true, true, true],
+	[true, true, true, true, true, true, true, true, true],
+	[true, true, true, true, true, true, true, true, true],
+	[true, true, true, true, true, true, true, true, true],
+	[true, true, true, true, true, true, true, true, true],
+	[true, true, true, true, true, true, true, true, true],
+	[true, true, true, true, true, true, true, true, true],
+	[true, true, true, true, true, true, true, true, true]
 ];
 
 this.getMatrix = function () {
@@ -27,10 +27,23 @@ this.getMatrix = function () {
 }
 
 this.getHiddenMatrix = function () {
-	for (var i = 0; i < 50; ++i) {
-		hiddenMatrix[Math.floor(Math.random() * 9)][Math.floor(Math.random() * 9)] = false;
+	var filterMatrix = [
+	[true, true, true, true, true, true, true, true, true],
+	[true, true, true, true, true, true, true, true, true],
+	[true, true, true, true, true, true, true, true, true],
+	[true, true, true, true, true, true, true, true, true],
+	[true, true, true, true, true, true, true, true, true],
+	[true, true, true, true, true, true, true, true, true],
+	[true, true, true, true, true, true, true, true, true],
+	[true, true, true, true, true, true, true, true, true],
+	[true, true, true, true, true, true, true, true, true]
+];
+
+	for (var i = 0; i < 40; ++i) {
+		filterMatrix[Math.floor(Math.random() * 9)][Math.floor(Math.random() * 9)] = false;
 	}
-	return hiddenMatrix;
+	log("filterMatrix = "+filterMatrix);
+	return filterMatrix;
 }
 
 function swapRow(matrix, row1, row2) {

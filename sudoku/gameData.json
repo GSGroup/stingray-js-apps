@@ -1,19 +1,31 @@
 {
-    "players":
-	[
-		"player1",
-		"player2",
-		"player3"
-
-	],
-
 	"difflevels":
 	[
-		"pfff",
 		"easy",
 		"medium",
-		"hard",
-		"INSANE!!"
-	
-	]
+		"hard"
+	],
+    "stats":
+    [
+	{
+	    "player" : "test1", 
+	    "time"  : 150
+	},
+	{
+	    "player" : "test2", 
+	    "time"  : 160
+	},
+	{
+	    "player" : "test3", 
+	    "time"  : 1120
+	},
+	{
+	    "player" : "test4", 
+	    "time"  : 1350
+	},
+	{
+	    "player" : "test5", 
+	    "time"  : 1220
+	}
+    ]
 }
