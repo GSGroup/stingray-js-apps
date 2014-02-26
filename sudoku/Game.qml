@@ -69,7 +69,7 @@ DigitChooseModel: ListModel {
 	onCompleted: {
 		for(var i=1; i<10; ++i)
 			this.append({digit : i});
-		this.append({digit : 'x'});
+//		this.append({digit : 'x'});
 	}
 }
 
@@ -174,20 +174,9 @@ Game: Rectangle {
 		}
 
 		onSelectPressed:{
-			if (!gameItem.timeIndicator.timer.running) {gameItem.timeIndicator.timer.start();}
-            else { log("TIMER IS RUNNING");}
 			this.opacity = 0.01;
             gameView.setFocus(); 
-			gameView.model.setProperty(gameView.currentIndex, 'shownValue', (currentIndex<9)?currentIndex+1 : "");
-			parent.hintRow(gameView.currentIndex);
-			parent.hintColumn(gameView.currentIndex); 			
-			parent.hintSquare(gameView.currentIndex);
-			if (gameItem.isFilled()){
-				gameItem.timeIndicator.timer.stop();
-				var gameOverText = "YOU ";
-				(!gameItem.fullStateCheck())?(gameOverText+="WIN!"):(gameOverText+="LOSE");
-				gameItem.gameOverEvent(gameOverText);
-			}
+			gameView.model.setProperty(gameView.currentIndex, 'isHint'+(currentIndex+1), !(gameView.model.get(gameView.currentIndex)['isHint'+(currentIndex+1)]));
 		}
 
         onBackPressed: {
@@ -221,6 +210,28 @@ Game: Rectangle {
                 digitChooser.opacity=1;
 				digitChooser.setFocus();
 			}
+		}
+
+		onKeyPressed: {
+			var rgx = new RegExp("^[1-9]$");
+			if(rgx.test(key)){
+				gameView.model.setProperty(gameView.currentIndex, 'shownValue', key);
+				if (!gameItem.timeIndicator.timer.running) {gameItem.timeIndicator.timer.start();}
+            	else { log("TIMER IS RUNNING");}
+				parent.hintRow(gameView.currentIndex);
+				parent.hintColumn(gameView.currentIndex); 			
+				parent.hintSquare(gameView.currentIndex);
+				if (gameItem.isFilled()){
+				   gameItem.timeIndicator.timer.stop();
+				   var gameOverText = "YOU ";
+				   (!gameItem.fullStateCheck())?(gameOverText+="WIN!"):(gameOverText+="LOSE");
+				   gameItem.gameOverEvent(gameOverText);
+				}
+			}
+
+			if("0"==key && !gameView.model.get(gameView.currentIndex).isBase)
+				gameView.model.setProperty(gameView.currentIndex, 'shownValue', "");
+			
 		}
 
 		function fillModel(hintsBool){
