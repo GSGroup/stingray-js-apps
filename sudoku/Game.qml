@@ -29,8 +29,8 @@ CellDelegate : Rectangle {
         height: parent.height/15;
         anchors.leftMargin:5;
         anchors.topMargin:2;
-		color: "#BC8F8F";
-        text:  model.isBase?"":(model.shownValue===""?(model.isHint1?"1":"  "):"")+"   "+
+		color: "#393939";
+        text:  model.isBase?"":(model.shownValue===""?(model.isHint1?"1":"  " ):"")+"   "+
 			  (model.isBase?"":(model.shownValue===""?(model.isHint2?"2":"   "):""))+"  "+
 			  (model.isBase?"":(model.shownValue===""?(model.isHint3?"3":"   "):""))+"\n"+
 			  (model.isBase?"":(model.shownValue===""?(model.isHint4?"4":"   "):""))+"  "+

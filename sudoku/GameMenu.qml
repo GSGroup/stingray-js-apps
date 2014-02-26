@@ -62,7 +62,7 @@ GameMenu : Item {
 			
 			onSelectPressed: {
 				log("newGameButton PRESSED!");
-				parent.newGameEvent(mainMenu.difficultyChooser.listView.model.get(difficultyChooser.currentIndex).text,
+				parent.newGameEvent(mainMenu.difficultyChooser.listView.model.get(difficultyChooser.currentIndex).name,
                     mainMenu.playerChooser.listView.model.get(playerChooser.currentIndex).player);
 			}
 		}

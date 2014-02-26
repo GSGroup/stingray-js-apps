@@ -87,7 +87,7 @@ Application {
 				}
 
 				onGameOverEvent: {
-                    gameStats.addNrestat({player: this.player, time: this.timeIndicator.sec});
+                    gameStats.addNrestat({player: this.player, time: this.timeIndicator.sec},gameMenu.difficultyChooser.listView.model.get(gameMenu.difficultyChooser.listView.currentIndex).factor);
 				    this.gameReset();
                     this.isIncomplete = false;
                     gameMenu.playButton.enabled = false;
