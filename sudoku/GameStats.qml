@@ -1,6 +1,7 @@
 GameStats : Item {
         id: gameStats;
-
+		property int difficulty;
+				
         Rectangle {
             id: gameStatsHead;
             height: 100;
@@ -44,12 +45,9 @@ GameStats : Item {
         }
 
         function load(data){
-                log("LOADING STATS");
                 this.stats = data["stats"];
                 this.stats.sort(this.statsCompare);
-                for (var i =0; i<this.stats.length; ++i){
-                        listView.model.append(this.stats[i]);
-                }
+				this.filterByDifficulty(this.difficulty);
         }
 
         function statsCompare(a,b){
@@ -64,28 +62,60 @@ GameStats : Item {
                 }
         }
 
-        function addNrestat(obj, diffFactor){
-				log("difffactor! "+diffFactor);
+		function filterByDifficulty(difficulty){
+			log("FILTERING BY DIFFICULTY "+difficulty);
+			this.listView.model.reset();
+			for(var i =0; i<this.stats.length; ++i){
+				if(this.stats[i].difficulty==difficulty){
+						this.listView.model.append(this.stats[i]);
+				}
+			}			
+		}
+
+        function addNrestat(argObj){
+			 log("ADDNRESTAT");
                 var tmpModel = [];
-				var player = "";
-				var time   = 0;
+				var tmpObj ={};
 				var isInList = false;
                 for(var i=0; i<this.listView.model.count; ++i){
-					player = this.listView.model.get(i)['player'];
-					time   = this.listView.model.get(i)['time'];
-					if(player==obj.player){
+					tmpObj = this.listView.model.get(i);
+					if(tmpObj.player==argObj.player && tmpObj.difficulty==argObj.difficulty){
 						isInList = true;
-						time = obj.time;
+						tmpObj.time = argObj.time;
 					}
-                    tmpModel.push({player: player, time: time});
+                    tmpModel.push(tmpObj);
                 }
 				
-                if(!isInList) tmpModel.push(obj);
+                if(!isInList) tmpModel.push(argObj);
                 tmpModel.sort(this.statsCompare);
-                
+
                 this.listView.model.reset();
                 for(var i=0; i<5;++i){
-                        this.listView.model.append({'player': tmpModel[i].player, 'time': tmpModel[i].time});
+						this.listView.model.append(tmpModel[i]);
                 }
+				this.modelToStats();
+				this.saveStats();
+
         }
+
+
+		function modelToStats(){
+				 var difficulty = this.listView.model.get(0).difficulty;
+
+				 for(var i=0; i<this.stats.length; ++i){
+				 		 if(this.stats[i].difficulty==difficulty){
+								this.stats.splice(i,1);
+								--i; //temporary (filthy splice side effect!!)
+						 }
+				 }
+
+				 for(var i =0;i<this.listView.model.count;++i){
+				 		 this.stats.push(this.listView.model.get(i));
+				 }
+
+				 this.stats.sort(this.statsCompare);
+		}
+		
+		function saveStats(){}
+
 }
