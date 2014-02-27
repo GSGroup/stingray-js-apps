@@ -140,21 +140,28 @@ GameMenu : Item {
 
         }
 
-
         function load(data)
         {
-                log("loading players..");
+/*              log("loading players..");
                 this.players = data ["stats"];
                 for (var i = 0; i < this.players.length; ++i){
                         mainMenu.playerChooser.append(this.players[i]);
                 }
-
+*/
                 log("loading difficulty levels..");
 				this.difflevels = data ["difflevels"];
 				for (var  i= 0; i< this.difflevels.length; ++i ){
 					    mainMenu.difficultyChooser.append(this.difflevels[i]);
 				}
         }
+
+		function reFillPlayerChooser(data){
+				 mainMenu.playerChooser.listView.model.reset();
+				 for(var i =0; i<data.count; ++i){
+				 		 mainMenu.playerChooser.append({player: data.get(i)['player']});
+				 }
+		}
+
 }
 
 
