@@ -63,6 +63,7 @@ Application {
 
 				onDifficultySet: {
 					gameStats.filterByDifficulty(difficulty);
+					this.reFillPlayerChooser(gameStats.listView.model);
 				}
         	}
 
@@ -155,6 +156,7 @@ Application {
 		        onDataChanged: {
 			            gameMenu.load(JSON.parse(this.data));
                         gameStats.load(JSON.parse(this.data));
+						gameMenu.reFillPlayerChooser(gameStats.listView.model);
              
 		        }
 	    }
