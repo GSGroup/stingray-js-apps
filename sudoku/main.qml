@@ -60,6 +60,10 @@ Application {
 				onHelpEvent: {
 					log("onHelpEvent");
 				}
+
+				onDifficultySet: {
+					gameStats.filterByDifficulty(difficulty);
+				}
         	}
 
 			Game {
@@ -87,7 +91,7 @@ Application {
 				}
 
 				onGameOverEvent: {
-                    gameStats.addNrestat({player: this.player, time: this.timeIndicator.sec},gameMenu.difficultyChooser.listView.model.get(gameMenu.difficultyChooser.listView.currentIndex).factor);
+                    gameStats.addNrestat({player: this.player, time: this.timeIndicator.sec, difficulty: gameMenu.difficultyChooser.listView.currentIndex+1});
 				    this.gameReset();
                     this.isIncomplete = false;
                     gameMenu.playButton.enabled = false;
@@ -174,6 +178,7 @@ Application {
         
         GameStats {
             id: gameStats;
+			difficulty: gameMenu.difficultyChooser.listView.currentIndex+1;
             anchors.top: gameMenu.difficultyChooser.bottom;
             anchors.right: parent.right;
             anchors.rightMargin: 145;

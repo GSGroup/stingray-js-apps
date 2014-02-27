@@ -8,6 +8,7 @@ GameMenu : Item {
 
         event newGameEvent(difficulty, player);
 		event playEvent(difficulty,player);
+		event difficultySet(difficulty);
 		event helpEvent();
 
         PlayerChooser {
@@ -38,6 +39,10 @@ GameMenu : Item {
 
 				onDownPressed: {
 					newGameButton.setFocus();
+				}
+
+				onCurrentIndexChanged: {
+					parent.difficultySet(this.listView.currentIndex+1);
 				}
         }
 
