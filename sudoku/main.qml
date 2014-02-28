@@ -82,14 +82,16 @@ Application {
 					gameSubMenu.gameInfoText.text=game.timeIndicator.text;
 
 				}
-				
+				/*
 				onKeyPressed:
 				{
 					if(key=="A")
 					{
 						this.gameOverEvent("test");
 					}
-				}
+
+					log("KEY PRESSED")
+				}*/
 
 				onGameOverEvent: {
                     gameStats.addNrestat({player: this.player, time: this.timeIndicator.sec, difficulty: gameMenu.difficultyChooser.listView.currentIndex+1});
