@@ -184,7 +184,6 @@ Game: Rectangle {
             gameView.setFocus();
         }
 
-
 		Behavior on opacity {
 			animation: Animation {
 				duration: 300;
@@ -213,14 +212,16 @@ Game: Rectangle {
 		}
 
 		onKeyPressed: {
-			var rgx = new RegExp("^[1-9]$");
+			var rgx = new RegExp("^[0-9]$");
 			if(rgx.test(key)){
-				gameView.model.setProperty(gameView.currentIndex, 'shownValue', key);
+				parent.setShownValue(gameView.currentIndex,parseInt(key));
+//				gameView.model.setProperty(gameView.currentIndex, 'shownValue', key);
 				if (!gameItem.timeIndicator.timer.running) {gameItem.timeIndicator.timer.start();}
             	else { log("TIMER IS RUNNING");}
-				parent.hintRow(gameView.currentIndex);
+/*				parent.hintRow(gameView.currentIndex);
 				parent.hintColumn(gameView.currentIndex); 			
-				parent.hintSquare(gameView.currentIndex);
+				parent.hintSquare(gameView.currentIndex);*/
+//		    		parent.reSetHints();
 				if (gameItem.isFilled()){
 				   gameItem.timeIndicator.timer.stop();
 				   var gameOverText = "YOU ";
@@ -228,9 +229,6 @@ Game: Rectangle {
 				   gameItem.gameOverEvent(gameOverText);
 				}
 			}
-
-			if("0"==key && !gameView.model.get(gameView.currentIndex).isBase)
-				gameView.model.setProperty(gameView.currentIndex, 'shownValue', "");
 			
 		}
 
@@ -294,7 +292,7 @@ Game: Rectangle {
 
 		return errors;
 	}
-
+/*
 	function setHints(){
 		var count =0;
 		for(var i=0;i<3;++i){
@@ -305,12 +303,16 @@ Game: Rectangle {
 				count+=10; //diagonal
 			}
 		}
-	}
 
+//		this.reSetHints();
+	}
+*/
     function hintRow(index){
 
 		var row = Math.floor(index/9);
 		var tmpV = 0;
+
+		
 /*
 		var tmpSVArray = [];
 		
@@ -330,7 +332,7 @@ Game: Rectangle {
 		}*/
 
 
-		
+		/*last
 		for(var i = row*9; i<row*9+9;++i){
 			tmpV = gameView.model.get(i)['shownValue'];
 			if(tmpV!=""){
@@ -339,7 +341,7 @@ Game: Rectangle {
 					 gameView.model.setProperty(j,'isHint'+tmpV.toString(), false);
 				}
 			}
-		}
+		}*/
     }
 
 
@@ -395,6 +397,100 @@ Game: Rectangle {
 	}
 
 
+    function setHints(){
+    	 log("RESET HINTS");
+		 var sctrArray=[[[],[],[]],[[],[],[]],[[],[],[]]];
+		 var clmnArray=[[],[],[],[],[],[],[],[],[]];
+		 var rwArray=[[],[],[],[],[],[],[],[],[]];
+		 var tmpV;
+		 for(var vSector=0;vSector<3;++vSector){
+	     	 for(var hSector=0;hSector<3;++hSector){
+				 for(var j = vSector*3*9; j<vSector*3*9+3*9; j+=9){
+		    	 	for(var i = hSector*3; i <hSector*3+3 ; ++i){
+						tmpV = this.gameView.model.get(i+j).shownValue;	
+						log("tmpV = "+tmpV+" row = " +hSector+" column "+vSector);
+						if(tmpV!=""){
+								sctrArray[hSector][vSector].push(tmpV);
+						}
+		    		}
+				}
+	    	}
+		}
+
+		for (var i = 0;i < 9; ++i){
+	    	for(var c = i; c<9*9; c+=9){
+				tmpV = this.gameView.model.get(c).shownValue;
+				if(tmpV!=""){
+					clmnArray[i].push(tmpV);
+				}
+	    	}
+		
+		
+			for(var r = i*9; r<i*9+9;++r){
+				tmpV = this.gameView.model.get(r).shownValue;
+				if(tmpV!=""){
+					rwArray[i].push(tmpV);
+				}
+	    	}
+		}
+		var lColumn, lRow, lVSector, lHSector;
+	
+		for(var i = 0 ; i<81;++i){		
+	    	lColumn  = i % 9;
+	    	lRow     = Math.floor(i/9);
+	    	lVSector = Math.floor(Math.floor(i/9)/3);
+	    	lHSector = Math.floor((i % 9)/3);
+	    	var allBool;
+	    	for(var num =1; num<10;++num){
+				allBool = (sctrArray[lHSector][lVSector].indexOf(num)==-1) &&  (clmnArray[lColumn].indexOf(num)==-1) && (rwArray[lRow].indexOf(num)==-1);
+				log("i = "+i.toString()+" num = "+num.toString()+" allBool = "+allBool);
+				this.gameView.model.setProperty(i,'isHint'+num.toString(),allBool);
+	    	}
+		}
+    }
+
+	function setShownValue(index, number){
+		log("UPDATE HINTS")
+		var column  = index % 9;
+		var row     = Math.floor(index/9);
+		var vSector = Math.floor(Math.floor(index/9)/3);
+		var hSector = Math.floor((index%9)/3);
+		var previousValue = this.gameView.model.get(index).shownValue;
+		if(number==0){
+			this.gameView.model.setProperty(index,'shownValue',"");
+			for(var i=row*9;i<row*9+9;++i){
+					this.gameView.model.setProperty(i,'isHint'+previousValue.toString(),true);					
+			}
+
+			for(var i=column; i<9*9; i+=9){
+					this.gameView.model.setProperty(i,'isHint'+previousValue.toString(),true);
+			}
+			
+			for(var j = vSector*3*9; j<vSector*3*9+3*9; j+=9){
+		     	for(var i = hSector*3; i <hSector*3+3 ; ++i){
+					this.gameView.model.setProperty(i+j,'isHint'+previousValue.toString(),true);
+		    	}
+			}
+		}
+		else{
+			this.gameView.model.setProperty(index,'shownValue',number);
+			for(var i=row*9;i<row*9+9;++i){
+					this.gameView.model.setProperty(i,'isHint'+number.toString(),false);					
+			}
+
+			for(var i=column; i<9*9; i+=9){
+					this.gameView.model.setProperty(i,'isHint'+number.toString(),false);
+			}
+			
+			for(var j = vSector*3*9; j<vSector*3*9+3*9; j+=9){
+		     	for(var i = hSector*3; i <hSector*3+3 ; ++i){
+					this.gameView.model.setProperty(i+j,'isHint'+number.toString(),false);
+		    	}
+			}
+			
+		}
+				
+	}
 
 	function checkRow(index) {
 		//log("check row")
