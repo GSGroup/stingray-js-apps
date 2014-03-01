@@ -29,4 +29,4 @@ VkApi.prototype = {
 this.VkApi = VkApi;
 
 if (this.instance == undefined)
-	this.instance = new VkApi("9e6de9d3e742a061453f432d0d8bcad7", "3ac2c3dcd33c54f991756f5c5fc41d61");
+	this.instance = new VkApi("8e9867ad31e5abfa0f5a0bb458e18f651cf84c68b56fca664f7995bc6cf6ce3e534e3c4c9a871c8b2beef");
