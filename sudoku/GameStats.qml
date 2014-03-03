@@ -90,7 +90,7 @@ GameStats : Item {
                 tmpModel.sort(this.statsCompare);
 
                 this.listView.model.reset();
-                for(var i=0; i<5;++i){
+                for(var i=0; i<8;++i){
 						this.listView.model.append(tmpModel[i]);
                 }
 				this.modelToStats();
