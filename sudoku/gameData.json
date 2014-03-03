@@ -4,6 +4,14 @@
 	{"name" : "easy"  , "factor" : 1},
 	{"name" : "medium", "factor" : 2},
 	{"name" : "hard"  , "factor" : 3}
+    ],    
+    "players":
+    [
+	{"player" : "test1"},
+	{"player" : "test2"},
+	{"player" : "test3"},
+	{"player" : "test4"},
+	{"player" : "test5"}
     ],
     "stats":
     [

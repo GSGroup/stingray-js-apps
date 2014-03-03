@@ -63,7 +63,7 @@ Application {
 
 				onDifficultySet: {
 					gameStats.filterByDifficulty(difficulty);
-					this.reFillPlayerChooser(gameStats.listView.model);
+//					this.reFillPlayerChooser(gameStats.listView.model);
 				}
         	}
 
@@ -82,8 +82,8 @@ Application {
 					gameSubMenu.gameInfoText.text=game.timeIndicator.text;
 
 				}
-				/*
-				onKeyPressed:
+				
+				onKeyPressed: // testmode
 				{
 					if(key=="A")
 					{
@@ -91,10 +91,11 @@ Application {
 					}
 
 					log("KEY PRESSED")
-				}*/
+				}
 
 				onGameOverEvent: {
                     gameStats.addNrestat({player: this.player, time: this.timeIndicator.sec, difficulty: gameMenu.difficultyChooser.listView.currentIndex+1});
+					gameMenu.savePlayers();
 				    this.gameReset();
                     this.isIncomplete = false;
                     gameMenu.playButton.enabled = false;
@@ -158,7 +159,7 @@ Application {
 		        onDataChanged: {
 			            gameMenu.load(JSON.parse(this.data));
                         gameStats.load(JSON.parse(this.data));
-						gameMenu.reFillPlayerChooser(gameStats.listView.model);
+//						gameMenu.reFillPlayerChooser(gameStats.listView.model);
              
 		        }
 	    }

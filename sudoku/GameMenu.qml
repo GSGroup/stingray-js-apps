@@ -142,12 +142,12 @@ GameMenu : Item {
 
         function load(data)
         {
-/*              log("loading players..");
-                this.players = data ["stats"];
+              log("loading players..");
+                this.players = data ["players"];
                 for (var i = 0; i < this.players.length; ++i){
                         mainMenu.playerChooser.append(this.players[i]);
                 }
-*/
+
                 log("loading difficulty levels..");
 				this.difflevels = data ["difflevels"];
 				for (var  i= 0; i< this.difflevels.length; ++i ){
@@ -162,6 +162,8 @@ GameMenu : Item {
 				 }
 		}
 
+		function savePlayers()
+		{}
 }
 
 
