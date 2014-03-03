@@ -151,7 +151,8 @@ GameMenu : Item {
         function load(data)
         {
               log("loading players..");
-                this.players = data ["players"];
+//                this.players = data ["players"];
+				this.players = load("sudokuPlayers");
                 for (var i = 0; i < this.players.length; ++i){
                         mainMenu.playerChooser.append(this.players[i]);
                 }
@@ -171,7 +172,14 @@ GameMenu : Item {
 		}
 
 		function savePlayers()
-		{}
+		{
+			var players =[];
+			for(var i =0 ;i<mainMenu.playerChooser.listView.model.count;++i){
+				players.push(mainMenu.playerChooser.listView.model.get(i));
+			}
+			log("plaerys "+players);
+			save("sudokuPlayers",players);
+		}
 }
 
 
