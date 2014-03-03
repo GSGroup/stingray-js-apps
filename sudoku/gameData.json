@@ -44,7 +44,26 @@
 	    "time"  : 1220,
 	    "difficulty": 1,
 	    "isBetter" : true
-	},	{
+	},
+	{
+	    "player" : "test6", 
+	    "time"  : 1120,
+	    "difficulty": 1,
+	    "isBetter" : true
+	},
+	{
+	    "player" : "test7", 
+	    "time"  : 1350,
+	    "difficulty": 1,
+	    "isBetter" : false
+	},
+	{
+	    "player" : "test8", 
+	    "time"  : 1220,
+	    "difficulty": 1,
+	    "isBetter" : true
+	},
+	{
 	    "player" : "test1", 
 	    "time"  : 150,
 	    "difficulty": 2,
@@ -73,7 +92,26 @@
 	    "time"  : 1220,
 	    "difficulty": 2,
 	    "isBetter" : true
-	},	{
+	},
+	{
+	    "player" : "test6", 
+	    "time"  : 1120,
+	    "difficulty": 2,
+	    "isBetter" : true
+	},
+	{
+	    "player" : "test7", 
+	    "time"  : 1350,
+	    "difficulty": 2,
+	    "isBetter" : false
+	},
+	{
+	    "player" : "test8", 
+	    "time"  : 1220,
+	    "difficulty": 2,
+	    "isBetter" : true
+	},
+	{
 	    "player" : "test1", 
 	    "time"  : 150,
 	    "difficulty": 3,
@@ -93,12 +131,30 @@
 	},
 	{
 	    "player" : "test4", 
-	    "time"  : 1350,
+	    "time"  : 1150,
 	    "difficulty": 3,
 	    "isBetter" : false
 	},
 	{
 	    "player" : "test5", 
+	    "time"  : 260,
+	    "difficulty": 3,
+	    "isBetter" : true
+	},
+	{
+	    "player" : "test6", 
+	    "time"  : 1120,
+	    "difficulty": 3,
+	    "isBetter" : true
+	},
+	{
+	    "player" : "test7", 
+	    "time"  : 1350,
+	    "difficulty": 3,
+	    "isBetter" : false
+	},
+	{
+	    "player" : "test8", 
 	    "time"  : 1220,
 	    "difficulty": 3,
 	    "isBetter" : true
