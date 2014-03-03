@@ -65,6 +65,12 @@ Application {
 					gameStats.filterByDifficulty(difficulty);
 //					this.reFillPlayerChooser(gameStats.listView.model);
 				}
+				
+				onEnablePlayBtnEvent: {
+					log("player = "+player+" difficulty = "+difficulty+" his game?: "+(player==game.player && difficulty==game.difficulty)); 
+					this.playButton.enabled=(player==game.player && difficulty==game.difficulty && game.isIncomplete);
+
+				}
         	}
 
 			Game {
