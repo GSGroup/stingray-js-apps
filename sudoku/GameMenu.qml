@@ -10,6 +10,7 @@ GameMenu : Item {
 		event playEvent(difficulty,player);
 		event difficultySet(difficulty);
 		event helpEvent();
+		event enablePlayBtnEvent(player,difficulty);
 
         PlayerChooser {
                 id: playerChooser;
@@ -25,6 +26,11 @@ GameMenu : Item {
                 onSelectPressed: {
                         pNameEdit.show();
                 }
+
+				onCurrentIndexChanged: {
+					parent.enablePlayBtnEvent(playerChooser.listView.model.get(playerChooser.listView.currentIndex).player,
+						difficultyChooser.listView.model.get(difficultyChooser.listView.currentIndex).name);
+				}
         }
 
         DifficultyChooser {
@@ -43,6 +49,8 @@ GameMenu : Item {
 
 				onCurrentIndexChanged: {
 					parent.difficultySet(this.listView.currentIndex+1);
+					parent.enablePlayBtnEvent(playerChooser.listView.model.get(playerChooser.listView.currentIndex).player,
+						difficultyChooser.listView.model.get(difficultyChooser.listView.currentIndex).name);
 				}
         }
 
