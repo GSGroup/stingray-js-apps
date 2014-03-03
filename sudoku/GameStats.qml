@@ -45,7 +45,17 @@ GameStats : Item {
         }
 
         function load(data){
-                this.stats = data["stats"];
+//                this.stats = data["stats"];
+				this.stats=[];
+				var statistic = load("sudokuStats");
+				
+				for(var i = 0; i<statistic.length; ++i){
+					this.stats.push({player: statistic[i].player,
+									 time:   parseInt(statistic[i].time,10),
+									 difficulty: parseInt(statistic[i].difficulty, 10)
+					});
+				}
+				if(this.stats.length==0) this.stats = data["stats"];
                 this.stats.sort(this.statsCompare);
 				this.filterByDifficulty(this.difficulty);
         }
@@ -85,19 +95,15 @@ GameStats : Item {
 					}
                     tmpModel.push(tmpObj);
                 }
-				
                 if(!isInList) tmpModel.push(argObj);
                 tmpModel.sort(this.statsCompare);
-
                 this.listView.model.reset();
-                for(var i=0; i<8;++i){
+                for(var i=0; i<Math.min(8,tmpModel.length);++i){
 						this.listView.model.append(tmpModel[i]);
                 }
 				this.modelToStats();
 				this.saveStats();
-
         }
-
 
 		function modelToStats(){
 				 var difficulty = this.listView.model.get(0).difficulty;
@@ -116,6 +122,18 @@ GameStats : Item {
 				 this.stats.sort(this.statsCompare);
 		}
 		
-		function saveStats(){}
+		function saveStats(){
+		    var statistic = [];
+			var tmpObj;
+			for(var i =0 ; i<this.stats.length; ++i){
+
+				tmpObj = this.stats[i];
+				statistic.push({player: tmpObj.player, 
+								time:   tmpObj.time.toString(),
+								difficulty: tmpObj.difficulty.toString()});
+			}
+			log("statistic "+statistic);		
+			save("sudokuStats",statistic);
+		}
 
 }

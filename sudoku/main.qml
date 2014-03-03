@@ -166,7 +166,8 @@ Application {
 			            gameMenu.load(JSON.parse(this.data));
                         gameStats.load(JSON.parse(this.data));
 //						gameMenu.reFillPlayerChooser(gameStats.listView.model);
-             
+						var t = load("test");
+             			log("t.a = "+t.a);
 		        }
 	    }
         
