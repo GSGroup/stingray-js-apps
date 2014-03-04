@@ -1,39 +1,20 @@
 /******
 *from controls/SimpleChooser.qml
 ******/
-/*
-PlayerChooserDelegate : Rectangle {
-	color: focused ? colorTheme.activeBorderColor : colorTheme.backgroundColor;
-	borderColor: activeFocus ? colorTheme.activeBorderColor : colorTheme.borderColor;
-	width: delegateText.width + 20;
-	height: 28;
-	anchors.verticalCenter: parent.verticalCenter;
-	focus: true;
-	
-	SmallText {
-		id: delegateText;
-		x: 10;
-		anchors.verticalCenter: parent.verticalCenter;
-		color: parent.activeFocus ? colorTheme.activeTextColor : parent.parent.focused ? colorTheme.textColor : colorTheme.disabledTextColor;
-		text: model.player;
-		
-		Behavior on color { animation: Animation { duration: 200; } }
-	}
-
-	Behavior on color { animation: Animation { duration: 200; } }
-	Behavior on borderColor { animation: Animation { duration: 200; } }
-	Behavior on x { animation: Animation { duration: 400; easingType: Animation.OutCirc; } }
-}
-*/
 
 PlayerChooserDelegate : Item {
-//	color: focused ? colorTheme.activeBorderColor : colorTheme.backgroundColor;
-//	borderColor: activeFocus ? colorTheme.activeBorderColor : colorTheme.borderColor;
 	width: delegateText.width + 20;
 	height: 28;
 	anchors.verticalCenter: parent.verticalCenter;
 	focus: true;
-	
+
+	Image {
+		id:pcDelegateImgage;
+		anchors.horizontalCenter: parent.horizontalCenter;
+		anchors.verticalCenter: parent.verticalCenter;
+		source: "apps/sudoku/img/btn_set_"+(parent.activeFocus? "focus": (parent.focused?"selected":"regular"))+".png";
+	}
+
 	SmallText {
 		id: delegateText;
 		x: 10;
@@ -43,23 +24,23 @@ PlayerChooserDelegate : Item {
 		
 		Behavior on color { animation: Animation { duration: 200; } }
 	}
-	
-	Image {
-		  
-	}
 
 	Behavior on x { animation: Animation { duration: 400; easingType: Animation.OutCirc; } }
 }
 
-
-DifficultyChooserDelegate : Rectangle {
-	color: focused ? colorTheme.activeBorderColor : colorTheme.backgroundColor;
-	borderColor: activeFocus ? colorTheme.activeBorderColor : colorTheme.borderColor;
+DifficultyChooserDelegate : Item {
 	width: delegateText.width + 20;
 	height: 28;
 	anchors.verticalCenter: parent.verticalCenter;
 	focus: true;
-	
+
+	Image {
+		id:dcDelegateImgage;
+		anchors.horizontalCenter: parent.horizontalCenter;
+		anchors.verticalCenter: parent.verticalCenter;
+		source: "apps/sudoku/img/btn_set_"+(parent.activeFocus? "focus": (parent.focused?"selected":"regular"))+".png";
+	}
+
 	SmallText {
 		id: delegateText;
 		x: 10;
@@ -70,10 +51,9 @@ DifficultyChooserDelegate : Rectangle {
 		Behavior on color { animation: Animation { duration: 200; } }
 	}
 
-	Behavior on color { animation: Animation { duration: 200; } }
-	Behavior on borderColor { animation: Animation { duration: 200; } }
 	Behavior on x { animation: Animation { duration: 400; easingType: Animation.OutCirc; } }
 }
+
 
 PlayerChooser : Item {
 	id: pChooserItem;
@@ -83,23 +63,8 @@ PlayerChooser : Item {
 	height: 50;
 	property alias currentIndex: listView.currentIndex;
 	property alias count: listView.count;
-	property int spacing: 1;
+	property int spacing: 36;
 	
-	/*Image {
-		anchors.left: parent.left;
-		anchors.verticalCenter: listView.verticalCenter;
-		anchors.rightMargin: 8;
-		source: "res/style/" + colorTheme.name + "/left.png";
-		visible: pChooserItem.showArrows;
-		opacity: parent.activeFocus ? 1 : 0.3;
-		width: 32;
-		
-		Behavior on opacity {
-			animation: Animation {
-				duration: 300;
-			}
-		}
-	}*/
 	
 	ListView {
 		id: listView;
@@ -117,22 +82,6 @@ PlayerChooser : Item {
 			postPositioningTimer.restart();
 		}
 	}
-	
-	/*Image {
-		anchors.right: parent.right;
-		anchors.verticalCenter: listView.verticalCenter;
-		anchors.rightMargin: 8;
-		source: "res/style/" + colorTheme.name + "/right.png";
-		visible: pChooserItem.showArrows;
-		opacity: parent.activeFocus ? 1 : 0.3;
-		width: 32;
-		
-		Behavior on opacity {
-			animation: Animation {
-				duration: 300;
-			}
-		}
-	}*/
 
 	Timer {
 		id: postPositioningTimer; // delegate's widths calculate correctly after next tick
@@ -163,24 +112,9 @@ DifficultyChooser : Item {
 	height: 50;
 	property alias currentIndex: listView.currentIndex;
 	property alias count: listView.count;
-	property int spacing: 1;
+	property int spacing: 23;
 	
-	/*Image {
-		anchors.left: parent.left;
-		anchors.verticalCenter: listView.verticalCenter;
-		anchors.rightMargin: 8;
-		source: "res/style/" + colorTheme.name + "/left.png";
-		visible: dChooserItem.showArrows;
-		opacity: parent.activeFocus ? 1 : 0.3;
-		width: 32;
-		
-		Behavior on opacity {
-			animation: Animation {
-				duration: 300;
-			}
-		}
-	}*/
-	
+
 	ListView {
 		id: listView;
 		anchors.fill: parent;
@@ -197,22 +131,6 @@ DifficultyChooser : Item {
 			postPositioningTimer.restart();
 		}
 	}
-	
-/*	Image {
-		anchors.right: parent.right;
-		anchors.verticalCenter: listView.verticalCenter;
-		anchors.rightMargin: 8;
-		source: "res/style/" + colorTheme.name + "/right.png";
-		visible: dChooserItem.showArrows;
-		opacity: parent.activeFocus ? 1 : 0.3;
-		width: 32;
-		
-		Behavior on opacity {
-			animation: Animation {
-				duration: 300;
-			}
-		}
-	}*/
 
 	Timer {
 		id: postPositioningTimer; // delegate's widths calculate correctly after next tick

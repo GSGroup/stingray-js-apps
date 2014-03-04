@@ -68,6 +68,7 @@ GameStats : Item {
 					anchors.horizontalCenter: parent.horizontalCenter;
 					text: listView.model.get(2).player;
 				}
+
 				SmallText {
 					id: time;
 					anchors.bottom: parent.top;
@@ -76,7 +77,6 @@ GameStats : Item {
 					text: Math.floor(listView.model.get(2).time/60)+":"+listView.model.get(2).time%60;
 				}
 			}
-
 		}
 
 				
