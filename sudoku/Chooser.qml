@@ -1,7 +1,7 @@
 /******
 *from controls/SimpleChooser.qml
 ******/
-
+/*
 PlayerChooserDelegate : Rectangle {
 	color: focused ? colorTheme.activeBorderColor : colorTheme.backgroundColor;
 	borderColor: activeFocus ? colorTheme.activeBorderColor : colorTheme.borderColor;
@@ -22,6 +22,32 @@ PlayerChooserDelegate : Rectangle {
 
 	Behavior on color { animation: Animation { duration: 200; } }
 	Behavior on borderColor { animation: Animation { duration: 200; } }
+	Behavior on x { animation: Animation { duration: 400; easingType: Animation.OutCirc; } }
+}
+*/
+
+PlayerChooserDelegate : Item {
+//	color: focused ? colorTheme.activeBorderColor : colorTheme.backgroundColor;
+//	borderColor: activeFocus ? colorTheme.activeBorderColor : colorTheme.borderColor;
+	width: delegateText.width + 20;
+	height: 28;
+	anchors.verticalCenter: parent.verticalCenter;
+	focus: true;
+	
+	SmallText {
+		id: delegateText;
+		x: 10;
+		anchors.verticalCenter: parent.verticalCenter;
+		color: parent.activeFocus ? colorTheme.activeTextColor : parent.parent.focused ? colorTheme.textColor : colorTheme.disabledTextColor;
+		text: model.player;
+		
+		Behavior on color { animation: Animation { duration: 200; } }
+	}
+	
+	Image {
+		  
+	}
+
 	Behavior on x { animation: Animation { duration: 400; easingType: Animation.OutCirc; } }
 }
 
@@ -59,7 +85,7 @@ PlayerChooser : Item {
 	property alias count: listView.count;
 	property int spacing: 1;
 	
-	Image {
+	/*Image {
 		anchors.left: parent.left;
 		anchors.verticalCenter: listView.verticalCenter;
 		anchors.rightMargin: 8;
@@ -73,7 +99,7 @@ PlayerChooser : Item {
 				duration: 300;
 			}
 		}
-	}
+	}*/
 	
 	ListView {
 		id: listView;
@@ -92,7 +118,7 @@ PlayerChooser : Item {
 		}
 	}
 	
-	Image {
+	/*Image {
 		anchors.right: parent.right;
 		anchors.verticalCenter: listView.verticalCenter;
 		anchors.rightMargin: 8;
@@ -106,7 +132,7 @@ PlayerChooser : Item {
 				duration: 300;
 			}
 		}
-	}
+	}*/
 
 	Timer {
 		id: postPositioningTimer; // delegate's widths calculate correctly after next tick
@@ -139,7 +165,7 @@ DifficultyChooser : Item {
 	property alias count: listView.count;
 	property int spacing: 1;
 	
-	Image {
+	/*Image {
 		anchors.left: parent.left;
 		anchors.verticalCenter: listView.verticalCenter;
 		anchors.rightMargin: 8;
@@ -153,7 +179,7 @@ DifficultyChooser : Item {
 				duration: 300;
 			}
 		}
-	}
+	}*/
 	
 	ListView {
 		id: listView;
@@ -172,7 +198,7 @@ DifficultyChooser : Item {
 		}
 	}
 	
-	Image {
+/*	Image {
 		anchors.right: parent.right;
 		anchors.verticalCenter: listView.verticalCenter;
 		anchors.rightMargin: 8;
@@ -186,7 +212,7 @@ DifficultyChooser : Item {
 				duration: 300;
 			}
 		}
-	}
+	}*/
 
 	Timer {
 		id: postPositioningTimer; // delegate's widths calculate correctly after next tick
