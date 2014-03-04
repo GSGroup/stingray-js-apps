@@ -77,6 +77,20 @@ GameStats : Item {
 					text: Math.floor(listView.model.get(2).time/60)+":"+listView.model.get(2).time%60;
 				}
 			}
+			
+			function reSetHeader(){
+
+			    this.headerItem.firstPlace.player.text = this.listView.model.get(0).player;
+			    this.headerItem.firstPlace.time.text =  Math.floor(this.listView.model.get(0).time/60)+":"+
+												   this.listView.model.get(0).time%60;
+			    this.headerItem.secondPlace.player.text = this.listView.model.get(1).player;
+			    this.headerItem.secondPlace.time.text = Math.floor(this.listView.model.get(1).time/60)+":"+
+												    this.listView.model.get(1).time%60;
+			    this.headerItem.thirdPlace.player.text = this.listView.model.get(2).player;
+			    this.headerItem.thirdPlace.time.text = Math.floor(this.listView.model.get(2).time/60)+":"+
+												    this.listView.model.get(2).time%60;
+				
+			}
 		}
 
 				
@@ -147,15 +161,7 @@ GameStats : Item {
 				}
 			}
 
-			this.headerItem.firstPlace.player.text = this.listView.model.get(0).player;
-			this.headerItem.firstPlace.time.text =  Math.floor(this.listView.model.get(0).time/60)+":"+
-												   this.listView.model.get(0).time%60;
-			this.headerItem.secondPlace.player.text = this.listView.model.get(1).player;
-			this.headerItem.secondPlace.time.text = Math.floor(this.listView.model.get(1).time/60)+":"+
-												    this.listView.model.get(1).time%60;
-			this.headerItem.thirdPlace.player.text = this.listView.model.get(2).player;
-			this.headerItem.thirdPlace.time.text = Math.floor(this.listView.model.get(2).time/60)+":"+
-												    this.listView.model.get(2).time%60;
+			this.headerItem.reSetHeader()
 			
 		}
 
@@ -178,6 +184,9 @@ GameStats : Item {
                 for(var i=0; i<Math.min(8,tmpModel.length);++i){
 						this.listView.model.append(tmpModel[i]);
                 }
+
+				this.headerItem.reSetHeader();
+
 				this.modelToStats();
 				this.saveStats();
         }

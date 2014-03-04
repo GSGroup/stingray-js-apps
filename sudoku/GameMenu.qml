@@ -1,3 +1,4 @@
+import controls.Button;
 import controls.FocusablePanel;
 import EditPlayerNamePanel;
 import Chooser;
