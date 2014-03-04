@@ -86,8 +86,8 @@ Application {
 
 			Game {
 				id: game;
-				height: parent.width/1.1;
-				width: parent.width/1.1;
+				height: safeArea.width/1.1;
+				width: safeArea.width/1.1;
                 anchors.horizontalCenter: parent.horizontalCenter;
                 isIncomplete: false;
 
@@ -190,5 +190,4 @@ Application {
 			anchors.leftMargin: 70;
 			width: 50;
         }
-
 }
