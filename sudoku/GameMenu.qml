@@ -12,10 +12,14 @@ GameMenu : Item {
 		event helpEvent();
 		event enablePlayBtnEvent(player,difficulty);
 
+
         PlayerChooser {
                 id: playerChooser;
+//                anchors.left: parent.left;
+				width: 400;
+//				anchors.horizontalCenter: parent.horizontalCenter;
                 anchors.left: parent.left;
-                anchors.right: parent.right;
+				anchors.leftMargin: 55;
                 anchors.top: parent.top;
 
 				onDownPressed: {
@@ -24,7 +28,7 @@ GameMenu : Item {
 				}
                 
                 onSelectPressed: {
-                        pNameEdit.show();
+                    pNameEdit.show();
                 }
 
 				onCurrentIndexChanged: {
@@ -35,9 +39,14 @@ GameMenu : Item {
 
         DifficultyChooser {
                 id: difficultyChooser;
-                anchors.left: parent.left;
-                anchors.right: parent.right;
+
                 anchors.top: playerChooser.bottom ; 
+				anchors.topMargin: 15;
+                anchors.left: parent.left;
+			   	anchors.leftMargin: 55;
+				width: 400;
+
+
                 
 				onUpPressed: {
 					playerChooser.setFocus();

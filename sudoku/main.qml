@@ -9,31 +9,41 @@ Application {
 	    focus: true;
 	    name: "sudoku";
 	    displayName: qsTr("Sudoku");
+		anchors.horizontalCenter: safeArea.horizontalCenter;
+		anchors.verticalCenter: safeArea.verticalCenter;		
 
-	    MainText {
-		        id: titleText;
-		        anchors.top: parent.top;
-		        anchors.horizontalCenter: pageStack.game.horizontalCenter;
-                color: "#A4A4A4";
-                style: Text.Outline;
-                styleColor: "#AA2222";
-		        text: "sudoku";
-        }
+		Image {
+			 id: mainMenuTheme;
+			 anchors.horizontalCenter: parent.horizontalCenter;
+			 anchors.verticalCenter: parent.verticalCenter;
+			 source: "apps/sudoku/img/ground_main.png";
+
+		}
+
+
+		 BigText {
+	     	id: titleText;
+			anchors.horizontalCenter: parent.horizontalCenter;
+			anchors.top: parent.top;
+			anchors.topMargin: 140;
+            color: "#FFFFFF";
+            text: "sudoku";
+       	}
 		
 		PageStack {
 			id: pageStack;
 
             anchors.top: titleText.bottom;
+			anchors.verticalCenter: parent.verticalCenter;
 			anchors.horizontalCenter: parent.horizontalCenter;
-            width: 700;
-			anchors.topMargin: 10;
-			anchors.leftMargin: control.width + control.anchors.leftMargin;
-			anchors.rightMargin: control.width + control.anchors.leftMargin;
-
+            width: 500;
+			anchors.topMargin: 40;
 	
 	        GameMenu {
 	        	id: gameMenu;
-				anchors.fill: parent;
+				anchors.horizontalCenter: parent.horizontalCenter;
+				anchors.verticalCenter: parent.verticalCenter;
+				width: 400;
 				
                 onNewGameEvent: {
                     log("onNewGameEvent player = "+player+" difficulty "+difficulty);
@@ -63,13 +73,14 @@ Application {
 
 				onDifficultySet: {
 					gameStats.filterByDifficulty(difficulty);
-//					this.reFillPlayerChooser(gameStats.listView.model);
 				}
 				
 				onEnablePlayBtnEvent: {
-					log("player = "+player+" difficulty = "+difficulty+" his game?: "+(player==game.player && difficulty==game.difficulty)); 
+					log("player = "+player+
+					" difficulty = "+difficulty+
+					" his game?: "+(player==game.player && difficulty==game.difficulty));
+ 
 					this.playButton.enabled=(player==game.player && difficulty==game.difficulty && game.isIncomplete);
-
 				}
         	}
 
@@ -100,7 +111,9 @@ Application {
 				}
 
 				onGameOverEvent: {
-                    gameStats.addNrestat({player: this.player, time: this.timeIndicator.sec, difficulty: gameMenu.difficultyChooser.listView.currentIndex+1});
+                    gameStats.addNrestat({player: this.player, 
+										  time: this.timeIndicator.sec, 
+										  difficulty: gameMenu.difficultyChooser.listView.currentIndex+1});
 					gameMenu.savePlayers();
 				    this.gameReset();
                     this.isIncomplete = false;
@@ -165,35 +178,17 @@ Application {
 		        onDataChanged: {
 			            gameMenu.load(JSON.parse(this.data));
                         gameStats.load(JSON.parse(this.data));
-//						gameMenu.reFillPlayerChooser(gameStats.listView.model);
-						var t = load("test");
-             			log("t.a = "+t.a);
-		        }
-	    }
-        
-	    SmallText {
-		        id: control;
-		        anchors.verticalCenter: parent.verticalCenter;
-		        anchors.left: parent.left;
-		        anchors.leftMargin: 70;
-		        color: "#7c83ad";
-		        text: "Control";
-
-		        Image {
-						id:img;
-			            anchors.top: parent.top;
-			            anchors.left: parent.left;
-			            source: "apps/sudoku/img/control.png";
-			            visible: parent.visible;
 		        }
 	    }
         
         GameStats {
             id: gameStats;
 			difficulty: gameMenu.difficultyChooser.listView.currentIndex+1;
-            anchors.top: gameMenu.difficultyChooser.bottom;
-            anchors.right: parent.right;
-            anchors.rightMargin: 145;
+			anchors.top: pageStack.top;
+			anchors.topMargin: 120;
+            anchors.left: pageStack.right;
+			anchors.leftMargin: 70;
+			width: 50;
         }
 
 }
