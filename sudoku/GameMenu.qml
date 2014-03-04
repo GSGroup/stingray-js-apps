@@ -1,4 +1,4 @@
-import controls.Button;
+import controls.FocusablePanel;
 import EditPlayerNamePanel;
 import Chooser;
 
@@ -63,16 +63,35 @@ GameMenu : Item {
 				}
         }
 
-		Button {
+		FocusablePanel {
 			id: newGameButton;
 			anchors.top: difficultyChooser.bottom;
 			anchors.horizontalCenter: parent.horizontalCenter;
-			anchors.topMargin: 10;
-			anchors.bottomMargin: 10;
+			anchors.topMargin: 15;
+//			anchors.bottomMargin: 10;
 			width: 250;
 			height: 50;
 			font: bigFont;
-			text: "New Game";
+
+			borderColor: "#00000000";
+			borderWidth: 0;
+			radius: 0;
+			color: "#00000000";
+
+			Image {
+				id:dcDelegateImgage;
+				anchors.horizontalCenter: parent.horizontalCenter;
+				anchors.verticalCenter: parent.verticalCenter;
+ 				source: "apps/sudoku/img/btn_main_"+(parent.enabled?(parent.activeFocus? "focus":"regular"):"disabled")+".png";
+			}
+
+			SmallText {
+				id: txt;
+				anchors.verticalCenter: parent.verticalCenter;
+				anchors.horizontalCenter: parent.horizontalCenter;
+				color: parent.activeFocus ? colorTheme.activeTextColor : colorTheme.textColor;
+				text:"New Game";
+			}
 			
 			onUpPressed: {
 				difficultyChooser.setFocus();
@@ -89,17 +108,36 @@ GameMenu : Item {
 			}
 		}
 
-		Button {
+		FocusablePanel {
 			id: playButton;
 			anchors.top: newGameButton.bottom;
 			anchors.horizontalCenter: parent.horizontalCenter;
-			anchors.topMargin: 10;
-			anchors.bottomMargin: 10;
+			anchors.topMargin: 5;
+
 			width: 250;
 			height: 50;
-			font: bigFont;
-			text: "Play";
             enabled: false;
+			borderColor: "#00000000";
+			borderWidth: 0;
+			radius: 0;
+			color: "#00000000";
+
+
+			Image {
+				id:dcDelegateImgage;
+				anchors.horizontalCenter: parent.horizontalCenter;
+				anchors.verticalCenter: parent.verticalCenter;
+ 				source: "apps/sudoku/img/btn_main_"+(parent.enabled?(parent.activeFocus? "focus":"regular"):"disabled")+".png";
+			}
+
+			SmallText {
+				id: txt;
+				anchors.verticalCenter: parent.verticalCenter;
+				anchors.horizontalCenter: parent.horizontalCenter;
+				color: parent.activeFocus ? colorTheme.activeTextColor : colorTheme.textColor;
+				text:"Play";
+			}
+
 			
 			onUpPressed: {
 				newGameButton.setFocus();
@@ -117,17 +155,38 @@ GameMenu : Item {
 		}
 
 
-		Button {
+		FocusablePanel {
 			id: helpButton;
 			anchors.top: playButton.bottom;
 			anchors.horizontalCenter: parent.horizontalCenter;
 			width: 250;
 			height: 50;
-			anchors.topMargin: 10;
-			anchors.bottomMargin: 10;
+			anchors.topMargin: 5;
+
 			font: bigFont;
 			text: "Help";
+			borderColor: "#00000000";
+			borderWidth: 0;
+			radius: 0;
+			color: "#00000000";
 			
+
+			Image {
+				id:dcDelegateImgage;
+				anchors.horizontalCenter: parent.horizontalCenter;
+				anchors.verticalCenter: parent.verticalCenter;
+ 				source: "apps/sudoku/img/btn_main_"+(parent.enabled?(parent.activeFocus? "focus":"regular"):"disabled")+".png";
+			}
+
+
+			SmallText {
+				id: txt;
+				anchors.verticalCenter: parent.verticalCenter;
+				anchors.horizontalCenter: parent.horizontalCenter;
+				color: parent.activeFocus ? colorTheme.activeTextColor : colorTheme.textColor;
+				text:"Help";
+			}
+
 			onUpPressed: {
                 playButton.enabled?playButton.setFocus():newGameButton.setFocus();
 			}
