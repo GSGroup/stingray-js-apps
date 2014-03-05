@@ -1,4 +1,5 @@
 import controls.Button;
+import controls.FocusablePanel;
 import EditPlayerNamePanel;
 import Chooser;
 
@@ -12,10 +13,14 @@ GameMenu : Item {
 		event helpEvent();
 		event enablePlayBtnEvent(player,difficulty);
 
+
         PlayerChooser {
                 id: playerChooser;
+//                anchors.left: parent.left;
+				width: 400;
+//				anchors.horizontalCenter: parent.horizontalCenter;
                 anchors.left: parent.left;
-                anchors.right: parent.right;
+				anchors.leftMargin: 55;
                 anchors.top: parent.top;
 
 				onDownPressed: {
@@ -24,7 +29,7 @@ GameMenu : Item {
 				}
                 
                 onSelectPressed: {
-                        pNameEdit.show();
+                    pNameEdit.show();
                 }
 
 				onCurrentIndexChanged: {
@@ -35,9 +40,14 @@ GameMenu : Item {
 
         DifficultyChooser {
                 id: difficultyChooser;
-                anchors.left: parent.left;
-                anchors.right: parent.right;
+
                 anchors.top: playerChooser.bottom ; 
+				anchors.topMargin: 15;
+                anchors.left: parent.left;
+			   	anchors.leftMargin: 55;
+				width: 400;
+
+
                 
 				onUpPressed: {
 					playerChooser.setFocus();
@@ -54,16 +64,35 @@ GameMenu : Item {
 				}
         }
 
-		Button {
+		FocusablePanel {
 			id: newGameButton;
 			anchors.top: difficultyChooser.bottom;
 			anchors.horizontalCenter: parent.horizontalCenter;
-			anchors.topMargin: 10;
-			anchors.bottomMargin: 10;
+			anchors.topMargin: 15;
+//			anchors.bottomMargin: 10;
 			width: 250;
 			height: 50;
 			font: bigFont;
-			text: "New Game";
+
+			borderColor: "#00000000";
+			borderWidth: 0;
+			radius: 0;
+			color: "#00000000";
+
+			Image {
+				id:dcDelegateImgage;
+				anchors.horizontalCenter: parent.horizontalCenter;
+				anchors.verticalCenter: parent.verticalCenter;
+ 				source: "apps/sudoku/img/btn_main_"+(parent.enabled?(parent.activeFocus? "focus":"regular"):"disabled")+".png";
+			}
+
+			SmallText {
+				id: txt;
+				anchors.verticalCenter: parent.verticalCenter;
+				anchors.horizontalCenter: parent.horizontalCenter;
+				color: parent.activeFocus ? colorTheme.activeTextColor : colorTheme.textColor;
+				text:"New Game";
+			}
 			
 			onUpPressed: {
 				difficultyChooser.setFocus();
@@ -80,17 +109,36 @@ GameMenu : Item {
 			}
 		}
 
-		Button {
+		FocusablePanel {
 			id: playButton;
 			anchors.top: newGameButton.bottom;
 			anchors.horizontalCenter: parent.horizontalCenter;
-			anchors.topMargin: 10;
-			anchors.bottomMargin: 10;
+			anchors.topMargin: 5;
+
 			width: 250;
 			height: 50;
-			font: bigFont;
-			text: "Play";
             enabled: false;
+			borderColor: "#00000000";
+			borderWidth: 0;
+			radius: 0;
+			color: "#00000000";
+
+
+			Image {
+				id:dcDelegateImgage;
+				anchors.horizontalCenter: parent.horizontalCenter;
+				anchors.verticalCenter: parent.verticalCenter;
+ 				source: "apps/sudoku/img/btn_main_"+(parent.enabled?(parent.activeFocus? "focus":"regular"):"disabled")+".png";
+			}
+
+			SmallText {
+				id: txt;
+				anchors.verticalCenter: parent.verticalCenter;
+				anchors.horizontalCenter: parent.horizontalCenter;
+				color: parent.activeFocus ? colorTheme.activeTextColor : colorTheme.textColor;
+				text:"Play";
+			}
+
 			
 			onUpPressed: {
 				newGameButton.setFocus();
@@ -108,17 +156,38 @@ GameMenu : Item {
 		}
 
 
-		Button {
+		FocusablePanel {
 			id: helpButton;
 			anchors.top: playButton.bottom;
 			anchors.horizontalCenter: parent.horizontalCenter;
 			width: 250;
 			height: 50;
-			anchors.topMargin: 10;
-			anchors.bottomMargin: 10;
+			anchors.topMargin: 5;
+
 			font: bigFont;
 			text: "Help";
+			borderColor: "#00000000";
+			borderWidth: 0;
+			radius: 0;
+			color: "#00000000";
 			
+
+			Image {
+				id:dcDelegateImgage;
+				anchors.horizontalCenter: parent.horizontalCenter;
+				anchors.verticalCenter: parent.verticalCenter;
+ 				source: "apps/sudoku/img/btn_main_"+(parent.enabled?(parent.activeFocus? "focus":"regular"):"disabled")+".png";
+			}
+
+
+			SmallText {
+				id: txt;
+				anchors.verticalCenter: parent.verticalCenter;
+				anchors.horizontalCenter: parent.horizontalCenter;
+				color: parent.activeFocus ? colorTheme.activeTextColor : colorTheme.textColor;
+				text:"Help";
+			}
+
 			onUpPressed: {
                 playButton.enabled?playButton.setFocus():newGameButton.setFocus();
 			}
@@ -151,7 +220,8 @@ GameMenu : Item {
         function load(data)
         {
               log("loading players..");
-                this.players = data ["players"];
+//                this.players = data ["players"];
+				this.players = load("sudokuPlayers");
                 for (var i = 0; i < this.players.length; ++i){
                         mainMenu.playerChooser.append(this.players[i]);
                 }
@@ -171,7 +241,14 @@ GameMenu : Item {
 		}
 
 		function savePlayers()
-		{}
+		{
+			var players =[];
+			for(var i =0 ;i<mainMenu.playerChooser.listView.model.count;++i){
+				players.push(mainMenu.playerChooser.listView.model.get(i));
+			}
+			log("plaerys "+players);
+			save("sudokuPlayers",players);
+		}
 }
 
 
