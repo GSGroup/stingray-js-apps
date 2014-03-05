@@ -95,19 +95,31 @@ Game: Rectangle {
 	}
 
 
+	
+
     BigText {
             id: difficultyIndicator;
             anchors.top: parent.top;
+			anchors.topMargin: 37;
             anchors.right: parent.right;
-            anchors.rightMargin: 20;
+            anchors.rightMargin: 100;
             text: parent.difficulty;
     }
 
 	BigText {
+			anchors.bottom: difficultyIndicator.top;
+			anchors.bottomMargin: 30;
+			anchors.horizontalCenter: difficultyIndicator.horizontalCenter;
+			text:"level:"
+	}
+
+	BigText {
 		id:timeIndicator;
-		anchors.top: parent.top;
-		anchors.right: parent.right;
-		anchors.leftMargin: 20;
+		anchors.top: difficultyIndicator.bottom;
+		anchors.topMargin: 93;
+//		anchors.right: parent.right;
+//		anchors.rightMargin: 110;
+		anchors.horizontalCenter: difficultyIndicator.horizontalCenter;
 		property int sec: 0;
 		text: Math.floor(sec/60)+":"+sec%60;
 
@@ -121,6 +133,14 @@ Game: Rectangle {
 			}
 		}
 	}
+
+	BigText {
+			anchors.bottom: timeIndicator.top;
+			anchors.bottomMargin: 30;
+			anchors.horizontalCenter: difficultyIndicator.horizontalCenter;
+			text:"time:"
+	}
+
 	
 /*	ListView {
 		id: digitChooser;
