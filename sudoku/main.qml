@@ -20,7 +20,6 @@ Application {
 
 		}
 
-
 		 BigText {
 	     	id: titleText;
 			anchors.horizontalCenter: parent.horizontalCenter;
@@ -48,10 +47,12 @@ Application {
                 onNewGameEvent: {
                     log("onNewGameEvent player = "+player+" difficulty "+difficulty);
 					pageStack.currentIndex = 1;
+					gameStats.opacity=0.01;
                     game.gameReset(difficulty);
                     game.difficulty = difficulty;
                     game.player = player;
                     log("GAME.PLAYER "+game.player+ " PLAYER "+player);
+					gameStats.opacity=0.01;
 					game.setFocus();
 
                 }
@@ -62,7 +63,7 @@ Application {
 					    pageStack.currentIndex = 1;
 
 		                if(game.timeIndicator.sec!=0) game.timeIndicator.timer.start();
-
+						gameStats.opacity=0.01;
 					    game.setFocus();
                     }
 				}
@@ -121,7 +122,7 @@ Application {
 					gameOverBox.subText.text=result;
 					pageStack.currentIndex = 3;
 					gameOverBox.setFocus();
-
+				
 				}
 			}
 
@@ -144,6 +145,7 @@ Application {
 					gameMenu.setFocus();
                     game.isIncomplete = true;
                     gameMenu.playButton.enabled = true;
+					gameStats.opacity=1;
 				}
 
 			}
@@ -167,6 +169,7 @@ Application {
 				onBackPressed: {
 					pageStack.currentIndex = 0;
 					gameMenu.setFocus();
+					gameStats.opacity=1;
 				}
 			}
 		}
@@ -189,5 +192,12 @@ Application {
             anchors.left: pageStack.right;
 			anchors.leftMargin: 70;
 			width: 50;
+			opacity: 1;
+
+			Behavior on opacity {
+			    animation: Animation {
+				     duration: 300;
+			    }
+		    }
         }
 }
