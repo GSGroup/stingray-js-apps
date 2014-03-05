@@ -5,9 +5,10 @@ CellDelegate : Rectangle {
 	id: cellItemDelegate;
 	width: Math.floor(parent.width/9);
 	height: Math.floor(parent.width/9);
-	color: focused ? "#008888" :(Math.floor((modelIndex%9)/3)+Math.floor(Math.floor(modelIndex/9)/3))%2==0?"#5E5E5E":"#AEAEAE" ;
-	borderColor: "#D3D3D3";
-	borderWidth: 1;
+//	color: focused ? "#008888" :(Math.floor((modelIndex%9)/3)+Math.floor(Math.floor(modelIndex/9)/3))%2==0?"#5E5E5E":"#AEAEAE" ;
+	color: focused ? "#008888" :"#00000000";
+//	borderColor: "#D3D3D3";
+//	borderWidth: 1;
 
 
 	BigText {
@@ -21,15 +22,21 @@ CellDelegate : Rectangle {
 		text:  model.shownValue;
 	}
 
-    SmallText {
+    Text {
         id: hint1;
-        anchors.top: parent.top;
-        anchors.left: parent.left;
-        width: parent.width/15;
-        height: parent.height/15;
+//        anchors.top: parent.top;
+//        anchors.left: parent.left;
+		  anchors.horizontalCenter:parent.horizontalCenter;
+		  anchors.verticalCenter: parent.verticalCenter;
+//        width: parent.width/15;
+//        height: parent.height/15;
         anchors.leftMargin:5;
-        anchors.topMargin:2;
+        anchors.topMargin:12;
 		color: "#393939";
+		font: Font {
+			  family: "Proxima Nova Condensed";
+			  pixelSize:20;
+		}
         text:  model.isBase?"":(model.shownValue===""?(model.isHint1?"1":"  " ):"")+"   "+
 			  (model.isBase?"":(model.shownValue===""?(model.isHint2?"2":"   "):""))+"  "+
 			  (model.isBase?"":(model.shownValue===""?(model.isHint3?"3":"   "):""))+"\n"+
@@ -80,10 +87,26 @@ Game: Rectangle {
     property string player;
     property string difficulty;
 
+	Image {
+		 id: mainGameTheme;
+		 anchors.horizontalCenter: safeArea.horizontalCenter;
+		 anchors.verticalCenter: safeArea.verticalCenter;
+		 source: "apps/sudoku/img/ground_game.png";
+	}
+
+
+    BigText {
+            id: difficultyIndicator;
+            anchors.top: parent.top;
+            anchors.right: parent.right;
+            anchors.rightMargin: 20;
+            text: parent.difficulty;
+    }
+
 	BigText {
 		id:timeIndicator;
 		anchors.top: parent.top;
-		anchors.left: parent.right;
+		anchors.right: parent.right;
 		anchors.leftMargin: 20;
 		property int sec: 0;
 		text: Math.floor(sec/60)+":"+sec%60;
@@ -98,14 +121,6 @@ Game: Rectangle {
 			}
 		}
 	}
-
-    BigText {
-            id: difficultyIndicator;
-            anchors.top: timeIndicator.bottom;
-            anchors.left: parent.right;
-            anchors.leftMargin: 20;
-            text: parent.difficulty;
-    }
 	
 /*	ListView {
 		id: digitChooser;
@@ -194,11 +209,13 @@ Game: Rectangle {
 
 	GridView {
 		id: gameView;
-		anchors.fill: parent;
+		anchors.horizontalCenter: mainGameTheme.horizontalCenter;
+		anchors.verticalCenter: mainGameTheme.verticalCenter;
 		focus: true;
+		height: mainGameTheme.height-142;
+		width: mainGameTheme.height-142;
 		cellWidth: width/9;
 		cellHeight: height/9;
-
 		model: GameFieldModel {}
 
 		delegate: CellDelegate{} 
@@ -227,8 +244,6 @@ Game: Rectangle {
 				   gameItem.gameOverEvent(gameOverText);
 				}
 			}
-
-
 		}
 
 		function fillModel(hintsBool){
