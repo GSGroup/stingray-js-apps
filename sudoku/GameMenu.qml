@@ -13,6 +13,13 @@ GameMenu : Item {
 		event helpEvent();
 		event enablePlayBtnEvent(player,difficulty);
 
+		Image {
+			 id: mainMenuTheme;
+			 anchors.horizontalCenter: safeArea.horizontalCenter;
+			 anchors.verticalCenter: safeArea.verticalCenter;
+			 source: "apps/sudoku/img/ground_main.png";
+
+		}
 
         PlayerChooser {
                 id: playerChooser;
@@ -259,9 +266,17 @@ GameSubMenu : Item {
 		event continueEvent();
 		event menuCallEvent();
 
+		Image {
+			 id: subMenuTheme;
+			 anchors.horizontalCenter: safeArea.horizontalCenter;
+			 anchors.verticalCenter: safeArea.verticalCenter;
+			 source: "apps/sudoku/img/ground_pause.png";
+		}
+
 		BigText {
 			id: playerInfoText;
-			anchors.topMargin: 40;
+			anchors.top: subMenuTheme.top;
+			anchors.topMargin: 140;
 			anchors.horizontalCenter: parent.horizontalCenter;
 			text: "";
 		}
@@ -269,12 +284,12 @@ GameSubMenu : Item {
 		BigText {
 			id: gameInfoText;
 			anchors.top: playerInfoText.bottom;
-			anchors.topMargin: 40;
+			anchors.topMargin: 20;
 			anchors.horizontalCenter: parent.horizontalCenter;
 		 
 		}
 
-		Button {
+		FocusablePanel {
 			id: continueButton;
 			anchors.top: gameInfoText.bottom;
 			anchors.horizontalCenter: parent.horizontalCenter;
@@ -282,8 +297,26 @@ GameSubMenu : Item {
 			anchors.bottomMargin: 10;
 			width: 250;
 			height: 50;
-			font: bigFont;
-			text: "continue";
+
+			borderColor: "#00000000";
+			borderWidth: 0;
+			radius: 0;
+			color: "#00000000";
+
+			Image {
+				anchors.horizontalCenter: parent.horizontalCenter;
+				anchors.verticalCenter: parent.verticalCenter;
+ 				source: "apps/sudoku/img/btn_main_"+(parent.activeFocus? "focus":"regular")+".png";
+			}
+
+			SmallText {
+				id: txt;
+				anchors.verticalCenter: parent.verticalCenter;
+				anchors.horizontalCenter: parent.horizontalCenter;
+				color: parent.activeFocus ? colorTheme.activeTextColor : colorTheme.textColor;
+				text:"continue";
+			}
+
 			
 			onUpPressed: {
 			}
@@ -299,7 +332,7 @@ GameSubMenu : Item {
 		}
 
 
-		Button {
+		FocusablePanel {
 			id: menuCallButton;
 			anchors.top: continueButton.bottom;
 			anchors.horizontalCenter: parent.horizontalCenter;
@@ -307,8 +340,26 @@ GameSubMenu : Item {
 			height: 50;
 			anchors.topMargin: 10;
 			anchors.bottomMargin: 10;
-			font: bigFont;
-			text: "to main menu";
+
+
+			borderColor: "#00000000";
+			borderWidth: 0;
+			radius: 0;
+			color: "#00000000";
+
+			Image {
+				anchors.horizontalCenter: parent.horizontalCenter;
+				anchors.verticalCenter: parent.verticalCenter;
+ 				source: "apps/sudoku/img/btn_main_"+(parent.activeFocus? "focus":"regular")+".png";
+			}
+
+			SmallText {
+				id: txt;
+				anchors.verticalCenter: parent.verticalCenter;
+				anchors.horizontalCenter: parent.horizontalCenter;
+				color: parent.activeFocus ? colorTheme.activeTextColor : colorTheme.textColor;
+				text:"to main menu";
+			}
 			
 			onUpPressed: {
 				continueButton.setFocus();

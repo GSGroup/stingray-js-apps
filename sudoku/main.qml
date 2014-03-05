@@ -12,13 +12,6 @@ Application {
 		anchors.horizontalCenter: safeArea.horizontalCenter;
 		anchors.verticalCenter: safeArea.verticalCenter;		
 
-		Image {
-			 id: mainMenuTheme;
-			 anchors.horizontalCenter: parent.horizontalCenter;
-			 anchors.verticalCenter: parent.verticalCenter;
-			 source: "apps/sudoku/img/ground_main.png";
-
-		}
 
 		 BigText {
 	     	id: titleText;
