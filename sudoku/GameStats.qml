@@ -96,7 +96,7 @@ GameStats : Item {
 				
         ListView {
             id:listView;
-            anchors.top: gameStatsHead.bottom;
+            anchors.top: gameStats.headerItem.bottom;
 //            anchors.left: parent.left;
 //            anchors.right: parent.right;
 			anchors.horizontalCenter: headerItem.horizontalCenter;
