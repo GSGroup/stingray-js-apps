@@ -94,25 +94,29 @@ Application {
 
 				}
 				
-				onKeyPressed: // testmode
+				onKeyPressed: 
 				{
 					if(key=="A")
 					{
 						this.gameOverEvent("test");
 					}
-
 					log("KEY PRESSED")
 				}
 
 				onGameOverEvent: {
-                    gameStats.addNrestat({player: this.player, 
-										  time: this.timeIndicator.sec, 
-										  difficulty: gameMenu.difficultyChooser.listView.currentIndex+1});
+                    if(result) {
+						gameStats.addNrestat({player: this.player, 
+													  time: this.timeIndicator.sec, 
+										  			  difficulty: gameMenu.difficultyChooser.listView.currentIndex+1});
+					}
 					gameMenu.savePlayers();
+					gameOverBox.player.text=this.player;
+					gameOverBox.difficulty.text=this.difficulty;
+					gameOverBox.time.text=Math.floor(this.timeIndicator.sec/60)+":"+this.timeIndicator.sec%60;
+
 				    this.gameReset();
                     this.isIncomplete = false;
                     gameMenu.playButton.enabled = false;
-					gameOverBox.subText.text=result;
 					pageStack.currentIndex = 3;
 					gameOverBox.setFocus();
 				
@@ -143,26 +147,30 @@ Application {
 
 			}
 
-			 Item {
+			 GameOverBox {
 				id: gameOverBox;
 				anchors.verticalCenter: parent.anchors.verticalCenter;
 				anchors.horizontalCenter: parent.anchors.horizontalCenter;
-				height:150;
-				width:350;
-				focus: true;
-
-				BigText {
-					id: subText;
-					anchors.topMargin:20;
-					anchors.verticalCenter: gameOverBox.anchors.verticalCenter;
-					anchors.horizontalCenter: gameOverBox.anchors.horizontalCenter;
-					text:"";
-				}
                      
 				onBackPressed: {
 					pageStack.currentIndex = 0;
 					gameMenu.setFocus();
 					gameStats.opacity=1;
+				}
+				
+				onMenuCallEvent: {
+					pageStack.currentIndex = 0;
+					gameMenu.setFocus();
+					gameStats.opacity=1;
+				}
+
+				onContinueEvent: {
+					pageStack.currentIndex = 1;
+					gameStats.opacity=0.01;
+                    game.gameReset(game.difficulty);
+					gameStats.opacity=0.01;
+					game.setFocus();
+					
 				}
 			}
 		}

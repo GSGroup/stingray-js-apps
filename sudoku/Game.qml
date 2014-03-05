@@ -259,9 +259,7 @@ Game: Rectangle {
             	else { log("TIMER IS RUNNING");}
 				if (gameItem.isFilled()){
 				   gameItem.timeIndicator.timer.stop();
-				   var gameOverText = "YOU ";
-				   (!gameItem.fullStateCheck())?(gameOverText+="WIN!"):(gameOverText+="LOSE");
-				   gameItem.gameOverEvent(gameOverText);
+				   gameItem.gameOverEvent(!gameItem.fullStateCheck());
 				}
 			}
 		}
