@@ -9,9 +9,7 @@
     [
 	{"player" : "test1"},
 	{"player" : "test2"},
-	{"player" : "test3"},
-	{"player" : "test4"},
-	{"player" : "test5"}
+	{"player" : "test3"}
     ],
     "stats":
     [

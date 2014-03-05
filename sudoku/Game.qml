@@ -427,7 +427,7 @@ Game: Rectangle {
 			this.gameView.model.setProperty(index,'shownValue',number);
 		}
 		
-		this.reSetHints(index);
+		if(this.difficulty=="easy") this.reSetHints(index);
 	//	this.setHints();
 	}
 
