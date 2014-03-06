@@ -109,26 +109,29 @@ GameStats : Item {
                 visible: modelIndex>2;
 				anchors.horizontalCenter: parent.horizontalCenter;
 
+				Image {
+					 id:progress;
+					 anchors.verticalCenter: time.verticalCenter;
+					 anchors.right: player.left;
+					 anchors.rightMargin: 5;
+					 source: "apps/sudoku/img/ico_level_"+(model.isBetter?"up":"down")+".png";
+				}
+
                 SmallText {
                     id: player;
                     anchors.top: parent.top;
-                    anchors.left: parent.left;
+					anchors.horizontalCenter: parent.horizontalCenter;
                     text: model.player;
                 }
 
                 SmallText {
                     id:time;
                     anchors.top: parent.top;
-                    anchors.right: parent.right;
+                    anchors.left: player.right;
+					anchors.leftMargin: 5;
                     text: Math.floor(model.time/60)+":"+model.time%60;   
                 }
 
-				Image {
-					 id:progress;
-					 anchors.verticalCenter: time.verticalCenter;
-					 anchors.left: time.right;
-					 source: "apps/sudoku/img/ico_level_"+(model.isBetter?"up":"down")+".png";
-				}
             }
         }
 
