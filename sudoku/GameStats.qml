@@ -104,10 +104,11 @@ GameStats : Item {
             height: 700;
             model: ListModel { }
             delegate: Item {
-                width:100;
+                width:150;
                 height:modelIndex>2?40:0;
                 visible: modelIndex>2;
 				anchors.horizontalCenter: parent.horizontalCenter;
+
                 SmallText {
                     id: player;
                     anchors.top: parent.top;
@@ -121,6 +122,13 @@ GameStats : Item {
                     anchors.right: parent.right;
                     text: Math.floor(model.time/60)+":"+model.time%60;   
                 }
+
+				Image {
+					 id:progress;
+					 anchors.verticalCenter: time.verticalCenter;
+					 anchors.left: time.right;
+					 source: "apps/sudoku/img/ico_level_"+(model.isBetter?"up":"down")+".png";
+				}
             }
         }
 
@@ -132,7 +140,8 @@ GameStats : Item {
 				for(var i = 0; i<statistic.length; ++i){
 					this.stats.push({player: statistic[i].player,
 									 time:   parseInt(statistic[i].time,10),
-									 difficulty: parseInt(statistic[i].difficulty, 10)
+									 difficulty: parseInt(statistic[i].difficulty, 10),
+									 isBetter: statistic[i].isBetter=="true"
 					});
 				}
 				if(this.stats.length==0) this.stats = data["stats"];
@@ -174,11 +183,16 @@ GameStats : Item {
 					tmpObj = this.listView.model.get(i);
 					if(tmpObj.player==argObj.player && tmpObj.difficulty==argObj.difficulty){
 						isInList = true;
+						tmpObj.isBetter=(tmpObj.time>=argObj.time);
 						tmpObj.time = argObj.time;
+												
 					}
                     tmpModel.push(tmpObj);
                 }
-                if(!isInList) tmpModel.push(argObj);
+                if(!isInList){ 
+					argObj.isBetter=true;
+					tmpModel.push(argObj);
+				}
                 tmpModel.sort(this.statsCompare);
                 this.listView.model.reset();
                 for(var i=0; i<Math.min(8,tmpModel.length);++i){
@@ -216,7 +230,8 @@ GameStats : Item {
 				tmpObj = this.stats[i];
 				statistic.push({player: tmpObj.player, 
 								time:   tmpObj.time.toString(),
-								difficulty: tmpObj.difficulty.toString()});
+								difficulty: tmpObj.difficulty.toString(),
+								isBetter: tmpObj.isBetter?"true":"false"});
 			}
 			log("statistic "+statistic);		
 			save("sudokuStats",statistic);
