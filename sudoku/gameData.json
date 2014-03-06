@@ -47,7 +47,7 @@
 	    "player" : "test6", 
 	    "time"  : 1120,
 	    "difficulty": 1,
-	    "isBetter" : true
+	    "isBetter" : false
 	},
 	{
 	    "player" : "test7", 

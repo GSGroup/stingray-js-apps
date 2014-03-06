@@ -97,22 +97,22 @@ Game: Rectangle {
 	}
 
 
-	
-
     BigText {
             id: difficultyIndicator;
             anchors.top: parent.top;
 			anchors.topMargin: 37;
-            anchors.right: parent.right;
-            anchors.rightMargin: 100;
+			anchors.horizontalCenter: difficultyHeader.horizontalCenter;
             text: parent.difficulty;
     }
 
 	BigText {
+			id:difficultyHeader;
 			anchors.bottom: difficultyIndicator.top;
 			anchors.bottomMargin: 30;
+			anchors.right: parent.right;
+			anchors.rightMargin: 95;
 			anchors.horizontalCenter: difficultyIndicator.horizontalCenter;
-			text:"level:"
+			text:"level:";
 	}
 
 	BigText {
@@ -129,7 +129,6 @@ Game: Rectangle {
 			interval: 1000;
 			onTriggered: {
 				++timeIndicator.sec ;
-		
 			}
 		}
 	}
