@@ -48,7 +48,6 @@ Application {
                     log("GAME.DIFFINT "+game.diffInt+ " DIFFINT "+diffInt);
 					gameStats.opacity=0.01;
 					game.setFocus();
-
                 }
 
 				onPlayEvent: {

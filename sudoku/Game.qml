@@ -5,11 +5,7 @@ CellDelegate : Rectangle {
 	id: cellItemDelegate;
 	width: Math.floor(parent.width/9);
 	height: Math.floor(parent.width/9);
-//	color: focused ? "#008888" :(Math.floor((modelIndex%9)/3)+Math.floor(Math.floor(modelIndex/9)/3))%2==0?"#5E5E5E":"#AEAEAE" ;
 	color: focused ? "#008888" :"#00000000";
-//	borderColor: "#D3D3D3";
-//	borderWidth: 1;
-
 
 	BigText {
 		id: subText;
@@ -24,12 +20,9 @@ CellDelegate : Rectangle {
 
     Text {
         id: hint1;
-//        anchors.top: parent.top;
-//        anchors.left: parent.left;
-		  anchors.horizontalCenter:parent.horizontalCenter;
-		  anchors.verticalCenter: parent.verticalCenter;
-//        width: parent.width/15;
-//        height: parent.height/15;
+		anchors.horizontalCenter:parent.horizontalCenter;
+		anchors.verticalCenter: parent.verticalCenter;
+
         anchors.leftMargin:5;
         anchors.topMargin:12;
 		color: "#393939";
@@ -76,9 +69,17 @@ DigitChooseModel: ListModel {
 	onCompleted: {
 		for(var i=1; i<10; ++i)
 			this.append({digit : i});
-//		this.append({digit : 'x'});
+		this.append({digit : 'x'});
 	}
 }
+
+HintDigitChooseModel: ListModel {
+	onCompleted: {
+		for(var i=1; i<10; ++i)
+			this.append({digit : i});
+	}
+}
+
 
 Game: Rectangle {
 	id: gameItem;
@@ -118,8 +119,6 @@ Game: Rectangle {
 		id:timeIndicator;
 		anchors.top: difficultyIndicator.bottom;
 		anchors.topMargin: 93;
-//		anchors.right: parent.right;
-//		anchors.rightMargin: 110;
 		anchors.horizontalCenter: difficultyIndicator.horizontalCenter;
 		property int sec: 0;
 		text: Math.floor(sec/60)+":"+sec%60;
@@ -155,21 +154,27 @@ Game: Rectangle {
 		delegate: Rectangle {
 			width: 50;
 			height: 50;
-			color: activeFocus ? "#5C656C" : "#fff" ;
+			color: activeFocus ? "#5C656C" : "#00000088" ;
 
 			Text {
 				font: bigFont;
+				color: "#FFFFFF";
 				anchors.centerIn: parent;
 				text: model.digit;
 			}
+
+            Behavior on color {
+			    animation: Animation {
+				     duration: 300;
+			    }
+		    }
+
 		}
 
 		onSelectPressed:{
 			if (!gameItem.timeIndicator.timer.running) {gameItem.timeIndicator.timer.start();}
             else { log("TIMER IS RUNNING");}
-
-			gameView.model.setProperty(gameView.currentIndex, 'shownValue', (currentIndex<9)?currentIndex+1 : "");
-			 			
+			parent.setShownValue(gameView.currentIndex,(currentIndex<9)?currentIndex+1:0);			 			
 			if (gameItem.isFilled()){
 				gameItem.timeIndicator.timer.stop();
 				var gameOverText = "YOU ";
@@ -177,7 +182,18 @@ Game: Rectangle {
 				gameItem.gameOverEvent(gameOverText);
 			}
 			this.opacity=0.01;
+			hintDigitChooser.opacity=0.01;
 			gameView.setFocus();
+		}
+
+        onBackPressed: {
+            this.opacity = 0.01;
+			hintDigitChooser.opacity = 0.01;
+            gameView.setFocus();
+        }
+
+		onLeftPressed: {
+			hintDigitChooser.setFocus();
 		}
 
 		Behavior on opacity {
@@ -187,17 +203,16 @@ Game: Rectangle {
 		}
 
 	}
-/*
-	GridView {
-		id: digitChooser;
-		anchors.right: gameView.left;
-		anchors.top: gameView.top;
-        width: 51*3;
-        height: 51*4;
-		cellWidth: 51;
-		cellHeight: 51;
-        opacity: 0.01;
-		model: DigitChooseModel {}
+
+	ListView {
+		id: hintDigitChooser;
+		anchors.right: digitChooser.left;
+		anchors.top: digitChooser.top;
+		width: 50;
+		height: 500;
+		opacity: 0.01;
+
+		model: HintDigitChooseModel {}
 
 		delegate: Rectangle {
 			width: 50;
@@ -221,21 +236,27 @@ Game: Rectangle {
 
 		onSelectPressed:{
 			this.opacity = 0.01;
+			digitChooser.opacity =0.01;
             gameView.setFocus(); 
 			gameView.model.setProperty(gameView.currentIndex, 'isHint'+(currentIndex+1), !(gameView.model.get(gameView.currentIndex)['isHint'+(currentIndex+1)]));
 		}
 
         onBackPressed: {
             this.opacity = 0.01;
+			digitChooser.opacity = 0.01;
             gameView.setFocus();
         }
+
+		onRightPressed:{
+			digitChooser.setFocus()
+		}
 
 		Behavior on opacity {
 			animation: Animation {
 				duration: 300;
 			}
 		}
-	}*/
+	}
 
 
 	GridView {
@@ -250,15 +271,16 @@ Game: Rectangle {
 		model: GameFieldModel {}
 
 		delegate: CellDelegate{} 
-/*
+
 		onSelectPressed: {
 
 			if (!gameView.model.get(gameView.currentIndex)['isBase']){
                 digitChooser.opacity=1;
+				hintDigitChooser.opacity=1;
 				digitChooser.setFocus();
 			}
 		}
-*/
+
 		onKeyPressed: {
 			var rgx = new RegExp("^[0-9]$");
 			if(rgx.test(key) && !gameView.model.get(gameView.currentIndex).isBase){
