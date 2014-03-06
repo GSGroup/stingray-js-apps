@@ -7,11 +7,11 @@ GameMenu : Item {
         id: mainMenu;
 		focus: true;
 
-        event newGameEvent(difficulty, player);
+        event newGameEvent(difficulty, player,diffInt);
 		event playEvent(difficulty,player);
 		event difficultySet(difficulty);
 		event helpEvent();
-		event enablePlayBtnEvent(player,difficulty);
+		event enablePlayBtnEvent(player,diffInt);
 
 		Image {
 			 id: mainMenuTheme;
@@ -41,7 +41,7 @@ GameMenu : Item {
 
 				onCurrentIndexChanged: {
 					parent.enablePlayBtnEvent(playerChooser.listView.model.get(playerChooser.listView.currentIndex).player,
-						difficultyChooser.listView.model.get(difficultyChooser.listView.currentIndex).name);
+						difficultyChooser.listView.model.get(difficultyChooser.listView.currentIndex).factor);
 				}
         }
 
@@ -67,7 +67,7 @@ GameMenu : Item {
 				onCurrentIndexChanged: {
 					parent.difficultySet(this.listView.currentIndex+1);
 					parent.enablePlayBtnEvent(playerChooser.listView.model.get(playerChooser.listView.currentIndex).player,
-						difficultyChooser.listView.model.get(difficultyChooser.listView.currentIndex).name);
+						difficultyChooser.listView.model.get(difficultyChooser.listView.currentIndex).factor);
 				}
         }
 
@@ -112,7 +112,8 @@ GameMenu : Item {
 			onSelectPressed: {
 				log("newGameButton PRESSED!");
 				parent.newGameEvent(mainMenu.difficultyChooser.listView.model.get(difficultyChooser.currentIndex).name,
-                    mainMenu.playerChooser.listView.model.get(playerChooser.currentIndex).player);
+                    mainMenu.playerChooser.listView.model.get(playerChooser.currentIndex).player,
+					mainMenu.difficultyChooser.listView.model.get(difficultyChooser.currentIndex).factor);
 			}
 		}
 

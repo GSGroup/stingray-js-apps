@@ -38,13 +38,14 @@ Application {
 				width: 400;
 				
                 onNewGameEvent: {
-                    log("onNewGameEvent player = "+player+" difficulty "+difficulty);
+                    log("onNewGameEvent player = "+player+" difficulty "+difficulty+" diffInt "+diffInt);
 					pageStack.currentIndex = 1;
 					gameStats.opacity=0.01;
-                    game.gameReset(difficulty);
                     game.difficulty = difficulty;
+					game.diffInt = diffInt;
                     game.player = player;
-                    log("GAME.PLAYER "+game.player+ " PLAYER "+player);
+                    game.gameReset();
+                    log("GAME.DIFFINT "+game.diffInt+ " DIFFINT "+diffInt);
 					gameStats.opacity=0.01;
 					game.setFocus();
 
@@ -74,7 +75,7 @@ Application {
 					" difficulty = "+difficulty+
 					" his game?: "+(player==game.player && difficulty==game.difficulty));
  
-					this.playButton.enabled=(player==game.player && difficulty==game.difficulty && game.isIncomplete);
+					this.playButton.enabled=(player==game.player && diffInt==game.diffInt && game.isIncomplete);
 				}
         	}
 
@@ -167,7 +168,7 @@ Application {
 				onContinueEvent: {
 					pageStack.currentIndex = 1;
 					gameStats.opacity=0.01;
-                    game.gameReset(game.difficulty);
+                    game.gameReset();
 					gameStats.opacity=0.01;
 					game.setFocus();
 					
