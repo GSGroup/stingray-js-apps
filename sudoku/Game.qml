@@ -153,7 +153,10 @@ Game: Rectangle {
 		delegate: Rectangle {
 			width: 50;
 			height: 50;
-			color: activeFocus ? "#5C656C" : "#00000088" ;
+			color: activeFocus ? colorTheme.activeBorderColor : colorTheme.backgroundColor;
+			borderColor: activeFocus ? colorTheme.activeBorderColor : colorTheme.borderColor;
+			borderWidth: 2;
+//			color: activeFocus ? "#5C656C" : "#00000088" ;
 
 			Text {
 				font: bigFont;
@@ -216,7 +219,11 @@ Game: Rectangle {
 		delegate: Rectangle {
 			width: 50;
 			height: 50;
-			color: activeFocus ? "#5C656C" : "#00000088" ;
+			color: activeFocus ? colorTheme.activeBorderColor : colorTheme.backgroundColor;
+			borderColor: activeFocus ? colorTheme.activeBorderColor : colorTheme.borderColor;
+			borderWidth: 2;
+
+//			color: activeFocus ? "#5C656C" : "#00000088" ;
 
 			Text {
                 anchors.horizontalCenter: parent.horizontalCenter;
@@ -274,8 +281,8 @@ Game: Rectangle {
 		onSelectPressed: {
 
 			if (!gameView.model.get(gameView.currentIndex)['isBase']){
-                digitChooser.opacity=1;
-				hintDigitChooser.opacity=1;
+                digitChooser.opacity=0.8;
+				hintDigitChooser.opacity=0.8;
 				digitChooser.setFocus();
 			}
 		}
