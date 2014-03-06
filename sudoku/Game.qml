@@ -86,6 +86,7 @@ Game: Rectangle {
     property bool isIncomplete: false;
     property string player;
     property string difficulty;
+	property int diffInt;
 
 	Image {
 		 id: mainGameTheme;
@@ -142,11 +143,11 @@ Game: Rectangle {
 	}
 
 	
-/*	ListView {
+	ListView {
 		id: digitChooser;
-		visible: false;
-		anchors.right: parent.left;
-		anchors.top: parent.top;
+		opacity: 0.01;
+		anchors.right: gameView.left;
+		anchors.top: gameView.top;
 		width: 50;
 		height: 500;
 		model: DigitChooseModel {}
@@ -166,7 +167,7 @@ Game: Rectangle {
 		onSelectPressed:{
 			if (!gameItem.timeIndicator.timer.running) {gameItem.timeIndicator.timer.start();}
             else { log("TIMER IS RUNNING");}
-			this.visible = false;
+
 			gameView.model.setProperty(gameView.currentIndex, 'shownValue', (currentIndex<9)?currentIndex+1 : "");
 			 			
 			if (gameItem.isFilled()){
@@ -175,13 +176,22 @@ Game: Rectangle {
 				(!gameItem.fullStateCheck())?(gameOverText+="WIN!"):(gameOverText+="LOSE");
 				gameItem.gameOverEvent(gameOverText);
 			}
+			this.opacity=0.01;
+			gameView.setFocus();
 		}
-	}*/
 
+		Behavior on opacity {
+			animation: Animation {
+				duration: 300;
+			}
+		}
+
+	}
+/*
 	GridView {
 		id: digitChooser;
-		anchors.right: parent.left;
-		anchors.top: parent.top;
+		anchors.right: gameView.left;
+		anchors.top: gameView.top;
         width: 51*3;
         height: 51*4;
 		cellWidth: 51;
@@ -192,12 +202,13 @@ Game: Rectangle {
 		delegate: Rectangle {
 			width: 50;
 			height: 50;
-			color: activeFocus ? "#5C656C" : "#fff" ;
+			color: activeFocus ? "#5C656C" : "#00000088" ;
 
 			Text {
                 anchors.horizontalCenter: parent.horizontalCenter;
                 anchors.verticalCenter: parent.verticalCenter;
 				font: smallFont;
+				color: parent.activeFocus ? colorTheme.activeTextColor : colorTheme.textColor;
 				text: model.digit;
 			}
             
@@ -224,7 +235,7 @@ Game: Rectangle {
 				duration: 300;
 			}
 		}
-	}
+	}*/
 
 
 	GridView {
@@ -239,7 +250,7 @@ Game: Rectangle {
 		model: GameFieldModel {}
 
 		delegate: CellDelegate{} 
-
+/*
 		onSelectPressed: {
 
 			if (!gameView.model.get(gameView.currentIndex)['isBase']){
@@ -247,7 +258,7 @@ Game: Rectangle {
 				digitChooser.setFocus();
 			}
 		}
-
+*/
 		onKeyPressed: {
 			var rgx = new RegExp("^[0-9]$");
 			if(rgx.test(key) && !gameView.model.get(gameView.currentIndex).isBase){
@@ -288,13 +299,14 @@ Game: Rectangle {
 		}
 	}
 
-    function gameReset(difficulty){
+    function gameReset(){
         this.timeIndicator.timer.restart();
         this.timeIndicator.timer.stop();
         this.timeIndicator.sec = 0;
         this.gameView.model.reset();
-        this.gameView.fillModel(difficulty=="easy");
-		if(difficulty=="easy") this.setHints();
+        this.gameView.fillModel(this.diffInt==1);
+		if(this.diffInt==1) this.setHints();
+		log("DIFFINT = "+this.diffInt)
     }
 
 	function isFilled(){
@@ -460,7 +472,7 @@ Game: Rectangle {
 			this.gameView.model.setProperty(index,'shownValue',number);
 		}
 		
-		if(this.difficulty=="easy") this.reSetHints(index);
+		if(this.diffInt==1) this.reSetHints(index);
 	//	this.setHints();
 	}
 
