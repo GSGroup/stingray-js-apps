@@ -20,6 +20,16 @@ GameMenu : Item {
 			 source: "apps/sudoku/img/ground_main.png";
 
 		}
+		
+		SmallText {
+			id:playerLabel;
+			anchors.top: parent.top;
+			anchors.topMargin: 12;
+			anchors.left: parent.left;
+			anchors.leftMargin: 5;
+			color: "#581B18";
+			text: "PLAYER:";
+		}
 
         PlayerChooser {
                 id: playerChooser;
@@ -29,7 +39,8 @@ GameMenu : Item {
                 anchors.left: parent.left;
 				anchors.leftMargin: 55;
                 anchors.top: parent.top;
-
+				anchors.topMargin: -2;
+				
 				onDownPressed: {
 					difficultyChooser.setFocus();
 				
@@ -45,11 +56,21 @@ GameMenu : Item {
 				}
         }
 
+		SmallText {
+			id:levelLabel;
+			anchors.horizontalCenter: playerLabel.horizontalCenter;
+			anchors.top: playerLabel.bottom;
+			anchors.topMargin: 45;
+			color: "#581B18";
+			text: "LEVEL:";
+		}
+
+
         DifficultyChooser {
                 id: difficultyChooser;
 
                 anchors.top: playerChooser.bottom ; 
-				anchors.topMargin: 15;
+				anchors.topMargin: 18;
                 anchors.left: parent.left;
 			   	anchors.leftMargin: 55;
 				width: 400;

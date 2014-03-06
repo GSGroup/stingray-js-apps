@@ -112,8 +112,8 @@ GameStats : Item {
 				Image {
 					 id:progress;
 					 anchors.verticalCenter: time.verticalCenter;
-					 anchors.right: player.left;
-					 anchors.rightMargin: 5;
+					 anchors.left: parent.left;
+					 anchors.rightMargin:1;
 					 source: "apps/sudoku/img/ico_level_"+(model.isBetter?"up":"down")+".png";
 				}
 
@@ -127,8 +127,8 @@ GameStats : Item {
                 SmallText {
                     id:time;
                     anchors.top: parent.top;
-                    anchors.left: player.right;
-					anchors.leftMargin: 5;
+                    anchors.right: parent.right;
+					anchors.leftMargin: 15;
                     text: Math.floor(model.time/60)+":"+model.time%60;   
                 }
 
