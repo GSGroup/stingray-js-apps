@@ -3,6 +3,7 @@ import controls.PageStack;
 import GameMenu;
 import Game;
 import GameStats;
+import Help;
 
 Application {
 	    id: sudokuApplication;
@@ -63,6 +64,9 @@ Application {
 
 				onHelpEvent: {
 					log("onHelpEvent");
+					pageStack.currentIndex=4;
+					gameStats.opacity = 0.01;
+					help.setFocus();
 				}
 
 				onDifficultySet: {
@@ -150,7 +154,7 @@ Application {
 			 GameOverBox {
 				id: gameOverBox;
 				anchors.verticalCenter: parent.anchors.verticalCenter;
-				anchors.horizontalCenter: parent.anchors.horizontalCenter;
+				anchors.horizontalCenter: parent.horizontalCenter;
                      
 				onBackPressed: {
 					pageStack.currentIndex = 0;
@@ -172,6 +176,19 @@ Application {
 					game.setFocus();
 					
 				}
+			}
+
+			Help {
+				id: help;
+				anchors.verticalCenter: parent.anchors.verticalCenter;
+				anchors.horizontalCenter: parent.anchors.horizontalCenter;
+
+				onBackPressed: {
+					pageStack.currentIndex = 0;
+					gameMenu.setFocus();
+					gameStats.opacity=1;
+				}
+				
 			}
 		}
 
