@@ -97,7 +97,7 @@ GameMenu : Item {
 				id: txt;
 				anchors.verticalCenter: parent.verticalCenter;
 				anchors.horizontalCenter: parent.horizontalCenter;
-				color: parent.activeFocus ? colorTheme.activeTextColor : colorTheme.textColor;
+				color: "#581B18";
 				text:"New Game";
 			}
 			
@@ -143,7 +143,7 @@ GameMenu : Item {
 				id: txt;
 				anchors.verticalCenter: parent.verticalCenter;
 				anchors.horizontalCenter: parent.horizontalCenter;
-				color: parent.activeFocus ? colorTheme.activeTextColor : colorTheme.textColor;
+				color: "#581B18";
 				text:"Play";
 			}
 
@@ -192,7 +192,7 @@ GameMenu : Item {
 				id: txt;
 				anchors.verticalCenter: parent.verticalCenter;
 				anchors.horizontalCenter: parent.horizontalCenter;
-				color: parent.activeFocus ? colorTheme.activeTextColor : colorTheme.textColor;
+				color: "#581B18";
 				text:"Help";
 			}
 

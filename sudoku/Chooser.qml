@@ -19,7 +19,8 @@ PlayerChooserDelegate : Item {
 		id: delegateText;
 		x: 10;
 		anchors.verticalCenter: parent.verticalCenter;
-		color: parent.activeFocus ? colorTheme.activeTextColor : parent.parent.focused ? colorTheme.textColor : colorTheme.disabledTextColor;
+//		color: parent.activeFocus ? colorTheme.activeTextColor : parent.parent.focused ? colorTheme.textColor : colorTheme.disabledTextColor;
+		color: "#581B18";
 		text: model.player;
 		
 		Behavior on color { animation: Animation { duration: 200; } }
@@ -45,7 +46,8 @@ DifficultyChooserDelegate : Item {
 		id: delegateText;
 		x: 10;
 		anchors.verticalCenter: parent.verticalCenter;
-		color: parent.activeFocus ? colorTheme.activeTextColor : parent.parent.focused ? colorTheme.textColor : colorTheme.disabledTextColor;
+//		color: parent.activeFocus ? colorTheme.activeTextColor : parent.parent.focused ? colorTheme.textColor : colorTheme.disabledTextColor;
+		color: "#581B18";
 		text: model.name;
 		
 		Behavior on color { animation: Animation { duration: 200; } }

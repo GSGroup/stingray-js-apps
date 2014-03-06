@@ -5,16 +5,25 @@ CellDelegate : Rectangle {
 	id: cellItemDelegate;
 	width: Math.floor(parent.width/9);
 	height: Math.floor(parent.width/9);
-	color: focused ? "#008888" :"#00000000";
+	color: focused ? "#00000088" :"#00000000";
 
-	BigText {
+	Text {
 		id: subText;
     	anchors.horizontalCenter: parent.horizontalCenter;
     	anchors.verticalCenter: parent.verticalCenter;
 		anchors.margins: 5;
 		horizontalAlignment: Text.AlignHCenter;
 		verticalAlignment: Text.AlignVCenter;
-		color: model.isBase? "#000000": "#FFFFFF"; 
+		color: model.isBase? "#581B18": "#447F12";
+ 		font: Font {
+			  family: "Proxima Nova Condensed";
+			  pixelSize: 70;
+//			  font.bold: true;
+/*			  pixelSize:80;
+			  pointSize: 80;
+			  bold: true;*/
+		}
+
 		text:  model.shownValue;
 	}
 
@@ -25,7 +34,7 @@ CellDelegate : Rectangle {
 
         anchors.leftMargin:5;
         anchors.topMargin:12;
-		color: "#393939";
+		color: "#375900";
 		font: Font {
 			  family: "Proxima Nova Condensed";
 			  pixelSize:20;
@@ -102,6 +111,7 @@ Game: Rectangle {
             anchors.top: parent.top;
 			anchors.topMargin: 37;
 			anchors.horizontalCenter: difficultyHeader.horizontalCenter;
+			color:"#813722";
             text: parent.difficulty;
     }
 
@@ -112,6 +122,7 @@ Game: Rectangle {
 			anchors.right: parent.right;
 			anchors.rightMargin: 95;
 			anchors.horizontalCenter: difficultyIndicator.horizontalCenter;
+			color: "#813722";
 			text:"level:";
 	}
 
@@ -121,6 +132,7 @@ Game: Rectangle {
 		anchors.topMargin: 93;
 		anchors.horizontalCenter: difficultyIndicator.horizontalCenter;
 		property int sec: 0;
+		color: "#813722";
 		text: Math.floor(sec/60)+":"+sec%60;
 
 		Timer {
@@ -137,6 +149,7 @@ Game: Rectangle {
 			anchors.bottom: timeIndicator.top;
 			anchors.bottomMargin: 30;
 			anchors.horizontalCenter: difficultyIndicator.horizontalCenter;
+			color: "#813722";
 			text:"time:"
 	}
 
