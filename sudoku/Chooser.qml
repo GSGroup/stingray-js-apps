@@ -3,8 +3,9 @@
 ******/
 
 PlayerChooserDelegate : Item {
-	width: delegateText.width + 20;
+	width: 99;
 	height: 28;
+
 	anchors.verticalCenter: parent.verticalCenter;
 	focus: true;
 
@@ -18,7 +19,9 @@ PlayerChooserDelegate : Item {
 	SmallText {
 		id: delegateText;
 		x: 10;
+//		anchors.left: parent.left;
 		anchors.verticalCenter: parent.verticalCenter;
+		anchors.horizontalCenter: parent.horizontalCenter;
 //		color: parent.activeFocus ? colorTheme.activeTextColor : parent.parent.focused ? colorTheme.textColor : colorTheme.disabledTextColor;
 		color: "#581B18";
 		text: model.player;
@@ -30,7 +33,7 @@ PlayerChooserDelegate : Item {
 }
 
 DifficultyChooserDelegate : Item {
-	width: delegateText.width + 20;
+	width: 99;
 	height: 28;
 	anchors.verticalCenter: parent.verticalCenter;
 	focus: true;
@@ -46,6 +49,7 @@ DifficultyChooserDelegate : Item {
 		id: delegateText;
 		x: 10;
 		anchors.verticalCenter: parent.verticalCenter;
+		anchors.horizontalCenter: parent.horizontalCenter;
 //		color: parent.activeFocus ? colorTheme.activeTextColor : parent.parent.focused ? colorTheme.textColor : colorTheme.disabledTextColor;
 		color: "#581B18";
 		text: model.name;
@@ -65,7 +69,7 @@ PlayerChooser : Item {
 	height: 50;
 	property alias currentIndex: listView.currentIndex;
 	property alias count: listView.count;
-	property int spacing: 36;
+	property int spacing: 1;
 	
 	
 	ListView {
@@ -114,8 +118,6 @@ DifficultyChooser : Item {
 	height: 50;
 	property alias currentIndex: listView.currentIndex;
 	property alias count: listView.count;
-	property int spacing: 23;
-	
 
 	ListView {
 		id: listView;
@@ -127,7 +129,7 @@ DifficultyChooser : Item {
 		clip: true;
 		delegate: DifficultyChooserDelegate { }
 		model: ListModel { }
-		spacing: dChooserItem.spacing;
+		spacing: 1 ;
 
 		onCurrentIndexChanged: {
 			postPositioningTimer.restart();
