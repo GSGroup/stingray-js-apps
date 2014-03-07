@@ -38,7 +38,7 @@ CellDelegate : Item {
 		anchors.margins: 5;
 		horizontalAlignment: Text.AlignHCenter;
 		verticalAlignment: Text.AlignVCenter;
-		color: model.isBase? "#581B18": "#447F12";
+		color: model.isBase? "#581B18":( cellItemDelegate.focused?"#FFFFFF":"#447F12");
  		font: Font {
 			  family: "Proxima Nova Condensed";
 			  pixelSize: 70;
@@ -46,6 +46,12 @@ CellDelegate : Item {
 		}
 
 		text:  model.shownValue;
+
+		Behavior on color {
+			Animation {
+				duration: 300;
+			}
+		}
 	}
 
     Text {
