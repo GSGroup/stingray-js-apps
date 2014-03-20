@@ -1,9 +1,13 @@
+var decode = function(str) {
+	return decodeURIComponent(str.replace(/\+/g, ' '));
+}
+
 var parse_qs = function(qs) {
 	var r = {}
 	var pairs = qs.split('&');
 	pairs.forEach(function(pair) {
 		pair = pair.split("=")
-		r[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1])
+		r[decode(pair[0])] = decode(pair[1])
 	})
 	return r;
 }
