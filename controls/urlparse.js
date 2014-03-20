@@ -27,19 +27,27 @@ var parse = function(url) {
 	}
 
 	var query_pos = url.indexOf('?');
-	var anchor_pos = url.indexOf('#');
-	if (anchor_pos < 0)
-		anchor_pos = url.length;
+	var fragment_pos = url.indexOf('#');
+	if (fragment_pos != -1)
+	{
+		r.fragment = url.substr(fragment_pos + 1);
+	}
+	else
+	{
+		r.fragment = "";
+		fragment_pos = url.length;
+	}
 
 	if (query_pos != -1) {
-		r.query = url.slice(query_pos + 1, anchor_pos);
+		r.query = url.slice(query_pos + 1, fragment_pos);
 	} else {
 		r.query = "";
 		query_pos = url.length;
 	}
 
-	r.anchor = url.substr(anchor_pos);
-	r.path = url.slice(path_pos, query_pos); //fixme: add scheme/host support
+	var path_end = fragment_pos < query_pos? fragment_pos: query_pos;
+
+	r.path = url.slice(path_pos, path_end); //fixme: add scheme/host support
 	return r;
 }
 
