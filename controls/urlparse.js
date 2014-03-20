@@ -3,7 +3,7 @@ var parse_qs = function(qs) {
 	var pairs = qs.split('&');
 	pairs.forEach(function(pair) {
 		pair = pair.split("=")
-		r[pair[0]] = pair[1]
+		r[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1])
 	})
 	return r;
 }
