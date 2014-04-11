@@ -1,5 +1,50 @@
-import controls.Text;
+import controls.Text
 import "generator.js" as generator;
+
+HintDigitChooserDelegate:Rectangle {
+			width: parent.width;
+			height: parent.width;
+			color: activeFocus ? colorTheme.activeBorderColor : colorTheme.backgroundColor;
+			borderColor: activeFocus ? colorTheme.activeBorderColor : colorTheme.borderColor;
+			borderWidth: 2;
+
+			Text {
+                anchors.horizontalCenter: parent.horizontalCenter;
+                anchors.verticalCenter: parent.verticalCenter;
+				font: smallFont;
+				color: parent.activeFocus ? colorTheme.activeTextColor : colorTheme.textColor;
+				text: model.digit;
+			}
+
+            Behavior on color {
+			    animation: Animation {
+				     duration: 300;
+			    }
+		    }
+		}
+
+DigitChooserDelegate:Rectangle {
+			width: parent.width;
+			height: parent.width;
+			color: activeFocus ? colorTheme.activeBorderColor : colorTheme.backgroundColor;
+			borderColor: activeFocus ? colorTheme.activeBorderColor : colorTheme.borderColor;
+			borderWidth: 2;
+//			color: activeFocus ? "#5C656C" : "#00000088" ;
+
+			Text {
+				font: bigFont;
+				color: "#FFFFFF";
+				anchors.centerIn: parent;
+				text: model.digit;
+			}
+
+            Behavior on color {
+				 animation: Animation {
+					duration: 300;
+				}
+			}
+
+		}
 
 CellDelegate : Item {
 	id: cellItemDelegate;
@@ -172,7 +217,7 @@ Game: Rectangle {
 			}
 		}
 	}
-
+//1
 	BigText {
 			anchors.bottom: timeIndicator.top;
 			anchors.bottomMargin: 30;
@@ -191,28 +236,7 @@ Game: Rectangle {
 		height: gameView.cellHeight*9;
 		model: DigitChooseModel {}
 
-		delegate: Rectangle {
-			width: parent.width;
-			height: parent.width;
-			color: activeFocus ? colorTheme.activeBorderColor : colorTheme.backgroundColor;
-			borderColor: activeFocus ? colorTheme.activeBorderColor : colorTheme.borderColor;
-			borderWidth: 2;
-//			color: activeFocus ? "#5C656C" : "#00000088" ;
-
-			Text {
-				font: bigFont;
-				color: "#FFFFFF";
-				anchors.centerIn: parent;
-				text: model.digit;
-			}
-
-            Behavior on color {
-			    animation: Animation {
-				     duration: 300;
-			    }
-		    }
-
-		}
+		delegate: DigitChooserDelegate {}
 
 		onSelectPressed:{
 			if (!gameItem.timeIndicator.timer.running) {gameItem.timeIndicator.timer.start();}
@@ -260,29 +284,7 @@ Game: Rectangle {
 
 		model: HintDigitChooseModel {}
 
-		delegate: Rectangle {
-			width: parent.width;
-			height: parent.width;
-			color: activeFocus ? colorTheme.activeBorderColor : colorTheme.backgroundColor;
-			borderColor: activeFocus ? colorTheme.activeBorderColor : colorTheme.borderColor;
-			borderWidth: 2;
-
-//			color: activeFocus ? "#5C656C" : "#00000088" ;
-
-			Text {
-                anchors.horizontalCenter: parent.horizontalCenter;
-                anchors.verticalCenter: parent.verticalCenter;
-				font: smallFont;
-				color: parent.activeFocus ? colorTheme.activeTextColor : colorTheme.textColor;
-				text: model.digit;
-			}
-            
-            Behavior on color {
-			    animation: Animation {
-				     duration: 300;
-			    }
-		    }
-		}
+		delegate: HintDigitChooserDelegate {}
 
 		onSelectPressed:{
 			this.opacity = 0.01;
@@ -313,6 +315,7 @@ Game: Rectangle {
 				duration: 300;
 			}
 		}
+
 	}
 
 	FocusablePanel {
