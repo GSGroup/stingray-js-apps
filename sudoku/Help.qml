@@ -1,14 +1,23 @@
 import controls.Edit;
+
+HelpStringDelegate:Item {
+				  height: 20;
+				  width: 400;
+				  anchors.horizontalCenter: parent.horizontalCenter;
+				  SmallText {
+				  anchors.horizontalCenter: parent.horizontalCenter;
+				  text: model.text;
+				  }
+		}
+
 Help : Item {
 	id: gameOverBox;
-
 	height:150;
 	width:350;
-
 	focus: true;
 	
 	Image {
-		id: finalTheme;
+		id: helpTheme;
 		anchors.horizontalCenter: parent.anchors.horizontalCenter;
 		anchors.verticalCenter: parent.anchors.verticalCenter;
 		source: "apps/sudoku/img/ground_help.png";
@@ -20,7 +29,6 @@ Help : Item {
 		y: -35;
 		source: "apps/sudoku/img/scroll.png";
 	}
-
 
 	ListView {
 		id:listView;
@@ -81,37 +89,23 @@ Help : Item {
 			   ListElement {text: "textline textline textline texasdfe textline "}
 			   ListElement {text: "textline textline textline textlinasdsdfline "}
 			   ListElement {text: "777tline textline textline textline textasdf "}
-
-		}
-		delegate: Item {
-				  height: 20;
-				  width: 400;
-				  anchors.horizontalCenter: parent.horizontalCenter;
-				  SmallText {
-
-				  	anchors.horizontalCenter: parent.horizontalCenter;
-					text: model.text;
-				  }
-				  
 		}
 
+		delegate: HelpStringDelegate {}
+		}
 		onDownPressed: {
 			if(scrollBar.y<220){
-				scrollBar.y+= 5;		
+				scrollBar.y+= 15;
 				this.currentIndex+=1;
+				log("scrollBar y "+scrollBar.y);
 			}
-			log("scrollBar y "+scrollBar.y);
 		}
 		
 		onUpPressed: {
 			if(scrollBar.y>-35){
-				scrollBar.y-= 5;	
+				scrollBar.y-= 15;
 				this.currentIndex-=1;
-			}	
-			log("scrollBar y "+scrollBar.y);
-		}			
-
-			 
-	}
-
+				log("scrollBar y "+scrollBar.y);
+			}
+		}
 }
