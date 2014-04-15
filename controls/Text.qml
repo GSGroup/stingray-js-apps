@@ -68,6 +68,6 @@ DateTimeText : Text {
 		dateTimeTextItem.text += " ";
 		dateTimeTextItem.text += setDate.getHours();
 		dateTimeTextItem.text += ":";
-		dateTimeTextItem.text += (setDate.getMinutes() < 10 ? " " : "") + setDate.getMinutes();
+		dateTimeTextItem.text += (setDate.getMinutes() < 10 ? "0" : "") + setDate.getMinutes();
 	}
 }
