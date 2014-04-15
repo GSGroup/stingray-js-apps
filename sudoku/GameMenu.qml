@@ -249,8 +249,12 @@ GameMenu : Item {
         function load(data)
         {
               log("loading players..");
-//                this.players = data ["players"];
-				this.players = load("sudokuPlayers");
+
+				if(!(this.players = load("sudokuPlayers")))
+				{
+						this.players = data ["players"];
+				}
+
                 for (var i = 0; i < this.players.length; ++i){
                         mainMenu.playerChooser.append(this.players[i]);
                 }

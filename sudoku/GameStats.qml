@@ -136,10 +136,13 @@ GameStats : Item {
             delegate: GameStatsDelegate {}
 			}
         function load(data){
-//                this.stats = data["stats"];
 				this.stats=[];
-				var statistic = load("sudokuStats");
-				
+				var statistic;
+				if(!(statistic = load("sudokuStats")))
+				{
+						statistic = data["stats"];
+				}
+
 				for(var i = 0; i<statistic.length; ++i){
 					this.stats.push({player: statistic[i].player,
 									 time:   parseInt(statistic[i].time,10),
