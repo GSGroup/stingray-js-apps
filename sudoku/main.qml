@@ -3,47 +3,52 @@ import controls.PageStack;
 import GameMenu;
 import Game;
 import GameStats;
+import Help;
 
 Application {
 	    id: sudokuApplication;
 	    focus: true;
 	    name: "sudoku";
 	    displayName: qsTr("Sudoku");
+		anchors.horizontalCenter: safeArea.horizontalCenter;
+		anchors.verticalCenter: safeArea.verticalCenter;		
 
-	    MainText {
-		        id: titleText;
-		        anchors.top: parent.top;
-		        anchors.horizontalCenter: pageStack.game.horizontalCenter;
-                color: "#A4A4A4";
-                style: Text.Outline;
-                styleColor: "#AA2222";
-		        text: "sudoku";
-        }
+
+		 BigText {
+	     	id: titleText;
+			anchors.horizontalCenter: parent.horizontalCenter;
+			anchors.top: parent.top;
+			anchors.topMargin: 140;
+            color: "#FFFFFF";
+            text: "sudoku";
+       	}
 		
 		PageStack {
 			id: pageStack;
 
             anchors.top: titleText.bottom;
+			anchors.verticalCenter: parent.verticalCenter;
 			anchors.horizontalCenter: parent.horizontalCenter;
-            width: 700;
-			anchors.topMargin: 10;
-			anchors.leftMargin: control.width + control.anchors.leftMargin;
-			anchors.rightMargin: control.width + control.anchors.leftMargin;
-
+            width: 500;
+			anchors.topMargin: 40;
 	
 	        GameMenu {
 	        	id: gameMenu;
-				anchors.fill: parent;
+				anchors.horizontalCenter: parent.horizontalCenter;
+				anchors.verticalCenter: parent.verticalCenter;
+				width: 400;
 				
                 onNewGameEvent: {
-                    log("onNewGameEvent player = "+player+" difficulty "+difficulty);
+                    log("onNewGameEvent player = "+player+" difficulty "+difficulty+" diffInt "+diffInt);
 					pageStack.currentIndex = 1;
-                    game.gameReset(difficulty);
+					gameStats.opacity=0.01;
                     game.difficulty = difficulty;
+					game.diffInt = diffInt;
                     game.player = player;
-                    log("GAME.PLAYER "+game.player+ " PLAYER "+player);
+                    game.gameReset();
+                    log("GAME.DIFFINT "+game.diffInt+ " DIFFINT "+diffInt);
+					gameStats.opacity=0.01;
 					game.setFocus();
-
                 }
 
 				onPlayEvent: {
@@ -52,20 +57,35 @@ Application {
 					    pageStack.currentIndex = 1;
 
 		                if(game.timeIndicator.sec!=0) game.timeIndicator.timer.start();
-
+						gameStats.opacity=0.01;
 					    game.setFocus();
                     }
 				}
 
 				onHelpEvent: {
 					log("onHelpEvent");
+					pageStack.currentIndex=4;
+					gameStats.opacity = 0.01;
+					help.setFocus();
+				}
+
+				onDifficultySet: {
+					gameStats.filterByDifficulty(difficulty);
+				}
+				
+				onEnablePlayBtnEvent: {
+					log("player = "+player+
+					" difficulty = "+difficulty+
+					" his game?: "+(player==game.player && difficulty==game.difficulty));
+ 
+					this.playButton.enabled=(player==game.player && diffInt==game.diffInt && game.isIncomplete);
 				}
         	}
 
 			Game {
 				id: game;
-				height: parent.width/1.1;
-				width: parent.width/1.1;
+				height: safeArea.width/1.1;
+				width: safeArea.width/1.1;
                 anchors.horizontalCenter: parent.horizontalCenter;
                 isIncomplete: false;
 
@@ -78,23 +98,32 @@ Application {
 
 				}
 				
-				onKeyPressed:
+				onKeyPressed: 
 				{
 					if(key=="A")
 					{
 						this.gameOverEvent("test");
 					}
+					log("KEY PRESSED")
 				}
 
 				onGameOverEvent: {
-                    gameStats.addNrestat({player: this.player, time: this.timeIndicator.sec});
+                    if(result) {
+						gameStats.addNrestat({player: this.player, 
+													  time: this.timeIndicator.sec, 
+										  			  difficulty: gameMenu.difficultyChooser.listView.currentIndex+1});
+					}
+					gameMenu.savePlayers();
+					gameOverBox.player.text=this.player;
+					gameOverBox.difficulty.text=this.difficulty;
+					gameOverBox.time.text=Math.floor(this.timeIndicator.sec/60)+":"+this.timeIndicator.sec%60;
+
 				    this.gameReset();
                     this.isIncomplete = false;
                     gameMenu.playButton.enabled = false;
-					gameOverBox.subText.text=result;
 					pageStack.currentIndex = 3;
 					gameOverBox.setFocus();
-
+				
 				}
 			}
 
@@ -117,30 +146,49 @@ Application {
 					gameMenu.setFocus();
                     game.isIncomplete = true;
                     gameMenu.playButton.enabled = true;
+					gameStats.opacity=1;
 				}
 
 			}
 
-			 Item {
+			 GameOverBox {
 				id: gameOverBox;
 				anchors.verticalCenter: parent.anchors.verticalCenter;
-				anchors.horizontalCenter: parent.anchors.horizontalCenter;
-				height:150;
-				width:350;
-				focus: true;
-
-				BigText {
-					id: subText;
-					anchors.topMargin:20;
-					anchors.verticalCenter: gameOverBox.anchors.verticalCenter;
-					anchors.horizontalCenter: gameOverBox.anchors.horizontalCenter;
-					text:"";
-				}
+				anchors.horizontalCenter: parent.horizontalCenter;
                      
 				onBackPressed: {
 					pageStack.currentIndex = 0;
 					gameMenu.setFocus();
+					gameStats.opacity=1;
 				}
+				
+				onMenuCallEvent: {
+					pageStack.currentIndex = 0;
+					gameMenu.setFocus();
+					gameStats.opacity=1;
+				}
+
+				onContinueEvent: {
+					pageStack.currentIndex = 1;
+					gameStats.opacity=0.01;
+                    game.gameReset();
+					gameStats.opacity=0.01;
+					game.setFocus();
+					
+				}
+			}
+
+			Help {
+				id: help;
+				anchors.verticalCenter: parent.anchors.verticalCenter;
+				anchors.horizontalCenter: parent.anchors.horizontalCenter;
+
+				onBackPressed: {
+					pageStack.currentIndex = 0;
+					gameMenu.setFocus();
+					gameStats.opacity=1;
+				}
+				
 			}
 		}
 
@@ -151,32 +199,23 @@ Application {
 		        onDataChanged: {
 			            gameMenu.load(JSON.parse(this.data));
                         gameStats.load(JSON.parse(this.data));
-             
-		        }
-	    }
-        
-	    SmallText {
-		        id: control;
-		        anchors.verticalCenter: parent.verticalCenter;
-		        anchors.left: parent.left;
-		        anchors.leftMargin: 70;
-		        color: "#7c83ad";
-		        text: "Control";
-
-		        Image {
-						id:img;
-			            anchors.top: parent.top;
-			            anchors.left: parent.left;
-			            source: "apps/sudoku/img/control.png";
-			            visible: parent.visible;
 		        }
 	    }
         
         GameStats {
             id: gameStats;
-            anchors.top: gameMenu.difficultyChooser.bottom;
-            anchors.right: parent.right;
-            anchors.rightMargin: 145;
-        }
+			difficulty: gameMenu.difficultyChooser.listView.currentIndex+1;
+			anchors.top: pageStack.top;
+			anchors.topMargin: 120;
+            anchors.left: pageStack.right;
+			anchors.leftMargin: 70;
+			width: 50;
+			opacity: 1;
 
+			Behavior on opacity {
+			    animation: Animation {
+				     duration: 300;
+			    }
+		    }
+        }
 }

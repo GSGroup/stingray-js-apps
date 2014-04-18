@@ -1,31 +1,162 @@
 {
-	"difflevels":
-	[
-		"easy",
-		"medium",
-		"hard"
-	],
+    "difflevels":
+    [
+	{"name" : "easy"  , "factor" : 1},
+	{"name" : "medium", "factor" : 2},
+	{"name" : "hard"  , "factor" : 3}
+    ],    
+    "players":
+    [
+	{"player" : "test1"},
+	{"player" : "test2"},
+	{"player" : "test3"}
+    ],
     "stats":
     [
 	{
 	    "player" : "test1", 
-	    "time"  : 150
+	    "time"  : 150,
+	    "difficulty": 1,
+	    "isBetter" : false
 	},
 	{
 	    "player" : "test2", 
-	    "time"  : 160
+	    "time"  : 160,
+	    "difficulty": 1,
+	    "isBetter" : true
 	},
 	{
 	    "player" : "test3", 
-	    "time"  : 1120
+	    "time"  : 1120,
+	    "difficulty": 1,
+	    "isBetter" : true
 	},
 	{
 	    "player" : "test4", 
-	    "time"  : 1350
+	    "time"  : 1350,
+	    "difficulty": 1,
+	    "isBetter" : false
 	},
 	{
 	    "player" : "test5", 
-	    "time"  : 1220
+	    "time"  : 1220,
+	    "difficulty": 1,
+	    "isBetter" : true
+	},
+	{
+	    "player" : "test6", 
+	    "time"  : 1120,
+	    "difficulty": 1,
+	    "isBetter" : false
+	},
+	{
+	    "player" : "test7", 
+	    "time"  : 1350,
+	    "difficulty": 1,
+	    "isBetter" : false
+	},
+	{
+	    "player" : "test8", 
+	    "time"  : 1220,
+	    "difficulty": 1,
+	    "isBetter" : true
+	},
+	{
+	    "player" : "test1", 
+	    "time"  : 150,
+	    "difficulty": 2,
+	    "isBetter" : false
+	},
+	{
+	    "player" : "test2", 
+	    "time"  : 160,
+	    "difficulty": 2,
+	    "isBetter" : true
+	},
+	{
+	    "player" : "test3", 
+	    "time"  : 1120,
+	    "difficulty": 2,
+	    "isBetter" : true
+	},
+	{
+	    "player" : "test4", 
+	    "time"  : 1350,
+	    "difficulty": 2,
+	    "isBetter" : false
+	},
+	{
+	    "player" : "test5", 
+	    "time"  : 1220,
+	    "difficulty": 2,
+	    "isBetter" : true
+	},
+	{
+	    "player" : "test6", 
+	    "time"  : 1120,
+	    "difficulty": 2,
+	    "isBetter" : true
+	},
+	{
+	    "player" : "test7", 
+	    "time"  : 1350,
+	    "difficulty": 2,
+	    "isBetter" : false
+	},
+	{
+	    "player" : "test8", 
+	    "time"  : 1220,
+	    "difficulty": 2,
+	    "isBetter" : true
+	},
+	{
+	    "player" : "test1", 
+	    "time"  : 150,
+	    "difficulty": 3,
+	    "isBetter" : false
+	},
+	{
+	    "player" : "test2", 
+	    "time"  : 160,
+	    "difficulty": 3,
+	    "isBetter" : true
+	},
+	{
+	    "player" : "test3", 
+	    "time"  : 1120,
+	    "difficulty": 3,
+	    "isBetter" : true
+	},
+	{
+	    "player" : "test4", 
+	    "time"  : 1150,
+	    "difficulty": 3,
+	    "isBetter" : false
+	},
+	{
+	    "player" : "test5", 
+	    "time"  : 260,
+	    "difficulty": 3,
+	    "isBetter" : true
+	},
+	{
+	    "player" : "test6", 
+	    "time"  : 1120,
+	    "difficulty": 3,
+	    "isBetter" : true
+	},
+	{
+	    "player" : "test7", 
+	    "time"  : 1350,
+	    "difficulty": 3,
+	    "isBetter" : false
+	},
+	{
+	    "player" : "test8", 
+	    "time"  : 1220,
+	    "difficulty": 3,
+	    "isBetter" : true
 	}
     ]
 }
+
