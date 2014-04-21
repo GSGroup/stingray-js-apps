@@ -6,9 +6,10 @@ Application {
 	displayname: "2048";
 	focus: true;
 	Rectangle {
-	anchors.fill: parent;
-	color: colorTheme.backgroundColor;
-	Game {}
+		focus: true;
+		anchors.fill: parent;
+		color: colorTheme.backgroundColor;
+		Game {focus:true;}
 	}
 }
 
