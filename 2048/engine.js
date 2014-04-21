@@ -1,8 +1,8 @@
 this.init = function () {
-//	fieldView.model.append({val: 0});
+//	fieldView.elements.append({val: 0});
 	for (var i = 0; i < 16; i ++)
-//		ifieldView.model.append({val: 1 << i});
-		fieldView.model.append({val: 0});
+//		ifieldView.elements.append({val: 1 << i});
+		fieldView.elements.push({val: 0, added: false, joined: false});
 	this.add();
 	this.add();
 }
@@ -10,7 +10,7 @@ this.init = function () {
 
 this.tic = function () {
 	for (var i = 0; i < 16; i ++)
-		fieldView.model.set(i,{added: false, val: fieldView.model.get(i).val, joined: false});
+		fieldView.elements[i] = {added: false, val: fieldView.elements[i].val, joined: false};
 }
 
 this.rotate = function (i, j) {
@@ -24,19 +24,29 @@ this.rotate = function (i, j) {
 }
 
 this.get = function (i, j) {
-	return fieldView.model.get(this.rotate(i,j));
+	return fieldView.elements[this.rotate(i,j)];
 }
 
 this.set = function (i, j, v) {
-	fieldView.model.set(this.rotate(i,j), {val: v, added: false, joined: false} );
+	fieldView.elements[this.rotate(i,j)] =  {val: v, added: false, joined: false} ;
 }
 
 this.setnew = function (i, j, v) {
-	fieldView.model.set(this.rotate(i,j), {val: v, added: true, joined: false} );
+	fieldView.elements[this.rotate(i,j)] =  {val: v, added: true, joined: false} ;
 }
 
 this.setjoined = function (i, j, v) {
-	fieldView.model.set(this.rotate(i,j), {val: v, added: true, joined: true} );
+	fieldView.elements[this.rotate(i,j)] =  {val: v, added: false, joined: true};
+}
+
+this.swap = function (i1, j1, i2, j2) {
+    if (this.get(i1,j1).val == 0 && this.get(i2,j2).val == 0) return;
+//	log(i1 + ' ' + j1 + " : " + i2 + ' ' + j2 + "   : " + this.get(i1,j1).val + " : " + this.get(i2,j2).val);
+//	log(this.rotate(i1,j1) + " : " + this.rotate(i2,j2));
+	var x = fieldView.swapList[this.rotate(i1,j1)];
+	fieldView.swapList[this.rotate(i1,j1)] = fieldView.swapList[this.rotate(i2,j2)];
+	fieldView.swapList[this.rotate(i2,j2)] = x; 
+//	log(fieldView.swapList);
 }
 
 
@@ -78,27 +88,26 @@ this.turn = function () {
 	for (var j = 0; j < 4; j ++) {
 		for (var i = 3; i >= 0; i --) {
 			var t = true;
-//			log("CHECK " + i + " " + j + " " + this.get(i,j).val); 
 			while (this.get(i,j).val == 0) {
 				t = false;
-//				log("ZERO");
 				for (var k = i; k > 0; k --) {
 					if (this.get(k - 1,j).val != 0) {
 						t = true;
 						changed = true;
 					}
-//					log("SET: " + k);
 					this.set(k,j,this.get(k - 1,j).val);
+					this.swap(k - 1, j, k, j);
 				}
 				this.set(0,j,0);
+//				this.swap(0,j,1,j);
 				if (!t) break;
 			}
 			if (!t) break;
 			if (i != 3) i ++; else continue;
 			if (this.get(i,j).val == this.get(i - 1,j).val && !this.get(i,j).joined && !this.get(i - 1,j).joined) {
-//				log("JOIN");
 				changed = true;
 				this.setjoined(i,j,this.get(i,j).val * 2);
+				this.swap(i - 1,j,i,j);
 				sum += this.get(i,j).val;
 				this.set(i - 1,j,0);
 				i ++;
