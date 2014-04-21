@@ -107,6 +107,7 @@ Game : Rectangle {
 		color: "#bcb0a2";
 		height: parent.height;
 		width: parent.width - game.space * 2;
+		focus: true;
 
 		Item {
 			id: fieldView;
@@ -122,7 +123,7 @@ Game : Rectangle {
 
 			anchors.fill: parent;
 			anchors.margins: game.space;
-			focus: false;
+			focus: true;
 			property int cellHeight:game.cellSize;
 			property int cellWidth: game.cellSize;
 
@@ -149,6 +150,40 @@ Game : Rectangle {
 				engine.add();
 //				engine.set(0,0,2);
 				this.draw();
+			}
+
+			onKeyPressed: {
+	
+				if (animTimer.running) 
+					return true;
+
+				if (key == "Select") {
+//					backMenu.visible = true;
+					backGrid.currentIndex = 0;
+					backGrid.setFocus();
+					backMenu.show();
+					log("INDEX " + backGrid.currentIndex)
+					return true;
+				}
+
+				engine.tic();
+				switch (key) {
+				case "Up": case "Down": case "Left": case "Right":
+					game.direction = key;
+					var res = engine.turn();
+					if (res.changed) engine.add();
+					scoreText.val += res.sum;
+					if (scoreText.val > bestText.val) {
+						bestText.val = scoreText.val;
+						save("best2048",scoreText.val);
+					}
+					if (!engine.check()) {
+						restartMenu.visible = true;
+						restartMenu.focus = true;
+					}
+					fieldView.draw();
+					return true;
+				}
 			}
 
 			function draw() {
@@ -291,11 +326,19 @@ Game : Rectangle {
 				text: "Try again";
 			}
 		}
+
+		onSelectPressed: {
+			engine.clear();
+			fieldView.draw();
+			scoreText.val = 0;
+			restartMenu.visible = false;
+			restartMenu.focus = false;
+		}
 	}
 
 	Rectangle {
 		id: backMenu;
-		visible: true;
+		visible: false;
 		focus: true;
 //		anchors.fill: parent;
 		anchors.centerIn: parent;
@@ -303,12 +346,13 @@ Game : Rectangle {
 		radius: 10;
 		color: "#EEE4DAB0";
 		width: 0;
+		clip: true;
 		Behavior on width { animation: Animation { duration: 300; } }
 
 		ListView {
 			id: backGrid;
 			focus: true;
-			visible: false;
+			visible: parent.width > 0;
 			property int cellHeight: game.cellSize;
 			property int cellWidth: game.cellSize * 2;
 			anchors.horizontalCenter: parent.horizontalCenter;
@@ -323,22 +367,18 @@ Game : Rectangle {
 			}
 			delegate: MenuDelegate{}
 
-			onKeyPressed: {
-				return true;
-			}
-
 			onSelectPressed: {
 				switch (backGrid.currentIndex) {
 				case 0: 
 					backMenu.width = 0;
-					backGrid.visible = false;
+					fieldView.setFocus();
 					break;
 				case 1:
 					engine.clear();
+					fieldView.setFocus();
 					fieldView.draw();
 					scoreText.val = 0;
 					backMenu.width = 0;
-					backGrid.visible = false;
 					break;
 				case 2:
 					help.visible = true;
@@ -365,8 +405,15 @@ Game : Rectangle {
 			onSelectPressed: {
 				this.visible = false;
 				backGrid.visible = true;
-				backGrid.setFocus();
+//				backGrid.setFocus();
+				backMenu.show();
 			}
+		}
+
+		function show() {
+			this.visible = true;
+			this.width = game.width;
+			this.setFocus();
 		}
 	}
 	
@@ -376,45 +423,4 @@ Game : Rectangle {
 //		backGrid.currentIndex = 0;
 //	}
 
-	onKeyPressed: {
-
-		if (animTimer.running) 
-			return true;
-
-		if (key == "Select") {
-			if (restartMenu.visible) {
-				engine.clear();
-				fieldView.draw();
-				scoreText.val = 0;
-				restartMenu.visible = false;
-				restartMenu.focus = false;
-				return true;
-			}
-			backGrid.visible = true;;
-			backGrid.currentIndex = 0;
-			backMenu.width = game.width;
-			backGrid.focus = true;
-			log("INDEX " + backGrid.currentIndex)
-		}
-
-		engine.tic();
-		switch (key) {
-		case "Up": case "Down": case "Left": case "Right":
-			game.direction = key;
-			var res = engine.turn();
-			if (res.changed) engine.add();
-			scoreText.val += res.sum;
-			if (scoreText.val > bestText.val) {
-				bestText.val = scoreText.val;
-				save("best2048",scoreText.val);
-			}
-			if (!engine.check()) {
-				restartMenu.visible = true;
-				restartMenu.focus = true;
-			}
-			fieldView.draw();
-			break;
-		}
-		return true;
-	}
 }
