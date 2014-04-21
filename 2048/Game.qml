@@ -26,7 +26,7 @@ CellDelegate : Rectangle {
 			text: rect.value ? rect.value : "";	
 			anchors.centerIn: parent;
 			color: rect.value <= 4 ? "#6D654E" : "#ffffff";
-			font: ubuntu_mono;
+			font: bigFont;
 		}
 	} 
 
@@ -64,11 +64,10 @@ CellDelegate : Rectangle {
 	color: "#bcb0a200";
 }
 
-MenuDelegate: Rectangle {
-	anchors.centerIn: parent;
+MenuDelegate: Item {
 	width: parent.cellWidth;
 	height: parent.cellHeight;
-	color: "#00000000";
+	anchors.horizontalCenter: parent.horizontalCenter;
 	Rectangle {
 		anchors.centerIn: parent;
 		color: parent.activeFocus ? "#835A22FF" : "#734A12AA";
@@ -77,7 +76,7 @@ MenuDelegate: Rectangle {
 		height: parent.height / 2;
 		Text {
 			anchors.centerIn: parent;
-			font: ubuntu_mono;
+			font: bigFont;
 			color: "#FFFFFF";
 			text: model.text;
 		}
@@ -208,7 +207,7 @@ Game : Rectangle {
 			anchors.topMargin: game.space;
 			text: "BEST";
 			color: "#EEE4DA";
-			font: ubuntu_mono;
+			font: bigFont;
 		}
 
 		Text {
@@ -224,7 +223,7 @@ Game : Rectangle {
 					return x;
 			}
 			text: val;
-			font: ubuntu_mono;
+			font: bigFont;
 			color: "#FFFFFF";
 		}			
 	}
@@ -246,7 +245,7 @@ Game : Rectangle {
 			anchors.topMargin: game.space;
 			text: "SCORE";
 			color: "#EEE4DA";
-			font: ubuntu_mono;
+			font: bigFont;
 		}
 
 		Text {
@@ -256,7 +255,7 @@ Game : Rectangle {
 			anchors.bottomMargin: game.space;
 			property int val: 0;
 			text: val;
-			font: ubuntu_mono;
+			font: bigFont;
 			color: "#FFFFFF";
 		}			
 	}
@@ -272,7 +271,7 @@ Game : Rectangle {
 		Text {
 			anchors.centerIn: parent;
 			anchors.bottomMargin: game.cellSize / 2;
-			font: ubuntu_mono;
+			font: bigFont;
 			color: "#734A12";
 			text: "GAME OVER";
 		}
@@ -294,13 +293,6 @@ Game : Rectangle {
 		}
 	}
 
-	ListModel {
-		id: menuModel;
-		ListElement {text: "Continue"}
-		ListElement {text: "New game"}
-		ListElement {text: "Exit"}
-	}
-
 	Rectangle {
 		id: backMenu;
 		visible: true;
@@ -313,49 +305,29 @@ Game : Rectangle {
 		width: 0;
 		Behavior on width { animation: Animation { duration: 300; } }
 
-		GridView {
+		ListView {
 			id: backGrid;
 			focus: true;
 			visible: false;
-			cellHeight: game.cellSize;
-			cellWidth: game.cellSize * 2;
+			property int cellHeight: game.cellSize;
+			property int cellWidth: game.cellSize * 2;
 			anchors.horizontalCenter: parent.horizontalCenter;
-			height: game.cellSize * 3;
+			anchors.top: parent.top;
+			anchors.topMargin: game.cellSize / 2;
+			height: game.cellSize * 4;
 			width: game.cellSize;
 			model: ListModel {
 				ListElement {text: "Continue"}
 				ListElement {text: "New game"}
-//				ListElement {text: "Exit"}
+				ListElement {text: "Help"}
 			}
 			delegate: MenuDelegate{}
-			handleNavigationKeys: false;
-		}
-	}
-	
-//	onBackPressed: {
-//		backMenu.width = backMenu.width == 0 ? game.width : 0;
-//		backGrid.visible = !backGrid.visible;
-//		backGrid.currentIndex = 0;
-//	}
 
-	onKeyPressed: {
-		if (animTimer.running) 
-			return true;
-		if (backMenu.width != 0) {
-			switch (key) {
-			case "Down":
-				if (backGrid.currentIndex == 2) 
-					backGrid.currentIndex = 0;
-				else 
-					backGrid.currentIndex++;
-				break;
-			case "Up":
-				if (backGrid.currentIndex == 0)
-					backGrid.currentIndex = 2;
-				else 
-					backGrid.currentIndex--;
-				break;
-			case "Select":
+			onKeyPressed: {
+				return true;
+			}
+
+			onSelectPressed: {
 				switch (backGrid.currentIndex) {
 				case 0: 
 					backMenu.width = 0;
@@ -369,12 +341,45 @@ Game : Rectangle {
 					backGrid.visible = false;
 					break;
 				case 2:
-					backMenu.width = 0;
+					help.visible = true;
+					help.setFocus();
 					backGrid.visible = false;
+					return true;
 				}
 			}
-			return;
 		}
+
+		BigText {
+			id: help;
+			anchors.left: parent.left;
+			anchors.right: parent.right;
+			anchors.verticalCenter: parent.verticalCenter;
+			anchors.margins: game.space * 10;
+			horizontalAlignment: Text.AlignHCenter;
+			color: "#6D654E";
+			visible: false;
+			focus: true;
+			wrapMode: Text.Wrap;
+			text: "How to play: use your arrow keys to move the tiles. When two tiles with the same number touch, they merge into one!";
+
+			onSelectPressed: {
+				this.visible = false;
+				backGrid.visible = true;
+				backGrid.setFocus();
+			}
+		}
+	}
+	
+//	onBackPressed: {
+//		backMenu.width = backMenu.width == 0 ? game.width : 0;
+//		backGrid.visible = !backGrid.visible;
+//		backGrid.currentIndex = 0;
+//	}
+
+	onKeyPressed: {
+
+		if (animTimer.running) 
+			return true;
 
 		if (key == "Select") {
 			if (restartMenu.visible) {
@@ -383,7 +388,7 @@ Game : Rectangle {
 				scoreText.val = 0;
 				restartMenu.visible = false;
 				restartMenu.focus = false;
-				return;
+				return true;
 			}
 			backGrid.visible = true;;
 			backGrid.currentIndex = 0;
@@ -410,5 +415,6 @@ Game : Rectangle {
 			fieldView.draw();
 			break;
 		}
+		return true;
 	}
 }
