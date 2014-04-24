@@ -165,7 +165,7 @@ HintDigitChooseModel: ListModel {
 
 Game: Rectangle {
 	id: gameItem;
-	event gameOverEvent(result);
+	signal gameOverEvent(result);
     property bool isIncomplete: false;
     property string player;
     property string difficulty;
