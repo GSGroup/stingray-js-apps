@@ -50,7 +50,6 @@ Spinner : Row {
 /*			rect1.visible = true;
 			rect2.visible = true;
 			rect3.visible = true;*/
-			log ("ACTIVE: " + spinner.activeSpinner);
 			spinner.activeSpinner = (spinner.activeSpinner + 1) % 4;
 			spinner.UpdateRectangle();
 			this.restart();
