@@ -20,8 +20,8 @@ Edit : Item {
 	property Color textColor;
 	textColor: colorTheme.activeTextColor;
 
-	event maxLenReached;
-	event invalidKeyEntered(std::string key);
+	signal maxLenReached;
+	signal invalidKeyEntered(std::string key);
 
 	onActiveFocusChanged: {
 		cursorRect.visible = activeFocus || alwaysShowCursor;
