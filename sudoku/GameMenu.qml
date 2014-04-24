@@ -7,11 +7,11 @@ GameMenu : Item {
         id: mainMenu;
 		focus: true;
 
-        event newGameEvent(difficulty, player,diffInt);
-		event playEvent(difficulty,player);
-		event difficultySet(difficulty);
-		event helpEvent();
-		event enablePlayBtnEvent(player,diffInt);
+        signal newGameEvent(difficulty, player,diffInt);
+		signal playEvent(difficulty,player);
+		signal difficultySet(difficulty);
+		signal helpEvent();
+		signal enablePlayBtnEvent(player,diffInt);
 
 		Image {
 			 id: mainMenuTheme;
@@ -289,8 +289,8 @@ GameSubMenu : Item {
 	    id: subMenu;
 		focus: true;
 
-		event continueEvent();
-		event menuCallEvent();
+		signal continueEvent();
+		signal menuCallEvent();
 
 		Image {
 			 id: subMenuTheme;
@@ -402,8 +402,8 @@ GameSubMenu : Item {
 GameOverBox : Item {
 	id: gameOverBox;
 
-	event continueEvent();
-	event menuCallEvent();
+	signal continueEvent();
+	signal menuCallEvent();
 
 
 	anchors.verticalCenter: parent.anchors.verticalCenter;

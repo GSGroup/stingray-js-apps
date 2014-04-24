@@ -48,7 +48,7 @@ EditPlayerNamePanel : Item {
 	property variant keysModel;
 	property bool isUpper;
 
-	event accepted(text);
+	signal accepted(text);
 
 	Rectangle {
 		anchors.fill: mainWindow;
