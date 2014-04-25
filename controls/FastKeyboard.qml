@@ -122,11 +122,14 @@ SpecialDelegate : Item {
 	}
 }
 
-FastKeyboard: Item {
+FastKeyboard: Rectangle {
 	id: fastKeyboard;
 
 	width: 40 * 3 * 3;
 	height: 70 + 40 * 3 * 3 + 60;
+	color: "#0D1C22";
+	borderWidth: 1;
+	borderColor: colorTheme.activeBorderColor;
 
 	property string editString: "";
 	property string rightString: "";
@@ -142,6 +145,14 @@ FastKeyboard: Item {
 
 	onEditStringChanged: {
 		this.checkLength();
+	}
+
+	onVisibleChanged: {
+		mainView.setFocus();
+		mainView.mode = 0;
+		mainView.fillSquare();
+		fastKeyboard.editString = "";
+		fastKeyboard.rightString = "";
 	}
 
 	function checkLength() {
@@ -163,8 +174,8 @@ FastKeyboard: Item {
 
 	Rectangle {
 		id: editRectangle;
-		anchors.top: parent;
-		anchors.topMargin: 10;
+		anchors.top: parent.top;
+		anchors.topMargin: 5;
 		anchors.horizontalCenter: parent.horizontalCenter;
 		height: 50;
 		focus: true;
@@ -266,7 +277,12 @@ FastKeyboard: Item {
 			switch (mainView.currentIndex) { 
 			case 0: case 1: case 2: 
 			case 3: case 4: case 5: 
-				mainView.currentIndex += 3;
+				if (mainView.model.get(mainView.currentIndex + 3).letterUp != ' ') 
+					mainView.currentIndex += 3;
+				else {
+					specialView.setFocus();
+					specialView.currentIndex = mainView.currentIndex - 3;
+				}
 				break;
 			case 6:	case 7: case 8: 
 				specialView.setFocus();
@@ -280,7 +296,8 @@ FastKeyboard: Item {
 				break;
 			case 1: case 4: case 7:
 			case 2: case 5: case 8:
-				mainView.currentIndex --;
+				if (mainView.model.get(mainView.currentIndex - 1).letterUp != ' ') 
+					mainView.currentIndex --;
 			}
 		}
 
@@ -288,7 +305,8 @@ FastKeyboard: Item {
 			switch (mainView.currentIndex) {
 			case 0: case 3: case 6: 
 			case 1: case 4: case 7:
-				mainView.currentIndex ++;
+				if (mainView.model.get(mainView.currentIndex + 1).letterUp != ' ') 
+					mainView.currentIndex ++;
 			case 2: case 5: case 8:
 				break;
 			}
@@ -322,7 +340,7 @@ FastKeyboard: Item {
 				return;
 			}
 			var arr = mainView.model.get(mainView.currentIndex);
-			if (mainView.currentIndex == 1) {
+			if (mainView.currentIndex == 7) {
 				mainView.digit = true;
 				specialView.model.set(1,{text: "0", color: "#ffffff", borderColor: colorTheme.activeBorderColor});
 			} else 
@@ -344,17 +362,17 @@ FastKeyboard: Item {
 		}
 
 		function fillSquare() {
-			mainView.model.set(0,{arrayDown: ".,/;'-=`0", arrayUp: "<>?:\"_+~0"});
-			mainView.model.set(1,{arrayDown: "123456789", arrayUp: "123456789"});
-			mainView.model.set(2,{arrayDown: "ъыьэюя.()", arrayUp: "ЪЫЬЭЮЯ,[]"});
+			mainView.model.set(0,{arrayDown: "abcdefghi", arrayUp: "ABCDEFGHI"});
+			mainView.model.set(1,{arrayDown: "jklmnopqr", arrayUp: "JKLMNOPQR"});
+			mainView.model.set(2,{arrayDown: "stuvwxyz ", arrayUp: "STUVWXYZ "});
 
-			mainView.model.set(3,{arrayDown: "abcdefghi", arrayUp: "ABCDEFGHI"});
-			mainView.model.set(4,{arrayDown: "jklmnopqr", arrayUp: "JKLMNOPQR"});
-			mainView.model.set(5,{arrayDown: "stuvwxyz.", arrayUp: "STUVWXYZ,"});
+			mainView.model.set(3,{arrayDown: "абвгдеёжз", arrayUp: "АБВГДЕЁЖЗ"});
+			mainView.model.set(4,{arrayDown: "ийклмнопр", arrayUp: "ИЙКЛМНОПР"});
+			mainView.model.set(5,{arrayDown: "стуфхцчшщ", arrayUp: "СТУФХЦЧШЩ"});
 
-			mainView.model.set(6,{arrayDown: "абвгдеёжз", arrayUp: "АБВГДЕЁЖЗ"});
-			mainView.model.set(7,{arrayDown: "ийклмнопр", arrayUp: "ИЙКЛМНОПР"});
-			mainView.model.set(8,{arrayDown: "стуфхцчшщ", arrayUp: "СТУФХЦЧШЩ"});
+			mainView.model.set(6,{arrayDown: ";?'(.)=-*", arrayUp: ":!\"<,>+_#"});
+			mainView.model.set(7,{arrayDown: "123456789", arrayUp: "123456789"});
+			mainView.model.set(8,{arrayDown: "ъыьэюя   ", arrayUp: "ЪЫЬЭЮЯ   "});
 
 			mainView.currentIndex = 4;	
 		}
@@ -376,8 +394,12 @@ FastKeyboard: Item {
 
 		onUpPressed: {
 			mainView.currentIndex = 6 + this.currentIndex;	
+			if (mainView.model.get(mainView.currentIndex).letterUp == ' ')
+				mainView.currentIndex -= 3;
 			mainView.setFocus();
 		}
+
+		onDownPressed: {}
 
 		onSelectPressed: {
 			this.acceptSpecial(specialView.currentIndex);
@@ -387,6 +409,7 @@ FastKeyboard: Item {
 			switch (specialView.model.get(i).text) {
 			case "Backspace": 
 				if (fastKeyboard.editString.length == 0) return;
+				log ("BACKSPACE");
 				fastKeyboard.editString = fastKeyboard.editString.slice(0,fastKeyboard.editString.length - 1) 
 				break;
 			case "Space": 
@@ -406,7 +429,6 @@ FastKeyboard: Item {
 				mainView.accept();
 				break;
 			case "Enter":
-				fastKeyboard.visible = false;
 				fastKeyboard.result = fastKeyboard.editString + fastKeyboard.rightString;
 				fastKeyboard.keyboardEntered(fastKeyboard.editString + fastKeyboard.rightString);
 				break;
@@ -427,15 +449,19 @@ FastKeyboard: Item {
 	}
 	
 	onBackPressed: {
-		this.visible = false;
+		if (mainView.mode == 1) {
+			specialView.acceptSpecial(0);
+			return;
+		}
 		this.keyboardCancelled();
 	}
 
 	onKeyPressed: {
 		switch (key) {
 		case "Chat": case "*": case "Red":
+			log("RED!");
 			specialView.acceptSpecial(0);
-			break;
+			break
 		case "Mail": case "#": case "Green":
 			specialView.acceptSpecial(2);
 			break;
@@ -447,8 +473,9 @@ FastKeyboard: Item {
 			mainView.currentIndex = key - 1;
 			mainView.accept();
 			return true;	
+		default: return false;
 		}
-		return false;
+		return true;
 	}
 
 }
