@@ -38,14 +38,14 @@ Player : Item {
 				anchors.left: parent.left;
 				anchors.bottom: parent.bottom;
 //				width: 100;
-				Behavior on width {animation: Animation {duration: 5000;} }
+				Behavior on width {animation: Animation {duration: 2000;} }
 			}
 		}
 	}
 
 	Timer {
 		id: refreshBarTimer;
-		interval: 5000;
+		interval: 2000;
 
 		onTriggered: {
 			playerObj.refreshBar();
@@ -65,7 +65,7 @@ Player : Item {
 	}
 
 	onSelectPressed: {
-		pause = !pause;
+		this.paused = !this.paused;
 		this.player.pause();
 	}
 
