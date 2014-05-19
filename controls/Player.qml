@@ -11,7 +11,7 @@ Player : Item {
 	anchors.fill: mainWindow;
 	visible: false;
 
-	signal finished();
+	signal finished(state);
 
 	property bool paused: false;
 	property bool statusShow: false;
@@ -19,8 +19,10 @@ Player : Item {
 
 	Item {
 		id: statusItem;
-		visible: parent.statusShow;
+//		visible: parent.statusShow;
+		opacity: parent.statusShow ? 1 : 0.1;
 		anchors.fill: parent;
+		anchors.margins: 20;
 
 		Rectangle {
 			id: emptyBar;
@@ -37,7 +39,6 @@ Player : Item {
 				anchors.top: parent.top;
 				anchors.left: parent.left;
 				anchors.bottom: parent.bottom;
-//				width: 100;
 				Behavior on width {animation: Animation {duration: 2000;} }
 			}
 		}
@@ -49,18 +50,16 @@ Player : Item {
 
 		onTriggered: {
 			playerObj.refreshBar();
+			this.restart();
 		}
 	}
 
 	onCompleted: {
 		this.player = new media.Player();
-		if (statusShow)
-			refreshBarTimer.start();
 	}
 
 	onBackPressed: {
-		this.player.stop();
-		this.visible = false;
+		this.stop();
 		this.finished();
 	}
 
@@ -69,25 +68,18 @@ Player : Item {
 		this.player.pause();
 	}
 
-	onStatusShowChanged: {
-		if (statusShow) {
-			playerObj.refreshBar();
-			refreshBarTimer.start();
-		}
-		else 
-			refreshBarTimer.stop();
-	}
-
 	onKeyPressed: {
 		return true;
 	}
 
 	onUpPressed: {
 		this.statusShow = !this.statusShow;
+		this.refreshBar();
 	}
 
 	onDownPressed: {
 		this.statusShow = !this.statusShow;
+		this.refreshBar();
 	}
 
 	function playUrl(url) {
@@ -96,18 +88,23 @@ Player : Item {
 		this.player.stop();
 		this.player.playUrl(url);
 		this.paused = false;
+		playerObj.refreshBar();
+		refreshBarTimer.start();
 	}
 
 	function stop() {
 		log("Player: stop playing");
 		this.player.stop();
+		refreshBarTimer.stop();
+		this.visible = false;
 	}
 
 	function refreshBar() {
 		log("Progress: " + playerObj.player.getProgress());
-		log("Seekable progress: " + playerObj.player.getSeekableProgress());
+//		log("Seekable progress: " + playerObj.player.getSeekableProgress());
 		progressBar.width = playerObj.player.getProgress() / playerObj.duration * emptyBar.width;
-		refreshBarTimer.restart();
+		log("ProgressBar width: " + progressBar.width);
+		log("EmptyBar width: " + emptyBar.width);
 	}
 
 }
