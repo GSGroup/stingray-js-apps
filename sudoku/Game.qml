@@ -182,7 +182,7 @@ Game: Rectangle {
     BigText {
             id: difficultyIndicator;
             anchors.top: parent.top;
-			anchors.topMargin: 37;
+			anchors.topMargin: 85;
 			anchors.horizontalCenter: difficultyHeader.horizontalCenter;
 			color:"#813722";
             text: parent.difficulty;
@@ -199,23 +199,20 @@ Game: Rectangle {
 			text:"level:";
 	}
 
-	BigText {
-		id:timeIndicator;
-		anchors.top: difficultyIndicator.bottom;
-		anchors.topMargin: 93;
-		anchors.horizontalCenter: difficultyIndicator.horizontalCenter;
-		property int sec: 0;
-		color: "#813722";
-		text: Math.floor(sec/60)+":"+sec%60;
+	FixedStringTimer {
+			id: timeIndicator;
+			anchors.top: difficultyIndicator.bottom;
+			anchors.topMargin: 93;
+			anchors.horizontalCenter: difficultyIndicator.horizontalCenter;
 
-		Timer {
-			id:timer;
-			repeat: true;
-			interval: 1000;
-			onTriggered: {
-				++timeIndicator.sec ;
+			Timer {
+				id:timer;
+				repeat: true;
+				interval: 1000;
+				onTriggered: {
+					++timeIndicator.sec ;
+				}
 			}
-		}
 	}
 //1
 	BigText {
@@ -356,7 +353,8 @@ Game: Rectangle {
 	GridView {
 		id: gameView;
 		anchors.horizontalCenter: mainGameTheme.horizontalCenter;
-		anchors.verticalCenter: mainGameTheme.verticalCenter;
+		anchors.bottom: mainGameTheme.bottom;
+		anchors.bottomMargin: 21;
 		focus: true;
 		height: mainGameTheme.height-142;
 		width: mainGameTheme.height-142;
