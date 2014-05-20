@@ -89,7 +89,7 @@ CellDelegate : Item {
 			  pixelSize: 70;
 
 		}
-
+		style: Shadow;
 		text:  model.shownValue;
 
 		Behavior on color {
@@ -248,6 +248,7 @@ Game: Rectangle {
 			this.opacity=0.01;
 			hintDigitChooser.opacity=0.01;
 			eraser.opacity=0.01;
+			showHintButton.opacity=0.01;
 			gameView.wall.color = "#00000000"
 			gameView.setFocus();
 		}
@@ -255,6 +256,7 @@ Game: Rectangle {
         onBackPressed: {
             this.opacity = 0.01;
 			hintDigitChooser.opacity = 0.01;
+			showHintButton.opacity=0.01;
 			gameView.wall.color = "#00000000"
             gameView.setFocus();
         }
@@ -287,6 +289,7 @@ Game: Rectangle {
 			this.opacity = 0.01;
 			digitChooser.opacity =0.01;
 			eraser.opacity=0.01;
+			showHintButton.opacity=0.01;
             gameView.setFocus(); 
 			gameView.wall.color = "#00000000"
 			gameView.model.setProperty(gameView.currentIndex, 'isHint'+(currentIndex+1), !(gameView.model.get(gameView.currentIndex)['isHint'+(currentIndex+1)]));
@@ -307,6 +310,10 @@ Game: Rectangle {
 			eraser.setFocus();
 		}
 
+		onUpPressed: {
+//			showHintButton.setFocus(); stab
+		}
+
 		Behavior on opacity {
 			animation: Animation {
 				duration: 300;
@@ -323,7 +330,7 @@ Game: Rectangle {
 		height: width;
 		radius: 0;
 //		color: "#00000088";
-		color: eraser.activeFocus ? colorTheme.activeBorderColor : "#00000088"; //colorTheme.backgroundColor;
+		color: eraser.activeFocus ? colorTheme.activeBorderColor : "#000000"; //colorTheme.backgroundColor;
 		opacity: 0.01;
 		Image {
 			anchors.fill: parent;
@@ -335,11 +342,38 @@ Game: Rectangle {
 			this.opacity = 0.01;
 			digitChooser.opacity = 0.01;
 			hintDigitChooser.opacity = 0.01;
+			showHintButton.opacity = 0.01;
 			gameView.wall.color = "#00000000"
 			gameView.setFocus();
 		}
 
 		onRightPressed: {
+			hintDigitChooser.setFocus();
+		}
+
+		Behavior on opacity {
+			Animation {
+				duration: 300;
+			}
+		}
+	}
+
+	FocusablePanel {
+		id: showHintButton;
+		anchors.right: hintDigitChooser.right;
+		anchors.bottom: hintDigitChooser.top;
+		width: hintDigitChooser.width;
+		height: width;
+		radius: 0;
+		color: showHintButton.activeFocus ? colorTheme.activeBorderColor : "#000000"; //colorTheme.backgroundColor;
+		opacity: 0.01;
+		Image {
+			  anchors.fill: parent;
+			  source: "apps/sudoku/img/ico_clear.png";
+		}
+
+		onSelectPressed: {}
+		onDownPressed: {
 			hintDigitChooser.setFocus();
 		}
 
@@ -374,9 +408,10 @@ Game: Rectangle {
 		onSelectPressed: {
 
 			if (!gameView.model.get(gameView.currentIndex)['isBase']){
-                digitChooser.opacity=0.8;
-				hintDigitChooser.opacity=0.8;
-				eraser.opacity=0.8
+                digitChooser.opacity=1.0;
+				hintDigitChooser.opacity=1.0;
+				eraser.opacity=1.0;
+//				showHintButton.opacity=1.0; stab
 				digitChooser.setFocus();
 				wall.color = "#00000055";
 			}
