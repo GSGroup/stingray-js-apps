@@ -1,56 +1,54 @@
 SpinnerRectangle : Rectangle {
 	borderWidth: 2;
-	opacity: 0.5;
+	opacity: active;
 	visible: true;
+	radius: height / 2;
+	width: circleRadius * 2;
+	height: width;
+	color: colorTheme.activeBorderColor; 
+	borderColor: colorTheme.activeBorderColor; 
+	
+	property float active;
 
 	Behavior on opacity {
 		animation: Animation {
 			id: opacityAnimation;
-			duration: 300;
+			duration: 100;
 		}
-	}
-
-	function fadeIn() {
-		this.opacity = 1;
-	}
-	function fadeOut() {
-		this.opacity = 0.5;
 	}
 }
 
-Spinner : Row {
+Spinner : Item {
 	id: spinner;
-	width: 60;
-	height: width / 3;
-	property int activeSpinner;
-	property Color color;
-	property Color borderColor;
-	color: colorTheme.activeBackgroundColor; 
-	borderColor: colorTheme.activeBorderColor; 
+//	width: 90;
+//	height: width / 3;
+	anchors.centerIn: parent;
 
-	spacing: 2;
+	property int activeSpinner: 0;
+	property int circleRadius: 10;
+	property int space: 3;
+	property int circlesCount: 8;
+
+
 	collapseEmptyItems: false;
 
-	SpinnerRectangle { id: rect1; width: parent.width / 3; height: parent.height; color: spinner.color; borderColor: spinner.borderColor; }
-	SpinnerRectangle { id: rect2; width: parent.width / 3; height: parent.height; color: spinner.color; borderColor: spinner.borderColor; }
-	SpinnerRectangle { id: rect3; width: parent.width / 3; height: parent.height; color: spinner.color; borderColor: spinner.borderColor; }
+	SpinnerRectangle{}	SpinnerRectangle{}
+	SpinnerRectangle{}	SpinnerRectangle{}
+	SpinnerRectangle{}	SpinnerRectangle{}
+	SpinnerRectangle{}	SpinnerRectangle{}
 
 	function UpdateRectangle() {
-		switch(this.activeSpinner) {
-		case 0: rect3.fadeOut(); rect1.fadeIn(); break;
-		case 1: rect1.fadeOut(); rect2.fadeIn(); break;
-		case 2: rect2.fadeOut(); rect3.fadeIn(); break;
+		var o = 1;
+		for (var i = this.activeSpinner; o >= 0; i = i == 0 ? spinner.circlesCount - 1 : i-1, o -= 0.15) {
+			this.children[i].active = o;
 		}
 	}
 
 	Timer {
 		id: timer;
-		interval: 300;
+		interval: 100;
 		onTriggered: {
-/*			rect1.visible = true;
-			rect2.visible = true;
-			rect3.visible = true;*/
-			spinner.activeSpinner = (spinner.activeSpinner + 1) % 4;
+			spinner.activeSpinner = (spinner.activeSpinner + 1) % (spinner.circlesCount);
 			spinner.UpdateRectangle();
 			this.restart();
 		}
@@ -62,6 +60,15 @@ Spinner : Row {
 			timer.restart();
 		} else {
 			timer.stop();
+		}
+	}
+
+	onCompleted: {
+		for (var i = 0; i < this.circlesCount; i ++) {
+			this.children[i].circleRadius = this.circleRadius;
+			this.children[i].x = Math.sin(Math.PI * i / this.circlesCount * 2) * this.circleRadius * this.space;
+			this.children[i].y = Math.cos(Math.PI * i / this.circlesCount * 2) * this.circleRadius * this.space;
+			this.children[i].active = 0;
 		}
 	}
 }
