@@ -20,7 +20,7 @@ Player : Item {
 	Item {
 		id: statusItem;
 //		visible: parent.statusShow;
-		opacity: parent.statusShow ? 1 : 0.1;
+		opacity: parent.statusShow ? 1 : 0.01;
 		anchors.fill: parent;
 		anchors.margins: 20;
 
@@ -42,6 +42,8 @@ Player : Item {
 				Behavior on width {animation: Animation {duration: 2000;} }
 			}
 		}
+		
+		Behavior on opacity {animation: Animation {duration: 400;} }
 	}
 
 	Timer {
