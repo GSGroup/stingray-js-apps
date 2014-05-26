@@ -15,7 +15,7 @@ Panel : Rectangle {
 		anchors.fill: parent;
 		anchors.margins: 1;
 
-		orientation: Orientation.Vertical;
+		orientation: Vertical;
 		GradientStop {position: 0; color: "#2d3640"; }
 		GradientStop {position: 1; color: "#212930"; }
 
