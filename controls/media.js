@@ -66,6 +66,10 @@ Player.prototype = {
 		return this.getSeekableRange()[1];
 	},
 
+	getMediaInfo: function() {
+		return this.session? this.session.GetMediaInfo(): null;
+	},
+
 	_onFinished: function() {
 		this.finished();
 	}
