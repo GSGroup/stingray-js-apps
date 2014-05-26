@@ -27,7 +27,7 @@ Player : Item {
 		Rectangle {
 			id: emptyBar;
 			color: colorTheme.disabledBackgroundColor;
-			height: 40;
+			height: parent.height / 20;
 			anchors.bottom: parent.bottom;
 			anchors.left: parent.left;
 			anchors.right: parent.right;
@@ -109,4 +109,119 @@ Player : Item {
 		log("EmptyBar width: " + emptyBar.width);
 	}
 
+}
+
+PreviewPlayer : Item {
+	id: previewItem;
+
+	signal finished(state);
+	property int duration;
+
+	Player {
+		id: previewPlayer;
+		anchors.top: parent.top;
+		anchors.bottom: controls.top;
+		anchors.left: parent.left;
+		anchors.right: parent.right;
+		preview: true;
+		statusShow: true;
+		focus: false;
+		duration: parent.duration;
+
+		onFinished: {
+			previewItem.finished(state);
+		}
+	}
+
+	Item {
+		id: controls;
+		anchors.bottom: parent.bottom;
+		anchors.left: parent.left;
+		anchors.right: parent.right;
+		height: 50;
+		focus: true;
+
+		onActiveFocusChanged: {
+			if (activeFocus)
+				fullIm.setFocus();
+		}
+
+		Image {
+			id: playIm;
+			anchors.centerIn: parent;
+			width: 48;
+			height: 48;
+			focus: true;
+			color: "#ff0000";
+			source:	!previewPlayer.paused ? 
+					activeFocus ? "res/apps/preview/arrowPlayActive.png" : "res/apps/preview/arrowPlay.png" :
+					activeFocus ? "res/apps/preview/arrowPauseActive.png" : "res/apps/preview/arrowPause.png";
+//			z: 100;
+			
+			onLeftPressed: {
+				prevIm.setFocus();
+			}
+
+			onRightPressed: {
+				nextIm.setFocus();
+			}
+		}
+
+		Image {
+			id: nextIm;
+			anchors.top: playIm.top;
+			anchors.bottom: playIm.bottom;
+			anchors.left: playIm.right;
+			width: 48;
+			focus: true;
+			source: activeFocus ? "res/apps/preview/arrowNextActive.png" : "res/apps/preview/arrowNext.png";
+
+			onRightPressed: {
+				fullIm.setFocus();
+			}
+
+			onLeftPressed: {
+				playIm.setFocus();
+			}
+		}
+
+		Image {
+			id: prevIm;
+			anchors.top: playIm.top;
+			anchors.bottom: playIm.bottom;
+			anchors.right: playIm.left;
+			width: 48;
+			focus: true;
+			source: activeFocus ? "res/apps/preview/arrowPrevActive.png" : "res/apps/preview/arrowPrev.png";
+
+			onRightPressed: {
+				playIm.setFocus();
+			}
+		}
+
+		Image {
+			id: fullIm;
+			anchors.top: playIm.top;
+			anchors.bottom: playIm.bottom;
+			anchors.right: parent.right;
+			width: 48;
+			focus: true;
+			source: activeFocus ? "res/apps/preview/fullscreenActive.png" : "res/apps/preview/fullscreen.png";
+
+			onLeftPressed: {
+				nextIm.setFocus();
+			}
+		}
+
+	}
+	
+	function playUrl (url) {
+		this.visible = true;
+//		previewPlayer.playUrl(url);
+	}
+	
+	function stop () {
+		this.visible = false;
+//		previewPlayer.stop();
+	}
 }
