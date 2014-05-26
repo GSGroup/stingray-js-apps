@@ -51,11 +51,19 @@ Player.prototype = {
 		return 0;
 	},
 
-	getSeekableProgress: function() {
+	getSeekableRange: function() {
 		if (this.session)
-			return this.session.GetSeekableRange().GetEnd();
+			return [this.session.GetSeekableRange().GetStart(), this.session.GetSeekableRange().GetEnd()];
+		else
+			return [0, 0];
+	},
 
-		return 0;
+	getSeekableRangeStart: function() {
+		return this.getSeekableRange()[0];
+	},
+
+	getSeekableRangeEnd: function() {
+		return this.getSeekableRange()[1];
 	},
 
 	_onFinished: function() {
