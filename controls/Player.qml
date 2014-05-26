@@ -8,7 +8,7 @@ Player : Item {
 	}
 
 	focus: true;
-	anchors.fill: mainWindow;
+//	anchors.fill: parent;
 	visible: false;
 
 	signal finished(state);
@@ -115,12 +115,33 @@ PreviewPlayer : Item {
 	id: previewItem;
 
 	signal finished(state);
+	signal fullscreen();
+
+	property string title;
 	property int duration;
+
+	Rectangle {
+		anchors.top: previewItem.top;
+		anchors.right: previewItem.right;
+		anchors.left: previewItem.left;
+		height: titleText.height;
+		color: "#00000080";
+
+		SmallText {
+			id: titleText;
+			anchors.top: previewItem.top;
+			anchors.right: previewItem.right;
+			anchors.left: previewItem.left;
+			horizontalAlignment: Text.AlignHCenter;
+			text: previewItem.title;
+			wrapMode: Text.Wrap;
+		}
+	}
 
 	Player {
 		id: previewPlayer;
 		anchors.top: parent.top;
-		anchors.bottom: controls.top;
+		anchors.bottom: controls.opacity == 1 ? controls.top : parent.bottom;
 		anchors.left: parent.left;
 		anchors.right: parent.right;
 		preview: true;
@@ -130,6 +151,8 @@ PreviewPlayer : Item {
 
 		onFinished: {
 			previewItem.finished(state);
+			previewPlayer.anchors.fill = parent;
+			controls.opacity = 1;
 		}
 	}
 
@@ -139,7 +162,9 @@ PreviewPlayer : Item {
 		anchors.left: parent.left;
 		anchors.right: parent.right;
 		height: 50;
+		clip: true;
 		focus: true;
+		opacity: 1;
 
 		onActiveFocusChanged: {
 			if (activeFocus)
@@ -165,6 +190,10 @@ PreviewPlayer : Item {
 			onRightPressed: {
 				nextIm.setFocus();
 			}
+
+			onSelectPressed: {
+				previewPlayer.onSelectPressed();
+			}
 		}
 
 		Image {
@@ -183,6 +212,11 @@ PreviewPlayer : Item {
 			onLeftPressed: {
 				playIm.setFocus();
 			}
+
+			onSelectPressed: {
+				previewPlayer.onRightPressed();
+				playIm.setFocus();
+			}
 		}
 
 		Image {
@@ -195,6 +229,11 @@ PreviewPlayer : Item {
 			source: activeFocus ? "res/apps/preview/arrowPrevActive.png" : "res/apps/preview/arrowPrev.png";
 
 			onRightPressed: {
+				playIm.setFocus();
+			}
+
+			onSelectPressed: {
+				previewPlayer.onLeftPressed();
 				playIm.setFocus();
 			}
 		}
@@ -211,17 +250,23 @@ PreviewPlayer : Item {
 			onLeftPressed: {
 				nextIm.setFocus();
 			}
+
+			onSelectPressed: {
+				previewPlayer.anchors.fill = mainWindow;
+				previewItem.fullscreen();
+				controls.opacity = 0;
+			}
 		}
 
 	}
 	
 	function playUrl (url) {
 		this.visible = true;
-//		previewPlayer.playUrl(url);
+		previewPlayer.playUrl(url);
 	}
 	
 	function stop () {
 		this.visible = false;
-//		previewPlayer.stop();
+		previewPlayer.stop();
 	}
 }
