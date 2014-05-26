@@ -90,8 +90,8 @@ Player : Item {
 		this.player.stop();
 		this.player.playUrl(url);
 		this.paused = false;
-		playerObj.refreshBar();
 		refreshBarTimer.start();
+		playerObj.refreshBar(); //could throw exception and timer will not start
 	}
 
 	function stop() {
@@ -107,6 +107,9 @@ Player : Item {
 		progressBar.width = playerObj.player.getProgress() / playerObj.duration * emptyBar.width;
 		log("ProgressBar width: " + progressBar.width);
 		log("EmptyBar width: " + emptyBar.width);
+		var mi = playerObj.player.getMediaInfo();
+		if (mi)
+			log(mi.GetDuration().ToString());
 	}
 
 }
