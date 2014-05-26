@@ -103,7 +103,7 @@ Player : Item {
 
 	function refreshBar() {
 		log("Progress: " + playerObj.player.getProgress());
-//		log("Seekable progress: " + playerObj.player.getSeekableProgress());
+		//log("Seekable progress: " + playerObj.player.getSeekableRangeEnd());
 		progressBar.width = playerObj.player.getProgress() / playerObj.duration * emptyBar.width;
 		log("ProgressBar width: " + progressBar.width);
 		log("EmptyBar width: " + emptyBar.width);
