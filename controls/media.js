@@ -37,6 +37,7 @@ Player.prototype = {
 	},
 
 	seek: function(msDelta) {
+		return this.session? this.session.GetMediaInfo(): null;
 		if (!this.session)
 			return;
 
@@ -68,6 +69,13 @@ Player.prototype = {
 
 	getMediaInfo: function() {
 		return this.session? this.session.GetMediaInfo(): null;
+	},
+
+	getDuration: function () {
+		var mi = this.session ? this.session.GetMediaInfo(): null;
+		if (!mi)
+			return null;
+		return mi.GetDuration().GetMilliseconds();
 	},
 
 	_onFinished: function() {
