@@ -36,6 +36,14 @@ Spinner : Item {
 	SpinnerRectangle{}	SpinnerRectangle{}
 	SpinnerRectangle{}	SpinnerRectangle{}
 	SpinnerRectangle{}	SpinnerRectangle{}
+	SpinnerRectangle{}	SpinnerRectangle{}
+	SpinnerRectangle{}	SpinnerRectangle{}
+	SpinnerRectangle{}	SpinnerRectangle{}
+	SpinnerRectangle{}	SpinnerRectangle{}
+	SpinnerRectangle{}	SpinnerRectangle{}
+	SpinnerRectangle{}	SpinnerRectangle{}
+	SpinnerRectangle{}	SpinnerRectangle{}
+	SpinnerRectangle{}	SpinnerRectangle{}
 
 	function UpdateRectangle() {
 		var o = 1;
