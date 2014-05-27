@@ -15,14 +15,18 @@ Player : Item {
 
 	property bool paused: false;
 	property bool statusShow: false;
+	property bool statusHold: false;
 	property int duration: 0;
+	property int cursorPos: 0;
+	property int cursorDist: cursorPos / duration * emptyBar.width;
+	property int cursorGain: 1000;
 
 	Item {
 		id: statusItem;
 //		visible: parent.statusShow;
 		opacity: parent.statusShow ? 1 : 0.01;
-		anchors.fill: parent;
-		anchors.margins: 20;
+		anchors.fill: parent.width < safeArea.width ? parent : safeArea;
+		anchors.margins: 10;
 
 		Rectangle {
 			id: emptyBar;
@@ -33,6 +37,16 @@ Player : Item {
 			anchors.right: parent.right;
 
 			Rectangle {
+				id: seekBar;
+				color: colorTheme.activeBackgroundColor;
+				anchors.margins: parent.borderWidth;
+				anchors.top: parent.top;
+				anchors.left: parent.left;
+				anchors.bottom: parent.bottom;
+				Behavior on width {animation: Animation {duration: 2000;} }
+			}
+
+			Rectangle {
 				id: progressBar;
 				color: colorTheme.activeBorderColor;
 				anchors.margins: parent.borderWidth;
@@ -40,9 +54,24 @@ Player : Item {
 				anchors.left: parent.left;
 				anchors.bottom: parent.bottom;
 				Behavior on width {animation: Animation {duration: 2000;} }
+				z: 100;
+			}
+
+
+			Rectangle {
+				id: cursorBar;
+				color: "#ffffff";
+				visible: false;
+				anchors.top: parent.top;
+				anchors.bottom: parent.bottom;
+				anchors.margins: parent.borderWidth;
+				anchors.left: progressBar.right;
+				anchors.leftMargin: playerObj.cursorDist;
+				width: 10;
+				Behavior on x {animation: Animation {duration: 200;}}
 			}
 		}
-		
+
 		Behavior on opacity {animation: Animation {duration: 400;} }
 	}
 
@@ -56,8 +85,52 @@ Player : Item {
 		}
 	}
 
+	Timer {
+		id: statusTimer;
+		interval: 5000;
+
+		onTriggered: {
+			if (!playerObj.statusHold) { 
+				playerObj.statusShow = false;
+			}
+			cursorBar.visible = false;
+			playerObj.cursorPos = 0;
+		}
+	}
+
+	Timer {
+		id: holdTimer;
+		interval: 250;
+	}
+
 	onCompleted: {
 		this.player = new media.Player();
+	}
+
+	onRightPressed: {
+		if (holdTimer.running) {
+			this.cursorGain += 1000;
+		} else this.cursorGain = 1000;
+		holdTimer.restart();
+		statusTimer.restart();
+		cursorBar.visible = true;
+		if (this.cursorPos + this.cursorGain <=  playerObj.player.getSeekableRangeEnd())
+			this.cursorPos += this.cursorGain;
+		else 
+			this.cursorPos = playerObj.player.getSeekableRangeEnd();
+	}
+
+	onLeftPressed: {
+		if (holdTimer.running) {
+			this.cursorGain += 1000;
+		} else this.cursorGain = 1000;
+		holdTimer.restart();
+		statusTimer.restart();
+		cursorBar.visible = true;
+		if (this.cursorPos - this.cursorGain >=  playerObj.player.getSeekableRangeStart())
+			this.cursorPos -= this.cursorGain;
+		else 
+			this.cursorPos = playerObj.player.getSeekableRangeStart();
 	}
 
 	onBackPressed: {
@@ -66,8 +139,17 @@ Player : Item {
 	}
 
 	onSelectPressed: {
-		this.paused = !this.paused;
-		this.player.pause();
+		statusTimer.restart();
+		if (cursorBar.visible) {
+			cursorBar.visible = false;
+			log ("Seeking at " + this.cursorPos);
+			this.player.seek(this.cursorPos);
+			this.refreshBar();
+		}
+		else {
+			this.paused = !this.paused;
+			this.player.pause();
+		}
 	}
 
 	onKeyPressed: {
@@ -82,6 +164,12 @@ Player : Item {
 	onDownPressed: {
 		this.statusShow = !this.statusShow;
 		this.refreshBar();
+	}
+
+	onStatusShowChanged: {
+		if (statusShow && !statusHold) {
+			statusTimer.start();
+		}
 	}
 
 	function playUrl(url) {
@@ -102,14 +190,19 @@ Player : Item {
 	}
 
 	function refreshBar() {
+/*		while (true) {
+			var d = playerObj.player.getDuration();
+			if (d) {
+				playerObj.duration = d;
+				break;
+			}
+		}*/
 		log("Progress: " + playerObj.player.getProgress());
-		//log("Seekable progress: " + playerObj.player.getSeekableRangeEnd());
+		log("Seekable progress: " + playerObj.player.getSeekableRangeEnd());
 		progressBar.width = playerObj.player.getProgress() / playerObj.duration * emptyBar.width;
+//		seekBar.width = playerObj.player.getSeekableRangeEnd() / playerObj.duration * emptyBar.width;
 		log("ProgressBar width: " + progressBar.width);
 		log("EmptyBar width: " + emptyBar.width);
-		var mi = playerObj.player.getMediaInfo();
-		if (mi)
-			log(mi.GetDuration().ToString());
 	}
 
 }
@@ -121,6 +214,7 @@ PreviewPlayer : Item {
 	signal fullscreen();
 
 	property string title;
+	property bool isFullscreen: false;
 	property int duration;
 
 	Rectangle {
@@ -129,6 +223,7 @@ PreviewPlayer : Item {
 		anchors.left: previewItem.left;
 		height: titleText.height;
 		color: "#00000080";
+		visible: !parent.isFullscreen;
 
 		SmallText {
 			id: titleText;
@@ -139,22 +234,26 @@ PreviewPlayer : Item {
 			text: previewItem.title;
 			wrapMode: Text.Wrap;
 		}
+
+		z: 1000;
 	}
 
 	Player {
 		id: previewPlayer;
-		anchors.top: parent.top;
-		anchors.bottom: controls.opacity == 1 ? controls.top : parent.bottom;
-		anchors.left: parent.left;
-		anchors.right: parent.right;
-		preview: true;
-		statusShow: true;
-		focus: false;
+		anchors.top: parent.isFullscreen ? mainWindow.top : parent.top;
+		anchors.bottom: parent.isFullscreen ? mainWindow.bottom : controls.opacity == 1 ? controls.top : parent.bottom;
+		anchors.left: parent.isFullscreen ? mainWindow.left : parent.left;
+		anchors.right: parent.isFullscreen? mainWindow.right : parent.right;
+		statusShow: !parent.isFullscreen;
+		statusHold: !parent.isFullscreen;
+		focus: true; //isFullscreen;
 		duration: parent.duration;
 
 		onFinished: {
 			previewItem.finished(state);
-			previewPlayer.anchors.fill = parent;
+			previewItem.isFullscreen = false;
+//			previewPlayer.statusShow = true;
+//			previewPlayer.statusHold = true;
 			controls.opacity = 1;
 		}
 	}
@@ -168,6 +267,7 @@ PreviewPlayer : Item {
 		clip: true;
 		focus: true;
 		opacity: 1;
+		z: 1000;
 
 		onActiveFocusChanged: {
 			if (activeFocus)
@@ -218,7 +318,6 @@ PreviewPlayer : Item {
 
 			onSelectPressed: {
 				previewPlayer.onRightPressed();
-				playIm.setFocus();
 			}
 		}
 
@@ -237,7 +336,6 @@ PreviewPlayer : Item {
 
 			onSelectPressed: {
 				previewPlayer.onLeftPressed();
-				playIm.setFocus();
 			}
 		}
 
@@ -255,7 +353,12 @@ PreviewPlayer : Item {
 			}
 
 			onSelectPressed: {
-				previewPlayer.anchors.fill = mainWindow;
+//				previewPlayer.focus = true;
+//				previewPlayer.anchors.fill = mainWindow;
+				previewItem.isFullscreen = true;
+//				previewPlayer.statusShow = false;
+//				previewPlayer.statusHold = false;
+				previewPlayer.setFocus();
 				previewItem.fullscreen();
 				controls.opacity = 0;
 			}
