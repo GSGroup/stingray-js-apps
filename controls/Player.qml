@@ -122,8 +122,15 @@ Player : Item {
 		interval: 100;
 		
 		onTriggered: {
-			if (playerObj.player.getProgress() != 0) 
-				loadSpinner.visible = false;
+			if (playerObj.player.getProgress() != 0) {
+				var d = playerObj.player.getDuration();
+				if (d) {
+					playerObj.duration = d;
+					log("DURATION: " + d);
+					loadSpinner.visible = false;
+				} 
+				else this.restart();
+			}
 			else this.restart();
 		}
 	}
@@ -221,14 +228,6 @@ Player : Item {
 	}
 
 	function refreshBar() {
-		while (playerObj.duration == -1) {
-			var d = playerObj.player.getDuration();
-			if (d) {
-				playerObj.duration = d;
-				log("DURATION: " + d);
-				break;
-			}
-		}
 		log("Progress: " + playerObj.player.getProgress());
 		log("Seekable progress: " + playerObj.player.getSeekableRangeEnd());
 		progressBar.width = playerObj.player.getProgress() / playerObj.duration * emptyBar.width;
@@ -283,6 +282,7 @@ PreviewPlayer : Item {
 //		duration: parent.duration;
 
 		onFinished: {
+			previewPlayer.focus = false;
 			previewItem.finished(state);
 			previewItem.isFullscreen = false;
 //			previewPlayer.statusShow = true;
@@ -316,7 +316,7 @@ PreviewPlayer : Item {
 			color: "#ff0000";
 			source:	previewPlayer.paused ? 
 					activeFocus ? "res/apps/preview/arrowPlayActive.png" : "res/apps/preview/arrowPlay.png" :
-					activeFocus ? "res/apps/preview/arrowPauseActive.png" : "res/apps/preview/arrowPause.png";
+					activeFocus ? "res/apps/preview/pauseActive.png" : "res/apps/preview/pause.png";
 //			z: 100;
 			
 			onLeftPressed: {
@@ -386,7 +386,7 @@ PreviewPlayer : Item {
 			}
 
 			onSelectPressed: {
-//				previewPlayer.focus = true;
+				previewPlayer.focus = true;
 //				previewPlayer.anchors.fill = mainWindow;
 				previewItem.isFullscreen = true;
 //				previewPlayer.statusShow = false;
