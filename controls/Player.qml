@@ -7,6 +7,12 @@ Player : Item {
 		anchors.fill: parent;
 	}
 
+	Spinner {
+		id: loadSpinner;
+		anchors.centerIn: parent;
+		z: 1000;
+	}
+
 	focus: true;
 //	anchors.fill: parent;
 	visible: false;
@@ -18,7 +24,7 @@ Player : Item {
 	property bool statusHold: false;
 	property int duration: 0;
 	property int cursorPos: 0;
-	property int cursorDist: cursorPos / duration * emptyBar.width;
+	property int cursorDist: cursorPos / duration * emptyBar.width - 2;
 	property int cursorGain: 1000;
 
 	Item {
@@ -58,6 +64,13 @@ Player : Item {
 			}
 
 
+			SmallText {
+				anchors.top: progressBar.bottom;
+				anchors.left: progressBar.left;
+				anchors.topMargin: 2;
+
+			}
+
 			Rectangle {
 				id: cursorBar;
 				color: "#ffffff";
@@ -65,10 +78,11 @@ Player : Item {
 				anchors.top: parent.top;
 				anchors.bottom: parent.bottom;
 				anchors.margins: parent.borderWidth;
-				anchors.left: progressBar.right;
+				anchors.left: parent.left;
 				anchors.leftMargin: playerObj.cursorDist;
 				width: 10;
 				Behavior on x {animation: Animation {duration: 200;}}
+				z: 200;
 			}
 		}
 
@@ -103,6 +117,17 @@ Player : Item {
 		interval: 250;
 	}
 
+	Timer {
+		id: spinnerTimer;
+		interval: 100;
+		
+		onTriggered: {
+			if (playerObj.player.getProgress() != 0) 
+				loadSpinner.visible = false;
+			else this.restart();
+		}
+	}
+
 	onCompleted: {
 		this.player = new media.Player();
 	}
@@ -114,7 +139,7 @@ Player : Item {
 		holdTimer.restart();
 		statusTimer.restart();
 		cursorBar.visible = true;
-		if (this.cursorPos + this.cursorGain <=  playerObj.player.getSeekableRangeEnd())
+		if (this.cursorPos + this.cursorGain  <=  playerObj.player.getSeekableRangeEnd())
 			this.cursorPos += this.cursorGain;
 		else 
 			this.cursorPos = playerObj.player.getSeekableRangeEnd();
@@ -148,7 +173,7 @@ Player : Item {
 		}
 		else {
 			this.paused = !this.paused;
-			this.player.pause();
+			this.player.pause(this.paused);
 		}
 	}
 
@@ -170,10 +195,16 @@ Player : Item {
 		if (statusShow && !statusHold) {
 			statusTimer.start();
 		}
+		if (statusShow) {
+			playerObj.cursorPos = playerObj.player.getProgress();
+		}
 	}
 
 	function playUrl(url) {
 		log("Player: start playing " + url);
+		loadSpinner.visible = true;
+		spinnerTimer.restart();
+		this.duration = -1;
 		this.visible = true;
 		this.player.stop();
 		this.player.playUrl(url);
@@ -190,13 +221,14 @@ Player : Item {
 	}
 
 	function refreshBar() {
-/*		while (true) {
+		while (playerObj.duration == -1) {
 			var d = playerObj.player.getDuration();
 			if (d) {
 				playerObj.duration = d;
+				log("DURATION: " + d);
 				break;
 			}
-		}*/
+		}
 		log("Progress: " + playerObj.player.getProgress());
 		log("Seekable progress: " + playerObj.player.getSeekableRangeEnd());
 		progressBar.width = playerObj.player.getProgress() / playerObj.duration * emptyBar.width;
@@ -244,10 +276,11 @@ PreviewPlayer : Item {
 		anchors.bottom: parent.isFullscreen ? mainWindow.bottom : controls.opacity == 1 ? controls.top : parent.bottom;
 		anchors.left: parent.isFullscreen ? mainWindow.left : parent.left;
 		anchors.right: parent.isFullscreen? mainWindow.right : parent.right;
+		anchors.bottomMargin: 10;
 		statusShow: !parent.isFullscreen;
 		statusHold: !parent.isFullscreen;
-		focus: true; //isFullscreen;
-		duration: parent.duration;
+		focus: parent.isFullscreen;
+//		duration: parent.duration;
 
 		onFinished: {
 			previewItem.finished(state);
@@ -281,7 +314,7 @@ PreviewPlayer : Item {
 			height: 48;
 			focus: true;
 			color: "#ff0000";
-			source:	!previewPlayer.paused ? 
+			source:	previewPlayer.paused ? 
 					activeFocus ? "res/apps/preview/arrowPlayActive.png" : "res/apps/preview/arrowPlay.png" :
 					activeFocus ? "res/apps/preview/arrowPauseActive.png" : "res/apps/preview/arrowPause.png";
 //			z: 100;
