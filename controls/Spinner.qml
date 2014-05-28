@@ -9,6 +9,7 @@ SpinnerRectangle : Rectangle {
 	borderColor: colorTheme.activeBorderColor; 
 	
 	property float active;
+	property float circleRadius;
 
 	Behavior on opacity {
 		animation: Animation {
@@ -25,9 +26,10 @@ Spinner : Item {
 	anchors.centerIn: parent;
 
 	property int activeSpinner: 0;
-	property int circleRadius: 10;
+	property int circleRadius: 12;
 	property int space: 3;
 	property int circlesCount: 8;
+	property int speed: 50;
 
 
 	collapseEmptyItems: false;
@@ -54,7 +56,7 @@ Spinner : Item {
 
 	Timer {
 		id: timer;
-		interval: 100;
+		interval: spinner.speed;
 		onTriggered: {
 			spinner.activeSpinner = (spinner.activeSpinner + 1) % (spinner.circlesCount);
 			spinner.UpdateRectangle();
@@ -74,8 +76,8 @@ Spinner : Item {
 	onCompleted: {
 		for (var i = 0; i < this.circlesCount; i ++) {
 			this.children[i].circleRadius = this.circleRadius;
-			this.children[i].x = Math.sin(Math.PI * i / this.circlesCount * 2) * this.circleRadius * this.space;
-			this.children[i].y = Math.cos(Math.PI * i / this.circlesCount * 2) * this.circleRadius * this.space;
+			this.children[i].x = Math.sin(Math.PI * i / this.circlesCount * 2) * this.circleRadius * this.space - this.circleRadius;
+			this.children[i].y = Math.cos(Math.PI * i / this.circlesCount * 2) * this.circleRadius * this.space - this.circleRadius;
 			this.children[i].active = 0;
 		}
 	}
