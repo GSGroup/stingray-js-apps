@@ -4,6 +4,7 @@ Player : Item {
 	id: playerObj;
 
 	VideoOverlay {
+		visible: !loadSpinner.visible;
 		anchors.fill: parent;
 	}
 
