@@ -4,11 +4,12 @@ Player : Item {
 	id: playerObj;
 
 	VideoOverlay {
-		visible: !loadSpinner.visible;
+//		visible: !loadSpinner.visible;
 		anchors.fill: parent;
 	}
 
-	Spinner {
+
+	Spinner {	
 		id: loadSpinner;
 		anchors.centerIn: parent;
 		z: 1000;
@@ -229,6 +230,16 @@ Player : Item {
 		}
 	}
 
+	Timer {
+		id: loadTimer;
+		interval: 4000;
+
+		onTriggered: {
+			loadSpinner.visible = false;
+			playerObj.paused = false;
+		}
+	}
+
 	onCompleted: {
 		this.player = new media.Player();
 	}
@@ -274,8 +285,11 @@ Player : Item {
 		}
 		else {
 			this.paused = !this.paused;
-			this.player.pause(this.paused);
 		}
+	}
+
+	onPausedChanged: {
+		this.player.pause(this.paused);
 	}
 
 	onKeyPressed: {
@@ -344,9 +358,16 @@ Player : Item {
 		refreshTimeTimer.stop();
 		this.visible = false;
 	}
+	
+	property int prevProgress;
 
 	function refreshBar() {
 		var p = playerObj.player.getProgress();
+		if (p && p == this.prevProgress) {
+			loadSpinner.visible = true;
+			loadTimer.restart();
+		}
+		this.prevProgress = p;
 		log("Progress: " + p);
 		log("Seekable progress: " + playerObj.player.getSeekableRangeEnd());
 		progressBar.width = p / playerObj.duration * emptyBar.width;
