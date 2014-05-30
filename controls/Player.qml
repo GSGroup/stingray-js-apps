@@ -1,4 +1,6 @@
 import "controls/media.js" as media;
+import controls.Text;
+import controls.Spinner;
 
 Player : Item {
 	id: playerObj;
