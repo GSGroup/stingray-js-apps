@@ -28,6 +28,7 @@ Player : Item {
 	property int duration: 0;
 	property int cursorPos: 0;
 	property int cursorDist: cursorPos / duration * emptyBar.width - 2;
+
 	property int cursorGain: 1000;
 	property string curTimeStr: "";
 	property string fullTimeStr: "";
@@ -36,7 +37,7 @@ Player : Item {
 		id: pauseImage;
 		anchors.centerIn: parent;
 		visible: parent.paused;
-		source: "res/apps/preview/icoPause.png";
+		source: "apps/preview/icoPause.png";
 	}
 
 	Item {
@@ -230,16 +231,6 @@ Player : Item {
 		}
 	}
 
-	Timer {
-		id: loadTimer;
-		interval: 4000;
-
-		onTriggered: {
-			loadSpinner.visible = false;
-			playerObj.paused = false;
-		}
-	}
-
 	onCompleted: {
 		this.player = new media.Player();
 	}
@@ -363,10 +354,6 @@ Player : Item {
 
 	function refreshBar() {
 		var p = playerObj.player.getProgress();
-		if (p && p == this.prevProgress) {
-			loadSpinner.visible = true;
-			loadTimer.restart();
-		}
 		this.prevProgress = p;
 		log("Progress: " + p);
 		log("Seekable progress: " + playerObj.player.getSeekableRangeEnd());
@@ -470,11 +457,6 @@ PreviewPlayer : Item {
 		opacity: 1;
 		z: 1000;
 
-		onActiveFocusChanged: {
-			if (activeFocus)
-				fullIm.setFocus();
-		}
-
 		MainText {
 			anchors.verticalCenter: parent.verticalCenter;
 			anchors.left: parent.right;
@@ -502,10 +484,10 @@ PreviewPlayer : Item {
 			orientation: ListView.Horizontal;
 			model: 
 			ListModel {
-				ListElement { source:"res/apps/preview/fullscreen.png";}
-				ListElement { source: "res/apps/preview/arrowPrev.png";}
-				ListElement { source: "res/apps/preview/arrowPlay.png";}
-				ListElement { source: "res/apps/preview/arrowNext.png";}
+				ListElement { source:"apps/preview/fullscreen.png";}
+				ListElement { source: "apps/preview/arrowPrev.png";}
+				ListElement { source: "apps/preview/arrowPlay.png";}
+				ListElement { source: "apps/preview/arrowNext.png";}
 			}
 
 			delegate: BorderedImage{}
