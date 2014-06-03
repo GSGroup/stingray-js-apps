@@ -27,6 +27,7 @@ Player : Item {
 	property bool statusShow: false;
 	property bool statusHold: false;
 	property bool preview: false;
+	property bool cursorVisible: cursorBar.visible;
 	property int duration: 0;
 	property int cursorPos: 0;
 	property int cursorDist: cursorPos / duration * emptyBar.width - 2;
@@ -206,7 +207,7 @@ Player : Item {
 				playerObj.statusShow = false;
 			}
 			cursorBar.visible = false;
-			playerObj.cursorPos = 0;
+			playerObj.cursorPos = player.getProgress();
 		}
 	}
 
@@ -302,6 +303,7 @@ Player : Item {
 	onDownPressed: {
 		playerObj.statusShow = !playerObj.statusShow;
 		playerObj.refreshBar();
+		cursorBar.visible = false;
 		playerObj.completeAnim();
 	}
 
@@ -387,6 +389,7 @@ BorderedImage : Panel {
 		anchors.centerIn: parent;
 		source: model.source;
 	}
+
 }
 
 PreviewPlayer : Item {
@@ -446,6 +449,14 @@ PreviewPlayer : Item {
 //			previewPlayer.statusHold = true;
 			controls.opacity = 1;
 		}
+
+		onPausedChanged: {
+			controlsView.model.set(2, {source: "apps/controls/res/preview/arrow" + (!paused ? "Pause.png" : "Play.png")});
+		}
+
+		onCursorVisibleChanged: {
+			controlsView.model.set(2, {source: "apps/controls/res/preview/arrow" + (!cursorVisible ? "Pause.png" : "Play.png")});
+		}
 	}
 
 	Item {
@@ -477,6 +488,7 @@ PreviewPlayer : Item {
 		}
 		
 		ListView {
+			id: controlsView;
 			anchors.top: parent.top;
 			anchors.left: parent.left;
 //			anchors.right: parent.right;
@@ -488,7 +500,7 @@ PreviewPlayer : Item {
 			ListModel {
 				ListElement { source:"apps/controls/res/preview/fullscreen.png";}
 				ListElement { source: "apps/controls/res/preview/arrowPrev.png";}
-				ListElement { source: "apps/controls/res/preview/arrowPlay.png";}
+				ListElement { source: "apps/controls/res/preview/arrowPause.png";}
 				ListElement { source: "apps/controls/res/preview/arrowNext.png";}
 			}
 
