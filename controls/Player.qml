@@ -39,7 +39,7 @@ Player : Item {
 		id: pauseImage;
 		anchors.centerIn: parent;
 		visible: parent.paused;
-		source: "apps/preview/icoPause.png";
+		source: "apps/controls/res/preview/icoPause.png";
 	}
 
 	Item {
@@ -486,10 +486,10 @@ PreviewPlayer : Item {
 			orientation: ListView.Horizontal;
 			model: 
 			ListModel {
-				ListElement { source:"apps/preview/fullscreen.png";}
-				ListElement { source: "apps/preview/arrowPrev.png";}
-				ListElement { source: "apps/preview/arrowPlay.png";}
-				ListElement { source: "apps/preview/arrowNext.png";}
+				ListElement { source:"apps/controls/res/preview/fullscreen.png";}
+				ListElement { source: "apps/controls/res/preview/arrowPrev.png";}
+				ListElement { source: "apps/controls/res/preview/arrowPlay.png";}
+				ListElement { source: "apps/controls/res/preview/arrowNext.png";}
 			}
 
 			delegate: BorderedImage{}
