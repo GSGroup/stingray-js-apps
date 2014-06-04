@@ -37,7 +37,6 @@ Player.prototype = {
 	},
 
 	seek: function(msDelta) {
-		return this.session? this.session.GetMediaInfo(): null;
 		if (!this.session)
 			return;
 
