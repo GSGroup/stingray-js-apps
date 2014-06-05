@@ -31,6 +31,7 @@ Player : Item {
 	property int duration: 0;
 	property int cursorPos: 0;
 	property int cursorDist: cursorPos / duration * emptyBar.width - 2;
+	property bool seeking: false;
 
 	property int cursorGain: 1000;
 	property string curTimeStr: "";
@@ -207,7 +208,7 @@ Player : Item {
 				playerObj.statusShow = false;
 			}
 			cursorBar.visible = false;
-			playerObj.cursorPos = player.getProgress();
+			playerObj.cursorPos = playerObj.player.getProgress();
 		}
 	}
 
@@ -275,6 +276,10 @@ Player : Item {
 			cursorBar.visible = false;
 			log ("Seeking at " + this.cursorPos);
 			this.player.seek(this.cursorPos);
+			this.seeking = true;
+			loadSpinner.visible = true;
+			progressBar.width = this.cursorDist;
+			spinnerTimer.restart();
 			this.refreshBar();
 		}
 		else {
@@ -361,10 +366,11 @@ Player : Item {
 		this.prevProgress = p;
 		log("Progress: " + p);
 		log("Seekable progress: " + playerObj.player.getSeekableRangeEnd());
+		if (p == 0 && this.seeking)
+			return;
+		this.seeking = false;
 		progressBar.width = p / playerObj.duration * emptyBar.width;
 //		seekBar.width = playerObj.player.getSeekableRangeEnd() / playerObj.duration * emptyBar.width;
-		log("ProgressBar width: " + progressBar.width);
-		log("EmptyBar width: " + emptyBar.width);
 	}
 
 }
