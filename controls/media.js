@@ -51,11 +51,30 @@ Player.prototype = {
 		return 0;
 	},
 
-	getSeekableProgress: function() {
+	getSeekableRange: function() {
 		if (this.session)
-			return this.session.GetSeekableRange().GetEnd();
+			return [this.session.GetSeekableRange().GetStart(), this.session.GetSeekableRange().GetEnd()];
+		else
+			return [0, 0];
+	},
 
-		return 0;
+	getSeekableRangeStart: function() {
+		return this.getSeekableRange()[0];
+	},
+
+	getSeekableRangeEnd: function() {
+		return this.getSeekableRange()[1];
+	},
+
+	getMediaInfo: function() {
+		return this.session? this.session.GetMediaInfo(): null;
+	},
+
+	getDuration: function () {
+		var mi = this.session ? this.session.GetMediaInfo(): null;
+		if (!mi)
+			return null;
+		return mi.GetDuration().GetMilliseconds();
 	},
 
 	_onFinished: function() {

@@ -60,7 +60,7 @@ this.add = function () {
 	}
 	if (v.length == 0) return false;
 	var ind = Math.floor(Math.random() * v.length);
-	this.setnew(v[ind].i, v[ind].j, Math.random() > 0.5 ? 2 : 4);
+	this.setnew(v[ind].i, v[ind].j, Math.random() > 0.1 ? 2 : 4);
 	return true;
 }
 
