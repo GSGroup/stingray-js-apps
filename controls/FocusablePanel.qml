@@ -1,5 +1,4 @@
 FocusablePanel : Rectangle {
-	property bool enabled: true;
 
 	height: 46;
 	color: enabled ? activeFocus ? colorTheme.activeBackgroundColor : colorTheme.backgroundColor : colorTheme.disabledBackgroundColor;
