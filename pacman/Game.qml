@@ -8,8 +8,6 @@ Game : Rectangle {
 	focus: true;
 	id: pacmanGame;
 
-	property int dx;
-	property int dy;
 	property bool horizontal;
 
 	property int speed: 150;
@@ -110,6 +108,7 @@ Game : Rectangle {
 				width: gameView.cellWidth;
 				height: gameView.cellHeight;
 				color: "#f00";
+				dx: 1;
 			}
 			Enemy {
 				cellX: 12;
@@ -117,6 +116,7 @@ Game : Rectangle {
 				width: gameView.cellWidth;
 				height: gameView.cellHeight;
 				color: "#f0f";
+				dx: -1;
 			}
 			Enemy {
 				cellX: 19;
@@ -125,6 +125,7 @@ Game : Rectangle {
 				height: gameView.cellHeight;
 				color: "#0ff";
 				faceLeft: true;
+				dy: 1;
 			}
 
 			Enemy {
@@ -134,6 +135,7 @@ Game : Rectangle {
 				height: gameView.cellHeight;
 				color: "#fc0";
 				faceLeft: true;
+				dy: -1;
 			}
 		}
 	}
@@ -158,7 +160,7 @@ Game : Rectangle {
 				gameGridModel.setCellProperty(player.cellX, player.cellY, "dot", false);
 			}
 			var x = player.cellX, y = player.cellY;
-			var dx = pacmanGame.dx, dy = pacmanGame.dy;
+			var dx = player.dx, dy = player.dy;
 			var horizontal = pacmanGame.horizontal;
 
 			var next_h_cell = gameGridModel.getCell(x + dx, y);
@@ -180,21 +182,24 @@ Game : Rectangle {
 				player.faceLeft = dx < 0;
 			player.cellX = x + dx;
 			player.cellY = y + dy;
+
+			//enemy phase
+			
 		}
 	}
 
 	onKeyPressed: {
 		if (key == "Left") {
-			this.dx = -1;
+			player.dx = -1;
 			this.horizontal = true;
 		} else if (key == "Right") {
-			this.dx = 1;
+			player.dx = 1;
 			this.horizontal = true;
 		} else if (key == "Up") {
-			this.dy = -1;
+			player.dy = -1;
 			this.horizontal = false;
 		} else if (key == "Down") {
-			this.dy = 1;
+			player.dy = 1;
 			this.horizontal = false;
 		}
 	}
