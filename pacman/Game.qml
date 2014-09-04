@@ -1,5 +1,6 @@
 import Player
 import GameCell
+import controls.Text
 
 Game : Rectangle {
 	color: "#003";
@@ -9,6 +10,10 @@ Game : Rectangle {
 	property int dx;
 	property int dy;
 	property bool horizontal;
+
+	property int speed: 250;
+	property int score: 0;
+	property int cells: 21;
 
 	ListModel {
 		id: gameGridModel;
@@ -73,8 +78,6 @@ Game : Rectangle {
 		}
 	}
 
-	property int cells: 21;
-
 	GridView
 	{
 		id: gameView;
@@ -97,18 +100,27 @@ Game : Rectangle {
 			height: gameView.cellHeight;
 			cellX: 1;
 			cellY: 1;
+			speed: pacmanGame.speed;
 		}
+	}
+
+	BigText {
+		text: "SCORE\n" + pacmanGame.score;
+		horizontalAlignment: AlignHCenter;
+
+		anchors.right: parent.left;
+		anchors.rightMargin: 10;
 	}
 
 	Timer {
 		repeat: true;
 		running: true;
-		interval: 250;
+		interval: pacmanGame.speed;
 
 		onTriggered: {
 			var cell = gameGridModel.getCell(player.cellX, player.cellY);
 			if (cell.dot) {
-				log("ate dot");
+				pacmanGame.score += 100;
 				cell.dot = true;
 				gameGridModel.setCellProperty(player.cellX, player.cellY, "dot", false);
 			}
