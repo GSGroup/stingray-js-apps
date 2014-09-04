@@ -1,13 +1,15 @@
 Player : Item {
+	id: playerItem;
 
 	property int cellX;
 	property int cellY;
+	property int speed;
 
 	x: width * cellX;
 	y: height * cellY;
 
-	Behavior on x { animation: Animation { duration: 200; } }
-	Behavior on y { animation: Animation { duration: 200; } }
+	Behavior on x { animation: Animation { duration: playerItem.speed; } }
+	Behavior on y { animation: Animation { duration: playerItem.speed; } }
 
 	Rectangle {
 		anchors.fill: parent;
