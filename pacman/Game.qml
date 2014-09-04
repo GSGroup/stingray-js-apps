@@ -4,12 +4,26 @@ import GameCell
 Game : Rectangle {
 	color: "#003";
 	focus: true;
+	id: pacmanGame;
 
 	property int dx;
 	property int dy;
+	property bool horizontal;
 
 	ListModel {
 		id: gameGridModel;
+
+		function getCell(x, y) {
+			return (x >= 0 && x < this.w && y >= 0 && y < this.h)? this.get(x + y * this.w): { "walls": 15, "dot": false };
+		}
+
+		function setCell(x, y, cell) {
+			return this.set(x + y * this.w, cell);
+		}
+
+		function setCellProperty(x, y, name, value) {
+			return this.setProperty(x + y * this.w, name, value);
+		}
 
 		function hline(l, r, y) {
 			for(var i = l; i < r; ++i) {
@@ -77,28 +91,64 @@ Game : Rectangle {
 
 
 		Player {
+			id: player;
 			z: 1;
 			width: gameView.cellWidth;
 			height: gameView.cellHeight;
-			id: player;
 			cellX: 1;
 			cellY: 1;
+		}
+	}
+
+	Timer {
+		repeat: true;
+		running: true;
+		interval: 250;
+
+		onTriggered: {
+			var cell = gameGridModel.getCell(player.cellX, player.cellY);
+			if (cell.dot) {
+				log("ate dot");
+				cell.dot = true;
+				gameGridModel.setCellProperty(player.cellX, player.cellY, "dot", false);
+			}
+			var x = player.cellX, y = player.cellY;
+			var dx = pacmanGame.dx, dy = pacmanGame.dy;
+			var horizontal = pacmanGame.horizontal;
+
+			var next_h_cell = gameGridModel.getCell(x + dx, y);
+			var next_v_cell = gameGridModel.getCell(x, y + dy);
+
+			if (next_h_cell.walls)
+				dx = 0;
+			if (next_v_cell.walls)
+				dy = 0;
+
+			if (!next_h_cell.walls && !next_v_cell.walls) { //both variants are valid, prefer last direction
+				if (horizontal)
+					dy = 0;
+				else
+					dx = 0;
+			}
+
+			player.cellX = x + dx;
+			player.cellY = y + dy;
 		}
 	}
 
 	onKeyPressed: {
 		if (key == "Left") {
 			this.dx = -1;
-			this.dy = 0;
+			this.horizontal = true;
 		} else if (key == "Right") {
 			this.dx = 1;
-			this.dy = 0;
+			this.horizontal = true;
 		} else if (key == "Up") {
-			this.dx = 0;
 			this.dy = -1;
+			this.horizontal = false;
 		} else if (key == "Down") {
-			this.dx = 0;
 			this.dy = 1;
+			this.horizontal = false;
 		}
 	}
 
