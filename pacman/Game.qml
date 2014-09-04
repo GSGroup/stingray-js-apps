@@ -1,4 +1,5 @@
 import Player
+import Enemy
 import GameCell
 import controls.Text
 
@@ -95,12 +96,36 @@ Game : Rectangle {
 
 		Player {
 			id: player;
-			z: 1;
 			width: gameView.cellWidth;
 			height: gameView.cellHeight;
-			cellX: 1;
-			cellY: 1;
+			cellX: 1; cellY: 1;
 			speed: pacmanGame.speed;
+		}
+		Item {
+			z: 1;
+			id: enemies;
+			Enemy {
+				cellX: 1;
+				cellY: 12;
+				width: gameView.cellWidth;
+				height: gameView.cellHeight;
+				color: "#f00";
+			}
+			Enemy {
+				cellX: 12;
+				cellY: 10;
+				width: gameView.cellWidth;
+				height: gameView.cellHeight;
+				color: "#0f0";
+			}
+			Enemy {
+				cellX: 19;
+				cellY: 9;
+				width: gameView.cellWidth;
+				height: gameView.cellHeight;
+				color: "#00f";
+				faceLeft: true;
+			}
 		}
 	}
 
