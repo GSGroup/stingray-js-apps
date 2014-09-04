@@ -26,9 +26,10 @@ Player : GameObject {
 		property bool opened;
 
 		color: "#003";
+		radius: width / 3;
 
 		width: parent.width / 2;
-		height: opened? parent.height / 4: 2;
+		height: opened? parent.height / 2: 0;
 
 		anchors.horizontalCenter: parent.horizontalCenter;
 		anchors.verticalCenter: parent.verticalCenter;
