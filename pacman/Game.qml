@@ -116,14 +116,23 @@ Game : Rectangle {
 				cellY: 10;
 				width: gameView.cellWidth;
 				height: gameView.cellHeight;
-				color: "#0f0";
+				color: "#f0f";
 			}
 			Enemy {
 				cellX: 19;
 				cellY: 9;
 				width: gameView.cellWidth;
 				height: gameView.cellHeight;
-				color: "#00f";
+				color: "#0ff";
+				faceLeft: true;
+			}
+
+			Enemy {
+				cellX: 10;
+				cellY: 10;
+				width: gameView.cellWidth;
+				height: gameView.cellHeight;
+				color: "#fc0";
 				faceLeft: true;
 			}
 		}
