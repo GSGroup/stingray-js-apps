@@ -1,0 +1,5 @@
+{
+	"id": "pacman",
+	"display": { "name": "PACMAN", "icon": "pacman.png"},
+	"purpose": "application"
+}
