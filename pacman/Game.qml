@@ -121,7 +121,6 @@ Game : Rectangle {
 			var cell = gameGridModel.getCell(player.cellX, player.cellY);
 			if (cell.dot) {
 				pacmanGame.score += 100;
-				cell.dot = true;
 				gameGridModel.setCellProperty(player.cellX, player.cellY, "dot", false);
 			}
 			var x = player.cellX, y = player.cellY;
