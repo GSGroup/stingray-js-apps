@@ -3,6 +3,8 @@ GameObject : Item {
 	property int cellY;
 	property int speed;
 	property bool faceLeft;
+	property int dx;
+	property int dy;
 
 	z: 1;
 
