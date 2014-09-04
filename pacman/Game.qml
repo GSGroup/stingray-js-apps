@@ -184,7 +184,28 @@ Game : Rectangle {
 			player.cellY = y + dy;
 
 			//enemy phase
-			
+			var ens = enemies.children;
+			for(var i = 0; i < ens.length; ++i) {
+				var obj = ens[i];
+				var x = obj.cellX, y = obj.cellY;
+				var dx = obj.dx, dy = obj.dy;
+
+				while(true) {
+					var next_cell = gameGridModel.getCell(x + dx, y + dy);
+					if (next_cell.walls) {
+						if (dx > 0) { dy = 1; dx = 0; }
+						else if (dx < 0) { dy = -1; dx = 0; }
+						else if (dy > 0) { dx = -1; dy = 0; }
+						else if (dy < 0) { dx = 1; dy = 0; }
+					} else
+						break;
+				}
+
+				obj.dx = dx;
+				obj.dy = dy;
+				obj.cellX = x + dx;
+				obj.cellY = y + dy;
+			}
 		}
 	}
 
