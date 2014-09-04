@@ -4,6 +4,7 @@ Player : Item {
 	property int cellX;
 	property int cellY;
 	property int speed;
+	property bool faceLeft;
 
 	x: width * cellX;
 	y: height * cellY;
@@ -16,16 +17,18 @@ Player : Item {
 		color: "#ee2";
 	}
 
+	//eye
 	Rectangle {
 		width: parent.width / 5;
 		height: parent.height / 5;
 
-		anchors.right: parent.right;
+		anchors.horizontalCenter: parent.horizontalCenter;
+		anchors.leftMargin: 3 * parent.width / 5 * (playerItem.faceLeft? -1: 1);
 		anchors.top: parent.top;
 		anchors.topMargin: height;
-		anchors.rightMargin: width;
 	}
 
+	//mouth
 	Rectangle {
 		id: mouth;
 		property bool opened;
@@ -35,9 +38,11 @@ Player : Item {
 		width: parent.width / 2;
 		height: opened? parent.height / 4: 2;
 
-		anchors.right: parent.right;
+		anchors.horizontalCenter: parent.horizontalCenter;
 		anchors.verticalCenter: parent.verticalCenter;
 		anchors.topMargin: parent.height / 2;
+
+		anchors.leftMargin: (parent.width / 2 + 2) * (playerItem.faceLeft? -1: 1);
 
 		Behavior on height { animation: Animation { duration: 100; } }
 	}

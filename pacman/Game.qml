@@ -11,7 +11,7 @@ Game : Rectangle {
 	property int dy;
 	property bool horizontal;
 
-	property int speed: 250;
+	property int speed: 150;
 	property int score: 0;
 	property int cells: 21;
 
@@ -142,6 +142,8 @@ Game : Rectangle {
 					dx = 0;
 			}
 
+			if (dx)
+				player.faceLeft = dx < 0;
 			player.cellX = x + dx;
 			player.cellY = y + dy;
 		}
