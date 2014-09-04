@@ -10,7 +10,7 @@ Game : Rectangle {
 
 	property bool horizontal;
 
-	property int speed: 150;
+	property int speed: 250;
 	property int score: 0;
 	property int cells: 21;
 
