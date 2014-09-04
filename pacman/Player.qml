@@ -1,20 +1,12 @@
-Player : Item {
+import GameObject
+
+Player : GameObject {
 	id: playerItem;
-
-	property int cellX;
-	property int cellY;
-	property int speed;
-	property bool faceLeft;
-
-	x: width * cellX;
-	y: height * cellY;
-
-	Behavior on x { animation: Animation { duration: playerItem.speed; } }
-	Behavior on y { animation: Animation { duration: playerItem.speed; } }
 
 	Rectangle {
 		anchors.fill: parent;
 		color: "#ee2";
+		radius: width / 2;
 	}
 
 	//eye
