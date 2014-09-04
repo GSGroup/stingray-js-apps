@@ -6,6 +6,9 @@ Player : Item {
 	x: width * cellX;
 	y: height * cellY;
 
+	Behavior on x { animation: Animation { duration: 200; } }
+	Behavior on y { animation: Animation { duration: 200; } }
+
 	Rectangle {
 		anchors.fill: parent;
 		color: "#ee2";
