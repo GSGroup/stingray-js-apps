@@ -1,7 +1,9 @@
 import GameObject
 
 Enemy : GameObject {
+	id: ghost;
 	property Color color;
+	property bool step;
 
 	Rectangle {
 		anchors.fill: parent;
@@ -13,13 +15,13 @@ Enemy : GameObject {
 		height: width;
 		anchors.bottom: parent.bottom;
 		color: "#003";
-		x: width;
+		x: (parent.step? 1: 0) + width;
 	}
 
 	Rectangle {
 		width: parent.width / 5;
 		height: width;
-		x: width * 3;
+		x: (parent.step? 1: 0) + width * 3;
 		anchors.bottom: parent.bottom;
 		color: "#003";
 	}
@@ -39,5 +41,12 @@ Enemy : GameObject {
 		color: "#fff";
 		width: parent.width / 5;
 		height: width;
+	}
+
+	Timer {
+		repeat: true;
+		running: true;
+		interval : 200;
+		onTriggered: { ghost.step = !ghost.step; }
 	}
 }
