@@ -178,8 +178,6 @@ Game : Rectangle {
 					dx = 0;
 			}
 
-			if (dx)
-				player.faceLeft = dx < 0;
 			player.cellX = x + dx;
 			player.cellY = y + dy;
 

@@ -2,7 +2,7 @@ GameObject : Item {
 	property int cellX;
 	property int cellY;
 	property int speed;
-	property bool faceLeft;
+	property bool faceLeft: dx < 0;
 	property int dx;
 	property int dy;
 
