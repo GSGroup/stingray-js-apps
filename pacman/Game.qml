@@ -215,15 +215,19 @@ Game : Rectangle {
 		if (key == "Left") {
 			player.dx = -1;
 			this.horizontal = true;
+			return true;
 		} else if (key == "Right") {
 			player.dx = 1;
 			this.horizontal = true;
+			return true;
 		} else if (key == "Up") {
 			player.dy = -1;
 			this.horizontal = false;
+			return true;
 		} else if (key == "Down") {
 			player.dy = 1;
 			this.horizontal = false;
+			return true;
 		}
 	}
 
