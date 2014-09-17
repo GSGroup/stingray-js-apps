@@ -109,6 +109,7 @@ Game : Rectangle {
 				height: gameView.cellHeight;
 				color: "#f00";
 				dx: 1;
+				speed: pacmanGame.speed;
 			}
 			Enemy {
 				cellX: 12;
@@ -117,6 +118,7 @@ Game : Rectangle {
 				height: gameView.cellHeight;
 				color: "#f0f";
 				dx: -1;
+				speed: pacmanGame.speed;
 			}
 			Enemy {
 				cellX: 19;
@@ -126,6 +128,7 @@ Game : Rectangle {
 				color: "#0ff";
 				faceLeft: true;
 				dy: 1;
+				speed: pacmanGame.speed;
 			}
 
 			Enemy {
@@ -136,6 +139,7 @@ Game : Rectangle {
 				color: "#fc0";
 				faceLeft: true;
 				dy: -1;
+				speed: pacmanGame.speed;
 			}
 		}
 	}
