@@ -1,11 +1,9 @@
 FocusablePanel : Rectangle {
 
 	height: 46;
-	color: enabled ? activeFocus ? colorTheme.activeBackgroundColor : colorTheme.backgroundColor : colorTheme.disabledBackgroundColor;
-	borderColor: enabled ? activeFocus ? colorTheme.activeBorderColor : colorTheme.borderColor : colorTheme.disabledBorderColor;
-	borderWidth: 2;
-	radius: colorTheme.rounded ? height/2 : 0;
 	focus: true;
+	property bool active: activeFocus;
+	color: active ? colorTheme.activePanelColor : colorTheme.focusablePanelColor;
 
 	Behavior on color {
 		animation: Animation {

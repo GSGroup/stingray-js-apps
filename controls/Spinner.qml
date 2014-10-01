@@ -5,8 +5,8 @@ SpinnerRectangle : Rectangle {
 	radius: height / 2;
 	width: circleRadius * 2;
 	height: width;
-	color: colorTheme.activeBorderColor; 
-	borderColor: colorTheme.activeBorderColor; 
+	color: colorTheme.activeFocusTop; 
+	borderColor: color; 
 	
 	property float active;
 	property float circleRadius;
