@@ -102,10 +102,7 @@ GameMenu : Item {
 			height: 50;
 			font: bigFont;
 
-			borderColor: "#00000000";
-			borderWidth: 0;
 			radius: 0;
-			color: "#00000000";
 
 			Image {
 				id:dcDelegateImgage;
@@ -147,10 +144,6 @@ GameMenu : Item {
 			width: 250;
 			height: 50;
             enabled: false;
-			borderColor: "#00000000";
-			borderWidth: 0;
-			radius: 0;
-			color: "#00000000";
 
 
 			Image {
@@ -195,9 +188,6 @@ GameMenu : Item {
 
 			font: bigFont;
 			text: "Help";
-			borderColor: "#00000000";
-			borderWidth: 0;
-			radius: 0;
 			color: "#00000000";
 			
 
@@ -324,9 +314,6 @@ GameSubMenu : Item {
 			width: 250;
 			height: 50;
 
-			borderColor: "#00000000";
-			borderWidth: 0;
-			radius: 0;
 			color: "#00000000";
 
 			Image {
@@ -366,9 +353,6 @@ GameSubMenu : Item {
 			anchors.topMargin: 10;
 			anchors.bottomMargin: 10;
 
-			borderColor: "#00000000";
-			borderWidth: 0;
-			radius: 0;
 			color: "#00000000";
 
 			Image {
@@ -465,9 +449,6 @@ GameOverBox : Item {
 		width: 250;
 		height: 50;
 
-		borderColor: "#00000000";
-		borderWidth: 0;
-		radius: 0;
 		color: "#00000000";
 
 		Image {
@@ -508,9 +489,6 @@ GameOverBox : Item {
 		anchors.topMargin: 5;
 
 
-		borderColor: "#00000000";
-		borderWidth: 0;
-		radius: 0;
 		color: "#00000000";
 
 		Image {
