@@ -512,7 +512,7 @@ PreviewPlayer : Item {
 				ListElement { source: "apps/controls/res/preview/arrowNext.png";}
 			}
 
-			delegate: BorderedImage{}
+			delegate: BorderedImage{ color: colorTheme.activePanelColor; }
 
 
 			onSelectPressed: {
