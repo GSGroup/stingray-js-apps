@@ -32,6 +32,7 @@ Player : Item {
 	property int cursorPos: 0;
 	property int cursorDist: cursorPos / duration * emptyBar.width - 2;
 	property bool seeking: false;
+	property int progress: 0;
 
 	property int cursorGain: 1000;
 	property string curTimeStr: "";
@@ -178,6 +179,7 @@ Player : Item {
 
 		onTriggered: {
 			var p = playerObj.player.getProgress();
+			playerObj.progress = p / 1000;
 			if (playerObj.duration >= 0) {
 				//fixme: gognocode
 				playerObj.curTimeStr = 
