@@ -55,11 +55,12 @@ Player : Item {
 		Rectangle {
 			id: emptyBar;
 			color: "#808080";
-			height: parent.height / 20;
+			height: parent.height / 40;
 			anchors.bottom: parent.bottom;
 			anchors.left: parent.left;
 			anchors.right: parent.right;
 			anchors.bottomMargin: 20;
+			radius: height / 2;
 
 			Rectangle {
 				id: seekBar;
@@ -68,16 +69,18 @@ Player : Item {
 				anchors.top: parent.top;
 				anchors.left: parent.left;
 				anchors.bottom: parent.bottom;
+				radius: height / 2;
 				Behavior on x {animation: Animation {id: seekAnim; duration: 200;} }
 			}
 
 			Rectangle {
 				id: progressBar;
-				color: colorTheme.activeBorderColor;
+				color: colorTheme.activeFocusColor;
 				anchors.margins: parent.borderWidth;
 				anchors.top: parent.top;
 				anchors.left: parent.left;
 				anchors.bottom: parent.bottom;
+				radius: height / 2;
 				Behavior on width {animation: Animation {id: progressAnim; duration: 2000;} }
 				z: 100;
 			}
@@ -100,26 +103,24 @@ Player : Item {
 			}
 
 			MainText {
-				id: curTimeText;
-				visible: !playerObj.preview;
-				anchors.top: progressBar.bottom;
-				anchors.right: emptyBar.right;
-				anchors.topMargin: 5;
-				color: "#e0e000"; //colorTheme.activeBorderColor;
-				style: Shadow;
-				text: playerObj.fullTimeStr;
-				z: 1000;
+			   visible: !playerObj.preview;
+			   anchors.top: progressBar.bottom;
+			   anchors.right: emptyBar.right;
+			   anchors.topMargin: 5;
+			   color: "#e0e000"; //colorTheme.activeBorderColor;
+			   style: Shadow;
+			   text: playerObj.fullTimeStr;
+			   z: 1000;
 			}
 
-			Text {
+			SmallText {
 				id: seekTimeText;
-				anchors.bottom: cursorBar.top;
-				anchors.horizontalCenter: cursorBar.horizontalCenter;
+				anchors.verticalCenter: cursorBar.verticalCenter;
+				anchors.left: cursorBar.right;
+				anchors.leftMargin: playerObj.cursorDist + width + 10 > parent.width ? - width - cursorBar.width : 5;
 				style: Shadow;
 				color: colorTheme.activeTextColor;
 				visible: cursorBar.visible;
-				font: playerObj.preview ? smallFont : mainFont;
-				//fixme gognocode
 				text: (playerObj.cursorPos / 1000 / 60 >= 10 ? "" : "0") + 
 						Math.floor(playerObj.cursorPos / 1000 / 60) + ":" +
 					  (playerObj.cursorPos / 1000 % 60 >= 10 ? "" : "0") +
@@ -132,7 +133,7 @@ Player : Item {
 				anchors.right: playerObj.right;
 				anchors.left: playerObj.left;
 				anchors.top: parent.top;
-				anchors.topMargin: playerObj.preview ? -30 : -45;
+				anchors.topMargin: -10;
 
 				GradientStop {
 					position: 1;
@@ -151,10 +152,12 @@ Player : Item {
 				visible: false;
 				anchors.top: parent.top;
 				anchors.bottom: parent.bottom;
-				anchors.margins: parent.borderWidth;
+				anchors.topMargin: -2;
+				anchors.bottomMargin: -2;
 				anchors.left: parent.left;
 				anchors.leftMargin: playerObj.cursorDist;
-				width: 10;
+				width: height;
+				radius: width / 2;
 				Behavior on x {animation: Animation {id: cursorAnim; duration: 200;}}
 				z: 200;
 			}
