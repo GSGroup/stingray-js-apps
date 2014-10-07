@@ -1,15 +1,6 @@
-SelectionGradient : Gradient {
+SelectionGradient : Rectangle {
 	anchors.fill: parent;
-
-	GradientStop {
-		position: 1;
-		color: colorTheme.activeFocusBottom;
-	}
-
-	GradientStop {
-		position: 0;
-		color: colorTheme.activeFocusTop;
-	}
+	color: colorTheme.activeFocusColor;
 
 	Behavior on opacity {
 		animation: Animation {
