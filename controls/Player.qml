@@ -59,7 +59,7 @@ Player : Item {
 			anchors.bottom: parent.bottom;
 			anchors.left: parent.left;
 			anchors.right: parent.right;
-			anchors.bottomMargin: 20;
+			anchors.bottomMargin: playerObj.preview ? 10 : 20;
 			radius: height / 2;
 
 			Rectangle {
@@ -408,10 +408,30 @@ PreviewPlayer : Item {
 
 	signal finished(state);
 	signal fullscreen();
+	signal hDPressed();
 
 	property string title;
 	property bool isFullscreen: false;
 	property int duration;
+	property bool showHD: false;
+	property bool useHD;
+
+	onCompleted: {
+		this.onShowHDChanged();
+	}
+
+	onUseHDChanged: {
+		if (this.showHD) 
+			controlsView.model.set(4, {source: "apps/controls/res/preview/" + (this.useHD ? "HD.png" : "LD.png")});
+	}
+
+	onShowHDChanged: {
+		if (this.showHD && controlsView.count < 5)
+			controlsView.model.append({});
+		if (!this.showHD && controlsView.count == 5)
+			controlsView.model.remove(4);
+		this.onUseHDChanged();
+	}
 
 	onActiveFocusChanged: {
 		if (activeFocus) 
@@ -481,16 +501,16 @@ PreviewPlayer : Item {
 		opacity: 1;
 		z: 1000;
 
-		MainText {
+		SmallText {
 			anchors.verticalCenter: parent.verticalCenter;
 			anchors.left: parent.right;
-			anchors.leftMargin: -158;
+			anchors.leftMargin: -128;
 			anchors.topMargin: 3;
 			text: previewPlayer.curTimeStr;
 			color: "#e0e000";
 		}
 
-		MainText {
+		SmallText {
 			anchors.verticalCenter: parent.verticalCenter;
 			anchors.right: parent.right;
 			anchors.topMargin: 3;
@@ -504,7 +524,7 @@ PreviewPlayer : Item {
 			anchors.left: parent.left;
 //			anchors.right: parent.right;
 			anchors.bottom: parent.bottom;
-			width: (70 + 10) * 4;
+			width: (70 + 10) * 5;
 			spacing: 10;
 			orientation: ListView.Horizontal;
 			model: 
@@ -538,6 +558,9 @@ PreviewPlayer : Item {
 					break;
 				case 3:
 					previewPlayer.onRightPressed();
+					break;
+				case 4:
+					previewItem.hDPressed();
 					break;
 				}
 			}
