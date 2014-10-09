@@ -41,7 +41,7 @@ Player.prototype = {
 			return;
 
 		log("seeking to " + msDelta + "ms from current pos");
-		this.session.Seek(Math.max(0, this.session.GetProgress() + msDelta));
+		this.session.Seek(new stingray.TimeDuration(Math.max(0, this.session.GetProgress() + msDelta)));
 	},
 
 	getProgress: function() {
