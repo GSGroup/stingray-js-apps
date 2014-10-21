@@ -1,6 +1,7 @@
 ScaleImage : Image {
 	id: scaleImage;
-	property int scale: 1;
+	property real scale: 1;
+	property real maxScale: 2.5;
 	property int xPos;
 	property int yPos;
 	property int xOffset;
@@ -9,7 +10,6 @@ ScaleImage : Image {
 	yOffset: (paintedHeight - height) / 2;
 	x: xPos + xOffset;
 	y: yPos + yOffset;
-	property int maxScale: 3;
 	property bool descale;
 	property int duration: 400;
 	fillMode: Image.Stretch;
@@ -38,18 +38,11 @@ ScaleImage : Image {
 
 	Behavior on opacity {
 		animation: Animation {
-			duration: scaleImage.descale ? 0 : scaleImage.duration;
+			duration: scaleImage.descale ? 0 : 500;
 		}
 	}
 
-	Behavior on width {
-		animation: Animation {
-			duration: scaleImage.descale ? 0 : scaleImage.duration;
-			easingType: Animation.OutCirc;
-		}
-	}
-
-	Behavior on height {
+	Behavior on scale {
 		animation: Animation {
 			duration: scaleImage.descale ? 0 : scaleImage.duration;
 			easingType: Animation.OutCirc;
