@@ -31,9 +31,11 @@ Player.prototype = {
 
 		for (var i = 0; i < this.connections.length; ++i)
 			this.connections[i].disconnect();
-
+		
 		this.connections = [];
+
 		this.session.reset();
+		this.session = null;
 	},
 
 	seek: function(msDelta) {
