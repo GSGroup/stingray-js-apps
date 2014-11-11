@@ -13,6 +13,11 @@ MainText: Text {
 	font: mainFont;
 }
 
+MainCaptionText: Text {
+	color: colorTheme.activeTextColor;
+	font: captionMain;
+}
+
 BigText: Text {
 	color: colorTheme.activeTextColor;
 	font: bigFont;
