@@ -183,7 +183,7 @@ Player : Item {
 		onTriggered: {
 			var p = playerObj.player.getProgress();
 			playerObj.progress = p / 1000;
-			if (playerObj.duration >= 0) {
+			if (p && playerObj.duration >= 0) {
 				//fixme: gognocode
 				playerObj.curTimeStr = 
 								   (p / 1000 / 60 >= 10 ? "" : "0") +
