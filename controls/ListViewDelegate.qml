@@ -6,7 +6,6 @@ ListViewDelegate : Panel {
 
 	SelectionGradient {
 		anchors.fill: parent;
-		radius: 5;
 		opacity: parent.activeFocus ? 1 : 0;
 
 		Behavior on opacity {
