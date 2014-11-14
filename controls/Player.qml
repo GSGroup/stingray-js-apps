@@ -198,6 +198,7 @@ Player : Item {
 			} else {
 				playerObj.curTimeStr = "";
 				playerObj.fullTimeStr = "";
+				playerObj.progress = 0;
 			}
 			this.restart();
 		}
