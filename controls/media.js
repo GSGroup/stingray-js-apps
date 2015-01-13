@@ -30,7 +30,7 @@ Player.prototype = {
 			return;
 
 		for (var i = 0; i < this.connections.length; ++i)
-			this.connections[i].disconnect();
+			this.connections[i].Reset();
 		
 		this.connections = [];
 
