@@ -22,14 +22,11 @@ FloatingText : Item {
 		anchors.bottomMargin: -10;
 		clip: true;
 
-		Text {
+		MainText {
 			id: innerText;
-			property int initPosition;	// TODO: When ResetAnimation will be implemented, just use it instead this.
-			anchors.verticalCenter: floatingTextItem.verticalCenter;
-			initPosition: 0;
-			text: floatingTextItem.text;
+			anchors.verticalCenter: parent.verticalCenter;
 			color: floatingTextItem.color;
-			font: mainFont;
+			text: floatingTextItem.text; //TODO onTextChanged doesn't called for non-dynamic instances like Checkbox
 			x: 0;
 
 			Timer {
@@ -39,14 +36,15 @@ FloatingText : Item {
 				running: floatingTextItem.floating && floatingTextItem.floatingNeeded;
 
 				onTriggered: {
-					if (movementTimer.interval != 1000) {
+					if (interval != 1000) {
 						movementTimer.interval = 1000;
 						floatingTextItem.reset();
 
 						innerText.opacity = 0;
+						opacityAnimation.complete();
 						innerText.opacity = 1;
 					} else {
-						if (innerText.width > floatingTextItem.width && innerText.x == innerText.initPosition) {
+						if (innerText.width > floatingTextItem.width) {
 							innerText.x = -(innerText.width - floatingTextItem.width);
 							movementTimer.interval = floatingTextItem.floatingPeriod + 1000;
 						}
@@ -54,10 +52,17 @@ FloatingText : Item {
 				}
 			}
 
-			Behavior on x { animation: Animation { duration: floatingTextItem.floatingPeriod; } }
-			Behavior on opacity { animation: Animation { duration: 500; } }
+			onWidthChanged: { floatingTextItem.reset(); }
 
-			onWidthChanged: { floatingTextItem.updateWidth(); }
+			Behavior on color { animation: Animation { duration: 300; } }
+			Behavior on opacity { animation: Animation { id: opacityAnimation; duration: 500; } }
+
+			Behavior on x {
+				animation: Animation {
+					id: xAnamation;
+					duration: floatingTextItem.floatingPeriod;
+				}
+			}
 		}
 	}
 
@@ -75,6 +80,7 @@ FloatingText : Item {
 			this.reset();
 		} else if (innerText.width > floatingTextItem.width) {
 			floatingTextItem.floatingPeriod = (innerText.width - floatingTextItem.width) * 20;
+			innerText.x = -(innerText.width - this.width);
 		}
 	}
 
@@ -91,19 +97,13 @@ FloatingText : Item {
 		case Text.AlignRight: val = this.floatingNeeded ? 0 : (this.width - innerText.width); break;
 		case Text.AlignHCenter: val = this.floatingNeeded ? 0 : ((this.width - innerText.width) / 2); break;
 		}
-		innerText.initPosition = val;
 		innerText.x = val;
-		movementTimer.interval = 1000;
+		xAnamation.complete();
 	}
 
-	start: { floating = true; }
-	stop: { floating = false; }
-
 	updateWidth: {
-		if (floatingTextItem.maxWidth <= 0) {
+		if (floatingTextItem.maxWidth <= 0)
 			return;
-		}
-
 		floatingTextItem.width = innerText.width > floatingTextItem.maxWidth ? floatingTextItem.maxWidth : innerText.width;
 	}
 }
