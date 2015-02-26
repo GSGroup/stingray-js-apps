@@ -1,4 +1,4 @@
-FocusablePanel : Rectangle {
+Rectangle {
 
 	height: 46;
 	focus: true;

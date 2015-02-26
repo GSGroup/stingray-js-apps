@@ -1,6 +1,6 @@
-import controls.Text;
+import controls.MainText;
 
-FloatingText : Item {
+Item {
 	id: floatingTextItem;
 	property string text;
 	property Color color;

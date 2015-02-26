@@ -1,15 +1,11 @@
 import "ui.js" as ui
 import "game.js" as game
 import controls.Button
-import controls.Text
+import controls.SmallText
+import controls.MainText
+import controls.BigText
 import Minigame
-
-CellDelegate : Image {
-	width: 32;
-	height: 32;
-	source: model.tile >= 0? "apps/fontanero/t/" + model.tile + ".png": "";
-	visible: model.tile >= 0;
-}
+import CellDelegate
 
 Application {
 	id: fontanero;

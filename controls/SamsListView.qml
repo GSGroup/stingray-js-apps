@@ -1,4 +1,4 @@
-SamsListView : ListView {
+ListView {
 	id: samsListViewItem;
 
 	keyNavigationWraps: false;

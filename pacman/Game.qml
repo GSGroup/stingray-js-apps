@@ -1,9 +1,9 @@
 import Player
 import Enemy
 import GameCell
-import controls.Text
+import controls.BigText
 
-Game : Rectangle {
+Rectangle {
 	color: "#003";
 	focus: true;
 	id: pacmanGame;

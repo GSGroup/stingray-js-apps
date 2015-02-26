@@ -1,4 +1,4 @@
-ListViewDelegate : Panel {
+Panel {
 	anchors.left: parent.left;
 	anchors.right: parent.right;
 	active: parent.activeFocus;

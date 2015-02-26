@@ -1,6 +1,6 @@
 import GameObject
 
-Player : GameObject {
+GameObject {
 	id: playerItem;
 
 	Rectangle {
