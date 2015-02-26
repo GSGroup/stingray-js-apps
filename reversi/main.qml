@@ -1,5 +1,4 @@
-import Game;
-import controls.Text;
+import Game
 
 Application {
 	id: reversiItem;

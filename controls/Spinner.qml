@@ -1,25 +1,6 @@
-SpinnerRectangle : Rectangle {
-	borderWidth: 2;
-	opacity: active;
-	visible: true;
-	radius: height / 2;
-	width: circleRadius * 2;
-	height: width;
-	color: colorTheme.activeFocusTop; 
-	borderColor: color; 
-	
-	property float active;
-	property float circleRadius;
+import SpinnerRectangle;
 
-	Behavior on opacity {
-		animation: Animation {
-			id: opacityAnimation;
-			duration: 100;
-		}
-	}
-}
-
-Spinner : Item {
+Item {
 	id: spinner;
 //	width: 90;
 //	height: width / 3;

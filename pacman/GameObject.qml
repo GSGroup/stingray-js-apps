@@ -1,4 +1,4 @@
-GameObject : Item {
+Item {
 	property int cellX;
 	property int cellY;
 	property int speed;

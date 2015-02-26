@@ -1,4 +1,4 @@
-GameCell : Item {
+Item {
 	width: parent.cellWidth;
 	height: parent.cellHeight;
 	clip: true;

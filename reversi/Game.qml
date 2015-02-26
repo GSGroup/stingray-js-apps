@@ -1,57 +1,11 @@
 import "engine.js" as engine;
+import controls.BigText
+import controls.SmallText
+import controls.MainText
+import BoardModel
+import CellDelegate
 
-ReversiDisc : Rectangle {
-	radius: 15;
-	height: parent.height - 15;
-	borderWidth: 2;
-	Behavior on width { animation: Animation { duration: 200; } }
-}
-
-Cursor: Rectangle {
-	color: "#0000";
-	anchors.fill: parent;
-	borderWidth: 6;
-//TODO: for black
-   // borderColor: playerWhite ? "#ffffff" : "#000000";
-   	borderColor: "#00ff00";
-	radius: 5;
-	Behavior on x { animation: Animation { duration: 200; } }
-	Behavior on y { animation: Animation { duration: 200; } }
-}
-
-CellDelegate : Rectangle {
-	width: parent.cellHeight;
-	height: parent.cellWidth;
-
-	color: "#151";
-	borderColor: "#432100";
-	borderWidth: 1;
-	
-	ReversiDisc {
-		id: white;
-		color: "#fff";
-		borderColor: "#000";
-		anchors.centerIn: parent;
-		width: model.disc == "White" ? 50: 0;
-	}
-
-	ReversiDisc {
-		id: black;
-		color: "#000";
-		borderColor: "#fff";
-		anchors.centerIn: parent;
-		width: model.disc == "Black" ? 50: 0;
-	}
-	Cursor {
-		visible: parent.activeFocus ? true: false;
-	}
-}
-
-BoardModel : ListModel {
-	onCompleted: {engine.Init();}
-}
-
-Game : Rectangle {
+Rectangle {
 	id: game;
 
 	anchors.fill: parent;
