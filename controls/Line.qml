@@ -1,4 +1,4 @@
-Line : Item {
+Item {
 	id: lineItem;
 	height: 2;
 

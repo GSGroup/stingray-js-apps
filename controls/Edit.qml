@@ -1,4 +1,4 @@
-Edit : Item {
+Item {
 	id: editItem;
 	focus: true;
 	width: 100;

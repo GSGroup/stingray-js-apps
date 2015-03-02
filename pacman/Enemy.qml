@@ -1,6 +1,6 @@
 import GameObject
 
-Enemy : GameObject {
+GameObject {
 	id: ghost;
 	property Color color;
 	property bool step;
