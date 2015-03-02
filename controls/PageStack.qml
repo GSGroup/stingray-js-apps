@@ -1,4 +1,4 @@
-PageStack : Item {
+Item {
 	id: pageStackItem;
 	property int currentIndex;
 	property int previousIndex;

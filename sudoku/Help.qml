@@ -1,16 +1,7 @@
 import controls.Edit;
+import HelpStringDelegate
 
-HelpStringDelegate:Item {
-				  height: 20;
-				  width: 400;
-				  anchors.horizontalCenter: parent.horizontalCenter;
-				  SmallText {
-				  anchors.horizontalCenter: parent.horizontalCenter;
-				  text: model.text;
-				  }
-		}
-
-Help : Item {
+Item {
 	id: gameOverBox;
 	height:150;
 	width:350;

@@ -1,6 +1,6 @@
 import controls.FocusablePanel;
 
-Button : FocusablePanel {
+FocusablePanel {
 	id: simpleButton;
 
 	property string text;

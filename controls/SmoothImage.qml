@@ -1,4 +1,4 @@
-SmoothImage : Item {
+Item {
 	id: smoothImageItem;
 	property string source;
 	property string previousSource;

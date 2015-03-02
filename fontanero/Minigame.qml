@@ -1,14 +1,6 @@
-import controls.Text;
+import controls.BigText;
 
-MinigameDelegate : Rectangle {
-	width: parent.cellWidth;
-	height: parent.cellHeight;
-	borderWidth: 5;
-	borderColor: activeFocus? "#fff": "#222";
-	color: model.fixed? "#0e0": "#e00";
-}
-
-Minigame : Item {
+Item {
 	id: minigameItem;
 
 	property int size;

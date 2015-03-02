@@ -1,4 +1,4 @@
-ScaleImage : Image {
+Image {
 	id: scaleImage;
 	property real scale: 1;
 	property real maxScale: 2.5;

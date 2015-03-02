@@ -1,4 +1,4 @@
-SelectionGradient : Rectangle {
+Rectangle {
 	anchors.fill: parent;
 	color: colorTheme.activeFocusColor;
 

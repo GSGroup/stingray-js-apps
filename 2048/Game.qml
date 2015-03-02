@@ -1,93 +1,8 @@
-import controls.Text;
+import controls.BigText;
+import CellDelegate;
 import "engine.js" as engine;
 
-CellDelegate : Rectangle {
-	id: rect;
-	height: parent.cellHeight;
-	width: parent.cellWidth;
-	property int value: -1;
-	property int added: false;
-	Behavior on x { animation: Animation { duration: rect.value < 2 || rect.added ? 0 : 300; } }
-	Behavior on y { animation: Animation { duration: rect.value < 2 || rect.added ? 0 : 300; } }
-	z: value ? 1 : 0;
-
-	Rectangle {
-		id: innerRect;
-		radius: 10;
-		anchors.fill: parent;
-		anchors.margins: 10;
-		Behavior on color { animation: Animation { duration: rect.added ? 300 : 0; } }
-		Behavior on x { animation: Animation { duration: rect.added ? 150 : 0; } }
-		Behavior on y { animation: Animation { duration: rect.added ? 150 : 0; } }
-		Behavior on width { animation: Animation { duration: rect.added ? 150 : 0; } }
-		Behavior on height { animation: Animation { duration: rect.added ? 150 : 0; } }
-		
-		Text {
-			text: rect.value ? rect.value : "";	
-			anchors.centerIn: parent;
-			color: rect.value <= 4 ? "#6D654E" : "#ffffff";
-			font: bigFont;
-		}
-	} 
-
-	Timer {
-		id: scaleTimer;
-		interval: 150;
-		onTriggered: {
-			innerRect.anchors.margins = 10;
-		}
-	}
-
-	function doscale () {
-		innerRect.anchors.margins = 0;
-		scaleTimer.restart();
-	}
-
-	onValueChanged: {
-		if (rect.value && rect.added) this.doscale();
-		switch (rect.value) {
-		case 0: innerRect.color =  "#ccc0b2"; break; 
-		case 2: innerRect.color = "#eee4da"; break;
-		case 4: innerRect.color = "#ECE0CA"; break;
-		case 8: innerRect.color = "#EEB57E"; break;
-		case 16: innerRect.color = "#F39562"; break;
-		case 32: innerRect.color = "#FD7D60"; break;
-		case 64: innerRect.color = "#F55837"; break;
-		case 128: innerRect.color = "#F4CA78"; break;
-		case 256: innerRect.color = "#EDCA6C"; break;
-		case 512: innerRect.color = "#EFCA45"; break;
-		case 1024: innerRect.color = "#F0C63C"; break;
-		case 2048: innerRect.color = "#F0C129"; break;
-		default: innerRect.color = "#000000"; 
-		}
-	}
-	color: "#bcb0a200";
-}
-
-MenuDelegate: Item {
-	width: parent.cellWidth;
-	height: parent.cellHeight;
-	anchors.horizontalCenter: parent.horizontalCenter;
-	Rectangle {
-		anchors.centerIn: parent;
-		color: parent.activeFocus ? "#835A22FF" : "#734A12AA";
-		radius: 10;
-		width: parent.width;
-		height: parent.height / 2;
-		Text {
-			anchors.centerIn: parent;
-			font: bigFont;
-			color: "#FFFFFF";
-			text: model.text;
-		}
-	}
-}
-
-FieldModel : ListModel {
-onCompleted: {engine.init();}
-}
-
-Game : Rectangle {
+Rectangle {
 	id: game;
 	anchors.centerIn: parent;
 	height: safeArea.height;
@@ -233,14 +148,14 @@ Game : Rectangle {
 		anchors.leftMargin: game.space;
 		height: game.cellSize / 1.5;
 		radius: 10;
-		width: { return Math.min((safeArea.width - parent.width) / 2 - game.space * 2, game.cellSize * 1.5);};
+		width: { return Math.min((safeArea.width - parent.width) / 2 - game.space * 2, game.cellSize * 1.5);}
 		color: "#CCC0B2";
 
 		Text {
 			anchors.horizontalCenter: parent.horizontalCenter;
 			anchors.top: parent.top;
 			anchors.topMargin: game.space;
-			text: "BEST";
+			text: qsTr("BEST");
 			color: "#EEE4DA";
 			font: bigFont;
 		}
@@ -250,17 +165,21 @@ Game : Rectangle {
 			anchors.horizontalCenter: parent.horizontalCenter;
 			anchors.bottom: parent.bottom;
 			anchors.bottomMargin: game.space;
-			property int val: {
-				var x;
-				if (!(x = load("best2048"))) 
-					return 0; 
-				else 
-					return x;
-			}
+			property int val;
 			text: val;
 			font: bigFont;
 			color: "#FFFFFF";
-		}			
+
+			onCompleted: {
+				this.val = function() {
+					var x;
+					if (!(x = load("best2048"))) 
+						return 0; 
+					else 
+						return x;
+				}
+			}
+		}
 	}
 
 	Rectangle {
@@ -271,14 +190,14 @@ Game : Rectangle {
 		anchors.leftMargin: game.space;
 		height: game.cellSize / 1.5;
 		radius: 10;
-		width: { return Math.min((safeArea.width - parent.width) / 2 - game.space * 2, game.cellSize * 1.5);};
+		width: { return Math.min((safeArea.width - parent.width) / 2 - game.space * 2, game.cellSize * 1.5);}
 		color: "#CCC0B2";
 
 		Text {
 			anchors.horizontalCenter: parent.horizontalCenter;
 			anchors.top: parent.top;
 			anchors.topMargin: game.space;
-			text: "SCORE";
+			text: qsTr("SCORE");
 			color: "#EEE4DA";
 			font: bigFont;
 		}
@@ -308,7 +227,7 @@ Game : Rectangle {
 			anchors.bottomMargin: game.cellSize / 2;
 			font: bigFont;
 			color: "#734A12";
-			text: "GAME OVER";
+			text: qsTr("GAME OVER");
 		}
 
 		Rectangle {
@@ -323,7 +242,7 @@ Game : Rectangle {
 				anchors.centerIn: parent;
 				font: smallFont;
 				color: "#FFFFFF";
-				text: "Try again";
+				text: qsTr("Try again");
 			}
 		}
 
@@ -400,7 +319,7 @@ Game : Rectangle {
 			visible: false;
 			focus: true;
 			wrapMode: Text.Wrap;
-			text: "How to play: use your arrow keys to move the tiles. When two tiles with the same number touch, they merge into one!";
+			text: qsTr("Use your arrow keys to move the tiles. When two tiles with the same number touch, they merge into one!");
 
 			onSelectPressed: {
 				this.visible = false;
@@ -422,5 +341,6 @@ Game : Rectangle {
 //		backGrid.visible = !backGrid.visible;
 //		backGrid.currentIndex = 0;
 //	}
+onCompleted: {engine.init();}
 
 }
