@@ -1,4 +1,5 @@
 import controls.FocusablePanel;
+import controls.SmallText;
 
 FocusablePanel {
 	id: simpleButton;
@@ -29,12 +30,12 @@ FocusablePanel {
 			}
 		}
 		
-		onSelectPressed: {
-			simpleButton.color = colorTheme.activeBorderColor;
+		//onSelectPressed: {
+			//simpleButton.color = colorTheme.activePanelColor;
 			//simpleButton.color.ResetAnimation();
-			simpleButton.color = colorTheme.activeBackgroundColor;
-			event.accepted = false;
-		}
+			//simpleButton.color = colorTheme.focusablePanelColor;
+			//event.accepted = false;
+		//}
 	}
 
 	Behavior on color { animation: Animation { duration: 400; easingType: Linear; } }
