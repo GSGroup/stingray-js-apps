@@ -29,11 +29,12 @@ Player.prototype = {
 		if (!this.session)
 			return;
 
-		for (var i = 0; i < this.connections.length; ++i)
-			this.connections[i].Reset();
+		for (var i = 0; i < this.connections.length; ++i) {
+			log("connection " + this.connections[i]);
+			this.connections[i].disconnect();
+		}
 		
 		this.connections = [];
-
 		this.session.reset();
 		this.session = null;
 	},
