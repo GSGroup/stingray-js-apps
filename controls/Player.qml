@@ -371,8 +371,8 @@ Item {
 	function refreshBar() {
 		var p = playerObj.player.getProgress();
 		this.prevProgress = p;
-		log("Progress: " + p);
-		log("Seekable progress: " + playerObj.player.getSeekableRangeEnd());
+		//log("Progress: " + p);
+		//log("Seekable progress: " + playerObj.player.getSeekableRangeEnd());
 		if (p == 0 && this.seeking)
 			return;
 		this.seeking = false;
