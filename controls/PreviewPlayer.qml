@@ -1,3 +1,5 @@
+import PreviewPlayerButton;
+
 Item {
 	id: previewItem;
 
@@ -99,7 +101,7 @@ Item {
 		SmallText {
 			anchors.verticalCenter: parent.verticalCenter;
 			anchors.left: parent.right;
-			anchors.leftMargin: -128;
+			anchors.leftMargin: -140;
 			anchors.topMargin: 3;
 			text: previewPlayer.curTimeStr;
 			color: "#e0e000";
@@ -130,8 +132,7 @@ Item {
 				ListElement { source: "apps/controls/res/preview/arrowNext.png";}
 			}
 
-			delegate: BorderedImage{ color: colorTheme.activePanelColor; }
-
+			delegate: PreviewPlayerButton{}
 
 			onSelectPressed: {
 				switch (currentIndex) {
