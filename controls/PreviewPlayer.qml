@@ -2,24 +2,18 @@ import PreviewPlayerButton;
 
 Item {
 	id: previewItem;
-
 	signal finished(state);
 	signal fullscreen();
 	signal hDPressed();
-
 	property string title;
 	property bool isFullscreen: false;
 	property int duration;
 	property bool showHD: false;
 	property bool useHD;
 
-	onCompleted: {
-		this.onShowHDChanged();
-	}
-
 	onUseHDChanged: {
 		if (this.showHD) 
-			controlsView.model.set(4, {source: "apps/controls/res/preview/" + (this.useHD ? "HD.png" : "LD.png")});
+			controlsView.model.set(4, {source: "apps/controls/res/preview/" + (this.useHD ? "HD.png" : "SD.png")});
 	}
 
 	onShowHDChanged: {
@@ -162,12 +156,14 @@ Item {
 			}
 		}
 	}
-	
+
+	onCompleted: { this.onShowHDChanged(); }
+
 	function playUrl (url) {
 		this.visible = true;
 		previewPlayer.playUrl(url);
 	}
-	
+
 	function stop () {
 		this.visible = false;
 		previewPlayer.stop();

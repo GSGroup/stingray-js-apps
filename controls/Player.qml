@@ -5,39 +5,33 @@ import controls.Spinner;
 
 Item {
 	id: playerObj;
+	signal finished(state);
+	property bool paused: false;
+	property bool statusShow: false;
+	property bool statusHold: false;
+	property bool preview: false;
+	property bool cursorVisible: cursorBar.visible;
+	property bool seeking: false;
+	property int duration: 0;
+	property int cursorPos: 0;
+	property int cursorDist: cursorPos / duration * emptyBar.width - 2;
+	property int progress: 0;
+	property int cursorGain: 1000;
+	property int prevProgress;
+	property string curTimeStr: "";
+	property string fullTimeStr: "";
+	visible: false;
 
 	VideoOverlay {
 //		visible: !loadSpinner.visible;
 		anchors.fill: parent;
 	}
 
-
-	Spinner {	
+	Spinner {
 		id: loadSpinner;
 		anchors.centerIn: parent;
 		z: 1000;
 	}
-
-//	focus: true;
-//	anchors.fill: parent;
-	visible: false;
-
-	signal finished(state);
-
-	property bool paused: false;
-	property bool statusShow: false;
-	property bool statusHold: false;
-	property bool preview: false;
-	property bool cursorVisible: cursorBar.visible;
-	property int duration: 0;
-	property int cursorPos: 0;
-	property int cursorDist: cursorPos / duration * emptyBar.width - 2;
-	property bool seeking: false;
-	property int progress: 0;
-
-	property int cursorGain: 1000;
-	property string curTimeStr: "";
-	property string fullTimeStr: "";
 
 	Image {
 		id: pauseImage;
@@ -71,7 +65,7 @@ Item {
 				anchors.left: parent.left;
 				anchors.bottom: parent.bottom;
 				radius: height / 2;
-				Behavior on x {animation: Animation {id: seekAnim; duration: 200;} }
+				Behavior on x { animation: Animation { id: seekAnim; duration: 200;} }
 			}
 
 			Rectangle {
@@ -82,14 +76,12 @@ Item {
 				anchors.left: parent.left;
 				anchors.bottom: parent.bottom;
 				radius: height / 2;
-				Behavior on width {animation: Animation {id: progressAnim; duration: 2000;} }
 				z: 100;
+
+				Behavior on width { animation: Animation { id: progressAnim; duration: 2000;} }
 			}
 
-
-			AlphaControl {
-				alphaFunc: MaxAlpha;
-			}
+			AlphaControl { alphaFunc: MaxAlpha; }
 
 			MainText {
 				id: curTimeText;
@@ -159,12 +151,13 @@ Item {
 				anchors.leftMargin: playerObj.cursorDist;
 				width: height;
 				radius: width / 2;
-				Behavior on x {animation: Animation {id: cursorAnim; duration: 200;}}
 				z: 200;
+
+				Behavior on x { animation: Animation { id: cursorAnim; duration: 200;}}
 			}
 		}
 
-		Behavior on opacity {animation: Animation {duration: 400;} }
+		Behavior on opacity { animation: Animation { duration: 400;} }
 	}
 
 	Timer {
@@ -235,15 +228,13 @@ Item {
 					playerObj.duration = d;
 					log("DURATION: " + d);
 					loadSpinner.visible = false;
-				} 
-				else this.restart();
+				} else {
+					this.restart();
+				}
+			} else {
+				this.restart();
 			}
-			else this.restart();
 		}
-	}
-
-	onCompleted: {
-		this.player = new media.Player();
 	}
 
 	onRightPressed: {
@@ -294,17 +285,9 @@ Item {
 		}
 	}
 
-	onPausedChanged: {
-		this.player.pause(this.paused);
-	}
-
-	onKeyPressed: {
-		return true;
-	}
-
-	onUpPressed: {
-		onDownPressed();
-	}
+	onPausedChanged:	{ this.player.pause(this.paused); }
+	onUpPressed:		{ onDownPressed(); }
+	onKeyPressed:		{ return visible; }
 	
 	completeAnim: {
 		progressAnim.complete();
@@ -344,6 +327,8 @@ Item {
 		}
 	}
 
+	onCompleted: { this.player = new media.Player(); }
+
 	function playUrl(url) {
 		log("Player: start playing " + url);
 		loadSpinner.visible = true;
@@ -365,8 +350,6 @@ Item {
 		refreshTimeTimer.stop();
 		this.visible = false;
 	}
-	
-	property int prevProgress;
 
 	function refreshBar() {
 		var p = playerObj.player.getProgress();
@@ -379,5 +362,4 @@ Item {
 		progressBar.width = p / playerObj.duration * emptyBar.width;
 //		seekBar.width = playerObj.player.getSeekableRangeEnd() / playerObj.duration * emptyBar.width;
 	}
-
 }
