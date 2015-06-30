@@ -2,35 +2,63 @@ import "controls/media.js" as media;
 import controls.MainText;
 import controls.SmallText;
 import controls.Spinner;
+import controls.TopLabel;
+import controls.PlaybackProgress;
 
 Item {
 	id: playerObj;
 	signal finished(state);
 	property bool paused: false;
-	property bool statusShow: false;
-	property bool statusHold: false;
-	property bool preview: false;
-	property bool cursorVisible: cursorBar.visible;
+	property bool isFullscreen: false;
 	property bool seeking: false;
 	property int duration: 0;
 	property int cursorPos: 0;
-	property int cursorDist: cursorPos / duration * emptyBar.width - 2;
+	//property int cursorDist: cursorPos / duration * emptyBar.width - 2;
 	property int progress: 0;
 	property int cursorGain: 1000;
 	property int prevProgress;
 	property string curTimeStr: "";
 	property string fullTimeStr: "";
-	visible: false;
+	clip: true;
 
-	VideoOverlay {
-//		visible: !loadSpinner.visible;
+	VideoOverlay { anchors.fill: parent; }
+
+	AlphaControl { alphaFunc: AlphaFunc.MaxAlpha; }
+
+	Rectangle {
+		anchors.centerIn: parent;
+		width: 100;
+		height: 100;
+		color: "#f00";
+	}
+
+	Item {
 		anchors.fill: parent;
+		visible: playerObj.isFullscreen;
+
+		TopLabel { id: title; }
+
+		PlaybackProgress {
+			id: playbackProgress;
+			height: 70;
+			anchors.bottom: safeArea.bottom;
+			anchors.left: safeArea.left;
+			anchors.right: safeArea.right;
+			anchors.leftMargin: 5;
+			anchors.rightMargin: 5;
+			focus: true;
+			//enabled: playerObj.visible;
+			//hideable: playerObj.visible;
+			//opacity: visible ? 1 : 0;
+			//visible: false;
+
+			Behavior on opacity { animation: Animation { duration: 300; } }
+		}
 	}
 
 	Spinner {
 		id: loadSpinner;
 		anchors.centerIn: parent;
-		z: 1000;
 	}
 
 	Image {
@@ -38,183 +66,6 @@ Item {
 		anchors.centerIn: parent;
 		visible: parent.paused;
 		source: "apps/controls/res/preview/icoPause.png";
-	}
-
-	Item {
-		id: statusItem;
-//		visible: parent.statusShow;
-		opacity: parent.statusShow ? 1 : 0.01;
-		anchors.fill: parent.width < safeArea.width ? parent : safeArea;
-		anchors.margins: 10;
-
-		Rectangle {
-			id: emptyBar;
-			color: "#808080";
-			height: parent.height / 40;
-			anchors.bottom: parent.bottom;
-			anchors.left: parent.left;
-			anchors.right: parent.right;
-			anchors.bottomMargin: playerObj.preview ? 10 : 20;
-			radius: height / 2;
-
-			Rectangle {
-				id: seekBar;
-				color: colorTheme.activeBackgroundColor;
-				anchors.margins: parent.borderWidth;
-				anchors.top: parent.top;
-				anchors.left: parent.left;
-				anchors.bottom: parent.bottom;
-				radius: height / 2;
-				Behavior on x { animation: Animation { id: seekAnim; duration: 200;} }
-			}
-
-			Rectangle {
-				id: progressBar;
-				color: colorTheme.activeFocusColor;
-				anchors.margins: parent.borderWidth;
-				anchors.top: parent.top;
-				anchors.left: parent.left;
-				anchors.bottom: parent.bottom;
-				radius: height / 2;
-				z: 100;
-
-				Behavior on width { animation: Animation { id: progressAnim; duration: 2000;} }
-			}
-
-			AlphaControl { alphaFunc: MaxAlpha; }
-
-			MainText {
-				id: curTimeText;
-				visible: !playerObj.preview;
-				anchors.top: progressBar.bottom;
-				anchors.left: emptyBar.left;
-				anchors.topMargin: 5;
-				color: "#e0e000"; //colorTheme.activeBorderColor;
-				style: Shadow;
-				text: playerObj.curTimeStr;
-				z: 1000;
-			}
-
-			MainText {
-			   visible: !playerObj.preview;
-			   anchors.top: progressBar.bottom;
-			   anchors.right: emptyBar.right;
-			   anchors.topMargin: 5;
-			   color: "#e0e000"; //colorTheme.activeBorderColor;
-			   style: Shadow;
-			   text: playerObj.fullTimeStr;
-			   z: 1000;
-			}
-
-			SmallText {
-				id: seekTimeText;
-				anchors.verticalCenter: cursorBar.verticalCenter;
-				anchors.left: cursorBar.right;
-				anchors.leftMargin: playerObj.cursorDist + width + 10 > parent.width ? - width - cursorBar.width : 5;
-				style: Shadow;
-				color: colorTheme.activeTextColor;
-				visible: cursorBar.visible;
-				text: (playerObj.cursorPos / 1000 / 60 >= 10 ? "" : "0") + 
-						Math.floor(playerObj.cursorPos / 1000 / 60) + ":" +
-					  (playerObj.cursorPos / 1000 % 60 >= 10 ? "" : "0") +
-					  	Math.floor(playerObj.cursorPos / 1000 % 60);
-				z: 1000;
-			}
-
-			Gradient {
-				anchors.bottom: playerObj.bottom;
-				anchors.right: playerObj.right;
-				anchors.left: playerObj.left;
-				anchors.top: parent.top;
-				anchors.topMargin: -10;
-
-				GradientStop {
-					position: 1;
-					color: "#000000";
-				}
-
-				GradientStop {
-					position: 0;
-					color: "#00000050";
-				}
-			}
-
-			Rectangle {
-				id: cursorBar;
-				color: "#ffffff";
-				visible: false;
-				anchors.top: parent.top;
-				anchors.bottom: parent.bottom;
-				anchors.topMargin: -2;
-				anchors.bottomMargin: -2;
-				anchors.left: parent.left;
-				anchors.leftMargin: playerObj.cursorDist;
-				width: height;
-				radius: width / 2;
-				z: 200;
-
-				Behavior on x { animation: Animation { id: cursorAnim; duration: 200;}}
-			}
-		}
-
-		Behavior on opacity { animation: Animation { duration: 400;} }
-	}
-
-	Timer {
-		id: refreshBarTimer;
-		interval: 2000;
-
-		onTriggered: {
-			playerObj.refreshBar();
-			this.restart();
-		}
-	}
-
-	Timer {
-		id: refreshTimeTimer;
-		interval: 100;
-
-		onTriggered: {
-			var p = playerObj.player.getProgress();
-			playerObj.progress = p / 1000;
-			if (p && playerObj.duration >= 0) {
-				//fixme: gognocode
-				playerObj.curTimeStr = 
-								   (p / 1000 / 60 >= 10 ? "" : "0") +
-								   		Math.floor(p / 1000 / 60) + ":" + 
-								   (p / 1000 % 60 >= 10 ? "" : "0") + 
-								   		Math.floor(p / 1000 % 60);
-				playerObj.fullTimeStr = 
-								   (playerObj.duration / 1000 / 60 >= 10 ? "" : "0") + 
-										Math.floor(playerObj.duration / 1000 / 60) + ":" + 
-								   (playerObj.duration / 1000 % 60 >= 10 ? "" : "0") + 
-								   		Math.floor(playerObj.duration / 1000 % 60);
-			} else {
-				playerObj.curTimeStr = "";
-				playerObj.fullTimeStr = "";
-				playerObj.progress = 0;
-			}
-			this.restart();
-		}
-	}
-
-
-	Timer {
-		id: statusTimer;
-		interval: 5000;
-
-		onTriggered: {
-			if (!playerObj.statusHold) { 
-				playerObj.statusShow = false;
-			}
-			cursorBar.visible = false;
-			playerObj.cursorPos = playerObj.player.getProgress();
-		}
-	}
-
-	Timer {
-		id: holdTimer;
-		interval: 250;
 	}
 
 	Timer {
@@ -237,97 +88,112 @@ Item {
 		}
 	}
 
-	onRightPressed: {
-		if (holdTimer.running) {
-			this.cursorGain += 1000;
-		} else this.cursorGain = 1000;
-		holdTimer.restart();
-		statusTimer.restart();
-		cursorBar.visible = true;
-		if (this.cursorPos + this.cursorGain  <=  playerObj.player.getSeekableRangeEnd())
-			this.cursorPos += this.cursorGain;
-		else 
-			this.cursorPos = playerObj.player.getSeekableRangeEnd();
+	Timer {
+		id: refreshTimeTimer;
+		interval: 100;
+
+		onTriggered: {
+			var p = playerObj.player.getProgress();
+			playerObj.progress = p / 1000;
+			if (p && playerObj.duration >= 0) {
+				//fixme: gognocode
+				playerObj.curTimeStr = 
+								   (p / 1000 / 60 >= 10 ? "" : "0") +
+										   Math.floor(p / 1000 / 60) + ":" + 
+								   (p / 1000 % 60 >= 10 ? "" : "0") + 
+										   Math.floor(p / 1000 % 60);
+				playerObj.fullTimeStr = 
+								   (playerObj.duration / 1000 / 60 >= 10 ? "" : "0") + 
+										Math.floor(playerObj.duration / 1000 / 60) + ":" + 
+								   (playerObj.duration / 1000 % 60 >= 10 ? "" : "0") + 
+										   Math.floor(playerObj.duration / 1000 % 60);
+			} else {
+				playerObj.curTimeStr = "";
+				playerObj.fullTimeStr = "";
+				playerObj.progress = 0;
+			}
+			this.restart();
+		}
 	}
 
-	onLeftPressed: {
-		if (holdTimer.running) {
-			this.cursorGain += 1000;
-		} else this.cursorGain = 1000;
-		holdTimer.restart();
-		statusTimer.restart();
-		cursorBar.visible = true;
-		if (this.cursorPos - this.cursorGain >=  playerObj.player.getSeekableRangeStart())
-			this.cursorPos -= this.cursorGain;
-		else 
-			this.cursorPos = playerObj.player.getSeekableRangeStart();
+	onKeyPressed: {
+		if (!visible || key == "Menu")
+			return false;
+		if (key == "Right" || key == "Volume Up" || (key == "Up" && playbackProgress.visible)) {
+			//mainWindow.Local().volumePanel.volumeUp();
+			return true;
+		}
+		if (key == "Left" || key == "Volume Down" || (key == "Down" && playbackProgress.visible)) {
+			//mainWindow.Local().volumePanel.volumeDown();
+			return true;
+		}
+		if (key == "Last") {
+			//self.Abort();
+			return false;
+		}
+
+		if (key == "Pause") {
+			playbackProgress.visible = true;
+			//playbackProgress.PlayPause();
+			return true;
+		}
+		if (key == "Fast Forward") {
+			playbackProgress.visible = true;
+			//playbackProgress.doFF();
+			return true;
+		}
+		if (key == "Rewind") {
+			playbackProgress.visible = true;
+			//playbackProgress.doRewind();
+			return true;
+		}
+
+		//if ((key == "Back" && !playbackProgress.visible) || key == "Stop") {
+		if (key == "Back" || key == "Stop") {
+			playerObj.abort();
+		} else if (key == "Volume Mute" || key == "V" || key == "v") {
+			//App::Zapper().Mute(!App::Zapper().IsMuted());
+			//mainWindow.Local().muteIcon.updateIcon();
+		} else {
+			playbackProgress.visible = true;
+		}
+		return true;
+	}
+
+	onCompleted: {
+		this.player = new media.Player();
+		this.paused = true;
 	}
 
 	onBackPressed: {
-//		this.stop();
-		this.finished();
+		playerObj.abort();
 	}
 
-	onSelectPressed: {
-		statusTimer.restart();
-		if (cursorBar.visible) {
-			cursorBar.visible = false;
-			log ("Seeking at " + this.cursorPos);
-			this.player.seek(this.cursorPos);
-			this.seeking = true;
-			loadSpinner.visible = true;
-			progressBar.width = this.cursorDist;
-			spinnerTimer.restart();
-			this.refreshBar();
-		}
-		else {
-			this.paused = !this.paused;
-		}
+	abort: {
+		this.player.stop();
+		this.paused = true;
+		playerObj.finished();
 	}
 
-	onPausedChanged:	{ this.player.pause(this.paused); }
-	onUpPressed:		{ onDownPressed(); }
-	onKeyPressed:		{ return visible; }
-	
-	completeAnim: {
-		progressAnim.complete();
-		seekAnim.complete();
-		cursorAnim.complete();
+	pause: {
+		//TODO: check puase.
+		//this.player.pause();
+		this.player.stop();
+		this.paused = true;
 	}
 
-	onDownPressed: {
-		playerObj.statusShow = !playerObj.statusShow;
-		playerObj.refreshBar();
-		cursorBar.visible = false;
-		playerObj.completeAnim();
+	function seek(msDelta) {
+		if (!this.paused)
+			this.player.seek(msDelta);
 	}
 
-	onStatusHoldChanged: {
-		if (playerObj.statusShow && !playerObj.statusHold) {
-			statusTimer.start();
-		}
-		if (statusHold) {
-			playerObj.statusShow = true;
-			statusTimer.stop();
-		}
+	function stop() {
+		log("Player: stop playing");
+		this.player.stop();
+		//refreshBarTimer.stop();
+		refreshTimeTimer.stop();
+		this.visible = false;
 	}
-
-	onPreviewChanged: {
-		playerObj.refreshBar();
-		playerObj.completeAnim();
-	}
-
-	onStatusShowChanged: {
-		playerObj.completeAnim();
-		if (statusShow && !statusHold) {
-			statusTimer.start();
-		}
-		if (statusShow) {
-			playerObj.cursorPos = playerObj.player.getProgress();
-		}
-	}
-
-	onCompleted: { this.player = new media.Player(); }
 
 	function playUrl(url) {
 		log("Player: start playing " + url);
@@ -339,27 +205,8 @@ Item {
 		this.player.stop();
 		this.player.playUrl(url);
 		this.paused = false;
+
 		refreshBarTimer.start();
 		playerObj.refreshBar(); //could throw exception and timer will not start
-	}
-
-	function stop() {
-		log("Player: stop playing");
-		this.player.stop();
-		refreshBarTimer.stop();
-		refreshTimeTimer.stop();
-		this.visible = false;
-	}
-
-	function refreshBar() {
-		var p = playerObj.player.getProgress();
-		this.prevProgress = p;
-		//log("Progress: " + p);
-		//log("Seekable progress: " + playerObj.player.getSeekableRangeEnd());
-		if (p == 0 && this.seeking)
-			return;
-		this.seeking = false;
-		progressBar.width = p / playerObj.duration * emptyBar.width;
-//		seekBar.width = playerObj.player.getSeekableRangeEnd() / playerObj.duration * emptyBar.width;
 	}
 }

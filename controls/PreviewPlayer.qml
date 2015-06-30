@@ -5,11 +5,12 @@ Item {
 	signal finished(state);
 	signal fullscreen();
 	signal hDPressed();
+	signal playPressed();
 	property string title;
-	property bool isFullscreen: false;
 	property int duration;
-	property bool showHD: false;
 	property bool useHD;
+	property bool isFullscreen: false;
+	property bool showHD: false;
 
 	onUseHDChanged: {
 		if (this.showHD) 
@@ -30,46 +31,25 @@ Item {
 	}
 
 	Rectangle {
-		anchors.top: previewItem.top;
-		anchors.right: previewItem.right;
-		anchors.left: previewItem.left;
-		height: titleText.height;
-		color: "#00000080";
+		anchors.fill: previewPlayer;
+		color: "#000";
 		visible: !parent.isFullscreen;
-
-		SmallText {
-			id: titleText;
-			anchors.top: previewItem.top;
-			anchors.right: previewItem.right;
-			anchors.left: previewItem.left;
-			horizontalAlignment: Text.AlignHCenter;
-			text: previewItem.title;
-			wrapMode: Text.Wrap;
-		}
-
-		z: 1000;
 	}
 
 	Player {
 		id: previewPlayer;
+		height: parent.isFullscreen ? mainWindow.height : (parent.height - controls.height - 10);
 		anchors.top: parent.isFullscreen ? mainWindow.top : parent.top;
-		anchors.bottom: parent.isFullscreen ? mainWindow.bottom : controls.opacity == 1 ? controls.top : parent.bottom;
 		anchors.left: parent.isFullscreen ? mainWindow.left : parent.left;
-		anchors.right: parent.isFullscreen? mainWindow.right : parent.right;
-		anchors.bottomMargin: 10;
-		statusShow: !parent.isFullscreen;
-		statusHold: !parent.isFullscreen;
+		anchors.right: parent.isFullscreen ? mainWindow.right : parent.right;
 		focus: parent.isFullscreen;
-		preview: !parent.isFullscreen;
+		isFullscreen: parent.isFullscreen;
 //		duration: parent.duration;
 
 		onFinished: {
 			previewPlayer.focus = false;
 			previewItem.finished(state);
 			previewItem.isFullscreen = false;
-//			previewPlayer.statusShow = true;
-//			previewPlayer.statusHold = true;
-			controls.opacity = 1;
 		}
 
 		onPausedChanged: {
@@ -89,8 +69,7 @@ Item {
 		height: 70;
 		clip: true;
 		focus: true;
-		opacity: 1;
-		z: 1000;
+		visible: !parent.isFullscreen;
 
 		SmallText {
 			anchors.verticalCenter: parent.verticalCenter;
@@ -112,15 +91,13 @@ Item {
 		ListView {
 			id: controlsView;
 			anchors.top: parent.top;
-			anchors.left: parent.left;
-//			anchors.right: parent.right;
+			anchors.horizontalCenter: parent.horizontalCenter;
 			anchors.bottom: parent.bottom;
 			width: (70 + 10) * 5;
 			spacing: 10;
 			orientation: ListView.Horizontal;
-			model: 
-			ListModel {
-				ListElement { source:"apps/controls/res/preview/fullscreen.png";}
+			model: ListModel {
+				ListElement { source: "apps/controls/res/preview/fullscreen.png";}
 				ListElement { source: "apps/controls/res/preview/arrowPrev.png";}
 				ListElement { source: "apps/controls/res/preview/arrowPause.png";}
 				ListElement { source: "apps/controls/res/preview/arrowNext.png";}
@@ -131,23 +108,21 @@ Item {
 			onSelectPressed: {
 				switch (currentIndex) {
 				case 0:
-					previewPlayer.focus = true;
-	//				previewPlayer.anchors.fill = mainWindow;
 					previewItem.isFullscreen = true;
-	//				previewPlayer.statusShow = false;
-	//				previewPlayer.statusHold = false;
 					previewPlayer.setFocus();
 					previewItem.fullscreen();
-					controls.opacity = 0;
 					break;
 				case 1:
-					previewPlayer.onLeftPressed();
+					previewPlayer.seek(-30000);
 					break;
 				case 2:
-					previewPlayer.onSelectPressed();
+					if (previewPlayer.paused)
+						previewItem.playPressed();
+					else
+						previewPlayer.pause();
 					break;
 				case 3:
-					previewPlayer.onRightPressed();
+					previewPlayer.seek(30000);
 					break;
 				case 4:
 					previewItem.hDPressed();
@@ -159,13 +134,11 @@ Item {
 
 	onCompleted: { this.onShowHDChanged(); }
 
-	function playUrl (url) {
-		this.visible = true;
+	function playUrl(url) {
 		previewPlayer.playUrl(url);
 	}
 
-	function stop () {
-		this.visible = false;
+	function stop() {
 		previewPlayer.stop();
 	}
 }
