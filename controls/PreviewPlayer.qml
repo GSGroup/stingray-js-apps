@@ -44,7 +44,7 @@ Item {
 		anchors.right: parent.isFullscreen ? mainWindow.right : parent.right;
 		focus: parent.isFullscreen;
 		isFullscreen: parent.isFullscreen;
-//		duration: parent.duration;
+		duration: parent.duration;
 
 		onFinished: {
 			previewPlayer.focus = false;
@@ -132,13 +132,7 @@ Item {
 		}
 	}
 
-	onCompleted: { this.onShowHDChanged(); }
-
-	function playUrl(url) {
-		previewPlayer.playUrl(url);
-	}
-
-	function stop() {
-		previewPlayer.stop();
-	}
+	stop:			{ previewPlayer.stop(); }
+	onCompleted:	{ this.onShowHDChanged(); }
+	function playUrl(url)	{ previewPlayer.playUrl(url); }
 }
