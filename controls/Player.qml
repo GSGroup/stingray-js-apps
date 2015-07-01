@@ -13,7 +13,6 @@ Item {
 	property bool seeking: false;
 	property int duration: 0;
 	property int cursorPos: 0;
-	//property int cursorDist: cursorPos / duration * emptyBar.width - 2;
 	property int progress: 0;
 	property int cursorGain: 1000;
 	property int prevProgress;
@@ -23,14 +22,7 @@ Item {
 
 	VideoOverlay { anchors.fill: parent; }
 
-	AlphaControl { alphaFunc: AlphaFunc.MaxAlpha; }
-
-	Rectangle {
-		anchors.centerIn: parent;
-		width: 100;
-		height: 100;
-		color: "#f00";
-	}
+	AlphaControl { alphaFunc: MaxAlpha; }
 
 	Item {
 		anchors.fill: parent;
@@ -49,8 +41,9 @@ Item {
 			focus: true;
 			//enabled: playerObj.visible;
 			//hideable: playerObj.visible;
-			//opacity: visible ? 1 : 0;
-			//visible: false;
+			opacity: visible ? 1 : 0;
+			//visible: playerObj.isFullscreen;
+			visible: false;
 
 			Behavior on opacity { animation: Animation { duration: 300; } }
 		}
@@ -71,20 +64,23 @@ Item {
 	Timer {
 		id: spinnerTimer;
 		interval: 100;
+		running: playerObj.visible;
 		
 		onTriggered: {
-			if (playerObj.player.getProgress() != 0) {
-				var d = playerObj.player.getDuration();
-				if (d) {
-					playerObj.duration = d;
-					log("DURATION: " + d);
-					loadSpinner.visible = false;
-				} else {
-					this.restart();
-				}
-			} else {
-				this.restart();
-			}
+			//if (playerObj.player.getProgress()) {
+				//var t = new TimeDuration(playerObj.player.getProgress());
+				//log("pr: " +t + "; dur: " + playerObj.duration);
+				//var d = playerObj.player.getDuration();
+				//if (d) {
+					//playerObj.duration = d;
+					//log("DURATION: " + d);
+					//loadSpinner.visible = false;
+				//} else {
+					//this.restart();
+				//}
+			//} else {
+				//this.restart();
+			//}
 		}
 	}
 
@@ -93,26 +89,25 @@ Item {
 		interval: 100;
 
 		onTriggered: {
-			var p = playerObj.player.getProgress();
-			playerObj.progress = p / 1000;
-			if (p && playerObj.duration >= 0) {
-				//fixme: gognocode
-				playerObj.curTimeStr = 
-								   (p / 1000 / 60 >= 10 ? "" : "0") +
-										   Math.floor(p / 1000 / 60) + ":" + 
-								   (p / 1000 % 60 >= 10 ? "" : "0") + 
-										   Math.floor(p / 1000 % 60);
-				playerObj.fullTimeStr = 
-								   (playerObj.duration / 1000 / 60 >= 10 ? "" : "0") + 
-										Math.floor(playerObj.duration / 1000 / 60) + ":" + 
-								   (playerObj.duration / 1000 % 60 >= 10 ? "" : "0") + 
-										   Math.floor(playerObj.duration / 1000 % 60);
-			} else {
-				playerObj.curTimeStr = "";
-				playerObj.fullTimeStr = "";
-				playerObj.progress = 0;
-			}
-			this.restart();
+			//playerObj.progress = p / 1000;
+			//if (p && playerObj.duration >= 0) {
+				////fixme: gognocode
+				//playerObj.curTimeStr = 
+								   //(p / 1000 / 60 >= 10 ? "" : "0") +
+										   //Math.floor(p / 1000 / 60) + ":" + 
+								   //(p / 1000 % 60 >= 10 ? "" : "0") + 
+										   //Math.floor(p / 1000 % 60);
+				//playerObj.fullTimeStr = 
+								   //(playerObj.duration / 1000 / 60 >= 10 ? "" : "0") + 
+										//Math.floor(playerObj.duration / 1000 / 60) + ":" + 
+								   //(playerObj.duration / 1000 % 60 >= 10 ? "" : "0") + 
+										   //Math.floor(playerObj.duration / 1000 % 60);
+			//} else {
+				//playerObj.curTimeStr = "";
+				//playerObj.fullTimeStr = "";
+				//playerObj.progress = 0;
+			//}
+			//this.restart();
 		}
 	}
 
@@ -200,7 +195,7 @@ Item {
 		loadSpinner.visible = true;
 		spinnerTimer.restart();
 		refreshTimeTimer.restart();
-		this.duration = -1;
+		//this.duration = -1;
 		this.visible = true;
 		this.player.stop();
 		this.player.playUrl(url);

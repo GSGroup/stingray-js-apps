@@ -1,6 +1,7 @@
 import controls.BigText;
 
 Item {
+	id: topLabelProto;
 	property string text;
 	anchors.top: safeArea.top;
 	anchors.left: safeArea.left;
@@ -30,7 +31,7 @@ Item {
 		anchors.top: parent.top;
 		anchors.horizontalCenter: parent.horizontalCenter;
 		horizontalAlignment: HorizontalAlignment.AlignHCenter;
-		text: parent.TopLabel.text;
+		text: topLabelProto.text;
 		color: "#fff";
 	}
 }

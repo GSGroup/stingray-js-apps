@@ -103,7 +103,7 @@ Item {
 			anchors.verticalCenter: parent.verticalCenter;
 			anchors.left: parent.left;
 			anchors.leftMargin: 10;
-			text: argile.toString(playbackProgressItem.progress, controlPanel.showHours ? "hh:mm:ss" : "mm:ss");
+			//text: argile.toString(playbackProgressItem.progress, controlPanel.showHours ? "hh:mm:ss" : "mm:ss");
 			//visible: argile.milliseconds(playbackProgressItem.duration) > 0;
 		}
 
@@ -111,7 +111,7 @@ Item {
 			anchors.verticalCenter: parent.verticalCenter;
 			anchors.right: parent.right;
 			anchors.rightMargin: 10;
-			text: argile.toString(playbackProgressItem.duration, controlPanel.showHours ? "hh:mm:ss" : "mm:ss");
+			//text: argile.toString(playbackProgressItem.duration, controlPanel.showHours ? "hh:mm:ss" : "mm:ss");
 			//visible: argile.milliseconds(playbackProgressItem.duration) > 0;
 		}
 
@@ -137,9 +137,9 @@ Item {
 					opacity: visible ? 1 : 0;
 
 					onXChanged:			{ hideTimer.restart(); }
-					onVisibleChanged:	{ highLighXAnim.Complete(); }
+					onVisibleChanged:	{ highLighXanim.complete(); }
 
-					Behavior on x { animation: Animation { id:highLighXAnim; duration: 300; easingType: EasingType.OutCirc; } }
+					Behavior on x { animation: Animation { id:highLighXanim; duration: 300; easingType: EasingType.OutCirc; } }
 					Behavior on opacity { animation: Animation { duration: 100; } }
 				}
 			}
