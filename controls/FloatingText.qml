@@ -84,7 +84,10 @@ Item {
 		}
 	}
 
-	onTextChanged: {
+	onTextChanged:	{ this.preprocess(); }
+	onWidthChanged:	{ this.preprocess(); }
+
+	preprocess: {
 		if (this.floating && innerText.width > floatingTextItem.width) {
 			floatingTextItem.floatingPeriod = (innerText.width - floatingTextItem.width) * 20;
 		}
