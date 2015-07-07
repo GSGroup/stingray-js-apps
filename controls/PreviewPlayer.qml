@@ -45,6 +45,7 @@ Item {
 		focus: parent.isFullscreen;
 		isFullscreen: parent.isFullscreen;
 		duration: parent.duration;
+		z: fullscreen ? 100500 : parent.z + 1;
 
 		onFinished: {
 			previewPlayer.focus = false;
@@ -87,11 +88,11 @@ Item {
 			text: (previewPlayer.fullTimeStr.length ? "/ " : "") + previewPlayer.fullTimeStr;
 			color: "#e0e000";
 		}
-		
+
 		ListView {
 			id: controlsView;
 			anchors.top: parent.top;
-			anchors.horizontalCenter: parent.horizontalCenter;
+			anchors.left: parent.left;
 			anchors.bottom: parent.bottom;
 			width: (70 + 10) * 5;
 			spacing: 10;

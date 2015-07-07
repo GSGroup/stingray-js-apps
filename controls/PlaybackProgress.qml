@@ -3,10 +3,19 @@ import controls.ProgressBar;
 
 Item {
 	id: playbackProgressItem;
+	signal playPressed;
+	signal pausePressed;
+	signal fastForwardPressed;
+	signal rewindPressed;
 	property bool hideable: false;
+	property bool isPlaying: false;
 	property int gear: 0;
-	//property TimeDuration seekProgress;
-	//property TimeDuration barProgress: gear == 0 ? progress : seekProgress;
+	property int duration;
+	property int progress;
+	property int barProgress: gear ? seekProgress : progress;
+	property int seekProgress;
+	property string curTimeStr: "";
+	property string fullTimeStr: "";
 
 	Timer {
 		id: hideTimer;
@@ -16,16 +25,16 @@ Item {
 		onTriggered: { playbackProgressItem.visible = false; }
 	}
 
-	Timer {
-		id: seekTimer;
-		interval: 2000;
+	//Timer {
+		//id: seekTimer;
+		//interval: 2000;
 
-		onTriggered: {
-			if (playbackProgressItem.gear.Ref() != 0)
-				playbackProgressItem.Seek(playbackProgressItem.seekProgress.Ref());
-			playbackProgressItem.resetSeek();
-		}
-	}
+		//onTriggered: {
+			//if (playbackProgressItem.gear != 0)
+				//playbackProgressItem.Seek(playbackProgressItem.seekProgress.Ref());
+			//playbackProgressItem.resetSeek();
+		//}
+	//}
 
 	ProgressBar {
 		anchors.left: parent.left;
@@ -33,20 +42,20 @@ Item {
 		anchors.bottom: controlPanel.top;
 		anchors.bottomMargin: 2;
 		height: 5;
-		color: argile.setAlpha(barColor, 0.3);
 		barColor: colorTheme.accentColor;
-		//progress: argile.milliseconds(playbackProgressItem.duration) > 0 ? 1.0 * argile.milliseconds(playbackProgressItem.barProgress) / (float) argile.milliseconds(playbackProgressItem.duration) : 0;
+		progress: playbackProgressItem.duration > 0 ? (1.0 * playbackProgressItem.barProgress) / playbackProgressItem.duration : 0;
 		clip: false;
 		animationDuration: 100;
 		z: 2;
 
-		Rectangle {
+		//Rectangle {
 			//anchors.horizontalCenter: filledArea.right;
 			//anchors.verticalCenter: parent.verticalCenter;
 			//height: 44;
 			//width: height;
 			//radius: height / 2;
-			//color: argile.setAlpha(colorTheme.accentColor, 0.5);
+			//color: colorTheme.accentColor;
+			//opacity: 0.5;
 			//visible: playbackProgressItem.gear != 0;
 
 			//Rectangle {
@@ -87,12 +96,12 @@ Item {
 					//}
 				//}
 			//}
-		}
+		//}
 	}
 
 	Rectangle {
 		id: controlPanel;
-		//property bool showHours: argile.milliseconds(playbackProgressItem.duration) > 3600000;
+		property bool showHours: playbackProgressItem.duration > 3600000;
 		anchors.left: parent.left;
 		anchors.right: parent.right;
 		anchors.bottom: parent.bottom;
@@ -103,16 +112,16 @@ Item {
 			anchors.verticalCenter: parent.verticalCenter;
 			anchors.left: parent.left;
 			anchors.leftMargin: 10;
-			//text: argile.toString(playbackProgressItem.progress, controlPanel.showHours ? "hh:mm:ss" : "mm:ss");
-			//visible: argile.milliseconds(playbackProgressItem.duration) > 0;
+			text: playbackProgressItem.curTimeStr;
+			visible: playbackProgressItem.duration > 0;
 		}
 
 		MainText {
 			anchors.verticalCenter: parent.verticalCenter;
 			anchors.right: parent.right;
 			anchors.rightMargin: 10;
-			//text: argile.toString(playbackProgressItem.duration, controlPanel.showHours ? "hh:mm:ss" : "mm:ss");
-			//visible: argile.milliseconds(playbackProgressItem.duration) > 0;
+			text: playbackProgressItem.fullTimeStr;
+			visible: playbackProgressItem.duration > 0;
 		}
 
 		Row {
@@ -132,14 +141,14 @@ Item {
 
 				Rectangle {
 					id: highlighter;
+					anchors.fill: rwBtn.activeFocus ? rwBtn : (playBtn.activeFocus ? playBtn : (ffBtn.activeFocus ? ffBtn : playBtn));
 					visible: controls.activeFocus;
 					color: colorTheme.activeFocusColor;
 					opacity: visible ? 1 : 0;
 
-					onXChanged:			{ hideTimer.restart(); }
 					onVisibleChanged:	{ highLighXanim.complete(); }
 
-					Behavior on x { animation: Animation { id:highLighXanim; duration: 300; easingType: EasingType.OutCirc; } }
+					Behavior on x { animation: Animation { id:highLighXanim; duration: 150; } }
 					Behavior on opacity { animation: Animation { duration: 100; } }
 				}
 			}
@@ -148,12 +157,14 @@ Item {
 				id: rwBtn;
 				source: "res/apps/player/ico_rw.png";
 
-				onActiveFocusChanged: { playbackProgressItem.resetSeek(); }
-				onSelectPressed:	{ self.press(); }
-				onLeftPressed:		{ self.press(); }
+				onActiveFocusChanged:	{ playbackProgressItem.resetSeek(); }
+				onSelectPressed:		{ this.press(); }
+				onLeftPressed:			{ this.press(); }
 
 				press: {
-					//hideTimer.restart();
+					playbackProgressItem.rewindPressed();
+					hideTimer.restart();
+
 					//seekTimer.restart();
 					//if (playbackProgressItem.gear.Ref() < 0)
 						//playbackProgressItem.gear -= 2;
@@ -161,17 +172,17 @@ Item {
 						//playbackProgressItem.seekProgress = playbackProgressItem.progress;
 						//playbackProgressItem.gear = -1;
 					//}
-					//playbackProgressItem.seekProgress.Ref() = std::max(playbackProgressItem.seekProgress.Ref() + stingray::TimeDuration::FromMilliseconds(playbackProgressItem.gear * 1000), stingray::TimeDuration());
+					//playbackProgressItem.seekProgress = std::max(playbackProgressItem.seekProgress.Ref() + playbackProgressItem.gear * 1000, 0);
 				}
 			}
 
 			PlaybackControl {
 				id: playBtn;
-				//source: argile.toString("res/apps/player/ico_") + (playbackProgressItem.state != MediaSession.State.Playing ? "play" : "pause") + ".png";
+				source: "res/apps/player/ico_" + (!playbackProgressItem.isPlaying ? "play" : "pause") + ".png";
 
 				onSelectPressed: {
-					//hideTimer.restart();
-					//playbackProgressItem.PlayPause();
+					hideTimer.restart();
+					playbackProgressItem.togglePlay();
 				}
 			}
 
@@ -179,21 +190,23 @@ Item {
 				id: ffBtn;
 				source: "res/apps/player/ico_ff.png";
 
-				onActiveFocusChanged: { playbackProgressItem.resetSeek(); }
-				onSelectPressed:	{ this.press(); }
-				onRightPressed:		{ this.press(); }
+				onActiveFocusChanged:	{ playbackProgressItem.resetSeek(); }
+				onSelectPressed:		{ this.press(); }
+				onRightPressed:			{ this.press(); }
 
 				press: {
-					//hideTimer.restart();
+					playbackProgressItem.fastForwardPressed();
+					hideTimer.restart();
+
 					//seekTimer.restart();
-					//if (playbackProgressItem.gear.Ref() > 0)
+					//if (playbackProgressItem.gear > 0)
 						//playbackProgressItem.gear += 2;
 					//else {
 						//playbackProgressItem.seekProgress = playbackProgressItem.progress;
 						//playbackProgressItem.gear = 1;
 					//}
 
-					//playbackProgressItem.seekProgress.Ref() = std::min(playbackProgressItem.seekProgress.Ref() + stingray::TimeDuration::FromMilliseconds(playbackProgressItem.gear * 1000), playbackProgressItem.duration.Ref());
+					//playbackProgressItem.seekProgress = std::min(playbackProgressItem.seekProgress + playbackProgressItem.gear * 1000, playbackProgressItem.duration.Ref());
 				}
 			}
 		}
@@ -215,20 +228,28 @@ Item {
 		return false;
 	}
 
+	togglePlay: {
+		if (!this.isPlaying)
+			this.playPressed();
+		else
+			this.pausePressed();
+	}
+
 	resetSeek: {
-		//gear = 0;
-		//seekProgress = stingray::TimeDuration();
+		this.gear = 0;
+		this.seekProgress = 0;
 		//seekTimer.stop();
+		hideTimer.restart();
 	}
 
 	onHideableChanged: {
-		//if (!hideable)
-			//self.visible = true;
+		if (!hideable)
+			this.visible = true;
 	}
 
 	onVisibleChanged: {
-		//self.resetSeek();
-		//if (visible)
-			//playBtn.setFocus();
+		this.resetSeek();
+		if (visible)
+			playBtn.setFocus();
 	}
 }

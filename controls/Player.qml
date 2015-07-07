@@ -18,6 +18,7 @@ Item {
 	property int prevProgress;
 	property string curTimeStr: "";
 	property string fullTimeStr: "";
+	property string currentUrl: "";
 	clip: true;
 
 	VideoOverlay { anchors.fill: parent; }
@@ -39,19 +40,25 @@ Item {
 			anchors.leftMargin: 5;
 			anchors.rightMargin: 5;
 			focus: true;
-			//enabled: playerObj.visible;
-			//hideable: playerObj.visible;
+			isPlaying: !playerObj.paused;
+			progress: playerObj.progress;
 			opacity: visible ? 1 : 0;
-			//visible: playerObj.isFullscreen;
+			duration: playerObj.duration;
+			curTimeStr: playerObj.curTimeStr;
+			fullTimeStr: playerObj.fullTimeStr;
 			visible: false;
+
+			onPlayPressed: {
+				if (playerObj.currentUrl)
+					playerObj.playUrl(playerObj.currentUrl);
+			}
+
+			onPausePressed:			{ playerObj.pause(); }
+			onFastForwardPressed:	{ playerObj.seek(30000); }
+			onRewindPressed:		{ playerObj.seek(-30000); }
 
 			Behavior on opacity { animation: Animation { duration: 300; } }
 		}
-	}
-
-	Spinner {
-		id: loadSpinner;
-		anchors.centerIn: parent;
 	}
 
 	Image {
@@ -61,53 +68,54 @@ Item {
 		source: "apps/controls/res/preview/icoPause.png";
 	}
 
-	Timer {
-		id: spinnerTimer;
-		interval: 100;
-		running: playerObj.visible;
-		
-		onTriggered: {
-			//if (playerObj.player.getProgress()) {
-				//var t = new TimeDuration(playerObj.player.getProgress());
-				//log("pr: " +t + "; dur: " + playerObj.duration);
-				//var d = playerObj.player.getDuration();
-				//if (d) {
-					//playerObj.duration = d;
-					//log("DURATION: " + d);
-					//loadSpinner.visible = false;
-				//} else {
-					//this.restart();
-				//}
-			//} else {
-				//this.restart();
-			//}
-		}
+	Spinner {
+		id: loadSpinner;
+		anchors.centerIn: parent;
 	}
 
 	Timer {
-		id: refreshTimeTimer;
-		interval: 100;
-
+		id: spinnerTimer;
+		interval: 400;
+		running: playerObj.visible;
+		repeat: running;
+		
 		onTriggered: {
-			//playerObj.progress = p / 1000;
-			//if (p && playerObj.duration >= 0) {
-				////fixme: gognocode
-				//playerObj.curTimeStr = 
-								   //(p / 1000 / 60 >= 10 ? "" : "0") +
-										   //Math.floor(p / 1000 / 60) + ":" + 
-								   //(p / 1000 % 60 >= 10 ? "" : "0") + 
-										   //Math.floor(p / 1000 % 60);
-				//playerObj.fullTimeStr = 
-								   //(playerObj.duration / 1000 / 60 >= 10 ? "" : "0") + 
-										//Math.floor(playerObj.duration / 1000 / 60) + ":" + 
-								   //(playerObj.duration / 1000 % 60 >= 10 ? "" : "0") + 
-										   //Math.floor(playerObj.duration / 1000 % 60);
-			//} else {
-				//playerObj.curTimeStr = "";
-				//playerObj.fullTimeStr = "";
-				//playerObj.progress = 0;
-			//}
-			//this.restart();
+			var p = playerObj.player.getProgress();
+			var d = playerObj.player.getDuration();
+			playerObj.progress = p;
+			playerObj.duration = d;
+
+			if (p && loadSpinner.visible && d)
+				loadSpinner.visible = false;
+
+			if (p && d >= 0) {
+				//fixme: gognocode
+				p /= 1000;
+				d /= 1000;
+				if (p < 0 || d < 0)
+					return;
+
+				var h = Math.floor(p / 3600);
+				playerObj.curTimeStr = h > 0 ? h + ":" : "";
+				p -= h * 3600;
+				playerObj.curTimeStr +=
+									(p / 60 >= 10 ? "" : "0") +
+										Math.floor(p / 60) + ":" + 
+									(p % 60 >= 10 ? "" : "0") + 
+										Math.floor(p % 60);
+
+				h = Math.floor(d / 3600);
+				playerObj.fullTimeStr = h > 0 ? h + ":" : "";
+				d -= h * 3600;
+				playerObj.fullTimeStr += 
+									(d / 60 >= 10 ? "" : "0") + 
+										Math.floor(d / 60) + ":" + 
+									(d  % 60 >= 10 ? "" : "0") + 
+										Math.floor(d % 60);
+			} else {
+				playerObj.curTimeStr = "";
+				playerObj.fullTimeStr = "";
+			}
 		}
 	}
 
@@ -122,29 +130,24 @@ Item {
 			//mainWindow.Local().volumePanel.volumeDown();
 			return true;
 		}
-		if (key == "Last") {
-			//self.Abort();
-			return false;
-		}
 
 		if (key == "Pause") {
 			playbackProgress.visible = true;
-			//playbackProgress.PlayPause();
+			playbackProgress.togglePlay();
 			return true;
 		}
 		if (key == "Fast Forward") {
 			playbackProgress.visible = true;
-			//playbackProgress.doFF();
+			playbackProgress.doFF();
 			return true;
 		}
 		if (key == "Rewind") {
 			playbackProgress.visible = true;
-			//playbackProgress.doRewind();
+			playbackProgress.doRewind();
 			return true;
 		}
 
-		//if ((key == "Back" && !playbackProgress.visible) || key == "Stop") {
-		if (key == "Back" || key == "Stop") {
+		if (key == "Back" || key == "Stop" || key == "Last") {
 			playerObj.abort();
 		} else if (key == "Volume Mute" || key == "V" || key == "v") {
 			//App::Zapper().Mute(!App::Zapper().IsMuted());
@@ -171,8 +174,6 @@ Item {
 	}
 
 	pause: {
-		//TODO: check puase.
-		//this.player.pause();
 		this.player.stop();
 		this.paused = true;
 	}
@@ -185,8 +186,6 @@ Item {
 	function stop() {
 		log("Player: stop playing");
 		this.player.stop();
-		//refreshBarTimer.stop();
-		refreshTimeTimer.stop();
 		this.visible = false;
 	}
 
@@ -194,14 +193,10 @@ Item {
 		log("Player: start playing " + url);
 		loadSpinner.visible = true;
 		spinnerTimer.restart();
-		refreshTimeTimer.restart();
-		//this.duration = -1;
+		this.currentUrl = url
 		this.visible = true;
 		this.player.stop();
 		this.player.playUrl(url);
 		this.paused = false;
-
-		refreshBarTimer.start();
-		playerObj.refreshBar(); //could throw exception and timer will not start
 	}
 }
