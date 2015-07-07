@@ -252,4 +252,9 @@ Item {
 		if (visible)
 			playBtn.setFocus();
 	}
+
+	show: {
+		this.visible = true;
+		hideTimer.restart();
+	}
 }

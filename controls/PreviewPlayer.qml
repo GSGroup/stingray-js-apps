@@ -45,7 +45,7 @@ Item {
 		focus: parent.isFullscreen;
 		isFullscreen: parent.isFullscreen;
 		duration: parent.duration;
-		z: fullscreen ? 100500 : parent.z + 1;
+		title: parent.title;
 
 		onFinished: {
 			previewPlayer.focus = false;
