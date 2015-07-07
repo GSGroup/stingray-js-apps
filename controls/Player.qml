@@ -19,6 +19,7 @@ Item {
 	property string curTimeStr: "";
 	property string fullTimeStr: "";
 	property string currentUrl: "";
+	property string title;
 	clip: true;
 
 	VideoOverlay { anchors.fill: parent; }
@@ -29,7 +30,10 @@ Item {
 		anchors.fill: parent;
 		visible: playerObj.isFullscreen;
 
-		TopLabel { id: title; }
+		TopLabel {
+			visible: playbackProgress.visible;
+			text: playerObj.title;
+		}
 
 		PlaybackProgress {
 			id: playbackProgress;
@@ -132,17 +136,17 @@ Item {
 		}
 
 		if (key == "Pause") {
-			playbackProgress.visible = true;
+			playbackProgress.show();
 			playbackProgress.togglePlay();
 			return true;
 		}
 		if (key == "Fast Forward") {
-			playbackProgress.visible = true;
+			playbackProgress.show();
 			playbackProgress.doFF();
 			return true;
 		}
 		if (key == "Rewind") {
-			playbackProgress.visible = true;
+			playbackProgress.show();
 			playbackProgress.doRewind();
 			return true;
 		}
@@ -153,7 +157,7 @@ Item {
 			//App::Zapper().Mute(!App::Zapper().IsMuted());
 			//mainWindow.Local().muteIcon.updateIcon();
 		} else {
-			playbackProgress.visible = true;
+			playbackProgress.show();
 		}
 		return true;
 	}
