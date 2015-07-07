@@ -195,6 +195,7 @@ Item {
 
 	function playUrl(url) {
 		log("Player: start playing " + url);
+		loadSpinner.visible = false;
 		loadSpinner.visible = true;
 		spinnerTimer.restart();
 		this.currentUrl = url
