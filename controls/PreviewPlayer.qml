@@ -26,7 +26,7 @@ Item {
 	}
 
 	onActiveFocusChanged: {
-		if (activeFocus) 
+		if (activeFocus)
 			controls.setFocus();
 	}
 
@@ -72,39 +72,21 @@ Item {
 		focus: true;
 		visible: !parent.isFullscreen;
 
-		SmallText {
-			anchors.verticalCenter: parent.verticalCenter;
-			anchors.left: parent.right;
-			anchors.leftMargin: -140;
-			anchors.topMargin: 3;
-			text: previewPlayer.curTimeStr;
-			color: "#e0e000";
-		}
-
-		SmallText {
-			anchors.verticalCenter: parent.verticalCenter;
-			anchors.right: parent.right;
-			anchors.topMargin: 3;
-			text: (previewPlayer.fullTimeStr.length ? "/ " : "") + previewPlayer.fullTimeStr;
-			color: "#e0e000";
-		}
-
 		ListView {
 			id: controlsView;
 			anchors.top: parent.top;
-			anchors.left: parent.left;
+			anchors.horizontalCenter: parent.horizontalCenter;
 			anchors.bottom: parent.bottom;
-			width: (70 + 10) * 5;
+			width: (70 + 10) * count;
 			spacing: 10;
 			orientation: ListView.Horizontal;
+			delegate: PreviewPlayerButton { }
 			model: ListModel {
-				ListElement { source: "apps/controls/res/preview/fullscreen.png";}
-				ListElement { source: "apps/controls/res/preview/arrowPrev.png";}
-				ListElement { source: "apps/controls/res/preview/arrowPause.png";}
-				ListElement { source: "apps/controls/res/preview/arrowNext.png";}
+				ListElement { source: "apps/controls/res/preview/fullscreen.png"; }
+				ListElement { source: "apps/controls/res/preview/arrowPrev.png"; }
+				ListElement { source: "apps/controls/res/preview/arrowPause.png"; }
+				ListElement { source: "apps/controls/res/preview/arrowNext.png"; }
 			}
-
-			delegate: PreviewPlayerButton{}
 
 			onSelectPressed: {
 				switch (currentIndex) {
