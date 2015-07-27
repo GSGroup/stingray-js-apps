@@ -9,6 +9,7 @@ Item {
 	id: playerObj;
 	signal finished(state);
 	property bool paused: false;
+	property bool stopped: false;
 	property bool isFullscreen: false;
 	property bool seeking: false;
 	property int duration: 0;
@@ -163,46 +164,53 @@ Item {
 		return true;
 	}
 
-	onCompleted: {
-		this.player = new media.Player();
-		this.paused = true;
-	}
-
-	onBackPressed: {
-		playerObj.abort();
-	}
+	onBackPressed:	{ playerObj.abort() }
+	pause:			{ this.togglePlay() }
 
 	abort: {
-		this.player.stop();
-		this.paused = true;
-		playerObj.finished();
+		this.player.stop()
+		this.paused = false
+		this.stopped = true
+		playerObj.finished()
 	}
 
-	pause: {
-		this.player.stop();
-		this.paused = true;
+	function togglePlay() {
+		this.paused = !this.paused
+		this.player.pause(this.paused)
 	}
 
 	function seek(msDelta) {
 		if (!this.paused)
-			this.player.seek(msDelta);
+			this.player.seek(msDelta)
 	}
 
 	function stop() {
-		log("Player: stop playing");
-		this.player.stop();
-		this.visible = false;
+		log("Player: stop playing")
+		this.player.stop()
+		this.visible = false
+		this.stopped = true
 	}
 
 	function playUrl(url) {
-		log("Player: start playing " + url);
-		loadSpinner.visible = false;
-		loadSpinner.visible = true;
+		if (this.paused && url == this.currentUrl) {
+			this.togglePlay()
+			return
+		}
+		log("Player: start playing " + url)
+		loadSpinner.visible = false
+		loadSpinner.visible = true
 		spinnerTimer.restart();
 		this.currentUrl = url
-		this.visible = true;
-		this.player.stop();
-		this.player.playUrl(url);
-		this.paused = false;
+		this.visible = true
+		this.player.stop()
+		this.player.playUrl(url)
+		this.stopped = false
+		this.paused = false
+	}
+
+	onCompleted: {
+		this.player = new media.Player()
+		this.paused = false
+		this.stopped = true
 	}
 }
