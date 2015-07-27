@@ -13,8 +13,8 @@ Item {
 	property bool showHD: false;
 
 	onUseHDChanged: {
-		if (this.showHD) 
-			controlsView.model.set(4, {source: "apps/controls/res/preview/" + (this.useHD ? "HD.png" : "SD.png")});
+		if (this.showHD)
+			controlsView.model.set(4, { source: "apps/controls/res/preview/" + (this.useHD ? "HD.png" : "SD.png") });
 	}
 
 	onShowHDChanged: {
@@ -53,13 +53,12 @@ Item {
 			previewItem.isFullscreen = false;
 		}
 
-		onPausedChanged: {
-			controlsView.model.set(2, {source: "apps/controls/res/preview/arrow" + (!paused ? "Pause.png" : "Play.png")});
+		updateIcon: {
+			controlsView.model.set(2, { source: "apps/controls/res/preview/arrow" + (!paused && !stopped ? "Pause.png" : "Play.png") });
 		}
 
-		onCursorVisibleChanged: {
-			controlsView.model.set(2, {source: "apps/controls/res/preview/arrow" + (!cursorVisible ? "Pause.png" : "Play.png")});
-		}
+		onStoppedChanged:	{ updateIcon(); }
+		onPausedChanged:	{ updateIcon(); }
 	}
 
 	Item {
@@ -99,10 +98,10 @@ Item {
 					previewPlayer.seek(-30000);
 					break;
 				case 2:
-					if (previewPlayer.paused)
+					if (previewPlayer.stopped)
 						previewItem.playPressed();
 					else
-						previewPlayer.pause();
+						previewPlayer.togglePlay();
 					break;
 				case 3:
 					previewPlayer.seek(30000);
@@ -115,7 +114,7 @@ Item {
 		}
 	}
 
-	stop:			{ previewPlayer.stop(); }
-	onCompleted:	{ this.onShowHDChanged(); }
+	stop:					{ previewPlayer.stop(); }
+	onCompleted:			{ this.onShowHDChanged(); }
 	function playUrl(url)	{ previewPlayer.playUrl(url); }
 }
