@@ -93,6 +93,8 @@ Item {
 					previewItem.isFullscreen = true;
 					previewPlayer.setFocus();
 					previewItem.fullscreen();
+					if (previewPlayer.stopped)
+						previewItem.playPressed();
 					break;
 				case 1:
 					previewPlayer.seek(-30000);
