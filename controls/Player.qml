@@ -58,9 +58,8 @@ Item {
 					playerObj.playUrl(playerObj.currentUrl);
 			}
 
-			onPausePressed:			{ playerObj.pause(); }
-			onFastForwardPressed:	{ playerObj.seek(30000); }
-			onRewindPressed:		{ playerObj.seek(-30000); }
+			onPausePressed:	{ playerObj.pause(); }
+			onSeeked:		{ playerObj.seekAbs(position); }
 
 			Behavior on opacity { animation: Animation { duration: 300; } }
 		}
@@ -177,6 +176,10 @@ Item {
 	function togglePlay() {
 		this.paused = !this.paused
 		this.player.pause(this.paused)
+	}
+
+	function seekAbs(position) {
+		this.player.seekAbs(position)
 	}
 
 	function seek(msDelta) {
