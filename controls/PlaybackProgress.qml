@@ -263,13 +263,20 @@ Item {
 	}
 
 	onVisibleChanged: {
-		this.resetSeek();
-		if (visible)
+		if (visible) {
+			playbackProgressItem.seekProgress = playbackProgressItem.progress;
 			playBtn.setFocus();
+		} else {
+			this.resetSeek();
+		}
 	}
 
 	show: {
 		this.visible = true;
 		hideTimer.restart();
+	}
+
+	hide: {
+		this.visible = false;
 	}
 }
