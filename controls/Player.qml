@@ -127,12 +127,13 @@ Item {
 	onKeyPressed: {
 		if (!visible || key == "Menu")
 			return false;
+
 		if (key == "Right" || key == "Volume Up" || (key == "Up" && playbackProgress.visible)) {
-			//mainWindow.Local().volumePanel.volumeUp();
+			mainWindow.volumeUp();
 			return true;
 		}
 		if (key == "Left" || key == "Volume Down" || (key == "Down" && playbackProgress.visible)) {
-			//mainWindow.Local().volumePanel.volumeDown();
+			mainWindow.volumeDown();
 			return true;
 		}
 
@@ -153,17 +154,18 @@ Item {
 		}
 
 		if (key == "Back" || key == "Stop" || key == "Last") {
-			playerObj.abort();
+			if (playbackProgress.visible)
+				playbackProgress.hide();
+			else
+				playerObj.abort();
 		} else if (key == "Volume Mute" || key == "V" || key == "v") {
-			//App::Zapper().Mute(!App::Zapper().IsMuted());
-			//mainWindow.Local().muteIcon.updateIcon();
+			mainWindow.muteToggle();
 		} else {
 			playbackProgress.show();
 		}
 		return true;
 	}
 
-	onBackPressed:	{ playerObj.abort() }
 	pause:			{ this.togglePlay() }
 
 	abort: {
