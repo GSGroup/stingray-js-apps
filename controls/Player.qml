@@ -166,7 +166,7 @@ Item {
 		return true;
 	}
 
-	pause:			{ this.togglePlay() }
+	pause: { this.togglePlay() }
 
 	abort: {
 		this.player.stop()
@@ -211,6 +211,10 @@ Item {
 		this.player.playUrl(url)
 		this.stopped = false
 		this.paused = false
+		var self = playerObj;
+		this.player.finished = function () {
+			self.finished()
+		};
 	}
 
 	onCompleted: {
