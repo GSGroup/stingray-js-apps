@@ -41,7 +41,6 @@ GridView {
 			id: highlightYAnim;
 			animation: Animation {
 				duration: 250;
-				easingType: EasingType.InOutQuad;
 			}
 		}
 
@@ -49,21 +48,18 @@ GridView {
 			id: highlightXAnim;
 			animation: Animation {
 				duration: 250;
-				easingType: EasingType.InOutQuad;
 			}
 		}
 
 		Behavior on width {
 			animation: Animation {
 				duration: 250;
-				easingType: EasingType.InOutQuad;
 			}
 		}
 
 		Behavior on height {
 			animation: Animation {
 				duration: 250;
-				easingType: EasingType.InOutQuad;
 			}
 		}
 

@@ -2,11 +2,12 @@ ListView {
 	id: highlightListView;
 	property int hlWidth: 0;
 	property int hlHeight: 0;
+	property Color highlightColor: highlightListView.activeFocus ? colorTheme.activeFocusColor : colorTheme.focusablePanelColor;
 	positionMode: PositionMode.Contain;
 
 	Rectangle {
 		id: highlight;
-		color: highlightListView.activeFocus ? colorTheme.activeFocusColor : colorTheme.focusablePanelColor;
+		color: highlightListView.highlightColor;
 		visible: highlightListView.count;
 
 		doHighlight: {
@@ -48,14 +49,12 @@ ListView {
 			id: highlightYAnim;
 			animation: Animation {
 				duration: 200;
-				easingType: EasingType.InOutQuad;
 			}
 		}
 
 		Behavior on height {
 			animation: Animation {
 				duration: 200;
-				easingType: EasingType.InOutQuad;
 			}
 		}
 
@@ -63,7 +62,6 @@ ListView {
 			id: highlightXAnim;
 			animation: Animation {
 				duration: 200;
-				easingType: EasingType.InOutQuad;
 			}
 		}
 
