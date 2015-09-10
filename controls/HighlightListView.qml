@@ -3,7 +3,6 @@ ListView {
 	property int hlWidth: 0;
 	property int hlHeight: 0;
 	property Color highlightColor: highlightListView.activeFocus ? colorTheme.activeFocusColor : colorTheme.focusablePanelColor;
-	positionMode: PositionMode.Contain;
 
 	Rectangle {
 		id: highlight;

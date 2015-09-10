@@ -1,5 +1,6 @@
 GridView {
 	id: highlightGridView;
+	property Color highlightColor: highlightGridView.activeFocus ? colorTheme.activeFocusColor : colorTheme.focusablePanelColor;
 
 	BorderShadow3D {
 		anchors.fill: highlight;
@@ -10,7 +11,7 @@ GridView {
 	Rectangle {
 		id: highlight;
 		opacity: parent.activeFocus && highlightGridView.count ? 1 : 0;
-		color: colorTheme.activeFocusColor;
+		color: highlightGridView.highlightColor;
 
 		updateHighlight: {
 			this.doHighlight();

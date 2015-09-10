@@ -9,7 +9,7 @@ Item {
 	property bool maxWidthReached;
 	property bool floating: false;
 	property bool floatingNeeded;
-	property int horizontalAlignment: innerText.horizontalAlignment;
+	property int horizontalAlignment;
 
 	height: innerText.height;
 	color: colorTheme.activeTextColor;
