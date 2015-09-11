@@ -7,7 +7,8 @@ var parse_qs = function(qs) {
 	var pairs = qs.split('&');
 	pairs.forEach(function(pair) {
 		pair = pair.split("=")
-		r[decode(pair[0])] = decode(pair[1])
+		if (pair.length > 1)
+			r[decode(pair[0])] = decode(pair[1])
 	})
 	return r;
 }
