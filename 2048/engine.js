@@ -1,7 +1,6 @@
 this.init = function () {
-//	fieldView.elements.append({val: 0});
+	fieldView.elements = []
 	for (var i = 0; i < 16; i ++)
-//		ifieldView.elements.append({val: 1 << i});
 		fieldView.elements.push({val: 0, added: false, joined: false});
 	this.add();
 	this.add();
