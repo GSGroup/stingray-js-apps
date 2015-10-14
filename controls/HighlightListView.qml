@@ -51,12 +51,6 @@ ListView {
 			}
 		}
 
-		Behavior on height {
-			animation: Animation {
-				duration: 200;
-			}
-		}
-
 		Behavior on x {
 			id: highlightXAnim;
 			animation: Animation {
@@ -64,6 +58,8 @@ ListView {
 			}
 		}
 
+		Behavior on height { animation: Animation { duration: 200; } }
+		Behavior on width { animation: Animation { duration: 200; } }
 	}
 
 	Timer {	//TODO: Remove this when GetItemRect will work correctly.
