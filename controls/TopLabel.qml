@@ -30,7 +30,7 @@ Item {
 		id: innerText;
 		anchors.top: parent.top;
 		anchors.horizontalCenter: parent.horizontalCenter;
-		horizontalAlignment: HorizontalAlignment.AlignHCenter;
+		horizontalAlignment: Text.AlignHCenter;
 		text: topLabelProto.text;
 		color: "#fff";
 	}
