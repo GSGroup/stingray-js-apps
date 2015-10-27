@@ -185,7 +185,7 @@ Item {
 			anchors.horizontalCenter: parent.horizontalCenter;
 			anchors.bottom: parent.top;
 			source: "res/apps/player/triangle.png";
-			fillMode: FillMode.PreserveAspectFit;
+			fillMode: Image.PreserveAspectFit;
 			height: 15;
 			width: height * 2;
 		}
