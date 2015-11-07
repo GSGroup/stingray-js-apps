@@ -1,0 +1,5 @@
+{
+	"id": "guesser",
+	"display": { "name": "Угадыватель", "icon": "guesser.png"},
+	"purpose": "application"
+}
