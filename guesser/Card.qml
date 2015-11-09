@@ -1,7 +1,7 @@
 Item {
 	id: cardProto;
 	property string resPath: "apps/guesser/res/";
-	property string shirt: resPath + "shirt3.png";
+	property string shirt: resPath + "shirt4.png";
 	property string cardNumber;
 	property int number;
 	property bool show: false;

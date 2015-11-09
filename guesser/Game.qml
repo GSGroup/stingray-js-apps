@@ -12,7 +12,8 @@ Rectangle {
 	property int guessedCard: -1;
 	property variant cards;
 	anchors.fill: mainWindow;
-	color: "#00C853";
+	color: "#004010";
+	//color: "#00C853";
 	focus: true;
 
 	PageStack {
