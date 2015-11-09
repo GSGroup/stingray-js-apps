@@ -10,6 +10,7 @@ Item {
 	property bool floating: false;
 	property bool floatingNeeded;
 	property int horizontalAlignment;
+	property variant font: mainFont;
 
 	height: innerText.height;
 	color: colorTheme.activeTextColor;
@@ -22,11 +23,12 @@ Item {
 		anchors.bottomMargin: -10;
 		clip: true;
 
-		MainText {
+		Text {
 			id: innerText;
 			anchors.verticalCenter: parent.verticalCenter;
 			color: floatingTextItem.color;
 			text: floatingTextItem.text; //TODO onTextChanged doesn't called for non-dynamic instances like Checkbox
+			font: floatingTextItem.font;
 			x: 0;
 
 			Timer {
