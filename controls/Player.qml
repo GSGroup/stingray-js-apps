@@ -12,6 +12,8 @@ Item {
 	property bool stopped: false;
 	property bool isFullscreen: false;
 	property bool seeking: false;
+	property bool hideSpinner: false;
+	property bool disableControls: false;
 	property int duration: 0;
 	property int cursorPos: 0;
 	property int progress: 0;
@@ -75,7 +77,9 @@ Item {
 
 	Spinner {
 		id: loadSpinner;
+		property bool show: true;
 		anchors.centerIn: parent;
+		visible: show && !playerObj.hideSpinner;
 	}
 
 	Timer {
@@ -90,8 +94,8 @@ Item {
 			playerObj.progress = p;
 			playerObj.duration = d;
 
-			if (p && loadSpinner.visible && d)
-				loadSpinner.visible = false;
+			if (p && loadSpinner.show && d)
+				loadSpinner.show = false;
 
 			if (p && d >= 0) {
 				//fixme: gognocode
@@ -137,17 +141,17 @@ Item {
 			return true;
 		}
 
-		if (key == "Pause") {
+		if (key == "Pause" && !this.disableControls) {
 			playbackProgress.show();
 			playbackProgress.togglePlay();
 			return true;
 		}
-		if (key == "Fast Forward") {
+		if (key == "Fast Forward" && !this.disableControls) {
 			playbackProgress.show();
 			playbackProgress.doFF();
 			return true;
 		}
-		if (key == "Rewind") {
+		if (key == "Rewind" && !this.disableControls) {
 			playbackProgress.show();
 			playbackProgress.doRewind();
 			return true;
@@ -160,7 +164,7 @@ Item {
 				playerObj.abort();
 		} else if (key == "Volume Mute" || key == "V" || key == "v") {
 			mainWindow.muteToggle();
-		} else {
+		} else if (!this.disableControls) {
 			playbackProgress.show();
 		}
 		return true;
@@ -202,8 +206,8 @@ Item {
 			return
 		}
 		log("Player: start playing " + url)
-		loadSpinner.visible = false
-		loadSpinner.visible = true
+		loadSpinner.show = false
+		loadSpinner.show = true
 		spinnerTimer.restart();
 		this.currentUrl = url
 		this.visible = true
