@@ -132,11 +132,11 @@ Item {
 		if (!visible || key == "Menu")
 			return false;
 
-		if (key == "Right" || key == "Volume Up" || (key == "Up" && playbackProgress.visible)) {
+		if (key == "Volume Up" || key == "Up") {
 			mainWindow.volumeUp();
 			return true;
 		}
-		if (key == "Left" || key == "Volume Down" || (key == "Down" && playbackProgress.visible)) {
+		if (key == "Volume Down" || key == "Down") {
 			mainWindow.volumeDown();
 			return true;
 		}
