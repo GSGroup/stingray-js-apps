@@ -177,7 +177,7 @@ Rectangle {
 						return 0; 
 					else 
 						return x;
-				}
+				}()
 			}
 		}
 	}
