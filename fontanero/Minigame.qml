@@ -1,4 +1,5 @@
-import controls.BigText;
+import controls.BigText
+import MinigameDelegate
 
 Item {
 	id: minigameItem;
