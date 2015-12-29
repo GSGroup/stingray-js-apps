@@ -7,7 +7,7 @@ Rectangle {
 	id: game;
 	anchors.centerIn: parent;
 	height: safeArea.height;
-	property int space: 10;
+	property int space: 6;
 	property int cellSize:  (safeArea.height - space * 4) / 4;
 	width: cellSize * 4 + space * 4;
 	color: parent.color;
@@ -149,7 +149,7 @@ Rectangle {
 		anchors.leftMargin: game.space;
 		height: game.cellSize / 1.5;
 		radius: 10;
-		width: { return Math.min((safeArea.width - parent.width) / 2 - game.space * 2, game.cellSize * 1.5);}
+		width: Math.min((safeArea.width - parent.width) / 2 - game.space * 2, game.cellSize * 1.5);
 		color: "#CCC0B2";
 
 		Text {
@@ -191,7 +191,7 @@ Rectangle {
 		anchors.leftMargin: game.space;
 		height: game.cellSize / 1.5;
 		radius: 10;
-		width: { return Math.min((safeArea.width - parent.width) / 2 - game.space * 2, game.cellSize * 1.5);}
+		width: Math.min((safeArea.width - parent.width) / 2 - game.space * 2, game.cellSize * 1.5);
 		color: "#CCC0B2";
 
 		Text {
