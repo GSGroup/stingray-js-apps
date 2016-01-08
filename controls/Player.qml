@@ -158,7 +158,7 @@ Item {
 		}
 
 		if (key == "Back" || key == "Stop" || key == "Last") {
-			if (playbackProgress.visible)
+			if (playbackProgress.visible && key != "Stop")
 				playbackProgress.hide();
 			else
 				playerObj.abort();
