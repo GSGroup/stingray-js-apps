@@ -3,6 +3,7 @@ import PreviewPlayerButton;
 Item {
 	id: previewItem;
 	signal finished(state);
+	signal stopped();
 	signal fullscreen();
 	signal hDPressed();
 	signal playPressed();
@@ -47,6 +48,12 @@ Item {
 		duration: parent.duration;
 		title: parent.title;
 
+		onStopped: {
+			previewPlayer.focus = false;
+			previewItem.stopped();
+			previewItem.isFullscreen = false;
+		}
+
 		onFinished: {
 			previewPlayer.focus = false;
 			previewItem.finished(state);
@@ -54,10 +61,10 @@ Item {
 		}
 
 		updateIcon: {
-			controlsView.model.set(2, { source: "apps/controls/res/preview/arrow" + (!paused && !stopped ? "Pause.png" : "Play.png") });
+			controlsView.model.set(2, { source: "apps/controls/res/preview/arrow" + (!paused && !isStopped ? "Pause.png" : "Play.png") });
 		}
 
-		onStoppedChanged:	{ updateIcon(); }
+		onIsStoppedChanged:	{ updateIcon(); }
 		onPausedChanged:	{ updateIcon(); }
 	}
 
@@ -93,14 +100,14 @@ Item {
 					previewItem.isFullscreen = true;
 					previewPlayer.setFocus();
 					previewItem.fullscreen();
-					if (previewPlayer.stopped)
+					if (previewPlayer.isStopped)
 						previewItem.playPressed();
 					break;
 				case 1:
 					previewPlayer.seek(-30000);
 					break;
 				case 2:
-					if (previewPlayer.stopped)
+					if (previewPlayer.isStopped)
 						previewItem.playPressed();
 					else
 						previewPlayer.togglePlay();
