@@ -8,8 +8,9 @@ import controls.PlaybackProgress;
 Item {
 	id: playerObj;
 	signal finished(state);
+	signal stopped();
 	property bool paused: false;
-	property bool stopped: false;
+	property bool isStopped: false;
 	property bool isFullscreen: false;
 	property bool seeking: false;
 	property bool hideSpinner: false;
@@ -175,8 +176,8 @@ Item {
 	abort: {
 		this.player.stop()
 		this.paused = false
-		this.stopped = true
-		playerObj.finished()
+		this.isStopped = true
+		playerObj.stopped()
 	}
 
 	function togglePlay() {
@@ -197,7 +198,7 @@ Item {
 		log("Player: stop playing")
 		this.player.stop()
 		this.visible = false
-		this.stopped = true
+		this.isStopped = true
 	}
 
 	function playUrl(url) {
@@ -213,10 +214,11 @@ Item {
 		this.visible = true
 		this.player.stop()
 		this.player.playUrl(url)
-		this.stopped = false
+		this.isStopped = false
 		this.paused = false
 		var self = playerObj;
 		this.player.finished = function () {
+			self.stop()
 			self.finished()
 		};
 	}
@@ -224,6 +226,6 @@ Item {
 	onCompleted: {
 		this.player = new media.Player()
 		this.paused = false
-		this.stopped = true
+		this.isStopped = true
 	}
 }
