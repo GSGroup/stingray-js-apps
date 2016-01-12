@@ -4,6 +4,7 @@ Item {
 	width: 100;
 	height: 40;
 	clip: true;
+	focus: true;
 
 	//property Font font;
 	property bool showBackground: true;
@@ -20,6 +21,10 @@ Item {
 	property Color textColor;
 	textColor: colorTheme.activeTextColor;
 
+	property Color borderColor: activeFocus ? colorTheme.activeBorderColor : colorTheme.borderColor;
+	property int borderWidth: 2;
+	property int radius: colorTheme.rounded ? 8 : 0;
+
 	signal maxLenReached;
 	signal invalidKeyEntered(std::string key);
 
@@ -35,11 +40,11 @@ Item {
 	Rectangle {
 		id: borderRect;
 		anchors.fill: parent;
-		borderWidth: 2;
-		radius: colorTheme.rounded ? 8 : 0;
-		borderColor: parent.activeFocus ? colorTheme.activeBorderColor : colorTheme.borderColor;
+		borderWidth: parent.borderWidth;
+		radius: parent.radius;
 		color: colorTheme.globalBackgroundColor;
 		visible: editItem.showBackground;
+		borderColor: parent.borderColor;
 
 		Behavior on borderColor {
 			animation: Animation {
@@ -66,10 +71,10 @@ Item {
 
 	MainText {
 		id: editText;
-		anchors.bottom: borderRect.bottom;
-		anchors.horizontalCenter: borderRect.horizontalCenter;
-		opacity: 1;
-		color: editItem.textColor; 
+		anchors.fill: parent;
+		verticalAlignment: Text.AlignVCenter;
+		horizontalAlignment: Text.AlignHCenter;
+		color: editItem.textColor;
 		font: smallFont;
 
 		Behavior on opacity {
