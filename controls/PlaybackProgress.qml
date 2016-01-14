@@ -157,7 +157,7 @@ Item {
 
 	Rectangle {
 		id: seekCursor;
-		anchors.horizontalCenter: filledArea.right;
+		anchors.horizontalCenter: seekProgressBar.filledArea.right;
 		anchors.verticalCenter: seekProgressBar.verticalCenter;
 		height: 44;
 		width: height;
