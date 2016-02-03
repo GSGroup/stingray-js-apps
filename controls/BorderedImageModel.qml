@@ -1,3 +1,3 @@
-BorderedImageModel : ListModel {
+ListModel {
 	property string source;
 }
