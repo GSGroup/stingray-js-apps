@@ -1,4 +1,4 @@
-BorderedImage : Panel {
+Panel {
 	borderWidth: 1;
 	borderColor: activeFocus ? colorTheme.activeBorderColor : colorTheme.disabledBorderColor;
 	width: 70;
