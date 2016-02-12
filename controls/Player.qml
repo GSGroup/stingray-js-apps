@@ -201,7 +201,7 @@ Item {
 		this.isStopped = true
 	}
 
-	function playUrl(url) {
+	function doPlayUrl(url, stream) {
 		if (this.paused && url == this.currentUrl) {
 			this.togglePlay()
 			return
@@ -213,7 +213,7 @@ Item {
 		this.currentUrl = url
 		this.visible = true
 		this.player.stop()
-		this.player.playUrl(url)
+		this.player.playUrl(url, stream)
 		this.isStopped = false
 		this.paused = false
 		var self = playerObj;
@@ -221,6 +221,14 @@ Item {
 			self.stop()
 			self.finished()
 		};
+	}
+
+	function playUrl(url) {
+		this.doPlayUrl(url, null)
+	}
+
+	function playUrl(url, stream) {
+		this.doPlayUrl(url, stream)
 	}
 
 	onCompleted: {

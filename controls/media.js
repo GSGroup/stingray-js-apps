@@ -7,11 +7,15 @@ Player.prototype = {
 
 	finished: function () { },
 
-	playUrl: function(url) {
+	playUrl: function(url, stream) {
 		if (this.session)
 			this.stop();
 
-		this.session = app.MediaPlayer().PlayMedia(url);
+		if (stream)
+			this.session = app.MediaPlayer().PlayMedia(url, stream);
+		else
+			this.session = app.MediaPlayer().PlayMedia(url);
+
 		this.connections.push(this.session.OnFinished.connect(this._onFinished.bind(this)));
 	},
 
