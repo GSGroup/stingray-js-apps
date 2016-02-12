@@ -12,7 +12,7 @@ Player.prototype = {
 			this.stop();
 
 		if (stream)
-			this.session = app.MediaPlayer().PlayMedia(url, stream);
+			this.session = app.MediaPlayer().PlayMedia(url, stream.programPid, stream.pmtPid, stream.pcrPid, stream.pmt);
 		else
 			this.session = app.MediaPlayer().PlayMedia(url);
 
