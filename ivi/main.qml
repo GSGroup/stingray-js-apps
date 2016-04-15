@@ -1,5 +1,3 @@
-import QtQuick 2.5
-
 Rectangle {
     id: mainWindow
     width: 1280
