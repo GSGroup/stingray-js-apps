@@ -1,0 +1,5 @@
+{
+        "id": "ivi",
+        "display": { "name": "ivi.ru", "icon": "icon.png" },
+	"purpose": "application"
+}
