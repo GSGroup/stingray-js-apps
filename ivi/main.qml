@@ -1,9 +1,9 @@
 import controls.FocusablePanel;
 
 Application {
-    id: application;
+    id: iviApp;
     name: "ivi.ru";
-    displayName: qsTr("ivi.ru");
+    displayname: "ivi.ru";
     focus: true;
 
     property var videos;
@@ -31,7 +31,7 @@ Application {
         request.onreadystatechange = function() {
             if (request.readyState === XMLHttpRequest.DONE)
                 if (request.status && request.status === 200) {
-                    application.videos = JSON.parse(request.responseText);
+                    iviApp.videos = JSON.parse(request.responseText);
                     //console.log(mainWindow.videos['result'][0]['thumbnails'][0]['path'])
                 } else
                     console.log(request.status, request.statusText);
