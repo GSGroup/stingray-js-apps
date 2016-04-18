@@ -1,7 +1,11 @@
-Rectangle {
-    id: mainWindow;
-    width: 1280;
-    height: 720
+import controls.FocusablePanel;
+
+Application
+{
+    id: application;
+    focus: true;
+    name: "ivi.ru";
+    displayName: qsTr("ivi.ru")
 
     property var videos;
 
@@ -13,7 +17,6 @@ Rectangle {
         anchors.right: parent.right;
         color: "#EC174F";
         height: 200;
-
 
         Image
         {
@@ -33,7 +36,7 @@ Rectangle {
         {
             if (request.readyState === XMLHttpRequest.DONE)
                 if (request.status && request.status === 200) {
-                    mainWindow.videos = JSON.parse(request.responseText);
+                    application.videos = JSON.parse(request.responseText);
                     //console.log(mainWindow.videos['result'][0]['thumbnails'][0]['path'])
                 } else
                     console.log(request.status, request.statusText);
@@ -53,7 +56,7 @@ Rectangle {
 
         Text
         {
-            id: promoTitl;
+            id: promoTitle;
             text: "Реклама";
             font.pointSize: 20;
             anchors.top: parent.top;
@@ -74,73 +77,51 @@ Rectangle {
             anchors.rightMargin: 20;
             anchors.bottom: parent.bottom;
             anchors.bottomMargin: 20;
-            orientation: ListView.Horizontal;
+            orientation: ListView.HorposterRectangleizontal;
             spacing: 20;
 
             model: videos['result'];
 
             delegate:
-                Rectangle {
-                id: videoElement;
-                width: 172;
-                height: 300;
-                color: "#F9F9F9";
-
-                Rectangle
+                FocusablePanel
                 {
-                    id: posterRectangle;
+                    id: videoElement;
                     width: 172;
-                    height: 264;
+                    height: 300;
+                    color: "#F9F9F9";
+                    active: parent.activeFocus;
 
                     Image
                     {
                         id: posterImage;
-                        anchors.fill: parent;
+                        width: 172;
+                        height: 264;
 
                         source: modelData['thumbnails'][0]['path'];
                     }
-                }
 
-                Text
-                {
-                    id: videoTitle;
-                    anchors.left: videoElement.left;
-                    anchors.right: videoElement.right;
-                    anchors.top: posterRectangle.bottom;
-                    anchors.topMargin: 10;
-                    anchors.bottom: videoElement.bottom;
-                    horizontalAlignment: Text.AlignHCenter;
-
-                    color: "#91949C";
-                    wrapMode: Text.WordWrap;
-                    font.pointSize: 12;
-
-                    text: modelData['title'];
-                }
-
-                MouseArea
-                {
-                    anchors.fill: parent;
-                    hoverEnabled: true;
-
-                    onEntered:
+                    Text
                     {
-                        parent.color = "#EC174F";
-                        videoTitle.color = "white";
+                        id: videoTitle;
+                        anchors.left: videoElement.left;
+                        anchors.right: videoElement.right;
+                        anchors.top: posterImage.bottom;
+                        anchors.topMargin: 10;
+                        anchors.bottom: videoElement.bottom;
+                        horizontalAlignment: Text.AlignHCenter;
+
+                        color: "#91949C";
+                        wrapMode: Text.WordWrap;
+                        font.pointSize: 12;
+
+                        text: modelData['title'];
                     }
 
-                    onExited:
-                    {
-                        parent.color = "#F9F9F9";
-                        videoTitle.color = "#91949C";
-                    }
                 }
             }
         }
-    }
 
-
-    Component.onCompleted:
+    onCompleted:
     {
         getPromoVideos();
     }
