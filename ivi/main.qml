@@ -1,16 +1,14 @@
 import controls.FocusablePanel;
 
-Application
-{
+Application {
     id: application;
-    focus: true;
     name: "ivi.ru";
-    displayName: qsTr("ivi.ru")
+    displayName: qsTr("ivi.ru");
+    focus: true;
 
     property var videos;
 
-    Rectangle
-    {
+    Rectangle {
         id: header;
         anchors.top: parent.top;
         anchors.left: parent.left;
@@ -18,8 +16,7 @@ Application
         color: "#EC174F";
         height: 200;
 
-        Image
-        {
+        Image {
             id: iviLogo;
             source: "header.png";
             anchors.top: parent.top;
@@ -27,13 +24,11 @@ Application
         }
     }
 
-    function getPromoVideos()
-    {
+    function getPromoVideos() {
         var request = new XMLHttpRequest();
         request.open("GET", "https://api.ivi.ru/mobileapi/videos/v5");
 
-        request.onreadystatechange = function()
-        {
+        request.onreadystatechange = function() {
             if (request.readyState === XMLHttpRequest.DONE)
                 if (request.status && request.status === 200) {
                     application.videos = JSON.parse(request.responseText);
@@ -45,8 +40,7 @@ Application
         request.send();
     }
 
-    Rectangle
-    {
+    Rectangle {
         id: body;
         anchors.top: header.bottom;
         anchors.left: parent.left;
@@ -54,8 +48,7 @@ Application
         anchors.bottom: parent.bottom;
         color: "#F9F9F9";
 
-        Text
-        {
+        Text {
             id: promoTitle;
             text: "Реклама";
             font.pointSize: 20;
@@ -66,8 +59,7 @@ Application
             anchors.right: parent.right;
         }
 
-        ListView
-        {
+        ListView {
             id: videosView;
             anchors.top: promoTitle.bottom;
             anchors.topMargin: 20;
@@ -83,16 +75,14 @@ Application
             model: videos['result'];
 
             delegate:
-                FocusablePanel
-                {
+                FocusablePanel {
                     id: videoElement;
                     width: 172;
                     height: 300;
                     color: "#F9F9F9";
                     active: parent.activeFocus;
 
-                    Image
-                    {
+                    Image {
                         id: posterImage;
                         width: 172;
                         height: 264;
@@ -100,8 +90,7 @@ Application
                         source: modelData['thumbnails'][0]['path'];
                     }
 
-                    Text
-                    {
+                    Text {
                         id: videoTitle;
                         anchors.left: videoElement.left;
                         anchors.right: videoElement.right;
@@ -121,8 +110,7 @@ Application
             }
         }
 
-    onCompleted:
-    {
+    onCompleted: {
         getPromoVideos();
     }
 }
