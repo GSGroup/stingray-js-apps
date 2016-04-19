@@ -4,7 +4,6 @@ Item {
     id: videoDelegate;
     width: 172;
     height: 300;
-
     Image {
         id: posterImage;
         width: 172;
