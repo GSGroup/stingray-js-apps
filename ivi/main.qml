@@ -1,4 +1,4 @@
-import VideoDelegate;
+import CatalogItemDelegate;
 
 import "ivi.js" as api;
 
@@ -8,7 +8,7 @@ Application {
     color: "#F9F9F9";
 
     Rectangle {
-        id: header;
+        id: headerRect;
 
         height: 188; // logo image height
 
@@ -21,18 +21,18 @@ Application {
         Image {
             id: logo;
 
-            anchors.top: header.top;
-            anchors.horizontalCenter: header.horizontalCenter;
+            anchors.top: headerRect.top;
+            anchors.horizontalCenter: headerRect.horizontalCenter;
 
             source: "apps/ivi/logo.png";
         }
     }
 
     ListView {
-        id: videosView;
+        id: promoCatalogView;
         focus: true;
 
-        anchors.top: header.bottom;
+        anchors.top: headerRect.bottom;
         anchors.left: mainWindow.left;
         anchors.right: mainWindow.right;
         anchors.topMargin: 20;
@@ -42,17 +42,17 @@ Application {
         orientation: Horizontal;
         positionMode: Center;
 
-        delegate: VideoDelegate {}
+        delegate: CatalogItemDelegate {}
         model: ListModel {}
 
         onCompleted: {
-            fillWithPromoVideos();
+            fill();
         }
 
-        function fillWithPromoVideos() {
-            var videos = api.getPromoVideos();
-            videos["result"].forEach(function (video) {
-                this.model.append( { poster: video["thumbnails"][0]["path"] } );
+        function fill() {
+            var catalog = api.getPromoCatalog();
+            catalog["result"].forEach(function (catalogItem) {
+                this.model.append( { poster: catalogItem["thumbnails"][0]["path"] } );
             });
         }
     }
