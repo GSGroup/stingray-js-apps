@@ -4,10 +4,10 @@ import VideoModel;
 import controls.HighlightListView;
 import controls.MainCaptionText;
 
+import "ivi.js" as api;
+
 Application {
-    id: application;
-    name: "ivi.ru";
-    displayName: "ivi.ru";
+    id: ivi;
     color: "#F9F9F9";
 
     Rectangle {
@@ -38,10 +38,9 @@ Application {
             id: promoBlockText;
             text: "Реклама";
             anchors.top: body.top;
-            anchros.left: body.left;
+            anchors.left: body.left;
             anchors.topMargin: 40;
             anchors.leftMargin: 20;
-            color: "black";
         }
 
         HighlightListView {
@@ -57,10 +56,19 @@ Application {
             orientation: Horizontal;
             focus: true;
 
-            model: VideoModel {}
+            model: ListModel {}
             delegate: VideoDelegate {}
+            
+            onCompleted: {
+				getPromoVideos();
+            }
+            
+            function getPromoVideos() {
+				var videos = api.getPromoVideos1();
+				videos["result"].forEach(function (video) {
+					this.model.append( { title: video["title"], poster: video["thumbnails"][0]["path"] } );
+				});
+			}
         }
     }
-
-    onCompleted: { videosView.model.getPromoVideos(); }
 }
