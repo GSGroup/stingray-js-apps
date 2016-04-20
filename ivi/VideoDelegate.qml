@@ -1,31 +1,20 @@
-import controls.SmallText;
-
-Item {
+Rectangle {
     id: videoDelegate;
-    width: 172;
-    height: 300;
+
+    width: 186;
+    height: 278;
+    color: activeFocus ? "#EC174F" : "#F9F9F9";
+
     Image {
         id: posterImage;
+
         width: 172;
         height: 264;
-        fillMode: PreserveAspectFit;
+
+        anchors.centerIn: parent;
 
         source: model.poster;
+
+        fillMode: PreserveAspectFit;
     }
-
-    SmallText {
-        id: titleText;
-        anchors.top: posterImage.bottom;
-        anchors.left: videoDelegate.left;
-        anchors.right: videoDelegate.right;
-        anchors.topMargin: 10;
-
-        text: model.title;
-
-        color: "#91949C";
-        horizontalAlignment: AlignHCenter;
-        wrapMode: WordWrap;
-    }
-
-    onSelectPressed: { log("Width: ", this.width); log("height: ", this.height); }
 }
