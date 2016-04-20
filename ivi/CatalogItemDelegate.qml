@@ -1,5 +1,5 @@
 Rectangle {
-    id: videoDelegate;
+    id: catalogItemDelegate;
 
     width: 186;
     height: 278;
