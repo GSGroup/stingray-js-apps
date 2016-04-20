@@ -40,6 +40,7 @@ Application {
         anchors.rightMargin: 20;
 
         orientation: Horizontal;
+        positionMode: Center;
 
         delegate: VideoDelegate {}
         model: ListModel {}
