@@ -1,7 +1,5 @@
 import CatalogItemDelegate;
 
-import "ivi.js" as api;
-
 Application {
     id: ivi;
 
@@ -43,17 +41,23 @@ Application {
         positionMode: Center;
 
         delegate: CatalogItemDelegate {}
-        model: ListModel {}
+        model: ListModel { id: catalogModel;}
 
         onCompleted: {
-            fill();
-        }
-
-        function fill() {
-            var catalog = api.getPromoCatalog();
-            catalog["result"].forEach(function (catalogItem) {
-                this.model.append( { poster: catalogItem["thumbnails"][0]["path"] } );
-            });
+            var request = new XMLHttpRequest();
+            request.open("GET", "https://api.ivi.ru/mobileapi/videos/v5");
+            request.send();
+            request.onreadystatechange = function() {
+                if (request.readyState === XMLHttpRequest.DONE) {
+                    if (request.status && request.status === 200) {
+                        var catalog = JSON.parse(request.responseText);
+                        catalog["result"].forEach(function (catalogItem) {
+                            catalogModel.append( { poster: catalogItem["thumbnails"][0]["path"] });
+                        });
+                    }
+                } else
+                    log(request.readyState);
+            }
         }
     }
 }
