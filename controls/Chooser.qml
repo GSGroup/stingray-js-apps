@@ -4,6 +4,8 @@ import ChooserDelegate;
 
 ActivePanel {
 	id: chooserItem;
+	property alias currentIndex: listView.currentIndex;
+	property alias count: listView.count;
 	property bool showArrows: true;
 	property int chooserWidth: 520;
 	width: (leftArrow.width + rightArrow.width + listView.contentWidth + 60) > chooserWidth ? chooserWidth : leftArrow.width + rightArrow.width + listView.contentWidth + 60;
