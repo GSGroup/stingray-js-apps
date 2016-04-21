@@ -1,7 +1,7 @@
 import controls.FocusablePanel;
 import controls.SmallText;
 
-FocusablePanel {
+ActivePanel {
 	id: simpleButton;
 	property string text;
 	property alias textColor: buttonText.color;
