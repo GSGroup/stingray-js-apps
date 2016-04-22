@@ -31,8 +31,6 @@ Application {
     ListView {
         id: promoCatalogView;
 
-        property bool isCatalogReady : false;
-
         focus: true;
 
         anchors.top: headerRect.bottom;
@@ -51,19 +49,29 @@ Application {
         onCompleted: {
             var request = new XMLHttpRequest();
             request.open("GET", "https://api.ivi.ru/mobileapi/videos/v5");
-            request.send();
             request.onreadystatechange = function() {
                 if (request.readyState === XMLHttpRequest.DONE) {
                     if (request.status && request.status === 200) {
+                        log("response was received");
+                        catalogModel.reset();
+
                         var catalog = JSON.parse(request.responseText);
                         catalog["result"].forEach(function (catalogItem) {
                             catalogModel.append( { id: catalogItem["id"], poster: catalogItem["thumbnails"][0]["path"] });
-                        });
-                        promoCatalogView.isCatalogReady = true;
+                         });
+                        log("promo catalog was updated");
                     }
                 } else
-                    log(request.readyState);
+                    log("request error: ", request.readyState);
             }
+
+            request.send();
+            log("request was sended");
+        }
+
+        onSelectPressed: {
+            log(promoCatalogView.model.get(promoCatalogView.currentIndex).id);
+            log(promoCatalogView.model.get(promoCatalogView.currentIndex).poster);
         }
     }
 
@@ -72,6 +80,6 @@ Application {
 
         anchors.centerIn: mainWindow;
 
-        visible: !promoCatalogView.isCatalogReady;
+        visible: promoCatalogView.model.count === 0;
     }
 }
