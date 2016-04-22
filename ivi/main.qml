@@ -1,5 +1,7 @@
 import CatalogItemDelegate;
 
+import controls.Spinner;
+
 Application {
     id: ivi;
 
@@ -28,6 +30,9 @@ Application {
 
     ListView {
         id: promoCatalogView;
+
+        property bool isCatalogReady : false;
+
         focus: true;
 
         anchors.top: headerRect.bottom;
@@ -52,12 +57,21 @@ Application {
                     if (request.status && request.status === 200) {
                         var catalog = JSON.parse(request.responseText);
                         catalog["result"].forEach(function (catalogItem) {
-                            catalogModel.append( { poster: catalogItem["thumbnails"][0]["path"] });
+                            catalogModel.append( { id: catalogItem["id"], poster: catalogItem["thumbnails"][0]["path"] });
                         });
+                        promoCatalogView.isCatalogReady = true;
                     }
                 } else
                     log(request.readyState);
             }
         }
+    }
+
+    Spinner {
+        id: loadingPromoCatalogSpinner;
+
+        anchors.centerIn: mainWindow;
+
+        visible: !promoCatalogView.isCatalogReady;
     }
 }
