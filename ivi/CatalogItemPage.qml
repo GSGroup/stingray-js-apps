@@ -32,10 +32,8 @@ Rectangle {
         id: titleText;
 
         anchors.left: posterImage.right;
-        anchors.leftMargin: 20;
+        anchors.margins: 20;
         anchors.top: catalogItemPage.top;
-        anchors.topMargin: 10;
-        anchors.rightMargin: 20;
 
         color: "#000000";
     }
