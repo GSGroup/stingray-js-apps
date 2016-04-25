@@ -4,6 +4,8 @@ import CatalogItemPage;
 import controls.Spinner;
 import controls.Player;
 
+//TODO: Replace mainWindow with Application id
+
 Application {
     id: ivi;
 
@@ -80,10 +82,11 @@ Application {
                             catalogModel.append( {
                                                     id: catalogItem["id"],
                                                     title: catalogItem["title"],
-                                                    year: catalogItem["year"] ? catalogItem["year"] : "" ,
+                                                    year: catalogItem["year"] ? catalogItem["year"] : "",
                                                     description: catalogItem["description"],
                                                     poster: catalogItem["thumbnails"][0]["path"] } );
                         });
+                        catalogModel.sync();
                         log("promo catalog was updated");
                     }
                 } else {
@@ -110,7 +113,7 @@ Application {
     Spinner {
         id: loadingPromoCatalogSpinner;
 
-        anchors.centerIn: ivi;
+        anchors.centerIn: mainWindow;
 
         visible: promoCatalogView.model.count === 0;
     }
@@ -118,7 +121,7 @@ Application {
     Player {
         id: videoPlayer;
 
-        anchors.fill: ivi;
+        anchors.fill: mainWindow;
 
         visible: false;
     }
