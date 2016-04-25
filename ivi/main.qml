@@ -1,6 +1,8 @@
 import CatalogItemDelegate;
+import CatalogItemPage;
 
 import controls.Spinner;
+import controls.Player;
 
 Application {
     id: ivi;
@@ -28,6 +30,17 @@ Application {
         }
     }
 
+    CatalogItemPage {
+        id: catalogItemPage;
+
+        anchors.top: headerRect.bottom;
+        anchors.left: mainWindow.left;
+        anchors.right: mainWindow.right;
+        anchors.bottom: mainWindow.bottom;
+
+        visible: false;
+    }
+
     ListView {
         id: promoCatalogView;
 
@@ -44,7 +57,7 @@ Application {
         positionMode: Center;
 
         delegate: CatalogItemDelegate {}
-        model: ListModel { id: catalogModel;}
+        model: ListModel { id: catalogModel; }
 
         onCompleted: {
             var request = new XMLHttpRequest();
@@ -53,16 +66,23 @@ Application {
                 if (request.readyState === XMLHttpRequest.DONE) {
                     if (request.status && request.status === 200) {
                         log("response was received");
+                        //log(request.responseText);
                         catalogModel.reset();
 
                         var catalog = JSON.parse(request.responseText);
                         catalog["result"].forEach(function (catalogItem) {
-                            catalogModel.append( { id: catalogItem["id"], poster: catalogItem["thumbnails"][0]["path"] });
-                         });
+                            catalogModel.append( {
+                                id: catalogItem["id"],
+                                title: catalogItem["title"],
+                                year: catalogItem["year"],
+                                description: catalogItem["description"],
+                                poster: catalogItem["thumbnails"][0]["path"] } );
+                        });
                         log("promo catalog was updated");
                     }
-                } else
-                    log("request error: ", request.readyState);
+                } else {
+                    log("request error: ", request.readyState, request.responseText);
+                }
             }
 
             request.send();
@@ -70,16 +90,30 @@ Application {
         }
 
         onSelectPressed: {
-            log(promoCatalogView.model.get(promoCatalogView.currentIndex).id);
-            log(promoCatalogView.model.get(promoCatalogView.currentIndex).poster);
+            promoCatalogView.visible = false;
+
+            var currentCatalogItem = model.get(promoCatalogView.currentIndex);
+            catalogItemPage.title = currentCatalogItem.title;
+            catalogItemPage.year = currentCatalogItem.year;
+            catalogItemPage.poster = currentCatalogItem.poster;
+            catalogItemPage.description = currentCatalogItem.description;
+            catalogItemPage.visible = true;
         }
-    }
 
-    Spinner {
-        id: loadingPromoCatalogSpinner;
+        Spinner {
+            id: loadingPromoCatalogSpinner;
 
-        anchors.centerIn: mainWindow;
+            anchors.centerIn: mainWindow;
 
-        visible: promoCatalogView.model.count === 0;
+            visible: promoCatalogView.model.count === 0;
+        }
+
+        Player {
+            id: videoPlayer;
+
+            anchors.fill: mainWindow;
+
+            visible: false;
+        }
     }
 }
