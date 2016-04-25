@@ -39,6 +39,12 @@ Application {
         anchors.bottom: mainWindow.bottom;
 
         visible: false;
+
+        onClosed: {
+            catalogItemPage.visible = false;
+            promoCatalogView.visible = true;
+            promoCatalogView.setFocus();
+        }
     }
 
     ListView {
@@ -72,11 +78,11 @@ Application {
                         var catalog = JSON.parse(request.responseText);
                         catalog["result"].forEach(function (catalogItem) {
                             catalogModel.append( {
-                                id: catalogItem["id"],
-                                title: catalogItem["title"],
-                                year: catalogItem["year"],
-                                description: catalogItem["description"],
-                                poster: catalogItem["thumbnails"][0]["path"] } );
+                                                    id: catalogItem["id"],
+                                                    title: catalogItem["title"],
+                                                    year: catalogItem["year"] ? catalogItem["year"] : "" ,
+                                                    description: catalogItem["description"],
+                                                    poster: catalogItem["thumbnails"][0]["path"] } );
                         });
                         log("promo catalog was updated");
                     }
@@ -99,21 +105,25 @@ Application {
             catalogItemPage.description = currentCatalogItem.description;
             catalogItemPage.visible = true;
         }
+    }
 
-        Spinner {
-            id: loadingPromoCatalogSpinner;
+    Spinner {
+        id: loadingPromoCatalogSpinner;
 
-            anchors.centerIn: mainWindow;
+        anchors.centerIn: ivi;
 
-            visible: promoCatalogView.model.count === 0;
-        }
+        visible: promoCatalogView.model.count === 0;
+    }
 
-        Player {
-            id: videoPlayer;
+    Player {
+        id: videoPlayer;
 
-            anchors.fill: mainWindow;
+        anchors.fill: ivi;
 
-            visible: false;
-        }
+        visible: false;
+    }
+
+    onBackPressed: {
+        viewsFinder.closeApp();
     }
 }
