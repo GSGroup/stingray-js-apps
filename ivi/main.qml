@@ -12,7 +12,7 @@ Application {
     Rectangle {
         id: headerRect;
 
-        height: 188; // logo image height
+        height: 131; // logo image height
 
         anchors.top: mainWindow.top;
         anchors.left: mainWindow.left;
