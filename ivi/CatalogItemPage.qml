@@ -18,12 +18,10 @@ Rectangle {
     Image {
         id: posterImage;
 
-        anchors.left: catalogItemPage.left;
         anchors.top: catalogItemPage.top;
-        anchors.bottom: catalogItemPage.bottom;
-        anchors.leftMargin: 20;
         anchors.topMargin: 20;
-        anchors.bottomMargin: 20;
+        anchors.left: catalogItemPage.left;
+        anchors.leftMargin: 20;
 
         fillMode: PreserveAspectFit;
     }
@@ -32,8 +30,9 @@ Rectangle {
         id: titleText;
 
         anchors.left: posterImage.right;
-        anchors.margins: 20;
+        anchors.leftMargin: 20;
         anchors.top: catalogItemPage.top;
+        anchors.topMargin: 10;
 
         color: "#000000";
     }
