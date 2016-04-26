@@ -1,5 +1,5 @@
 Rectangle {
-    id: catalogItemDelegate;
+    id: catalogDelegate;
 
     width: posterImage.width + 14;
     height: posterImage.height + 14;
