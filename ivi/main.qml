@@ -102,6 +102,8 @@ Application {
         anchors.bottom: mainWindow.bottom;
         anchors.bottomMargin: 40;
 
+        keyNavigationWraps: false;
+
         onSelectPressed: {
             this.visible = false;
 
@@ -133,6 +135,10 @@ Application {
         anchors.fill: mainWindow;
 
         visible: false;
+    }
+
+    onLeftPressed: {
+        categoryMenu.setFocus();
     }
 
     onCompleted: {
