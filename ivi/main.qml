@@ -1,80 +1,109 @@
 import CatalogItemPage;
 import CatalogView;
 import CategoryMenu;
-import Header;
 
 import controls.Player;
 import controls.Spinner;
-import controls.TinyText;
 
-//TODO: Replace mainWindow with Application id
-//TODO: Constants
+import "js/constants.js" as constants;
+
+//TODO: Replace anchors from mainWindow to application
 
 Application {
     id: ivi;
 
-    color: "#F9F9F9";
+    color: "#000000";
 
-    property string currentTitle: "Промо-видео"; //TODO: Remove this dirtest hack
+    Item {
+        id: menuItem;
 
-    Header {
-        id: header;
-
-        anchors.top: mainWindow.top;
         anchors.left: mainWindow.left;
-        anchors.right: mainWindow.right;
+        anchors.top: mainWindow.top;
+        anchors.bottom: mainWindow.bottom;
 
-        title: "Промо-видео";
+        width: 360;
+
+        Image {
+            id: iviImage;
+
+            anchors.top: parent.top;
+            anchors.topMargin: 80;
+            anchors.left: parent.left;
+            anchors.leftMargin: 80;
+
+            source: "apps/ivi/resources/logo.png";
+
+            fillMode: PreserveAspectFit;
+        }
+
+        CategoryMenu {
+            id: categoryMenu;
+
+            anchors.top: iviImage.bottom;
+            anchors.topMargin: 80;
+            anchors.left: parent.left;
+            anchors.leftMargin: 80;
+            anchors.right: parent.right;
+            anchors.bottom: parent.bottom;
+
+            spacing: 40;
+
+            onRightPressed: {
+                if (catalogView.visible)
+                    catalogView.setFocus();
+                else if (catalogItemPage.visible)
+                    catalogItemPage.setFocus();
+            }
+
+            onSelectPressed: {
+                catalogView.visible = true;
+                catalogItemPage.visible = false;
+                var currentCategory = model.get(categoryMenu.currentIndex);
+                catalogView.loadCatalog(currentCategory.url);
+                log("category was selected", currentCategory.title);
+            }
+        }
     }
 
     CatalogItemPage {
         id: catalogItemPage;
 
-        anchors.top: header.bottom;
-        anchors.left: mainWindow.left;
+        anchors.top: mainWindow.top;
+        anchors.topMargin: 80;
+        anchors.left: menuItem.right;
+        anchors.leftMargin: 40;
         anchors.right: mainWindow.right;
+        anchors.rightMargin: 40; //TODO: Constants
         anchors.bottom: mainWindow.bottom;
+        anchors.bottomMargin: 40;
 
         visible: false;
 
         onClosed: {
             this.visible = false;
             catalogView.visible = true;
-            instructionsText.visible = true; //TODO: Refactoring
             catalogView.setFocus();
+        }
+
+        onLeftPressed: {
+            categoryMenu.setFocus();
         }
     }
 
     CatalogView {
         id: catalogView;
 
-        anchors.top: header.bottom;
-        //anchors.topMargin: 20;
-        anchors.left: mainWindow.left;
-        //anchors.leftMargin: 80; //TODO: Replace with normal margins and set view on screen horizontal center
+        anchors.top: mainWindow.top;
+        anchors.topMargin: 80;
+        anchors.left: menuItem.right;
+        anchors.leftMargin: 40;
         anchors.right: mainWindow.right;
-        //anchors.rightMargin: 20;
-        anchors.bottom: instructionsText.top;
-        //anchors.bottomMargin: 20;
-        anchors.margins: 20;
-
-        onKeyPressed: {
-            if (key === "Red")
-                catalogView.loadCatalog(catalogView.url);
-
-            if (key === "Green") {
-                catalogView.visible = false;
-                instructionsText.visible = false;
-                ivi.currentTitle = header.title;
-                header.title = "Выберите категорию";
-                categoryMenu.visible = true;
-                categoryMenu.setFocus();
-            }
-        }
+        anchors.rightMargin: 40; //TODO: Constants
+        anchors.bottom: mainWindow.bottom;
+        anchors.bottomMargin: 40;
 
         onSelectPressed: {
             this.visible = false;
-            instructionsText.visible = false;
 
             var currentCatalogItem = model.get(catalogView.currentIndex);
             catalogItemPage.title = currentCatalogItem.title;
@@ -83,49 +112,11 @@ Application {
             catalogItemPage.description = currentCatalogItem.description;
             catalogItemPage.visible = true;
         }
-    }
 
-    CategoryMenu {
-        id: categoryMenu;
-
-        anchors.top: header.bottom;
-        anchors.left: mainWindow.left;
-        anchors.right: mainWindow.right;
-        anchors.bottom: instructionsText.top;
-        anchors.margins: 20;
-
-        visible: false;
-
-        onBackPressed: {
-            this.visible = false;
-            catalogView.visible = true;
-            instructionsText.visible = true;
-            header.title = ivi.currentTitle;
-            catalogView.setFocus();
+        onKeyPressed: {
+            if (key === "Red")
+                categoryMenu.setFocus();
         }
-
-        onSelectPressed: {
-            this.visible = false;
-            catalogView.visible = true;
-            instructionsText.visible = true;
-            var currentCategory = model.get(categoryMenu.currentIndex);
-            header.title = currentCategory.title;
-            catalogView.loadCatalog(currentCategory.url);
-            log("category was selected", currentCategory.title);
-            catalogView.setFocus();
-        }
-    }
-
-    TinyText {
-        id: instructionsText;
-
-        anchors.horizontalCenter: mainWindow.horizontalCenter;
-        anchors.bottom: mainWindow.bottom;
-        anchors.bottomMargin: 20;
-
-        color: "#91949C";
-
-        text: "Нажмите красную кнопку для обновления текущей выбранной категории.";
     }
 
     Spinner {

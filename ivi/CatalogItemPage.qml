@@ -3,6 +3,8 @@ import controls.SmallText;
 import controls.TinyText;
 import controls.Button;
 
+import "js/constants.js" as constants;
+
 Rectangle {
     id: catalogItemPage;
 
@@ -13,15 +15,11 @@ Rectangle {
     property alias year: yearText.text;
     property alias description: descriptionText.text;
 
-    color: "#F9F9F9";
-
     Image {
         id: posterImage;
 
         anchors.top: catalogItemPage.top;
-        anchors.topMargin: 20;
         anchors.left: catalogItemPage.left;
-        anchors.leftMargin: 20;
 
         fillMode: PreserveAspectFit;
     }
@@ -30,11 +28,10 @@ Rectangle {
         id: titleText;
 
         anchors.left: posterImage.right;
-        anchors.leftMargin: 20;
+        anchors.leftMargin: constants.border;
         anchors.top: catalogItemPage.top;
-        anchors.topMargin: 10;
 
-        color: "#000000";
+        color: "#FFFFFF";
     }
 
     SmallText {
@@ -42,17 +39,17 @@ Rectangle {
 
         anchors.top: titleText.bottom;
         anchors.left: posterImage.right;
-        anchors.leftMargin: 20;
-        anchors.rightMargin: 20;
+        anchors.leftMargin: constants.border;
+        anchors.rightMargin: constants.border;
 
-        color: "#000000";
+        color: "#FFFFFF";
     }
 
     Button {
         id: watchButton;
 
         anchors.top: yearText.bottom;
-        anchors.margins: 20;
+        anchors.margins: constants.border;
         anchors.left: posterImage.right;
 
         text: "Начать просмотр";
@@ -66,14 +63,14 @@ Rectangle {
         id: descriptionText;
 
         anchors.top: watchButton.bottom;
-        anchors.margins: 20;
+        anchors.margins: constants.border;
         anchors.left: posterImage.right;
         anchors.right: catalogItemPage.right;
         anchors.bottom: catalogItemPage.bottom;
 
         font: tinyFont;
 
-        color: "#91949C";
+        color: "#FFFFFF";
 
         onUpPressed: {
             watchButton.setFocus();
