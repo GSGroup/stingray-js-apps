@@ -1,7 +1,10 @@
 import CatalogDelegate;
 
-ListView {
+GridView {
     id: catalogView;
+
+    cellWidth: 186;
+    cellHeight: 278;
 
     property string url: "https://api.ivi.ru/mobileapi/videos/v5";
     property bool loading: false;
@@ -9,9 +12,10 @@ ListView {
     visible: !loading;
 
     focus: true;
+    clip: true;
 
-    orientation: Horizontal;
-    positionMode: Center;
+//    orientation: Horizontal;
+//    positionMode: Center;
 
     delegate: CatalogDelegate {}
     model: ListModel { id: catalogModel; }

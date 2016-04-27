@@ -45,11 +45,14 @@ Application {
         id: catalogView;
 
         anchors.top: header.bottom;
-        anchors.left: mainWindow.left;
-        anchors.right: mainWindow.right;
         anchors.topMargin: 20;
-        anchors.leftMargin: 20;
+        anchors.left: mainWindow.left;
+        anchors.leftMargin: 80; //TODO: Replace with normal margins and set view on screen horizontal center
+        anchors.right: mainWindow.right;
         anchors.rightMargin: 20;
+        anchors.bottom: instructionsText.top;
+        anchors.bottomMargin: 20;
+        //anchors.margins: 20;
 
         onSelectPressed: {
             this.visible = false;
@@ -79,13 +82,14 @@ Application {
     TinyText {
         id: instructionsText;
 
+        anchors.horizontalCenter: mainWindow.horizontalCenter;
         anchors.bottom: mainWindow.bottom;
-        anchors.bottomMargin: 120;
+        anchors.bottomMargin: 20;
         anchors.horizontalCenter: mainWindow.horizontalCenter;
 
         color: "#91949C";
 
-        text: "Используйте клавиши Вверх и Вниз для переключения между категориями фильмов. Нажмите красную кнопку для обновления текущей выбранной категории.";
+        text: "Нажмите красную кнопку для обновления текущей выбранной категории.";
     }
 
     Spinner {
