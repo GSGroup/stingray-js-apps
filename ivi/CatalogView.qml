@@ -14,8 +14,7 @@ GridView {
     focus: true;
     clip: true;
 
-//    orientation: Horizontal;
-//    positionMode: Center;
+    positionMode: Center;
 
     delegate: CatalogDelegate {}
     model: ListModel { id: catalogModel; }
