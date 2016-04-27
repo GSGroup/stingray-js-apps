@@ -3,7 +3,10 @@ import CatalogDelegate;
 ListView {
     id: catalogView;
 
-    property string url;
+    property string url: "https://api.ivi.ru/mobileapi/videos/v5";
+    property bool loading: false;
+
+    visible: !loading;
 
     focus: true;
 
@@ -13,7 +16,9 @@ ListView {
     delegate: CatalogDelegate {}
     model: ListModel { id: catalogModel; }
 
-    onCompleted: {
+    function loadCatalog(url) {
+        catalogView.url = url;
+        catalogView.loading = true;
         var request = new XMLHttpRequest();
         request.open("GET", url);
         request.onreadystatechange = function() {
@@ -25,15 +30,14 @@ ListView {
 
                     var catalog = JSON.parse(request.responseText);
                     catalog["result"].forEach(function (catalogItem) {
-                        catalogModel.append( {
-                                                id: catalogItem["id"],
+                        catalogModel.append( {  id: catalogItem["id"],
                                                 title: catalogItem["title"],
                                                 year: catalogItem["year"] ? catalogItem["year"] : "",
                                                 description: catalogItem["description"],
-                                                poster: catalogItem["thumbnails"][0]["path"] } );
+                                                poster: catalogItem["poster_originals"][0]["path"] } );
                     });
-                    catalogModel.sync();
-                    log("promo catalog was updated");
+                    catalogView.loading = false;
+                    log("catalog was updated");
                 }
             } else {
                 log("request error: ", request.readyState, request.responseText);
