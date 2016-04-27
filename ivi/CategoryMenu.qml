@@ -1,21 +1,27 @@
 import controls.Button;
-
+import "js/constants.js" as constants;
 
 ListView {
-    id: categoryMenu;
-
-    spacing: 20;
-
-    positionMode: Center;
+    id: categoryListView;
 
     focus: true;
+    clip: true;
 
-    model: ListModel {
-        ListElement { title: "Промо-видео"; url: "https://api.ivi.ru/mobileapi/videos/v5"; }
-        ListElement { title: "Советский кинематограф"; url: "https://api.ivi.ru/mobileapi/compilations/v5/"; }
+    model: ListModel {}
+
+    delegate: SmallText {
+        id: categoryText;
+
+        text: model.title;
+
+        verticalAlignment: Text.AlignVCenter;
+
+        color: activeFocus ? constants.colors["active"] : "#FFFFFF";
     }
 
-    delegate: Button {
-        text: model.title;
+    onCompleted: {
+        constants.categories.forEach(function (category) {
+            model.append( { title: category.title, url: category.url });
+        });
     }
 }

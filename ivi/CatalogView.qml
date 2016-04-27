@@ -1,12 +1,14 @@
 import CatalogDelegate;
 
+import "js/constants.js" as constants;
+
 GridView {
     id: catalogView;
 
-    cellWidth: 186;
-    cellHeight: 278;
+    cellWidth: 192;
+    cellHeight: 284;
 
-    property string url: "https://api.ivi.ru/mobileapi/videos/v5";
+    property string url: "https://api.ivi.ru/mobileapi/videos/v5"; //TODO: Constants
     property bool loading: false;
 
     visible: !loading;
