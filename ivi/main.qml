@@ -1,8 +1,8 @@
 import CatalogPage;
 import CatalogView;
 import CategoryMenu;
+import IviPlayer;
 
-import controls.Player;
 import controls.Spinner;
 
 import "js/constants.js" as constants;
@@ -73,6 +73,14 @@ Application {
 
         visible: false;
 
+        onWatch: {
+            this.visible = false;
+            menuItem.visible = false;
+            iviPlayer.visible = true;
+            log("start watching", catalogView.model.get(catalogView.currentIndex).id);
+            iviPlayer.playVideoById(catalogView.model.get(catalogView.currentIndex).id);
+        }
+
         onClosed: {
             this.visible = false;
             catalogView.visible = true;
@@ -122,12 +130,22 @@ Application {
         visible: catalogView.loading;
     }
 
-    Player {
-        id: videoPlayer;
+    IviPlayer {
+        id: iviPlayer;
 
         anchors.fill: mainWindow;
 
         visible: false;
+
+        onBackPressed: {
+            log("player stop");
+            iviPlayer.stop();
+            this.visible = false;
+            log("show catalog page");
+            menuItem.visible = true;
+            catalogPage.visible = true;
+            catalogPage.setFocus();
+        }
     }
 
     onLeftPressed: {

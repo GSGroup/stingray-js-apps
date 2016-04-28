@@ -9,6 +9,7 @@ Item {
     id: catalogPage;
 
     signal closed;
+    signal watch;
 
     property alias title: titleText.text;
     property alias poster: posterImage.source;
@@ -60,6 +61,11 @@ Item {
 
         onDownPressed: {
             descriptionText.setFocus();
+        }
+
+        onSelectPressed: {
+            log("watch button pressed");
+            catalogPage.watch();
         }
     }
 
