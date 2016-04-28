@@ -1,23 +1,16 @@
-import controls.Button;
+import CategoryDelegate;
+
+
 import "js/constants.js" as constants;
 
 ListView {
-    id: categoryListView;
 
     focus: true;
     clip: true;
 
     model: ListModel {}
 
-    delegate: SmallText {
-        id: categoryText;
-
-        text: model.title;
-
-        verticalAlignment: Text.AlignVCenter;
-
-        color: activeFocus ? constants.colors["active"] : "#FFFFFF";
-    }
+    delegate: CategoryDelegate {}
 
     onCompleted: {
         constants.categories.forEach(function (category) {

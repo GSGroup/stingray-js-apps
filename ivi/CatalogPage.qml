@@ -6,7 +6,7 @@ import controls.Button;
 import "js/constants.js" as constants;
 
 Rectangle {
-    id: catalogItemPage;
+    id: catalogPage;
 
     signal closed;
 
@@ -18,8 +18,8 @@ Rectangle {
     Image {
         id: posterImage;
 
-        anchors.top: catalogItemPage.top;
-        anchors.left: catalogItemPage.left;
+        anchors.top: catalogPage.top;
+        anchors.left: catalogPage.left;
 
         fillMode: PreserveAspectFit;
     }
@@ -29,7 +29,7 @@ Rectangle {
 
         anchors.left: posterImage.right;
         anchors.leftMargin: constants.border;
-        anchors.top: catalogItemPage.top;
+        anchors.top: catalogPage.top;
 
         color: "#FFFFFF";
     }
@@ -63,10 +63,10 @@ Rectangle {
         id: descriptionText;
 
         anchors.top: watchButton.bottom;
-        anchors.margins: constants.border;
         anchors.left: posterImage.right;
-        anchors.right: catalogItemPage.right;
-        anchors.bottom: catalogItemPage.bottom;
+        anchors.right: catalogPage.right;
+        anchors.bottom: catalogPage.bottom;
+        anchors.margins: constants.border;
 
         font: tinyFont;
 
