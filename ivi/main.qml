@@ -7,7 +7,7 @@ import controls.Spinner;
 
 import "js/constants.js" as constants;
 
-//TODO: Replace anchors from mainWindow to application
+//TODO: Replace anchors from mainWindow to application (advice by Ivan Leonov)
 
 Application {
     id: ivi;
@@ -17,7 +17,7 @@ Application {
     Item {
         id: menuItem;
 
-        width: 320;
+        width: constants.menuWidth;
 
         anchors.left: mainWindow.left;
         anchors.top: mainWindow.top;
@@ -28,9 +28,9 @@ Application {
 
             anchors.top: parent.top;
             anchors.left: parent.left;
-            anchors.margins: constants.border;
+            anchors.margins: constants.margin;
 
-            source: "apps/ivi/resources/logo.png";
+            source: "apps/ivi/resources/menu.png";
 
             fillMode: PreserveAspectFit;
         }
@@ -42,25 +42,20 @@ Application {
             anchors.left: parent.left;
             anchors.right: parent.right;
             anchors.bottom: parent.bottom;
-            anchors.margins: constants.border;
+            anchors.margins: constants.margin;
 
-            spacing: constants.border / 2;
+            spacing: constants.margin / 2;
 
-            opacity: activeFocus ? 1.0 : 0.7; //TODO: Constants
+            opacity: activeFocus ? 1.0 : constants.inactiveOpacity;
 
-            onRightPressed: {
-                if (catalogView.visible)
-                    catalogView.setFocus();
-                else if (catalogPage.visible)
-                    catalogPage.setFocus();
-            }
-
-            onSelectPressed: {
-                catalogView.visible = true;
-                catalogPage.visible = false;
-                var currentCategory = model.get(categoryMenu.currentIndex);
-                catalogView.loadCatalog(currentCategory.url);
-                log("category was selected", currentCategory.title);
+            onKeyPressed: {
+                if (key === "Select" || key === "Right") {
+                    catalogView.visible = true;
+                    catalogPage.visible = false;
+                    var currentCategory = model.get(categoryMenu.currentIndex);
+                    catalogView.loadCatalog(currentCategory.url);
+                    log("category was selected", currentCategory.title);
+                }
             }
         }
     }
@@ -69,11 +64,12 @@ Application {
         id: catalogPage;
 
         anchors.top: mainWindow.top;
-        anchors.topMargin: constants.border;
         anchors.left: menuItem.right;
         anchors.right: mainWindow.right;
         anchors.bottom: mainWindow.bottom;
-        anchors.bottomMargin: constants.border;
+        anchors.margins: constants.margin;
+
+        opacity: activeFocus ? 1.0 : constants.inactiveOpacity;
 
         visible: false;
 
@@ -95,9 +91,9 @@ Application {
         anchors.left: menuItem.right;
         anchors.right: mainWindow.right;
         anchors.bottom: mainWindow.bottom;
-        anchors.margins: constants.border;
+        anchors.margins: constants.margin;
 
-        opacity: activeFocus ? 1.0 : 0.7; //TODO: Constants
+        opacity: activeFocus ? 1.0 : constants.inactiveOpacity;
 
         keyNavigationWraps: false;
 

@@ -5,24 +5,20 @@ import "js/constants.js" as constants;
 GridView {
     id: catalogView;
 
-    cellWidth: 192;
-    cellHeight: 284;
-
-    property string url: "https://api.ivi.ru/mobileapi/videos/v5"; //TODO: Constants
     property bool loading: false;
+
+    cellWidth: constants.poster["width"] + (constants.margin / 3);
+    cellHeight: constants.poster["height"] + (constants.margin / 3);
 
     visible: !loading;
 
     focus: true;
     clip: true;
 
-    positionMode: Center;
-
     delegate: CatalogDelegate {}
     model: ListModel { id: catalogModel; }
 
     function loadCatalog(url) {
-        catalogView.url = url;
         catalogView.loading = true;
         var request = new XMLHttpRequest();
         request.open("GET", url);
@@ -42,6 +38,7 @@ GridView {
                                                 poster: catalogItem["poster_originals"][0]["path"] } );
                     });
                     catalogView.loading = false;
+                    catalogView.setFocus();
                     log("catalog was updated");
                 }
             } else {

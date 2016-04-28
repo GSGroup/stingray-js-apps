@@ -3,9 +3,10 @@ import controls.SmallText;
 import "js/constants.js" as constants;
 
 SmallText {
-    id: titleText;
+    id: categoryText;
 
     text: model.title;
 
-    color: activeFocus ? constants.colors["active"] : "#FFFFFF";
+    color: focused ? constants.colors["active"] : "#FFFFFF";
 }
+

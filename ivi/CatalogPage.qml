@@ -5,7 +5,7 @@ import controls.Button;
 
 import "js/constants.js" as constants;
 
-Rectangle {
+Item {
     id: catalogPage;
 
     signal closed;
@@ -28,7 +28,7 @@ Rectangle {
         id: titleText;
 
         anchors.left: posterImage.right;
-        anchors.leftMargin: constants.border;
+        anchors.leftMargin: constants.margin / 2;
         anchors.top: catalogPage.top;
 
         color: "#FFFFFF";
@@ -39,8 +39,7 @@ Rectangle {
 
         anchors.top: titleText.bottom;
         anchors.left: posterImage.right;
-        anchors.leftMargin: constants.border;
-        anchors.rightMargin: constants.border;
+        anchors.leftMargin: constants.margin / 2;
 
         color: "#FFFFFF";
     }
@@ -49,8 +48,13 @@ Rectangle {
         id: watchButton;
 
         anchors.top: yearText.bottom;
-        anchors.margins: constants.border;
+        anchors.topMargin: constants.margin / 2;
         anchors.left: posterImage.right;
+        anchors.leftMargin: constants.margin / 2;
+
+        opacity: activeFocus ? 1.0 : constants.inactiveOpacity;
+
+        color: activeFocus ? constants.colors["active"] : constants.colors["inactive"];
 
         text: "Начать просмотр";
 
@@ -63,14 +67,17 @@ Rectangle {
         id: descriptionText;
 
         anchors.top: watchButton.bottom;
+        anchors.topMargin: constants.margin;
         anchors.left: posterImage.right;
+        anchors.leftMargin: constants.margin / 2;
         anchors.right: catalogPage.right;
         anchors.bottom: catalogPage.bottom;
-        anchors.margins: constants.border;
 
-        font: tinyFont;
+        opacity: activeFocus ? 1.0 : constants.inactiveOpacity;
 
         color: "#FFFFFF";
+
+        font: tinyFont;
 
         onUpPressed: {
             watchButton.setFocus();
