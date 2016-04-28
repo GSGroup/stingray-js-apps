@@ -1,4 +1,4 @@
-import CatalogItemPage;
+import CatalogPage;
 import CatalogView;
 import CategoryMenu;
 
@@ -17,19 +17,18 @@ Application {
     Item {
         id: menuItem;
 
+        width: 320;
+
         anchors.left: mainWindow.left;
         anchors.top: mainWindow.top;
         anchors.bottom: mainWindow.bottom;
-
-        width: 360;
 
         Image {
             id: iviImage;
 
             anchors.top: parent.top;
-            anchors.topMargin: 80;
             anchors.left: parent.left;
-            anchors.leftMargin: 80;
+            anchors.margins: constants.border;
 
             source: "apps/ivi/resources/logo.png";
 
@@ -40,24 +39,25 @@ Application {
             id: categoryMenu;
 
             anchors.top: iviImage.bottom;
-            anchors.topMargin: 80;
             anchors.left: parent.left;
-            anchors.leftMargin: 80;
             anchors.right: parent.right;
             anchors.bottom: parent.bottom;
+            anchors.margins: constants.border;
 
-            spacing: 40;
+            spacing: constants.border / 2;
+
+            opacity: activeFocus ? 1.0 : 0.7; //TODO: Constants
 
             onRightPressed: {
                 if (catalogView.visible)
                     catalogView.setFocus();
-                else if (catalogItemPage.visible)
-                    catalogItemPage.setFocus();
+                else if (catalogPage.visible)
+                    catalogPage.setFocus();
             }
 
             onSelectPressed: {
                 catalogView.visible = true;
-                catalogItemPage.visible = false;
+                catalogPage.visible = false;
                 var currentCategory = model.get(categoryMenu.currentIndex);
                 catalogView.loadCatalog(currentCategory.url);
                 log("category was selected", currentCategory.title);
@@ -65,17 +65,15 @@ Application {
         }
     }
 
-    CatalogItemPage {
-        id: catalogItemPage;
+    CatalogPage {
+        id: catalogPage;
 
         anchors.top: mainWindow.top;
-        anchors.topMargin: 80;
+        anchors.topMargin: constants.border;
         anchors.left: menuItem.right;
-        anchors.leftMargin: 40;
         anchors.right: mainWindow.right;
-        anchors.rightMargin: 40; //TODO: Constants
         anchors.bottom: mainWindow.bottom;
-        anchors.bottomMargin: 40;
+        anchors.bottomMargin: constants.border;
 
         visible: false;
 
@@ -94,13 +92,12 @@ Application {
         id: catalogView;
 
         anchors.top: mainWindow.top;
-        anchors.topMargin: 80;
         anchors.left: menuItem.right;
-        anchors.leftMargin: 40;
         anchors.right: mainWindow.right;
-        anchors.rightMargin: 40; //TODO: Constants
         anchors.bottom: mainWindow.bottom;
-        anchors.bottomMargin: 40;
+        anchors.margins: constants.border;
+
+        opacity: activeFocus ? 1.0 : 0.7; //TODO: Constants
 
         keyNavigationWraps: false;
 
@@ -108,11 +105,11 @@ Application {
             this.visible = false;
 
             var currentCatalogItem = model.get(catalogView.currentIndex);
-            catalogItemPage.title = currentCatalogItem.title;
-            catalogItemPage.year = currentCatalogItem.year;
-            catalogItemPage.poster = currentCatalogItem.poster;
-            catalogItemPage.description = currentCatalogItem.description;
-            catalogItemPage.visible = true;
+            catalogPage.title = currentCatalogItem.title;
+            catalogPage.year = currentCatalogItem.year;
+            catalogPage.poster = currentCatalogItem.poster;
+            catalogPage.description = currentCatalogItem.description;
+            catalogPage.visible = true;
         }
 
         onKeyPressed: {
@@ -142,7 +139,7 @@ Application {
     }
 
     onCompleted: {
-        catalogView.loadCatalog("https://api.ivi.ru/mobileapi/compilations/v5/");
+        catalogView.loadCatalog(constants.categories[0].url);
     }
 
     onBackPressed: {

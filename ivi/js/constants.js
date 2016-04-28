@@ -1,8 +1,12 @@
-this.categories = [{ title: "Промо-видео", url: "https://api.ivi.ru/mobileapi/videos/v5" },
-                   { title: "Советский кинематограф", url: "https://api.ivi.ru/mobileapi/compilations/v5/" }];
+this.categories = [{ title: "Комедии", url: "https://api.ivi.ru/mobileapi/videos/v5" },
+                   { title: "Фантастика", url: "https://api.ivi.ru/mobileapi/compilations/v5/" },
+                   { title: "Ужасы", url: "https://api.ivi.ru/mobileapi/compilations/v5/" },
+                   { title: "Боевики", url: "https://api.ivi.ru/mobileapi/compilations/v5/" },
+                   { title: "Мелодрамы", url: "https://api.ivi.ru/mobileapi/compilations/v5/" }];
 
 this.colors = {"active" : "#EC174F",
-               "background" : "#F9F9F9",
                "text" : "#91949C"};
 
-this.border = 20;
+this.inactive_opacity = 0.8;
+
+this.border = 60;
