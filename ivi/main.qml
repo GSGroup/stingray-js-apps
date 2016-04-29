@@ -14,6 +14,14 @@ Application {
 
     color: "#000000";
 
+    property alias background: backgroundImage.source;
+
+    Image {
+        id: backgroundImage;
+
+        anchors.fill: mainWindow;
+    }
+
     Item {
         id: menuItem;
 
@@ -83,6 +91,7 @@ Application {
 
         onClosed: {
             this.visible = false;
+            ivi.background = ""; //TODO: more glitches if change visible to false
             catalogView.visible = true;
             catalogView.setFocus();
         }
@@ -111,8 +120,15 @@ Application {
             var currentCatalogItem = model.get(catalogView.currentIndex);
             catalogPage.title = currentCatalogItem.title;
             catalogPage.year = currentCatalogItem.year;
+            catalogPage.iviRating = currentCatalogItem.iviRating;
+            catalogPage.kpRating = currentCatalogItem.kpRating;
+            catalogPage.imdbRating = currentCatalogItem.imdbRating;
             catalogPage.poster = currentCatalogItem.poster;
+            catalogPage.duration = currentCatalogItem.duration;
+            ivi.background = currentCatalogItem.background;
+            catalogPage.restrict = currentCatalogItem.restrict;
             catalogPage.description = currentCatalogItem.description;
+            backgroundImage.visible = true;
             catalogPage.visible = true;
         }
 
