@@ -37,9 +37,9 @@ GridView {
                                                 iviRating: catalogItem["ivi_rating_10"] ? catalogItem["ivi_rating_10"] : "-",
                                                 kpRating: catalogItem["kp_rating"] ? catalogItem["kp_rating"] : "-",
                                                 imdbRating: catalogItem["imdb_rating"] ? catalogItem["imdb_rating"] : "-",
-                                                duration: catalogItem["duration"] ? catalogItem["duration"] : "-",
+                                                duration: catalogItem["duration"] ? catalogItem["duration"] : "",
                                                 background: catalogView.extractBackgroundImage(catalogItem),
-                                                restrict: catalogItem["restrict"] ? catalogItem["restrict"] : "-",
+                                                restrict: catalogItem["restrict"] ? catalogItem["restrict"] : "",
                                                 description: catalogItem["description"],
                                                 poster: catalogItem["poster_originals"][0]["path"] } );
                     });
