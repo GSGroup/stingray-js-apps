@@ -34,6 +34,12 @@ GridView {
                         catalogModel.append( {  id: catalogItem["id"],
                                                 title: catalogItem["title"],
                                                 year: catalogItem["year"] ? catalogItem["year"] : "",
+                                                iviRating: catalogItem["ivi_rating_10"] ? catalogItem["ivi_rating_10"] : "-",
+                                                kpRating: catalogItem["kp_rating"] ? catalogItem["kp_rating"] : "-",
+                                                imdbRating: catalogItem["imdb_rating"] ? catalogItem["imdb_rating"] : "-",
+                                                duration: catalogItem["duration"] ? catalogItem["duration"] : "-",
+                                                background: catalogView.extractBackgroundImage(catalogItem),
+                                                restrict: catalogItem["restrict"] ? catalogItem["restrict"] : "-",
                                                 description: catalogItem["description"],
                                                 poster: catalogItem["poster_originals"][0]["path"] } );
                     });
@@ -48,5 +54,13 @@ GridView {
 
         request.send();
         log("request was sended");
+    }
+
+    function extractBackgroundImage(catalogItem) {
+        var result = "";
+        if (catalogItem.hasOwnProperty("background"))
+            if (catalogItem["background"] && catalogItem["background"].hasOwnProperty("path"))
+                result = catalogItem["background"]["path"];
+        return result;
     }
 }
