@@ -21,6 +21,9 @@ Rectangle {
 
         activeFocus: catalogDelegate.activeFocus;
 
+        async: false;
+        registerInCacheSystem: false;
+
         source: model.poster;
 
         fillMode: PreserveAspectFit;

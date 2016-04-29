@@ -20,6 +20,9 @@ Application {
         id: backgroundImage;
 
         anchors.fill: mainWindow;
+
+        async: false;
+        registerInCacheSystem: false;
     }
 
     Item {
@@ -82,16 +85,15 @@ Application {
         visible: false;
 
         onWatch: {
-            this.visible = false;
-            menuItem.visible = false;
             iviPlayer.visible = true;
             log("start watching", catalogView.model.get(catalogView.currentIndex).id);
             iviPlayer.playVideoById(catalogView.model.get(catalogView.currentIndex).id);
+            iviPlayer.setFocus();
         }
 
         onClosed: {
             this.visible = false;
-            backgroundImage.visible = false; //TODO: more glitches if change visible to false
+            backgroundImage.visible = false;
             catalogView.visible = true;
             catalogView.setFocus();
         }
@@ -153,13 +155,8 @@ Application {
 
         visible: false;
 
-        onBackPressed: {
-            log("player stop");
-            iviPlayer.stop();
+        onStopped: {
             this.visible = false;
-            log("show catalog page");
-            menuItem.visible = true;
-            catalogPage.visible = true;
             catalogPage.setFocus();
         }
     }
