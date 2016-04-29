@@ -20,9 +20,6 @@ Application {
         id: backgroundImage;
 
         anchors.fill: mainWindow;
-
-        async: false;
-        registerInCacheSystem: false;
     }
 
     Item {
@@ -95,6 +92,7 @@ Application {
             this.visible = false;
             backgroundImage.visible = false;
             catalogView.visible = true;
+            catalogView.loadCatalog(catalogView.url);
             catalogView.setFocus();
         }
 

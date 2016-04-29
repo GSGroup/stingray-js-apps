@@ -27,9 +27,6 @@ Item {
         anchors.top: catalogPage.top;
         anchors.left: catalogPage.left;
 
-        async: false;
-        registerInCacheSystem: false;
-
         fillMode: PreserveAspectFit;
     }
 
