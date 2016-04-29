@@ -21,7 +21,7 @@ GridView {
     function loadCatalog(url) {
         catalogView.loading = true;
         var request = new XMLHttpRequest();
-        request.open("GET", url);
+        request.open("GET", url, true);
         request.onreadystatechange = function() {
             if (request.readyState === XMLHttpRequest.DONE) {
                 if (request.status && request.status === 200) {
