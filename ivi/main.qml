@@ -91,7 +91,7 @@ Application {
 
         onClosed: {
             this.visible = false;
-            ivi.background = ""; //TODO: more glitches if change visible to false
+            backgroundImage.visible = false; //TODO: more glitches if change visible to false
             catalogView.visible = true;
             catalogView.setFocus();
         }
