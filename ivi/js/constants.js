@@ -17,3 +17,5 @@ this.inactiveOpacity = 0.5;
 this.animationDuration = 150;
 
 this.margin = 60;
+
+this.defaultPoster = "apps/ivi/resources/catalog_default.png";
