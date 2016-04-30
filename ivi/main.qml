@@ -58,8 +58,8 @@ Application {
 
             onKeyPressed: {
                 if (key === "Select" || key === "Right") {
-                    catalogView.visible = true;
                     catalogPage.visible = false;
+                    catalogView.visible = true;
                     var currentCategory = model.get(categoryMenu.currentIndex);
                     catalogView.loadCatalog(currentCategory.url);
                     log("category was selected", currentCategory.title);
@@ -92,12 +92,7 @@ Application {
             this.visible = false;
             backgroundImage.visible = false;
             catalogView.visible = true;
-            catalogView.loadCatalog(catalogView.url);
             catalogView.setFocus();
-        }
-
-        onLeftPressed: {
-            categoryMenu.setFocus();
         }
     }
 
@@ -132,6 +127,10 @@ Application {
             catalogPage.visible = true;
         }
 
+        onLeftPressed: {
+            categoryMenu.setFocus();
+        }
+
         onKeyPressed: {
             if (key === "Red")
                 categoryMenu.setFocus();
@@ -159,15 +158,12 @@ Application {
         }
     }
 
-    onLeftPressed: {
-        categoryMenu.setFocus();
+    onBackPressed: {
+        viewsFinder.closeApp();
     }
 
     onCompleted: {
         catalogView.loadCatalog(constants.categories[0].url);
     }
 
-    onBackPressed: {
-        viewsFinder.closeApp();
-    }
 }

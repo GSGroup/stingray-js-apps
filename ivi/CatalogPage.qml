@@ -22,6 +22,19 @@ Item {
     property string imdbRating;
 
     Image {
+        id: posterDefaultImage;
+
+        anchors.top: catalogPage.top;
+        anchors.left: catalogPage.left;
+
+        visible: posterImage.status !== Image.Ready;
+
+        source: constants.defaultPoster;
+
+        fillMode: PreserveAspectFit;
+    }
+
+    Image {
         id: posterImage;
 
         anchors.top: catalogPage.top;
@@ -34,7 +47,7 @@ Item {
         id: titleText;
 
         anchors.top: catalogPage.top;
-        anchors.left: posterImage.right;
+        anchors.left: posterDefaultImage.visible ? posterDefaultImage.right : posterImage.right;
         anchors.leftMargin: constants.margin / 2;
         anchors.right: parent.right;
 
@@ -47,7 +60,7 @@ Item {
         id: yearText;
 
         anchors.top: titleText.bottom;
-        anchors.left: posterImage.right;
+        anchors.left: posterDefaultImage.visible ? posterDefaultImage.right : posterImage.right;
         anchors.leftMargin: constants.margin / 2;
 
         color: "#FFFFFF";
@@ -82,7 +95,7 @@ Item {
 
         anchors.top: yearText.bottom;
         anchors.topMargin: constants.margin / 2;
-        anchors.left: posterImage.right;
+        anchors.left: posterDefaultImage.visible ? posterDefaultImage.right : posterImage.right;
         anchors.leftMargin: constants.margin / 2;
         anchors.right: parent.right;
 
@@ -126,7 +139,7 @@ Item {
 
         anchors.top: ratingItem.bottom;
         anchors.topMargin: constants.margin / 2;
-        anchors.left: posterImage.right;
+        anchors.left: posterDefaultImage.visible ? posterDefaultImage.right : posterImage.right;
         anchors.leftMargin: constants.margin / 2;
 
         opacity: activeFocus ? 1.0 : constants.inactiveOpacity;
@@ -150,7 +163,7 @@ Item {
 
         anchors.top: watchButton.bottom;
         anchors.topMargin: constants.margin / 2;
-        anchors.left: posterImage.right;
+        anchors.left: posterDefaultImage.visible ? posterDefaultImage.right : posterImage.right;
         anchors.leftMargin: constants.margin / 2;
         anchors.right: catalogPage.right;
         anchors.bottom: catalogPage.bottom;

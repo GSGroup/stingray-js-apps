@@ -12,12 +12,34 @@ Rectangle {
     focus: true;
 
     Image {
+        id: posterDefaultImage;
+
+        width:  activeFocus ? constants.poster["width"]  + (constants.margin / 3)  : constants.poster["width"];
+        height: activeFocus ? constants.poster["height"] + (constants.margin / 3)  : constants.poster["height"];
+
+        anchors.centerIn: parent;
+
+        visible: posterImage.status !== Image.Ready;
+
+        activeFocus: catalogDelegate.activeFocus;
+
+        source: constants.defaultPoster;
+
+        fillMode: PreserveAspectFit;
+
+        Behavior on width  { animation: Animation { duration: constants.animationDuration; } }
+        Behavior on height { animation: Animation { duration: constants.animationDuration; } }
+    }
+
+    Image {
         id: posterImage;
 
         width:  activeFocus ? constants.poster["width"]  + (constants.margin / 3)  : constants.poster["width"];
         height: activeFocus ? constants.poster["height"] + (constants.margin / 3)  : constants.poster["height"];
 
         anchors.centerIn: parent;
+
+        registerInCacheSystem: false;
 
         activeFocus: catalogDelegate.activeFocus;
 
