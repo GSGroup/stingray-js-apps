@@ -1,5 +1,7 @@
 import controls.Player;
 
+import "js/constants.js" as constants;
+
 Player {
     id: iviPlayer;
 
@@ -13,9 +15,9 @@ Player {
             if (request.readyState !== XMLHttpRequest.DONE)
                 return;
 
-            if (request.status && request.status === 200) {
+            if (request.status === 200) {
                 log("response was received");
-                log(request.responseText);
+                //log(request.responseText);
                 var files = JSON.parse(request.responseText)["result"]["files"];
                 iviPlayer.playVideoByUrl(files[files.length - 1].url);
             } else
@@ -29,22 +31,26 @@ Player {
     }
 
     function playVideoByUrl(url) {
-        log("parsing url", url);
+        log("play video by url", url);
         var request = new XMLHttpRequest();
         request.onreadystatechange = function() {
             if (request.readyState !== XMLHttpRequest.DONE)
                 return;
 
-            if (request.status && request.status === 302) {
+            if(request.status === 302) {
                 var location = request.getResponseHeader("Location");
-                log("video url received", location);
-                iviPlayer.stop();
-                iviPlayer.playUrl(location);
-            } else
+                log("redirect url", location);
+                iviPlayer.playVideoByUrl(location);
+            } else if (request.status === 200) {
+                iviPlayer.abort();
+                iviPlayer.playUrl(url);
+            } else {
                 log("unhandled status", request.status);
+                return;
+            }
         }
 
-        request.open("GET", url, true);
+        request.open("HEAD", url, true);
         request.send();
     }
 }

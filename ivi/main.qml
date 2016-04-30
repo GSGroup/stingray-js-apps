@@ -82,10 +82,11 @@ Application {
         visible: false;
 
         onWatch: {
+            this.visible = false;
+            menuItem.visible = false;
             iviPlayer.visible = true;
             log("start watching", catalogView.model.get(catalogView.currentIndex).id);
             iviPlayer.playVideoById(catalogView.model.get(catalogView.currentIndex).id);
-            iviPlayer.setFocus();
         }
 
         onClosed: {
@@ -152,8 +153,13 @@ Application {
 
         visible: false;
 
-        onStopped: {
+        onBackPressed: {
+            log("player stop");
+            iviPlayer.stop();
             this.visible = false;
+            log("show catalog page");
+            menuItem.visible = true;
+            catalogPage.visible = true;
             catalogPage.setFocus();
         }
     }
