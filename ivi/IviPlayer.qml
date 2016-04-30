@@ -16,7 +16,8 @@ Player {
             if (request.status && request.status === 200) {
                 log("response was received");
                 log(request.responseText);
-                iviPlayer.playVideoByUrl(JSON.parse(request.responseText)["result"]["files"][2].url);
+                var files = JSON.parse(request.responseText)["result"]["files"];
+                iviPlayer.playVideoByUrl(files[files.length - 1].url);
             } else
                 log("unhandled status", request.status);
         }
