@@ -37,6 +37,8 @@ Player {
             if (request.readyState !== XMLHttpRequest.DONE)
                 return;
 
+            log("header was received");
+            //log(request.responseText);
             if(request.status === 302) {
                 var location = request.getResponseHeader("Location");
                 log("redirect url", location);
