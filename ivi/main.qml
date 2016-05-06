@@ -89,9 +89,13 @@ Application {
             iviPlayer.playVideoById(catalogView.model.get(catalogView.currentIndex).id);
         }
 
+        onLeftPressed: {
+            categoryMenu.setFocus();
+        }
+
         onClosed: {
             this.visible = false;
-            backgroundImage.visible = false;
+            backgroundImage.source = null;
             catalogView.visible = true;
             catalogView.setFocus();
         }
