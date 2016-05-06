@@ -17,7 +17,7 @@ Player {
 
             if (request.status === 200) {
                 log("response was received");
-                //log(request.responseText);
+                log("video response", request.responseText);
                 var files = JSON.parse(request.responseText)["result"]["files"];
                 iviPlayer.playVideoByUrl(files[files.length - 1].url);
             } else
