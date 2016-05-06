@@ -62,6 +62,7 @@ Player {
             } else if (request.status === 200) {
                 iviPlayer.abort();
                 iviPlayer.playUrl(url);
+                iviPlayer.setFocus();
             } else {
                 log("unhandled status", request.status);
                 return;

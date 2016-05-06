@@ -85,6 +85,7 @@ Application {
             this.visible = false;
             menuItem.visible = false;
             iviPlayer.visible = true;
+            iviPlayer.title = catalogView.model.get(catalogView.currentIndex).title;
             log("start watching", catalogView.model.get(catalogView.currentIndex).id);
             iviPlayer.playVideoById(catalogView.model.get(catalogView.currentIndex).id);
         }
@@ -166,6 +167,10 @@ Application {
             catalogPage.visible = true;
             catalogPage.setFocus();
         }
+
+        onFinished: {
+            hidePlayer();
+        }
     }
 
     onBackPressed: {
@@ -176,4 +181,19 @@ Application {
         catalogView.loadCatalog(constants.categories[0].url);
     }
 
+    onVisibleChanged: {
+        viewsFinder.ignoreScreenSaverForApp("ivi", this.visible);
+        iviPlayer.abort();
+
+        if(iviPlayer.visible) {
+            hidePlayer();
+        }
+    }
+
+    function hidePlayer() {
+        iviPlayer.visible = false;
+        menuItem.visible = true;
+        catalogPage.visible = true;
+        catalogPage.setFocus();
+    }
 }
