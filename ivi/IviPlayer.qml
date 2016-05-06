@@ -17,9 +17,7 @@ Player {
 
             if (request.status === 200) {
                 log("response was received");
-                log("video response", request.responseText);
-                var files = JSON.parse(request.responseText)["result"]["files"];
-                iviPlayer.playVideoByUrl(files[files.length - 1].url);
+                iviPlayer.playVideoByUrl(iviPlayer.getBestQualityVideoUrl(JSON.parse(request.responseText)["result"]["files"]));
             } else
                 log("unhandled status", request.status);
         }
@@ -28,6 +26,24 @@ Player {
             method: "da.content.get"};
         request.open("POST", "https://api.ivi.ru/light/", true);
         request.send(JSON.stringify(parameters));
+    }
+
+    function getBestQualityVideoUrl(files) {
+        var result = "";
+        var qualities = ["MP4-hi", "MP4-lo", "MP4-mobile", "MP4-low-mobile"];
+        qualities.forEach(function(quality) {
+            if (result)
+                return;
+
+            files.forEach(function(file) {
+                if(file["content_format"] === quality) {
+                    result = file["url"];
+                    return;
+                }
+            });
+        });
+
+        return result;
     }
 
     function playVideoByUrl(url) {
