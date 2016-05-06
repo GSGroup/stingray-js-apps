@@ -158,8 +158,8 @@ Application {
         visible: false;
 
         onBackPressed: {
-            log("player stop");
-            iviPlayer.stop();
+            log("player abort");
+            iviPlayer.abort();
             this.visible = false;
             log("show catalog page");
             menuItem.visible = true;
