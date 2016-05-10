@@ -16,7 +16,7 @@ Item {
 		anchors.bottom: parent.bottom;
 		fillMode: PreserveAspectFit;
 		opacity: parent.focused ? 1 : 0.65;
-		visible: source != "";
+		visible: model.icon != undefined ? source != "" : false;
 		
 		Behavior on opacity { animation: Animation { duration: 300; } }
 	}
@@ -29,7 +29,7 @@ Item {
 		anchors.rightMargin: 10;
 		color: parent.parent.activeFocus ? colorTheme.focusedTextColor : parent.focused ? colorTheme.activeTextColor : colorTheme.textColor;
 		opacity: parent.focused ? 1 : 0.65;
-		visible: text != "";
+		visible: model.text != undefined ? text != "" : false;
 		
 		Behavior on color { animation: Animation { duration: 300; } }
 		Behavior on opacity { animation: Animation { duration: 300; } }
