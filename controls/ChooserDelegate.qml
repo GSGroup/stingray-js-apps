@@ -1,5 +1,3 @@
-import controls.SmallText;
-
 Item {
 	width: 20 + chooserDelegateText.width * chooserDelegateText.visible + chooserIcon.width * chooserIcon.visible + (chooserIcon.visible && chooserDelegateText.visible) * 10;
 	height: parent.height;
