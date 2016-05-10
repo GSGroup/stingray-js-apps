@@ -22,8 +22,8 @@ ActivePanel {
 	Chooser {
 		id: chooserItem;
 		anchors.right: parent.right;
+		anchors.rightMargin: 10;
+		backgroundVisible: false;
 		chooserWidth: parent.chooserWidth;
 	}
-	
-	function append(text, icon) { chooserItem.append(text, icon); }
 }

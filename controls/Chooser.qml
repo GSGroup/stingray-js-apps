@@ -2,50 +2,72 @@ import "controls/utils.js" as utils;
 import controls.HighlightListView;
 import ChooserDelegate;
 
-ActivePanel {
+Item {
 	id: chooserItem;
 	property alias currentIndex: listView.currentIndex;
 	property alias count: listView.count;
+	property alias backgroundVisible: chooserBackground.visible;
+	property alias inverted: chooserBackground.inverted;
 	property bool showArrows: true;
+	property bool arrowsInPanel: true;
 	property int chooserWidth: 520;
-	width: (leftArrow.width + rightArrow.width + listView.contentWidth + 60) > chooserWidth ? chooserWidth : leftArrow.width + rightArrow.width + listView.contentWidth + 60;
+	height: chooserBackground.height;
+	width: Math.min(chooserWidth, listView.contentWidth + (30 + rightImage.width + leftImage.width) * (showArrows && arrowsInPanel));
 	focusedChild: listView;
-
+	
+	ActivePanel {
+		id: chooserBackground;
+		color: inverted ? (parent.activeFocus ? colorTheme.highlightPanelColor : colorTheme.passiveHighlightPanel) 
+						: (parent.activeFocus ? colorTheme.activeFocusColor : colorTheme.focusablePanelColor);
+		focus: false;
+		anchors.fill: parent;
+	}
+	
 	Image {
-		id: leftArrow;
-		anchors.left: parent.left;
-		anchors.leftMargin: 20;
-        anchors.rightMargin: 10;
-        anchors.verticalCenter: listView.verticalCenter;
+		id: leftImage;
+		anchors.verticalCenter: listView.verticalCenter;
+		anchors.right: listView.left;
+		anchors.rightMargin: 10;
+		forcedLoading: true;
 		source: colorTheme.pathToStyleFolder + "/left.png";
+		opacity: parent.activeFocus ? 1 : 0;
+		visible : chooserItem.showArrows;
+		
+		Behavior on opacity { animation: Animation { duration: 300; } }
+	}
+	
+	Image {
+		id: rightImage;
+		anchors.verticalCenter: listView.verticalCenter;
+		anchors.left: listView.right;
+		anchors.leftMargin: 10;
+		forcedLoading: true;
+		source: colorTheme.pathToStyleFolder + "/right.png";
 		opacity: parent.activeFocus ? 1 : 0;
 		visible: chooserItem.showArrows;
 
-		Behavior on opacity { animation: Animation { duration: 300;} }
+		Behavior on opacity { animation: Animation { duration: 300; } }
 	}
-
+	
 	HighlightListView {
 		id: listView;
-		anchors.top: chooserItem.top;
-		anchors.bottom: chooserItem.bottom;
-		anchors.topMargin: chooserItem.borderWidth;
-		anchors.bottomMargin: chooserItem.borderWidth;
-        anchors.right: rightArrow.left;
-        anchors.left: leftArrow.right;
-        anchors.rightMargin: 10;
-        anchors.leftMargin: 10;
-        leftFocusMargin: 5;
+		anchors.right: chooserItem.right;
+		anchors.left: chooserItem.left;
+		anchors.rightMargin: 10 + chooserItem.arrowsInPanel ? rightImage.width + 10 : 0;
+		anchors.leftMargin: 10 + chooserItem.arrowsInPanel ? leftImage.width + 10 : 0;
+		anchors.verticalCenter: parent.verticalCenter;
+		height: parent.height;
+		leftFocusMargin: 5;
         rightFocusMargin: 5;
         highlightFollowsCurrentItem: false;
-		keyNavigationWraps: true;
+        keyNavigationWraps: true;
 		handleNavigationKeys: false;
 		orientation: Horizontal;
 		delegate: ChooserDelegate { }
-		model: ListModel { }
 		clip: true;
-		highlightColor: chooserItem.activeFocus ? colorTheme.highlightPanelColor : colorTheme.passiveHighlightPanel;
+		highlight.color: chooserItem.activeFocus ? colorTheme.highlightPanelColor : colorTheme.passiveHighlightPanel;
 		positionMode: Center;
-
+		
 		Image {
 			anchors.right: highlight.left;
 			anchors.top: highlight.top;
@@ -62,20 +84,10 @@ ActivePanel {
 			fillMode: TileVertically;
 		}
 
-		onLeftPressed:	{ 
-			if (this.currentIndex > 0) 
-				this.currentIndex--; 
-			else 
-				this.currentIndex = this.count - 1; 
-		}
-		onRightPressed:	{
-			if (this.currentIndex < this.count - 1) 
-				this.currentIndex++; 
-			else 
-				this.currentIndex = 0; 
-		}
+		onLeftPressed:	{ this.decrementCurrentIndex(); }
+		onRightPressed:	{ this.incrementCurrentIndex(); }
 	}
-
+	
 	Item {
 		anchors.top: listView.top;
 		anchors.left: listView.left;
@@ -108,7 +120,7 @@ ActivePanel {
 		anchors.top: listView.top;
 		anchors.right: listView.right;
 		anchors.bottom: listView.bottom;
-		visible: (listView.contentWidth > listView.width) && (listView.currentIndex != (listView.count - 1)) ? 1 : 0;
+		opacity: (listView.contentWidth > listView.width) && (listView.currentIndex != (listView.count - 1)) ? 1 : 0;
 		width: 64;
 
 		Gradient {
@@ -130,22 +142,5 @@ ActivePanel {
 			}
 		}
 		Behavior on opacity { animation: Animation { duration: 300;} }
-	}
-
-	Image {
-		id: rightArrow;
-		anchors.right: parent.right;
-		anchors.rightMargin: 20;
-        anchors.leftMargin: 10;
-		anchors.verticalCenter: listView.verticalCenter;
-		source: colorTheme.pathToStyleFolder + "/right.png";
-		opacity: parent.activeFocus ? 1 : 0;
-		visible: chooserItem.showArrows;
-
-		Behavior on opacity { animation: Animation { duration: 300; } }
-	}
-	
-	function append(text, icon) {
-		this.listView.model.append({"text": text, "icon": icon});
 	}
 }
