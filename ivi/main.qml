@@ -97,6 +97,7 @@ Application {
         onClosed: {
             this.visible = false;
             backgroundImage.source = null;
+            iviPlayer.abort();
             catalogView.visible = true;
             catalogView.setFocus();
         }
@@ -169,7 +170,7 @@ Application {
         }
 
         onFinished: {
-            hidePlayer();
+            ivi.hidePlayer();
         }
     }
 
@@ -186,7 +187,7 @@ Application {
         iviPlayer.abort();
 
         if(iviPlayer.visible) {
-            hidePlayer();
+            ivi.hidePlayer();
         }
     }
 
