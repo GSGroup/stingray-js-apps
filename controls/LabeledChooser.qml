@@ -4,6 +4,7 @@ ActivePanel {
 	id: labeledChooserItem;
 	property alias currentIndex: chooserItem.listView.currentIndex;
 	property alias count: chooserItem.listView.count;
+	property alias contentWidth: chooserItem.listView.contentWidth;
 	property string text;
 	property int chooserWidth: 520; 
 	width: textItem.width + chooserItem.width + 40;

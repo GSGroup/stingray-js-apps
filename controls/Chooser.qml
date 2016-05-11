@@ -6,13 +6,14 @@ Item {
 	id: chooserItem;
 	property alias currentIndex: listView.currentIndex;
 	property alias count: listView.count;
+	property alias contentWidth: listView.contentWidth;
 	property alias backgroundVisible: chooserBackground.visible;
 	property alias inverted: chooserBackground.inverted;
 	property bool showArrows: true;
 	property bool arrowsInPanel: true;
 	property int chooserWidth: 520;
 	height: chooserBackground.height;
-	width: Math.min(chooserWidth, listView.contentWidth + (30 + rightImage.width + leftImage.width) * (showArrows && arrowsInPanel));
+	width: Math.min(chooserWidth, listView.contentWidth + 30 + (20 + rightImage.width + leftImage.width) * (showArrows && arrowsInPanel));
 	focusedChild: listView;
 	
 	ActivePanel {
@@ -53,8 +54,8 @@ Item {
 		id: listView;
 		anchors.right: chooserItem.right;
 		anchors.left: chooserItem.left;
-		anchors.rightMargin: 10 + chooserItem.arrowsInPanel ? rightImage.width + 10 : 0;
-		anchors.leftMargin: 10 + chooserItem.arrowsInPanel ? leftImage.width + 10 : 0;
+		anchors.rightMargin: 10 + (rightImage.width + 10) * (chooserItem.showArrows && chooserItem.arrowsInPanel);
+		anchors.leftMargin: 10 + (leftImage.width + 10) * (chooserItem.showArrows && chooserItem.arrowsInPanel);
 		anchors.verticalCenter: parent.verticalCenter;
 		height: parent.height;
 		leftFocusMargin: 5;
@@ -65,7 +66,7 @@ Item {
 		orientation: Horizontal;
 		delegate: ChooserDelegate { }
 		clip: true;
-		highlight.color: chooserItem.activeFocus ? colorTheme.highlightPanelColor : colorTheme.passiveHighlightPanel;
+		highlightColor: chooserItem.activeFocus ? colorTheme.highlightPanelColor : colorTheme.passiveHighlightPanel;
 		positionMode: Center;
 		
 		Image {
