@@ -84,9 +84,23 @@ Item {
 			source: "res/common/shadow_right.png";
 			fillMode: TileVertically;
 		}
+		
+		onKeyPressed: {
+			if(key == "Left")
+				if (!this.keyNavigationWraps && this.currentIndex == 0)
+					return false
+				else 
+					this.decrementCurrentIndex();
+			
+			if (key == "Right")
+				if (!this.keyNavigationWraps && this.currentIndex == this.count - 1)
+					return false
+				else
+					this.incrementCurrentIndex();
+		}
 
-		onLeftPressed:	{ this.decrementCurrentIndex(); }
-		onRightPressed:	{ this.incrementCurrentIndex(); }
+		//onLeftPressed:	{ this.decrementCurrentIndex(); }
+		//onRightPressed:	{ this.incrementCurrentIndex(); }
 	}
 	
 	Item {
