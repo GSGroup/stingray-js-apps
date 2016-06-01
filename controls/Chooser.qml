@@ -11,6 +11,7 @@ Item {
 	property alias inverted: chooserBackground.inverted;
 	property bool showArrows: true;
 	property bool arrowsInPanel: true;
+	property bool keyNavigationWraps;
 	property int chooserWidth: 520;
 	height: chooserBackground.height;
 	width: Math.min(chooserWidth, listView.contentWidth + 30 + (20 + rightImage.width + leftImage.width) * (showArrows && arrowsInPanel));
@@ -61,7 +62,7 @@ Item {
 		leftFocusMargin: 5;
         rightFocusMargin: 5;
         highlightFollowsCurrentItem: false;
-        keyNavigationWraps: true;
+        keyNavigationWraps: chooserItem.keyNavigationWraps;
 		handleNavigationKeys: false;
 		orientation: Horizontal;
 		delegate: ChooserDelegate { }
@@ -86,17 +87,24 @@ Item {
 		}
 		
 		onKeyPressed: {
+			log("Index : ", this.currentIndex, " wraps : ", this.keyNavigationWraps);
 			if(key == "Left")
-				if (!this.keyNavigationWraps && this.currentIndex == 0)
-					return false
-				else 
-					this.decrementCurrentIndex();
-			
-			if (key == "Right")
-				if (!this.keyNavigationWraps && this.currentIndex == this.count - 1)
+				if (!chooserItem.keyNavigationWraps && this.currentIndex == 0)
 					return false
 				else
+				{
+					this.decrementCurrentIndex();
+					return true;
+				}
+			
+			if (key == "Right")
+				if (!chooserItem.keyNavigationWraps && this.currentIndex == this.count - 1)
+					return false
+				else
+				{
 					this.incrementCurrentIndex();
+					return true;
+				}
 		}
 
 		//onLeftPressed:	{ this.decrementCurrentIndex(); }
