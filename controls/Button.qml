@@ -1,6 +1,3 @@
-import controls.FocusablePanel;
-import controls.SmallText;
-
 ActivePanel {
 	id: simpleButton;
 	property string text;
