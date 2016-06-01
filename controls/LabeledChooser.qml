@@ -6,6 +6,7 @@ ActivePanel {
 	property alias count: chooserItem.listView.count;
 	property alias contentWidth: chooserItem.listView.contentWidth;
 	property alias model: chooserItem.listView.model;
+	property bool keyNavigationWraps: true;
 	property string text;
 	property int chooserWidth: 520; 
 	width: textItem.width + chooserItem.width + 40;
@@ -26,6 +27,7 @@ ActivePanel {
 		anchors.right: parent.right;
 		anchors.rightMargin: 10;
 		backgroundVisible: false;
+		keyNavigationWraps: parent.keyNavigationWraps;
 		chooserWidth: parent.chooserWidth;
 	}
 }
