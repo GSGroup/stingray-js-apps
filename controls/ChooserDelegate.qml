@@ -1,4 +1,5 @@
 Item {
+	id: delegateItem;
 	width: 20 + chooserDelegateText.width * chooserDelegateText.visible + chooserIcon.width * chooserIcon.visible + (chooserIcon.visible && chooserDelegateText.visible) * 10;
 	height: parent.height;
 	
@@ -15,7 +16,9 @@ Item {
 		fillMode: PreserveAspectFit;
 		opacity: parent.focused ? 1 : 0.65;
 		visible: model.icon != undefined ? source != "" : false;
+		color: parent.parent.activeFocus ? colorTheme.focusedTextColor : parent.focused ? colorTheme.activeTextColor : colorTheme.textColor;
 		
+		Behavior on color { animation: Animation { duration: 300; } }
 		Behavior on opacity { animation: Animation { duration: 300; } }
 	}
 	
