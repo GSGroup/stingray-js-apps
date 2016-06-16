@@ -1,4 +1,4 @@
-import PreviewPlayerButton;
+import "PreviewPlayerButton.qml";
 
 Item {
 	id: previewItem;

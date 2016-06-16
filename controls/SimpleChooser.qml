@@ -1,4 +1,4 @@
-import SimpleChooserDelegate
+import "SimpleChooserDelegate.qml"
 
 Item {
 	id: chooserItem;

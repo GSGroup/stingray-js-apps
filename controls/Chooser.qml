@@ -1,6 +1,6 @@
-import "controls/utils.js" as utils;
+import controls.Utils;
 import controls.HighlightListView;
-import ChooserDelegate;
+import "ChooserDelegate.qml";
 
 Item {
 	id: chooserItem;
@@ -132,7 +132,7 @@ Item {
 			}
 			GradientStop {
 				position: 1;
-				color: utils.setAlpha((chooserItem.activeFocus ? colorTheme.activeFocusColor : colorTheme.focusablePanelColor), 0);
+				color: Utils.setAlpha((chooserItem.activeFocus ? colorTheme.activeFocusColor : colorTheme.focusablePanelColor), 0);
 				Behavior on color { animation: Animation { duration: 300;} }
 			}
 		}
@@ -155,7 +155,7 @@ Item {
 			orientation: Horizontal;
 			GradientStop {
 				position: 0;
-				color: utils.setAlpha((chooserItem.activeFocus ? colorTheme.activeFocusColor : colorTheme.focusablePanelColor), 0);
+				color: Utils.setAlpha((chooserItem.activeFocus ? colorTheme.activeFocusColor : colorTheme.focusablePanelColor), 0);
 				Behavior on color { animation: Animation { duration: 300;} }
 			}
 			GradientStop {

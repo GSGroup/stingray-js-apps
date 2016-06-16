@@ -2,5 +2,31 @@
 	"id": "controls",
 	"display": { "name": "Controls library" },
 	"purpose": "library",
-	"system": true
+	"system": true,
+	
+	"imports": [
+		["Button",				"Button.qml"],
+		["Edit",				"Edit.qml"],
+		["Chooser",				"Chooser.qml"],
+		["LabeledChooser",		"LabeledChooser.qml"],
+		["SimpleChooser",		"SimpleChooser.qml"],
+		
+		["FloatingText",		"FloatingText.qml"],
+		["FocusablePanel",		"FocusablePanel.qml"],
+		["Panel",				"Panel.qml"],
+		["SelectionGradient",	"SelectionGradient.qml"],
+		
+		["HighlightGridView",	"HighlightGridView.qml"],
+		["HighlightListView",	"HighlightListView.qml"],
+		
+		["Player",				"Player.qml"],
+		["PreviewPlayer",		"PreviewPlayer.qml"],
+		
+		["Spinner",				"Spinner.qml"],
+		
+		["Media",				"media.js"],
+		["UrlParse",			"urlparse.js"],
+		["Utils",				"utils.js"],
+		["VkAPI",				"vkapi.js"]
+	]
 }
