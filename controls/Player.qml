@@ -1,7 +1,7 @@
-import "controls/media.js" as media;
+import controls.Media;
 import controls.Spinner;
-import controls.TopLabel;
-import controls.PlaybackProgress;
+import "TopLabel.qml";
+import "PlaybackProgress.qml";
 
 Item {
 	id: playerObj;
@@ -230,7 +230,7 @@ Item {
 	}
 
 	onCompleted: {
-		this.player = new media.Player()
+		this.player = new Media.Player()
 		this.paused = false
 		this.isStopped = true
 	}

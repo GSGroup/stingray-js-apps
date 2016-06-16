@@ -1,7 +1,7 @@
-import CatalogPage;
-import CatalogView;
-import CategoryMenu;
-import IviPlayer;
+import "CatalogPage.qml";
+import "CatalogView.qml";
+import "CategoryMenu.qml";
+import "IviPlayer.qml";
 
 import controls.Spinner;
 

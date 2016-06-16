@@ -1,4 +1,4 @@
-import SpinnerRectangle;
+import "SpinnerRectangle.qml";
 
 Item {
 	id: spinner;

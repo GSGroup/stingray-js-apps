@@ -1,4 +1,4 @@
-import Chooser
+import Chooser;
 
 ActivePanel {
 	id: labeledChooserItem;

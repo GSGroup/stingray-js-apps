@@ -1,4 +1,4 @@
-import controls.ProgressBar;
+import "ProgressBar.qml";
 
 Item {
 	id: playbackProgressItem;
