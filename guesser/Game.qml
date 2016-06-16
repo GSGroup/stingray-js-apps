@@ -1,6 +1,4 @@
-import controls.MainText;
 import controls.Button;
-import controls.PageStack;
 import StartPage;
 import Card;
 import FirstIterationPage;

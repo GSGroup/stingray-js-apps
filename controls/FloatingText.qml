@@ -1,5 +1,3 @@
-import controls.MainText;
-
 Item {
 	id: floatingTextItem;
 	property string text;

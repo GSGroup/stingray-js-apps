@@ -1,7 +1,6 @@
 import Player
 import Enemy
 import GameCell
-import controls.BigText
 
 Rectangle {
 	color: "#003";

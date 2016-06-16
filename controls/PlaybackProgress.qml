@@ -1,4 +1,3 @@
-import controls.PlaybackControl;
 import controls.ProgressBar;
 
 Item {
@@ -89,8 +88,12 @@ Item {
 				}
 			}
 
-			PlaybackControl {
+			Image {
 				id: rwBtn;
+				height: parent.height;
+				width: 80;
+				focus: true;
+				color: activeFocus ? colorTheme.focusedTextColor : colorTheme.activeTextColor;
 				source: "res/apps/player/ico_rw.png";
 
 				onSelectPressed:		{ this.press(); }
@@ -109,8 +112,12 @@ Item {
 				}
 			}
 
-			PlaybackControl {
+			Image {
 				id: playBtn;
+				height: parent.height;
+				width: 80;
+				focus: true;
+				color: activeFocus ? colorTheme.focusedTextColor : colorTheme.activeTextColor;
 				source: "res/apps/player/ico_" + (!playbackProgressItem.isPlaying ? "play" : "pause") + ".png";
 
 				onSelectPressed: {
@@ -119,8 +126,12 @@ Item {
 				}
 			}
 
-			PlaybackControl {
+			Image {
 				id: ffBtn;
+				height: parent.height;
+				width: 80;
+				focus: true;
+				color: activeFocus ? colorTheme.focusedTextColor : colorTheme.activeTextColor;
 				source: "res/apps/player/ico_ff.png";
 
 				onSelectPressed:		{ this.press(); }

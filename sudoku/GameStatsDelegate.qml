@@ -1,5 +1,3 @@
-import controls.SmallText
-
 Item {
                 width:150;
                 height:modelIndex>2?40:0;

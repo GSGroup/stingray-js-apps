@@ -1,6 +1,4 @@
 import "controls/media.js" as media;
-import controls.MainText;
-import controls.SmallText;
 import controls.Spinner;
 import controls.TopLabel;
 import controls.PlaybackProgress;

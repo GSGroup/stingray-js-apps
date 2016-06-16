@@ -1,4 +1,3 @@
-import controls.BigText
 import "generator.js" as generator;
 
 HintDigitChooserDelegate:Rectangle {

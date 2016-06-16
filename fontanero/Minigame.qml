@@ -1,4 +1,3 @@
-import controls.BigText
 import MinigameDelegate
 
 Item {

@@ -1,5 +1,3 @@
-import controls.BigText;
-
 Item {
 	id: topLabelProto;
 	property string text;
