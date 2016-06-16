@@ -1,9 +1,6 @@
 import "ui.js" as ui
 import "game.js" as game
 import controls.Button
-import controls.SmallText
-import controls.MainText
-import controls.BigText
 import Minigame
 import CellDelegate
 

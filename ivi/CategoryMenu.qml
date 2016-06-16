@@ -1,5 +1,4 @@
 import CategoryDelegate;
-import controls.SmallText;
 import controls.Panel;
 
 import "js/constants.js" as constants;

@@ -1,7 +1,4 @@
 import "engine.js" as engine;
-import controls.BigText
-import controls.SmallText
-import controls.MainText
 import BoardModel
 import CellDelegate
 

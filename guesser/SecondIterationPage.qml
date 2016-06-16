@@ -1,4 +1,3 @@
-import controls.MainText
 import controls.HighlightListView
 
 Item {

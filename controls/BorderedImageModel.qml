@@ -1,3 +1,0 @@
-ListModel {
-	property string source;
-}

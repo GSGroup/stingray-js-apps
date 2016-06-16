@@ -1,7 +1,4 @@
 import controls.Button;
-import controls.MainCaptionText;
-import controls.SmallText;
-import controls.TinyText;
 
 import "js/constants.js" as constants;
 

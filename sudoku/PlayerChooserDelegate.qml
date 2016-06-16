@@ -1,5 +1,3 @@
-import controls.SmallText
-
 Item {
 	width: 99;
 	height: 28;
