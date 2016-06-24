@@ -87,7 +87,6 @@ Item {
 		}
 		
 		onKeyPressed: {
-			log("Index : ", this.currentIndex, " wraps : ", this.keyNavigationWraps);
 			if(key == "Left")
 				if (!chooserItem.keyNavigationWraps && this.currentIndex == 0)
 					return false
