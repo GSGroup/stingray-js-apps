@@ -6,6 +6,7 @@ Player.prototype = {
 	constructor: Player,
 
 	finished: function () { },
+	started: function () { },
 
 	playUrl: function(url, stream) {
 		if (this.session)
@@ -17,6 +18,7 @@ Player.prototype = {
 			this.session = app.MediaPlayer().PlayMedia(url);
 
 		this.connections.push(this.session.OnFinished.connect(this._onFinished.bind(this)));
+		this.connections.push(this.session.OnStarted.connect(this._onStarted.bind(this)));
 	},
 
 	pause: function(pause) {
@@ -92,6 +94,10 @@ Player.prototype = {
 		if (!mi)
 			return null;
 		return mi.GetDuration().GetMilliseconds();
+	},
+
+	_onStarted: function() {
+		this.started();
 	},
 
 	_onFinished: function() {
