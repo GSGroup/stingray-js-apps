@@ -24,7 +24,10 @@ Item {
 	property string title;
 	clip: true;
 
-	VideoOverlay { anchors.fill: parent; }
+	VideoOverlay {
+		anchors.fill: parent;
+		visible: !playerObj.isStopped;
+	}
 
 	AlphaControl { alphaFunc: MaxAlpha; }
 
@@ -211,14 +214,23 @@ Item {
 		this.currentUrl = url
 		this.visible = true
 		this.player.stop()
-		this.player.playUrl(url, stream)
-		this.isStopped = false
-		this.paused = false
+
+		this.paused    = false
+
 		var self = playerObj;
+
+		this.player.started = function () {
+			log("Player: play is started")
+			if (self.isStopped)
+				self.isStopped = false;
+		};
+
 		this.player.finished = function () {
 			self.stop()
 			self.finished()
 		};
+
+		this.player.playUrl(url, stream)
 	}
 
 	function playUrl(url) {
