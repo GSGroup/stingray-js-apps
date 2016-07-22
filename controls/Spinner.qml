@@ -8,7 +8,7 @@ Item {
 
 	property int activeSpinner: 0;
 	property int radius: 45;
-	property int circleRadius: 12;
+	property int circlesRadius: 12;
 	property int circlesCount: 8;
 	property int speed: 50;
 
@@ -56,9 +56,9 @@ Item {
 
 	onCompleted: {
 		for (var i = 0; i < this.circlesCount; i ++) {
-			this.children[i].radius = this.circleRadius;
-			this.children[i].x = Math.cos(Math.PI * i / this.circlesCount * 2) * (this.radius - this.circleRadius) - this.circleRadius + this.radius;
-			this.children[i].y = Math.sin(Math.PI * i / this.circlesCount * 2) * (this.radius - this.circleRadius) - this.circleRadius + this.radius;
+			this.children[i].radius = this.circlesRadius;
+			this.children[i].x = Math.cos(Math.PI * i / this.circlesCount * 2) * (this.radius - this.circlesRadius) - this.circlesRadius + this.radius;
+			this.children[i].y = Math.sin(Math.PI * i / this.circlesCount * 2) * (this.radius - this.circlesRadius) - this.circlesRadius + this.radius;
 			this.children[i].active = 0;
 		}
 	}
