@@ -2,11 +2,12 @@ import "SpinnerRectangle.qml";
 
 Item {
 	id: spinner;
-	width: 90;
+	width: radius * 2;
 	height: width;
 	anchors.centerIn: parent;
 
 	property int activeSpinner: 0;
+	property int radius: 45;
 	property int circleRadius: 12;
 	property int circlesCount: 8;
 	property int speed: 50;
@@ -56,8 +57,8 @@ Item {
 	onCompleted: {
 		for (var i = 0; i < this.circlesCount; i ++) {
 			this.children[i].radius = this.circleRadius;
-			this.children[i].x = Math.cos(Math.PI * i / this.circlesCount * 2) * (this.width / 2 - this.circleRadius) - this.circleRadius + this.width / 2;
-			this.children[i].y = Math.sin(Math.PI * i / this.circlesCount * 2) * (this.width / 2 - this.circleRadius) - this.circleRadius + this.width / 2;
+			this.children[i].x = Math.cos(Math.PI * i / this.circlesCount * 2) * (this.radius - this.circleRadius) - this.circleRadius + this.radius;
+			this.children[i].y = Math.sin(Math.PI * i / this.circlesCount * 2) * (this.radius - this.circleRadius) - this.circleRadius + this.radius;
 			this.children[i].active = 0;
 		}
 	}
