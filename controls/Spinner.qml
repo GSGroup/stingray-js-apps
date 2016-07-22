@@ -55,7 +55,7 @@ Item {
 
 	onCompleted: {
 		for (var i = 0; i < this.circlesCount; i ++) {
-			this.children[i].circleRadius = this.circleRadius;
+			this.children[i].radius = this.circleRadius;
 			this.children[i].x = Math.cos(Math.PI * i / this.circlesCount * 2) * (this.width / 2 - this.circleRadius) - this.circleRadius + this.width / 2;
 			this.children[i].y = Math.sin(Math.PI * i / this.circlesCount * 2) * (this.width / 2 - this.circleRadius) - this.circleRadius + this.width / 2;
 			this.children[i].active = 0;
