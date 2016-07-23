@@ -10,7 +10,7 @@ Item {
 	property int radius: 45;
 	property int circlesRadius: 12;
 	property int circlesCount: 8;
-	property int speed: 100;
+	property int interval: 100;
 
 
 	collapseEmptyItems: false;
@@ -37,7 +37,7 @@ Item {
 
 	Timer {
 		id: timer;
-		interval: spinner.speed;
+		interval: spinner.interval;
 		onTriggered: {
 			spinner.activeSpinner = (spinner.activeSpinner + 1) % (spinner.circlesCount);
 			spinner.UpdateRectangle();
