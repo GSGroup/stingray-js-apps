@@ -4,7 +4,6 @@ Item {
 	id: spinner;
 	width: radius * 2;
 	height: width;
-	anchors.centerIn: parent;
 
 	property int activeSpinner: 0;
 	property int radius: 45;
