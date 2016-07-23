@@ -10,7 +10,7 @@ Item {
 	property int radius: 45;
 	property int circlesRadius: 12;
 	property int circlesCount: 8;
-	property int speed: 50;
+	property int speed: 100;
 
 
 	collapseEmptyItems: false;
