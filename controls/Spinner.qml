@@ -26,7 +26,7 @@ Item {
 
 	function UpdateRectangle() {
 		var o = 1;
-		for (var i = this.activeSpinner; o >= 0; i = i == 0 ? spinner.circlesCount - 1 : i-1, o -= 0.15) {
+		for (var i = this.activeSpinner; o >= 0; i = i === 0 ? spinner.circlesCount - 1 : i-1, o -= 0.15) {
 			this.children[i].active = o;
 		}
 	}
