@@ -43,7 +43,6 @@ Item {
 
 	onVisibleChanged: {
 		if (this.visible) {
-			spinner.activeSpinner = 0;
 			timer.restart();
 		} else {
 			timer.stop();
