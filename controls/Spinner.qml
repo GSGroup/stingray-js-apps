@@ -32,7 +32,7 @@ Item {
 	}
 
 	Timer {
-		id: timer;
+		id: spinnerUpdateTimer;
 		interval: spinner.interval;
 		onTriggered: {
 			spinner.activeSpinner = (spinner.activeSpinner + 1) % (spinner.circlesCount);
@@ -43,9 +43,9 @@ Item {
 
 	onVisibleChanged: {
 		if (this.visible) {
-			timer.restart();
+			spinnerUpdateTimer.restart();
 		} else {
-			timer.stop();
+			spinnerUpdateTimer.stop();
 		}
 	}
 
