@@ -11,9 +11,6 @@ Item {
 	property int circlesCount: 8;
 	property int interval: 100;
 
-
-	collapseEmptyItems: false;
-
 	SpinnerRectangle{}	SpinnerRectangle{}
 	SpinnerRectangle{}	SpinnerRectangle{}
 	SpinnerRectangle{}	SpinnerRectangle{}
