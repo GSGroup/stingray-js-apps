@@ -7,6 +7,7 @@ Item {
 	property alias currentIndex: listView.currentIndex;
 	property alias count: listView.count;
 	property alias contentWidth: listView.contentWidth;
+	property alias model: listView.model;
 	property alias backgroundVisible: chooserBackground.visible;
 	property alias inverted: chooserBackground.inverted;
 	property bool showArrows: true;
