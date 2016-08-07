@@ -9,11 +9,6 @@ Item {
 		anchors.verticalCenter: parent.verticalCenter;
 		anchors.left: parent.left;
 		anchors.leftMargin: 10;
-		anchors.topMargin: 10;
-		anchors.bottomMargin: 10;
-		anchors.top: parent.top;
-		anchors.bottom: parent.bottom;
-		fillMode: PreserveAspectFit;
 		opacity: parent.focused ? 1 : 0.65;
 		visible: model.icon != undefined ? source != "" : false;
 		color: parent.parent.activeFocus ? colorTheme.focusedTextColor : parent.focused ? colorTheme.activeTextColor : colorTheme.textColor;
