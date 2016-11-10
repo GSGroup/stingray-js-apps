@@ -6,6 +6,8 @@ ActivePanel {
 	property alias count: chooserItem.listView.count;
 	property alias contentWidth: chooserItem.listView.contentWidth;
 	property alias model: chooserItem.listView.model;
+	property Color textColor;
+	textColor: activeFocus ? colorTheme.focusedTextColor : colorTheme.textColor;
 	property bool keyNavigationWraps: true;
 	property string text;
 	property int chooserWidth: 520; 
@@ -17,7 +19,7 @@ ActivePanel {
 		anchors.left: parent.left;
 		anchors.leftMargin: 20;
 		anchors.verticalCenter: parent.verticalCenter;
-		color: parent.activeFocus ? colorTheme.focusedTextColor : colorTheme.textColor;
+		color: labeledChooserItem.textColor;
 
 		Behavior on color { animation: Animation { duration: 300; } }
 	}
