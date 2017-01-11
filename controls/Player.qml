@@ -5,7 +5,7 @@ import "PlaybackProgress.qml";
 
 Item {
 	id: playerObj;
-	signal finished(state);
+	signal finished();
 	signal stopped();
 	property bool paused: false;
 	property bool isStopped: false;
