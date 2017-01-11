@@ -5,6 +5,7 @@ import "PlaybackProgress.qml";
 
 Item {
 	id: playerObj;
+	signal started();
 	signal finished();
 	signal stopped();
 	property bool paused: false;
@@ -221,8 +222,8 @@ Item {
 
 		this.player.started = function () {
 			log("Player: play is started");
-			if (self.isStopped)
-				self.isStopped = false;
+			self.isStopped = false;
+			self.started()
 		};
 
 		this.player.finished = function () {
