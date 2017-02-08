@@ -99,14 +99,20 @@ Item {
 				onLeftPressed:			{ this.press(); }
 
 				press: {
-					if (playbackProgressItem.gear < 0)
-						playbackProgressItem.gear -= 2;
-					else
-						playbackProgressItem.gear = -1;
-					var val = playbackProgressItem.seekProgress + playbackProgressItem.gear * 1000;
-					playbackProgressItem.seekProgress = val > 0 ? val : 0;
 					seekTimer.restart();
 					hideTimer.restart();
+
+					if (playbackProgressItem.gear < 0) {
+						playbackProgressItem.gear -= 2;
+					} else {
+						if (playbackProgressItem.gear == 0)
+							playbackProgressItem.seekProgress = playbackProgressItem.progress;
+
+						playbackProgressItem.gear = -1;
+					}
+
+					var val = playbackProgressItem.seekProgress + playbackProgressItem.gear * 1000;
+					playbackProgressItem.seekProgress = val > 0 ? val : 0;
 					playbackProgressItem.updateSeekText();
 				}
 			}
@@ -137,15 +143,20 @@ Item {
 				onRightPressed:			{ this.press(); }
 
 				press: {
-					if (playbackProgressItem.gear > 0)
+					seekTimer.restart();
+					hideTimer.restart();
+
+					if (playbackProgressItem.gear > 0) {
 						playbackProgressItem.gear += 2;
-					else
+					} else {
+						if (playbackProgressItem.gear == 0)
+							playbackProgressItem.seekProgress = playbackProgressItem.progress;
+
 						playbackProgressItem.gear = 1;
+					}
 
 					var val = playbackProgressItem.seekProgress + playbackProgressItem.gear * 1000;
 					playbackProgressItem.seekProgress = val < playbackProgressItem.duration ? val : playbackProgressItem.duration;
-					seekTimer.restart();
-					hideTimer.restart();
 					playbackProgressItem.updateSeekText();
 				}
 			}
