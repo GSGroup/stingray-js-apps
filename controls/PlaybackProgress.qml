@@ -5,7 +5,6 @@ Item {
 	signal playPressed;
 	signal pausePressed;
 	signal seeked(position);
-	property bool hideable: false;
 	property bool isPlaying: false;
 	property int gear: 0;
 	property int duration;
@@ -18,7 +17,7 @@ Item {
 	Timer {
 		id: hideTimer;
 		interval: 5000;
-		running: playbackProgressItem.visible && playbackProgressItem.hideable;
+		running: playbackProgressItem.visible;
 
 		onTriggered: { playbackProgressItem.visible = false; }
 	}
@@ -265,12 +264,6 @@ Item {
 		this.gear = 0;
 		this.seekProgress = 0;
 		seekTimer.stop();
-		hideTimer.restart();
-	}
-
-	onHideableChanged: {
-		if (!hideable)
-			this.visible = true;
 	}
 
 	onVisibleChanged: {

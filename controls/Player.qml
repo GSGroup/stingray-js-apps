@@ -56,7 +56,7 @@ Item {
 			duration: playerObj.duration;
 			curTimeStr: playerObj.curTimeStr;
 			fullTimeStr: playerObj.fullTimeStr;
-			visible: false;
+			visible: playerObj.visible;
 
 			onPlayPressed: {
 				if (playerObj.currentUrl)
