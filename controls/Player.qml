@@ -5,7 +5,8 @@ import "PlaybackProgress.qml";
 
 Item {
 	id: playerObj;
-	signal finished(state);
+	signal started();
+	signal finished();
 	signal stopped();
 	property bool paused: false;
 	property bool isStopped: false;
@@ -55,7 +56,7 @@ Item {
 			duration: playerObj.duration;
 			curTimeStr: playerObj.curTimeStr;
 			fullTimeStr: playerObj.fullTimeStr;
-			visible: false;
+			visible: playerObj.visible;
 
 			onPlayPressed: {
 				if (playerObj.currentUrl)
@@ -172,78 +173,78 @@ Item {
 		return true;
 	}
 
-	pause: { this.togglePlay() }
+	pause: { this.togglePlay(); }
 
 	abort: {
-		this.player.stop()
-		this.paused = false
-		this.isStopped = true
-		playerObj.stopped()
+		this.player.stop();
+		this.paused = false;
+		this.isStopped = true;
+		playerObj.stopped();
 	}
 
 	function togglePlay() {
-		this.paused = !this.paused
-		this.player.pause(this.paused)
+		this.paused = !this.paused;
+		this.player.pause(this.paused);
 	}
 
 	function seekAbs(position) {
-		this.player.seekAbs(position)
+		this.player.seekAbs(position);
 	}
 
 	function seek(msDelta) {
 		if (!this.paused)
-			this.player.seek(msDelta)
+			this.player.seek(msDelta);
 	}
 
 	function stop() {
-		log("Player: stop playing")
-		this.player.stop()
-		this.visible = false
-		this.isStopped = true
+		log("Player: stop playing");
+		this.player.stop();
+		this.visible = false;
+		this.isStopped = true;
 	}
 
 	function doPlayUrl(url, stream) {
 		if (this.paused && url == this.currentUrl) {
-			this.togglePlay()
-			return
+			this.togglePlay();
+			return;
 		}
-		log("Player: start playing " + url)
-		loadSpinner.show = false
-		loadSpinner.show = true
+		log("Player: start playing " + url);
+		loadSpinner.show = false;
+		loadSpinner.show = true;
 		spinnerTimer.restart();
-		this.currentUrl = url
-		this.visible = true
-		this.player.stop()
+		this.currentUrl = url;
+		this.visible = true;
+		this.player.stop();
 
-		this.paused    = false
+		this.paused = false;
 
 		var self = playerObj;
 
 		this.player.started = function () {
-			log("Player: play is started")
-			if (self.isStopped)
-				self.isStopped = false;
+			log("Player: play is started");
+			self.isStopped = false;
+			self.started()
 		};
 
 		this.player.finished = function () {
-			self.stop()
-			self.finished()
+			self.stop();
+			self.finished();
 		};
 
-		this.player.playUrl(url, stream)
+		this.player.playUrl(url, stream);
 	}
 
 	function playUrl(url) {
-		this.doPlayUrl(url, null)
+		this.doPlayUrl(url, null);
 	}
 
 	function playUrl(url, stream) {
-		this.doPlayUrl(url, stream)
+		this.doPlayUrl(url, stream);
 	}
 
 	onCompleted: {
-		this.player = new Media.Player()
-		this.paused = false
-		this.isStopped = true
+		this.player = new Media.Player();
+		this.paused = false;
+		this.isStopped = true;
 	}
 }

@@ -5,7 +5,6 @@ Item {
 	signal playPressed;
 	signal pausePressed;
 	signal seeked(position);
-	property bool hideable: false;
 	property bool isPlaying: false;
 	property int gear: 0;
 	property int duration;
@@ -18,7 +17,7 @@ Item {
 	Timer {
 		id: hideTimer;
 		interval: 5000;
-		running: playbackProgressItem.visible && playbackProgressItem.hideable;
+		running: playbackProgressItem.visible;
 
 		onTriggered: { playbackProgressItem.visible = false; }
 	}
@@ -100,14 +99,20 @@ Item {
 				onLeftPressed:			{ this.press(); }
 
 				press: {
-					if (playbackProgressItem.gear < 0)
-						playbackProgressItem.gear -= 2;
-					else
-						playbackProgressItem.gear = -1;
-					var val = playbackProgressItem.seekProgress + playbackProgressItem.gear * 1000;
-					playbackProgressItem.seekProgress = val > 0 ? val : 0;
 					seekTimer.restart();
 					hideTimer.restart();
+
+					if (playbackProgressItem.gear < 0) {
+						playbackProgressItem.gear -= 2;
+					} else {
+						if (playbackProgressItem.gear == 0)
+							playbackProgressItem.seekProgress = playbackProgressItem.progress;
+
+						playbackProgressItem.gear = -1;
+					}
+
+					var val = playbackProgressItem.seekProgress + playbackProgressItem.gear * 1000;
+					playbackProgressItem.seekProgress = val > 0 ? val : 0;
 					playbackProgressItem.updateSeekText();
 				}
 			}
@@ -138,15 +143,20 @@ Item {
 				onRightPressed:			{ this.press(); }
 
 				press: {
-					if (playbackProgressItem.gear > 0)
+					seekTimer.restart();
+					hideTimer.restart();
+
+					if (playbackProgressItem.gear > 0) {
 						playbackProgressItem.gear += 2;
-					else
+					} else {
+						if (playbackProgressItem.gear == 0)
+							playbackProgressItem.seekProgress = playbackProgressItem.progress;
+
 						playbackProgressItem.gear = 1;
+					}
 
 					var val = playbackProgressItem.seekProgress + playbackProgressItem.gear * 1000;
 					playbackProgressItem.seekProgress = val < playbackProgressItem.duration ? val : playbackProgressItem.duration;
-					seekTimer.restart();
-					hideTimer.restart();
 					playbackProgressItem.updateSeekText();
 				}
 			}
@@ -265,12 +275,6 @@ Item {
 		this.gear = 0;
 		this.seekProgress = 0;
 		seekTimer.stop();
-		hideTimer.restart();
-	}
-
-	onHideableChanged: {
-		if (!hideable)
-			this.visible = true;
 	}
 
 	onVisibleChanged: {
