@@ -17,8 +17,8 @@ Player.prototype = {
 		else
 			this.session = app.MediaPlayer().PlayMedia(url);
 
-		this.connections.push(this.session.OnFinished.connect(this._onFinished.bind(this)));
-		this.connections.push(this.session.OnStarted.connect(this._onStarted.bind(this)));
+		this.connections.push(this.session.OnFinished().connect(this._onFinished.bind(this)));
+		this.connections.push(this.session.OnStarted().connect(this._onStarted.bind(this)));
 	},
 
 	pause: function(pause) {
