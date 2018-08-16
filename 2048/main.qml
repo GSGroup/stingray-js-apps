@@ -1,4 +1,4 @@
-import Game;
+import "Game.qml";
 
 Application {
 	id: g2048;
