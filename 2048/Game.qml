@@ -1,5 +1,5 @@
-import CellDelegate;
-import MenuDelegate
+import "CellDelegate.qml";
+import "MenuDelegate.qml";
 import "engine.js" as engine;
 
 Rectangle {
