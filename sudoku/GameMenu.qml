@@ -1,7 +1,8 @@
-import controls.Button
-import controls.FocusablePanel
-import EditPlayerNamePanel
-import PlayerChooser
+import controls.Button;
+import controls.FocusablePanel;
+import "DifficultyChooser.qml";
+import "EditPlayerNamePanel.qml";
+import "PlayerChooser.qml";
 
 Item {
         id: mainMenu;

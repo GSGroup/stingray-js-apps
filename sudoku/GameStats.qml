@@ -1,3 +1,5 @@
+import "GameStatsDelegate.qml";
+
 Item {
         id: gameStats;
 		property int difficulty;
