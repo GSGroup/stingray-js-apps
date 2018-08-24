@@ -1,5 +1,5 @@
 import controls.Edit;
-import HelpStringDelegate
+import "HelpStringDelegate.qml";
 
 Item {
 	id: gameOverBox;

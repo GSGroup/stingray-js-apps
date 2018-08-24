@@ -1,4 +1,4 @@
-import DifficultyChooserDelegate
+import "DifficultyChooserDelegate.qml";
 
 Item {
 	id: dChooserItem;
