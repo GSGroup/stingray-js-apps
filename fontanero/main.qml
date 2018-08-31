@@ -1,8 +1,8 @@
 import "ui.js" as ui
 import "game.js" as game
-import controls.Button
-import Minigame
-import CellDelegate
+import controls.Button;
+import "Minigame.qml";
+import "CellDelegate.qml";
 
 Application {
 	id: fontanero;
