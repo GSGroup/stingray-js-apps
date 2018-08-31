@@ -1,4 +1,4 @@
-import MinigameDelegate
+import "MinigameDelegate.qml";
 
 Item {
 	id: minigameItem;
