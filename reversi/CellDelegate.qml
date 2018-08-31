@@ -1,5 +1,5 @@
-import Cursor
-import ReversiDisc
+import "Cursor.qml";
+import "ReversiDisc.qml";
 
 Rectangle {
 	width: parent.cellHeight;
