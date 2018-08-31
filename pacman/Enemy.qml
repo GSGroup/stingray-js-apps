@@ -1,4 +1,4 @@
-import GameObject
+import "GameObject.qml";
 
 GameObject {
 	id: ghost;
