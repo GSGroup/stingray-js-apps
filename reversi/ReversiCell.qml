@@ -1,13 +1,8 @@
-/*ReversiDisc : Rectangle {
-	radius: 15;
-	height: 50;
-	borderWidth: 2;
-	Behavior on width { animation: Animation { duration: 200; } }
-}*/
+import "ReversiDisc.qml";
 
 ReversiCell : Rectangle {
 	id: cellItem;
-	disc: "Empty";
+	property enum { Empty, Black, White } disc: Empty;
 
 	width: 65;
 	height: 65;
@@ -21,7 +16,7 @@ ReversiCell : Rectangle {
 		color: "#fff";
 		borderColor: "#000";
 		anchors.centerIn: parent;
-		width: cellItem.disc == "White" ? 50: 0;
+		width: cellItem.disc == ReversiCell::Disc::White? 50: 0;
 	}
 
 	ReversiDisc {
@@ -29,6 +24,7 @@ ReversiCell : Rectangle {
 		color: "#000";
 		borderColor: "#fff";
 		anchors.centerIn: parent;
-		width: cellItem.disc == "Black" ? 50: 0;
+		width: cellItem.disc == ReversiCell::Disc::Black? 50: 0;
 	}
 }
+

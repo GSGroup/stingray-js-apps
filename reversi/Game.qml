@@ -1,6 +1,6 @@
 import "engine.js" as engine;
-import BoardModel
-import CellDelegate
+import "BoardModel.qml";
+import "CellDelegate.qml";
 
 Rectangle {
 	id: game;
