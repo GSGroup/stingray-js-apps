@@ -1,5 +1,5 @@
 import controls.Button;
-import CardGrid; 
+import "CardGrid.qml";
 
 Item {
 	id: startPageProto;

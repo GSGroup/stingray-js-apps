@@ -1,4 +1,4 @@
-import Card;
+import "Card.qml";
 
 Item {
 	id: cardGridProto;

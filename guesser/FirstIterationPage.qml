@@ -1,4 +1,5 @@
-import controls.HighlightListView
+import controls.HighlightListView;
+import "CardGrid.qml";
 
 Item {
 	id: firstPageProto;

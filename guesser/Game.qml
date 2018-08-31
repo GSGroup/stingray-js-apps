@@ -1,8 +1,8 @@
 import controls.Button;
-import StartPage;
-import Card;
-import FirstIterationPage;
-import SecondIterationPage;
+import "StartPage.qml";
+import "Card.qml";
+import "FirstIterationPage.qml";
+import "SecondIterationPage.qml";
 
 Rectangle {
 	id: gameProto;
