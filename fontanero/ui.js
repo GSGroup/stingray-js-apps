@@ -359,7 +359,7 @@ this.win = function() {
 	text += "\n\nGot $" + hero.cash + "\nBeing dead " + hero.dead + " times.\n\nProgrammed by:\nVladimir Menshakov\n&\nVladimir Zhuravlev\n\n©2010-2013"
 	this.winPanel.text = text;
 	this.winPanel.visible = true;
-	this.winPanel.focus = true;
+	this.winPanel.setFocus();
 }.bind(this);
 
 this.intro = function() {
