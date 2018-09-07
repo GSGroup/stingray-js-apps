@@ -19,14 +19,14 @@ Item {
 	place: {
 		for (var i = 0; i < this.size; ++i)
 		{
-			var y = i * this.cardArea
+			var y = i * this.cardArea;
 			for (var j = 0; j < this.size; ++j)
 			{
-				var card = this.children[i * this.size + j]
+				var card = this.children[i * this.size + j];
 
-				card.show = true
-				card.y = y
-				card.x = j * this.cardArea
+				card.show = true;
+				card.y = y;
+				card.x = j * this.cardArea;
 			}
 		}
 	}

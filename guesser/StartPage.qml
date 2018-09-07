@@ -25,21 +25,21 @@ Item {
 	function cardIsAdded(cards, number) {
 		for (var i in cards)
 			if (cards[i].number == number)
-				return true
-		return false 
+				return true;
+		return false;
 	}
 
 	init: {
 		for (var i in cards.children)
 		{
-			var rand = Math.floor(Math.random() * gameProto.cardsCount)
+			var rand = Math.floor(Math.random() * gameProto.cardsCount);
 			while (this.cardIsAdded(cards.children, rand))
-				rand = Math.floor(Math.random() * gameProto.cardsCount)
+				rand = Math.floor(Math.random() * gameProto.cardsCount);
 
-			var card = cards.children[i]
-			card.number = rand 
-			card.cardNumber = cards.children[i].number.toString()
+			var card = cards.children[i];
+			card.number = rand;
+			card.cardNumber = cards.children[i].number.toString();
 		}
-		cards.place()
+		cards.place();
 	}
 }
