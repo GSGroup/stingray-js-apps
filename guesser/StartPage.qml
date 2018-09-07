@@ -13,6 +13,9 @@ Item {
 	Button {
 		id: startButton;
 
+		height: 45;
+		width: 200;
+
 		anchors.top: cards.bottom;
 		anchors.horizontalCenter: cards.horizontalCenter;
 		anchors.rightMargin: 60;

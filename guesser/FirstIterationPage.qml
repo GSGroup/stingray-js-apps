@@ -40,7 +40,7 @@ Item {
 
 	MainText {
 		anchors.bottom: cardsFirst.top;
-		anchors.bottomMargin: 20;
+		anchors.bottomMargin: 15;
 		anchors.horizontalCenter: cardsFirst.horizontalCenter;
 		anchors.rightMargin: 40;
 
