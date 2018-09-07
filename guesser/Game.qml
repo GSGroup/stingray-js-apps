@@ -1,5 +1,5 @@
 import controls.Button;
-import "Card.qml";
+import "FinalPage.qml";
 import "FirstIterationPage.qml";
 import "SecondIterationPage.qml";
 import "StartPage.qml";
@@ -52,12 +52,10 @@ Rectangle {
 			}
 		}
 
-		Card {
+		FinalPage {
 			id: result;
 
-			anchors.centerIn: parent;
-
-			onXDone: { result.show = true; }
+			onAccepted: { gameProto.init(); }
 		}
 	}
 
