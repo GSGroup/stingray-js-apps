@@ -46,7 +46,7 @@ Item {
 
 				onRunningChanged: {
 				if (!this.running)
-					image.show = cardProto.show
+					image.show = cardProto.show;
 				}
 			}
 		}
@@ -62,7 +62,7 @@ Item {
 
 			onRunningChanged: {
 				if (!this.running)
-					cardProto.xDone()
+					cardProto.xDone();
 			}
 		}
 	}

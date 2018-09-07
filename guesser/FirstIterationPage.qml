@@ -53,23 +53,23 @@ Item {
 	function cardIsAdded(cards, number) {
 		for (var i in cards)
 			if (cards[i].number == number)
-				return true
-		return false 
+				return true;
+		return false;
 	}
 
 	show: {
 		for (var i in cardsFirst.children)
 		{
-			var card = cardsFirst.children[i]
-			var rand = Math.floor(Math.random() * gameProto.cards.length)
+			var card = cardsFirst.children[i];
+			var rand = Math.floor(Math.random() * gameProto.cards.length);
 			while (this.cardIsAdded(cardsFirst.children, gameProto.cards[rand].number))
-				rand = Math.floor(Math.random() * gameProto.cards.length)
-			var gameCard = gameProto.cards[rand]
-			card.number = gameCard.number
-			card.cardNumber = gameCard.cardNumber
-			card.show = true
+				rand = Math.floor(Math.random() * gameProto.cards.length);
+			var gameCard = gameProto.cards[rand];
+			card.number = gameCard.number;
+			card.cardNumber = gameCard.cardNumber;
+			card.show = true;
 		}
 
-		cardsFirst.place()
+		cardsFirst.place();
 	}
 }

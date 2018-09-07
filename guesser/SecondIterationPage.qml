@@ -46,32 +46,32 @@ Item {
 	function cardIsAdded(cards, number) {
 		for (var i in cards)
 			if (cards[i].number == number)
-				return true
-		return false 
+				return true;
+		return false;
 	}
 
 	function show(col) {
 		for (var i = 0; i < col.length; ++i)
 		{
-			var card = cardsSecond.children[i]
-			var gameCard = col[i]
-			card.number = gameCard.number
-			card.cardNumber = gameCard.cardNumber
-			card.show = true
+			var card = cardsSecond.children[i];
+			var gameCard = col[i];
+			card.number = gameCard.number;
+			card.cardNumber = gameCard.cardNumber;
+			card.show = true;
 		}
 
 		for (var i = col.length; i < cardsSecond.children.length; ++i)
 		{
-			var card = cardsSecond.children[i]
-			var rand = Math.floor(Math.random() * gameProto.cards.length)
+			var card = cardsSecond.children[i];
+			var rand = Math.floor(Math.random() * gameProto.cards.length);
 			while (this.cardIsAdded(cardsSecond.children, gameProto.cards[rand].number))
-				rand = Math.floor(Math.random() * gameProto.cards.length)
-			var gameCard = gameProto.cards[rand]
-			card.number = gameCard.number
-			card.cardNumber = gameCard.cardNumber
-			card.show = true
+				rand = Math.floor(Math.random() * gameProto.cards.length);
+			var gameCard = gameProto.cards[rand];
+			card.number = gameCard.number;
+			card.cardNumber = gameCard.cardNumber;
+			card.show = true;
 		}
 
-		cardsSecond.place()
+		cardsSecond.place();
 	}
 }
