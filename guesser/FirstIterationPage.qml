@@ -3,21 +3,26 @@ import "CardGrid.qml";
 
 Item {
 	id: firstPageProto;
+
 	signal choosed(col);
+
 	anchors.fill: parent;
 
 	HighlightListView {
 		anchors.fill: cardsFirst;
 		anchors.leftMargin: -8;
 		anchors.topMargin: -8;
+
 		orientation: ListView.Horizontal;
 		spacing: 40;
+
 		model: ListModel {
 			ListElement {}
 			ListElement {}
 			ListElement {}
 			ListElement {}
 		}
+
 		delegate: Item {
 			width: 100;
 			height: parent.height;
@@ -34,12 +39,13 @@ Item {
 	}
 
 	MainText {
-		color: "#fff";
-		text: "В какой колонке карта?";
 		anchors.bottom: cardsFirst.top;
 		anchors.bottomMargin: 20;
 		anchors.horizontalCenter: cardsFirst.horizontalCenter;
 		anchors.rightMargin: 40;
+
+		color: "#fff";
+		text: "В какой колонке карта?";
 	}
 
 	CardGrid { id: cardsFirst; }
@@ -52,7 +58,8 @@ Item {
 	}
 
 	show: {
-		for (var i in cardsFirst.children) {
+		for (var i in cardsFirst.children)
+		{
 			var card = cardsFirst.children[i]
 			var rand = Math.floor(Math.random() * gameProto.cards.length)
 			while (this.cardIsAdded(cardsFirst.children, gameProto.cards[rand].number))

@@ -3,21 +3,26 @@ import "CardGrid.qml";
 
 Item {
 	id: secondPageProto;
+
 	signal cardSelected(card);
+
 	anchors.fill: parent;
 
 	HighlightListView {
 		anchors.fill: cardsFirst;
 		anchors.leftMargin: -8;
 		anchors.topMargin: -8;
+
 		orientation: ListView.Horizontal;
 		spacing: 40;
+
 		model: ListModel {
 			ListElement {}
 			ListElement {}
 			ListElement {}
 			ListElement {}
 		}
+
 		delegate: Item {
 			width: 100;
 			height: parent.height;
@@ -27,12 +32,13 @@ Item {
 	}
 
 	MainText {
-		color: "#fff";
-		text: "В какой колонке карта?";
 		anchors.bottom: cardsSecond.top;
 		anchors.bottomMargin: 20;
 		anchors.horizontalCenter: cardsFirst.horizontalCenter;
 		anchors.rightMargin: 40;
+
+		color: "#fff";
+		text: "В какой колонке карта?";
 	}
 
 	CardGrid { id: cardsSecond; }
@@ -45,7 +51,8 @@ Item {
 	}
 
 	function show(col) {
-		for (var i = 0; i < col.length; ++i) {
+		for (var i = 0; i < col.length; ++i)
+		{
 			var card = cardsSecond.children[i]
 			var gameCard = col[i]
 			card.number = gameCard.number
@@ -53,7 +60,8 @@ Item {
 			card.show = true
 		}
 
-		for (var i = col.length; i < cardsSecond.children.length; ++i) {
+		for (var i = col.length; i < cardsSecond.children.length; ++i)
+		{
 			var card = cardsSecond.children[i]
 			var rand = Math.floor(Math.random() * gameProto.cards.length)
 			while (this.cardIsAdded(cardsSecond.children, gameProto.cards[rand].number))
