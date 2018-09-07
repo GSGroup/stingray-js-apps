@@ -1,21 +1,24 @@
 import controls.Button;
-import "StartPage.qml";
 import "Card.qml";
 import "FirstIterationPage.qml";
 import "SecondIterationPage.qml";
+import "StartPage.qml";
 
 Rectangle {
 	id: gameProto;
+
 	property int cardsCount: 54;
 	property int guessedCard: -1;
 	property variant cards;
+
 	anchors.fill: mainWindow;
+
 	color: "#004010";
-	//color: "#00C853";
 	focus: true;
 
 	PageStack {
 		id: gameStates;
+
 		anchors.fill: parent;
 
 		StartPage {
@@ -51,11 +54,10 @@ Rectangle {
 
 		Card {
 			id: result;
+
 			anchors.centerIn: parent;
 
-			onXDone: {
-				result.show = true;
-			}
+			onXDone: { result.show = true; }
 		}
 	}
 

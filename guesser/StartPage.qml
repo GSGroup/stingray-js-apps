@@ -3,21 +3,23 @@ import "CardGrid.qml";
 
 Item {
 	id: startPageProto;
+
 	signal accepted(cards);
+
 	anchors.fill: parent;
 
 	CardGrid { id: cards; }
 
 	Button {
 		id: startButton;
+
 		anchors.top: cards.bottom;
 		anchors.horizontalCenter: cards.horizontalCenter;
 		anchors.rightMargin: 60;
+
 		text: "Продолжить";
 		
-		onSelectPressed: {
-			startPageProto.accepted(cards.children);
-		}
+		onSelectPressed: { startPageProto.accepted(cards.children); }
 	}
 
 	function cardIsAdded(cards, number) {
@@ -28,7 +30,8 @@ Item {
 	}
 
 	init: {
-		for (var i in cards.children) {
+		for (var i in cards.children)
+		{
 			var rand = Math.floor(Math.random() * gameProto.cardsCount)
 			while (this.cardIsAdded(cards.children, rand))
 				rand = Math.floor(Math.random() * gameProto.cardsCount)
