@@ -8,6 +8,16 @@ Item {
 
 	anchors.fill: parent;
 
+	MainText {
+		anchors.bottom: cards.top;
+		anchors.bottomMargin: 15;
+		anchors.horizontalCenter: cards.horizontalCenter;
+		anchors.rightMargin: 40;
+
+		color: "#fff";
+		text: "Загадайте карту и нажмите кнопку «Продолжить»";
+	}
+
 	CardGrid { id: cards; }
 
 	Button {
