@@ -203,7 +203,7 @@ Item {
 	}
 
 	show: {
-		ePlayerNamePanelItem.opacity = 1;
+		ePlayerNamePanelItem.visible = true;
 		edit.text = "";
 		edit.setFocus();
 	}

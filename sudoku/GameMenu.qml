@@ -229,7 +229,7 @@ Item {
                 id: pNameEdit;
                 anchors.top: playerChooser.bottom;
                 anchors.horizontalCenter: parent.horizontalCenter;
-                opacity: 0.01;
+				visible: false;
 
                 onAccepted: {
                         log("set player name");
