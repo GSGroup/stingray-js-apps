@@ -26,7 +26,7 @@ Rectangle {
     BigText {
             id: difficultyIndicator;
             anchors.top: parent.top;
-			anchors.topMargin: 85;
+			anchors.topMargin: 68;
 			anchors.horizontalCenter: difficultyHeader.horizontalCenter;
 			color:"#813722";
             text: parent.difficulty;
@@ -35,9 +35,9 @@ Rectangle {
 	BigText {
 			id:difficultyHeader;
 			anchors.bottom: difficultyIndicator.top;
-			anchors.bottomMargin: 30;
+			anchors.bottomMargin: 18;
 			anchors.right: parent.right;
-			anchors.rightMargin: 95;
+			anchors.rightMargin: 105;
 			anchors.horizontalCenter: difficultyIndicator.horizontalCenter;
 			color: "#813722";
 			text:"level:";
@@ -46,7 +46,7 @@ Rectangle {
 	FixedStringTimer {
 			id: timeIndicator;
 			anchors.top: difficultyIndicator.bottom;
-			anchors.topMargin: 93;
+			anchors.topMargin: 78;
 			anchors.horizontalCenter: difficultyIndicator.horizontalCenter;
 
 			Timer {
@@ -54,14 +54,14 @@ Rectangle {
 				repeat: true;
 				interval: 1000;
 				onTriggered: {
-					++timeIndicator.sec ;
+					++timeIndicator.sec;
 				}
 			}
 	}
 //1
 	BigText {
 			anchors.bottom: timeIndicator.top;
-			anchors.bottomMargin: 30;
+			anchors.bottomMargin: 15;
 			anchors.horizontalCenter: difficultyIndicator.horizontalCenter;
 			color: "#813722";
 			text:"time:"
