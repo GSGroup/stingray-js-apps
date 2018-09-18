@@ -54,7 +54,7 @@ Rectangle {
 				repeat: true;
 				interval: 1000;
 				onTriggered: {
-					++timeIndicator.sec;
+					++timeIndicator.seconds;
 				}
 			}
 	}
@@ -304,7 +304,7 @@ Rectangle {
     function gameReset(){
         this.timeIndicator.timer.restart();
         this.timeIndicator.timer.stop();
-        this.timeIndicator.sec = 0;
+        this.timeIndicator.seconds = 0;
         this.gameView.model.reset();
         this.gameView.fillModel(this.diffInt==1);
 		if(this.diffInt==1) this.setHints();
