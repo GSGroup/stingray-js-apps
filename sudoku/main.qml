@@ -1,7 +1,9 @@
-import GameMenu;
-import Game;
-import GameStats;
-import Help;
+import "Game.qml";
+import "GameMenu.qml";
+import "GameOverBox.qml";
+import "GameStats.qml";
+import "GameSubMenu.qml";
+import "Help.qml";
 
 Application {
 	    id: sudokuApplication;
