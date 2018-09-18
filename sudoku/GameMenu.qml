@@ -23,24 +23,26 @@ Item {
 		}
 		
 		SmallText {
-			id:playerLabel;
-			anchors.top: parent.top;
-			anchors.topMargin: 12;
-			anchors.left: parent.left;
-			anchors.leftMargin: 5;
+			id: playerLabel;
+
+			anchors.top: mainMenuTheme.top;
+			anchors.topMargin: 253;
+			anchors.left: mainMenuTheme.left;
+			anchors.leftMargin: 440;
+
 			color: "#581B18";
 			text: "PLAYER:";
 		}
 
         PlayerChooser {
                 id: playerChooser;
-//                anchors.left: parent.left;
-				width: 400;
-//				anchors.horizontalCenter: parent.horizontalCenter;
-                anchors.left: parent.left;
-				anchors.leftMargin: 55;
-                anchors.top: parent.top;
-				anchors.topMargin: -2;
+
+				width: 350;
+
+                anchors.left: mainMenuTheme.left;
+				anchors.leftMargin: 518;
+                anchors.top: mainMenuTheme.top;
+				anchors.topMargin: 246;
 				
 				onDownPressed: {
 					difficultyChooser.setFocus();
@@ -59,9 +61,11 @@ Item {
 
 		SmallText {
 			id:levelLabel;
+
 			anchors.horizontalCenter: playerLabel.horizontalCenter;
 			anchors.top: playerLabel.bottom;
-			anchors.topMargin: 45;
+			anchors.topMargin: 42;
+
 			color: "#581B18";
 			text: "LEVEL:";
 		}
@@ -70,14 +74,13 @@ Item {
         DifficultyChooser {
                 id: difficultyChooser;
 
-                anchors.top: playerChooser.bottom ; 
-				anchors.topMargin: 18;
-                anchors.left: parent.left;
-			   	anchors.leftMargin: 55;
-				width: 400;
+				width: 350;
 
+				anchors.left: mainMenuTheme.left;
+				anchors.leftMargin: 518;
+                anchors.top: mainMenuTheme.top;
+				anchors.topMargin: 315;
 
-                
 				onUpPressed: {
 					playerChooser.setFocus();
 				}
@@ -97,7 +100,7 @@ Item {
 			id: newGameButton;
 			anchors.top: difficultyChooser.bottom;
 			anchors.horizontalCenter: parent.horizontalCenter;
-			anchors.topMargin: 15;
+			anchors.topMargin: 10;
 //			anchors.bottomMargin: 10;
 			width: 250;
 			height: 50;
