@@ -98,15 +98,15 @@ Item {
 				
         ListView {
             id:listView;
-            anchors.top: gameStats.headerItem.bottom;
-//            anchors.left: parent.left;
-//            anchors.right: parent.right;
+
+			anchors.top: gameStats.headerItem.bottom;
 			anchors.horizontalCenter: headerItem.horizontalCenter;
             width: 200;
-            height: 700;
+            height: 250;
             model: ListModel { }
             delegate: GameStatsDelegate {}
-			}
+		}
+
         function load(data){
 				this.stats=[];
 				var statistic;
