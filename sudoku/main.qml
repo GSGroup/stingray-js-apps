@@ -92,6 +92,7 @@ Application {
 				onBackPressed: {
 					pageStack.currentIndex = 2;
 					this.timeIndicator.timer.stop();
+					this.gameHide();
 					gameSubMenu.setFocus();
                     gameSubMenu.playerInfoText.text="player: "+game.player;
 					gameSubMenu.gameInfoText.text=game.timeIndicator.text;
@@ -218,4 +219,14 @@ Application {
 			    }
 		    }
         }
+
+		startGame: {
+			pageStack.currentIndex = 0;
+		}
+
+		onVisibleChanged: {
+			if (visible) {
+				this.startGame();
+			}
+		}
 }
