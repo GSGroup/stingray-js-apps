@@ -1,0 +1,6 @@
+{
+	"id": "tetris",
+	"display": { "name": "tetris", "icon": "tetris.png" },
+	"purpose": "application"
+}
+
