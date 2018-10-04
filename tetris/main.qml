@@ -1,5 +1,7 @@
+import "Game.qml";
+
 Application {
-	id: gtetris;
+	id: gTetris;
 
 	name: "tetris";
 	displayname: "tetris";
@@ -12,5 +14,9 @@ Application {
 		color: colorTheme.backgroundColor;
 
 		focus: true;
+
+		Game {
+			focus:true;
+		}
 	}
 }
