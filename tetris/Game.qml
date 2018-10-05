@@ -23,7 +23,6 @@ Rectangle {
 		width: game.cellSize*6;
 		height: game.infoSize;
 
-
 		anchors.top: parent.top;
 		anchors.left:parent.right;
 		anchors.bottomMargin: game.space;
@@ -41,8 +40,8 @@ Rectangle {
 			text: qsTr("Далее");
 			color: "#FFFFFF";
 			font: smallFont;
-		}
 
+		}
 	}
 
 	Rectangle {
@@ -101,35 +100,34 @@ Rectangle {
 		id: backMenu;
 
 		width: 0;
-		height: game.cellSize * 6 + game.space * 4;
+		height: game.cellSize * 8;
 
 		anchors.centerIn: parent;
 
-		focus: true;
+		focus: false;
 		color: parent.color;
 		radius: 5;
+		clip: true;
 
 		visible: false;
 		opacity: 0.7;
-
-		clip: true;
 
 		Behavior on width { animation: Animation { duration: 300; } }
 
 		ListView {
 			id: backGrid;
 
-			property int cellHeight: game.cellSize * 2;
 			property int cellWidth: game.cellSize * 6;
+			property int cellHeight: game.cellSize * 8;
 
-			width: game.cellSize;
-			height: game.cellSize * 4;
+			width: game.cellSize * 6;
+			height: game.cellSize * 8;
 
 			anchors.horizontalCenter: parent.horizontalCenter;
 			anchors.top: parent.top;
-			anchors.topMargin: game.cellSize / 2;
 
 			focus: true;
+			//clip: true;
 
 			visible: parent.width > 0;
 
@@ -145,19 +143,27 @@ Rectangle {
 				switch (backGrid.currentIndex) {
 				case 0:
 					backMenu.width = 0;
-					game.setFocus();
+					backMenu.focus = false;
+					backMenu.visible = false;
 					break;
 				case 1:
 					backMenu.width = 0;
-					game.setFocus();
+					backMenu.focus = false;
+					backMenu.visible = false;
 					break;
 				case 2:
 					help.visible = true;
-					help.setFocus();
+					help.focus = true;
 					backGrid.visible = false;
 					return true;
 				}
 			}
+
+				onKeyPressed: {
+					if (key == "8") {
+						return true;
+					}
+				}
 		}
 
 		BigText {
@@ -171,8 +177,10 @@ Rectangle {
 			horizontalAlignment: Text.AlignHCenter;
 
 			color: "#FFFFFF";
-			focus: true;
-			text: qsTr ("Use your arrow keys to move the Tetriminos (game pieces). The aim is to create a horizontal line of ten units without gaps by moving Tetriminos and rotating it by 90 degree. When such a line is created, it gets destroyed and any block above the deleted line will fall.");
+			focus: false;
+			text: qsTr ("Use your arrow keys to move the Tetriminos (game pieces). The aim is to create a horizontal line of ten units without gaps" +
+						" by moving Tetriminos and rotating it by 90 degree. When such a line is created, it gets destroyed and any block above the" +
+						" deleted line will fall.");
 			font: smallFont;
 
 			visible: false;
@@ -182,8 +190,8 @@ Rectangle {
 			onKeyPressed: {
 				if (key == "Select") {
 					this.visible = false;
+					this.focus = false;
 					backGrid.visible = true;
-					backMenu.show();
 					return true;
 				}
 			}
@@ -191,17 +199,68 @@ Rectangle {
 
 		function show() {
 			this.currentIndex = 0;
-			this.visible = true;
 			this.width = game.width * 2;
-			this.setFocus();
+			this.focus = true;
+			this.visible = true;
+
 		}
+
 	}
 
+	Rectangle {
+		id: pauseRect;
+
+		width: game.width;
+		height: game.cellSize * 6 + game.space * 4;
+
+		anchors.centerIn: parent;
+
+		focus: true;
+		color: parent.color;
+		radius: 5;
+
+		visible: false;
+		opacity: 1.0;
+
+		Text {
+			anchors.centerIn: parent;
+
+			text: qsTr("Пауза");
+			color: "#FFFFFF";
+			font: smallFont;
+
+		}
+
+		function show() {
+			this.visible = true;
+			this.focus = true;
+		}
+
+		onKeyPressed: {
+			if (key == "8") {
+				this.visible = false;
+				this.focus   = false;
+
+				return true;
+			}
+
+			if (key == "Select") {
+				return true;
+			}
+		}
+
+	}
 
 	onKeyPressed: {
 		if (key == "Select") {
 			backMenu.show();
 			return true;
 		}
+
+		if (key == "8") {
+			pauseRect.show();
+			return true;
+		}
 	}
+
 }
