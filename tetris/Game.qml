@@ -1,15 +1,22 @@
 import "MenuDelegate.qml";
+import "CellDelegate.qml";
 
 Rectangle {
 	id: game;
 
+	property int glassWidth: 10;
+	property int glassHigh: 20;
+	property real dropTime: 2000.0;
+
 	property int space: 6;
-	property int cellSize: (safeArea.height - space * 4) / 20;
+	property int cellSize: (safeArea.height - space * 4) / glassHigh;
+	property int spaceBlocks:2;
+
 	property int infoMarginSize: space * 6;
 	property int infoSize: cellSize * 6;
 
-	width: cellSize * 10;
-	height: safeArea.height - space * 4;
+	width: cellSize * glassWidth;
+	height: cellSize * glassHigh;
 
 	anchors.centerIn: parent;
 
@@ -28,10 +35,9 @@ Rectangle {
 		anchors.bottomMargin: game.space;
 		anchors.leftMargin: game.infoMarginSize;
 
-		color:"#000000";
-		radius: 5;
-
 		Text {
+			id:textNext;
+
 			anchors.left: parent.left;
 			anchors.top: parent.top;
 			anchors.topMargin: game.space;
@@ -41,6 +47,64 @@ Rectangle {
 			color: "#FFFFFF";
 			font: smallFont;
 
+			visible:true;
+		}
+
+		Item {
+			id: nextTetraminos;
+
+			anchors.top: textNext.bottom;
+			anchors.topMargin: game.space;
+
+			focus: false;
+
+			visible: true;
+
+			CellDelegate{} CellDelegate{} CellDelegate{} CellDelegate{}
+			CellDelegate{} CellDelegate{} CellDelegate{} CellDelegate{}
+			CellDelegate{} CellDelegate{} CellDelegate{} CellDelegate{}
+			CellDelegate{} CellDelegate{} CellDelegate{} CellDelegate{}
+
+			Timer {
+				id: nextBlockTimer;
+
+				interval: game.dropTime;
+
+				running:true;
+
+				repeat:true;
+
+				onTriggered: {
+
+					var colors = ["#F95234","#63A928","#3D11E4","#E265E7","#F3D36D"];
+					var indexColor = Math.floor(Math.random() * 4);
+
+					for(var i = 0; i< 16; i++)
+					{
+						nextTetraminos.children[i].innerRect.color = colors[indexColor];
+					}
+
+					var j = [0x44C0, 0x8E00, 0x6440, 0x0E20];
+					var l = [0x4460, 0x0E80, 0xC440, 0x2E00];
+					var o = [0xCC00, 0xCC00, 0xCC00, 0xCC00];
+					var i = [0x0F00, 0x2222, 0x00F0, 0x4444];
+					var s = [0x06C0, 0x8C40, 0x6C00, 0x4620];
+					var t = [0x0E40, 0x4C40, 0x4E00, 0x4640];
+					var z = [0x0C60, 0x4C80, 0xC600, 0x2640];
+
+					var pieces = [i,j,l,o,s,t,z];
+					var indexBlock = Math.floor(Math.random() * 3);
+					var next = pieces[Math.floor(Math.random() * 7)];
+					var nextBlock = next[indexBlock];
+				}
+			}
+
+			onCompleted: {
+				for (var i = 0; i < 16; i ++) {
+					this.children[i].rect.x = (i % 4) * (game.cellSize + game.spaceBlocks);
+					this.children[i].rect.y = Math.floor(i / 4 ) * (game.cellSize + game.spaceBlocks);
+				}
+			}
 		}
 	}
 
@@ -127,7 +191,6 @@ Rectangle {
 			anchors.top: parent.top;
 
 			focus: true;
-			//clip: true;
 
 			visible: parent.width > 0;
 
@@ -202,9 +265,7 @@ Rectangle {
 			this.width = game.width * 2;
 			this.focus = true;
 			this.visible = true;
-
 		}
-
 	}
 
 	Rectangle {
@@ -228,7 +289,6 @@ Rectangle {
 			text: qsTr("Пауза");
 			color: "#FFFFFF";
 			font: smallFont;
-
 		}
 
 		function show() {
@@ -248,7 +308,6 @@ Rectangle {
 				return true;
 			}
 		}
-
 	}
 
 	onKeyPressed: {
@@ -262,5 +321,4 @@ Rectangle {
 			return true;
 		}
 	}
-
 }
