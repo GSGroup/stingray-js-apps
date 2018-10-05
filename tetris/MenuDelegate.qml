@@ -1,6 +1,6 @@
 Item {
 	width: parent.cellWidth;
-	height: parent.cellHeight;
+	height: parent.cellHeight / 3;
 
 	anchors.horizontalCenter: parent.horizontalCenter;
 
@@ -11,7 +11,7 @@ Item {
 
 		anchors.centerIn: parent;
 
-		color: parent.activeFocus ? "#ADADAD":"#949494";
+		color: parent.activeFocus ? "#ADADAD":"#525252";
 		radius: 10;
 
 		Text {
