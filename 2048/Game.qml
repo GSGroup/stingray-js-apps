@@ -1,5 +1,5 @@
-import CellDelegate;
-import MenuDelegate
+import "CellDelegate.qml";
+import "MenuDelegate.qml";
 import "engine.js" as engine;
 
 Rectangle {
@@ -94,7 +94,7 @@ Rectangle {
 					}
 					if (!engine.check()) {
 						restartMenu.visible = true;
-						restartMenu.focus = true;
+						restartMenu.setFocus();
 					}
 					fieldView.draw();
 					return true;
@@ -216,7 +216,7 @@ Rectangle {
 
 	Rectangle {
 		id: restartMenu;
-		focus: false;
+		focus: true;
 		visible: false;
 		anchors.fill: parent;
 		radius: 10;
@@ -247,11 +247,11 @@ Rectangle {
 		}
 
 		onSelectPressed: {
+			restartMenu.visible = false;
 			engine.clear();
 			fieldView.draw();
+			fieldView.setFocus();
 			scoreText.val = 0;
-			restartMenu.visible = false;
-			restartMenu.focus = false;
 		}
 	}
 
