@@ -1,8 +1,8 @@
 import "ui.js" as ui
 import "game.js" as game
-import controls.Button
-import Minigame
-import CellDelegate
+import controls.Button;
+import "Minigame.qml";
+import "CellDelegate.qml";
 
 Application {
 	id: fontanero;
@@ -128,7 +128,7 @@ Application {
 		onVisibleChanged: {
 			if (!visible)
 			{
-				fontaneroInput.focus = true;
+				fontaneroInput.setFocus();
 				ui.panel();
 			}
 		}
@@ -141,6 +141,7 @@ Application {
 			if (!visible) {
 				ui.map.hero.add_cash(this.bonus);
 				this.bonus = 0;
+				fontaneroInput.setFocus();
 			}
 		}
 	}
@@ -209,7 +210,7 @@ Application {
 	gameOver: {
 		log("game over");
 		restartDialog.visible = true;
-		restartDialog.continueButton.focus = true;
+		restartDialog.continueButton.setFocus();
 	}
 
 	startGame: {
@@ -226,7 +227,7 @@ Application {
 		ui.intro();
 		ui.map.generate();
 		ui.panel();
-		fontanero.focus = true;
+		fontanero.setFocus();
 	}
 
 	onCompleted: {

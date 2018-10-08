@@ -1,4 +1,4 @@
-import MinigameDelegate
+import "MinigameDelegate.qml";
 
 Item {
 	id: minigameItem;
@@ -32,6 +32,8 @@ Item {
 		width: cellWidth * parent.size;
 		height: cellHeight * parent.size;
 		anchors.centerIn: parent;
+
+		focus: true;
 
 		model: minigameModel;
 		delegate: MinigameDelegate {}
@@ -94,7 +96,7 @@ Item {
 		minigameView.currentIndex = n * n / 2;
 		bonusTimer.running = true;
 		this.visible = true;
-		minigameView.focus = true;
+		minigameView.setFocus();
 	}
 
 	onKeyPressed: {
