@@ -1,6 +1,6 @@
-import Player
-import Enemy
-import GameCell
+import "Player.qml";
+import "Enemy.qml";
+import "GameCell.qml";
 
 Rectangle {
 	color: "#003";
