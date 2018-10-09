@@ -58,6 +58,8 @@ Rectangle{
 				anchors.top: parent.top;
 				anchors.left:parent.left;
 
+				color: "#05090C";
+
 				Item {
 					id: nextTetraminos;
 
@@ -103,9 +105,22 @@ Rectangle{
 							var z = [0x0C60, 0x4C80, 0xC600, 0x2640];
 
 							var pieces = [i,j,l,o,s,t,z];
-							var indexBlock = Math.floor(Math.random() * 3);
+							var indexBlockView = Math.floor(Math.random() * 3);
 							var next = pieces[Math.floor(Math.random() * 7)];
-							var nextBlock = next[indexBlock];
+							var nextBlock = next[indexBlockView];
+
+							var bit;
+							var indexBlock = 0;
+							for(bit = 0x8000 ; bit > 0 ; bit = bit >> 1) {
+								if (nextBlock & bit) {
+									nextTetraminos.children[indexBlock].innerRect.visible = true;
+								}
+								else
+								{
+									nextTetraminos.children[indexBlock].innerRect.visible = false;
+								}
+								indexBlock++;
+							}
 						}
 					}
 
