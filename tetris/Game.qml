@@ -1,5 +1,6 @@
 import "MenuDelegate.qml";
 import "CellDelegate.qml";
+import "engine.js" as engine;
 
 Rectangle{
 	id: mainWindow;
@@ -18,11 +19,18 @@ Rectangle{
 
 		property int glassWidth: 10;
 		property int glassHigh: 20;
-		property real dropTime: 2000.0;
+		property real dropTime: 16000.0;
 
 		property int space: 6;
-		property int spaceBetweenBlocks:2;
+		property int spaceBetweenBlocks: 1 ;
 		property int blockSize: (safeArea.height - space * 4) / glassHigh;
+
+		property int currentBlock: 0x44C0;
+		property int nextBlock: 0x4460;
+
+		property string colorGradientStart: "#E49C8B";
+		property string colorGradientEnd: "#CE573D";
+		//TODO:ввести текущий и цвет в инфоблоке
 
 		width: blockSize * glassWidth;
 		height: blockSize * glassHigh;
@@ -32,6 +40,62 @@ Rectangle{
 		color: "#3F4042";
 		focus: true;
 		radius: 5;
+
+		Item {
+			id: movingTetraminos;
+
+			x: game.width / 2 - rect.width * 2;
+			y: 0;
+
+			focus: false;
+
+			visible: true;
+
+			CellDelegate{ } CellDelegate{ } CellDelegate{ } CellDelegate{ }
+			CellDelegate{ } CellDelegate{ } CellDelegate{ } CellDelegate{ }
+			CellDelegate{ } CellDelegate{ } CellDelegate{ } CellDelegate{ }
+			CellDelegate{ } CellDelegate{ } CellDelegate{ } CellDelegate{ }
+
+			Timer {
+				id: animTimer;
+
+				interval: game.dropTime / (game.glassHigh - 4);
+				running: true;
+				repeat: true;
+
+				//TOFIX:нужна адекватная проверка
+				onTriggered: {
+					var noCollisions = true;
+
+					for (var j = 15; j > 0; j --) {
+						if( game.hasCollisions( movingTetraminos.children[j].rect.x,
+												movingTetraminos.children[j].rect.y + game.blockSize,
+												movingTetraminos.children[j].rect.value ) ) {
+							noCollisions = false;
+							break;
+						}
+					}
+
+					if( noCollisions ){
+						for (var i = 15; i > 0; i --)
+							movingTetraminos.children[i].rect.y += game.blockSize;
+					}
+				}
+			}
+
+			onCompleted: {
+				for (var k = 0; k < 16; k ++) {
+					this.children[k].rect.color = game.color;
+					this.children[k].rect.x = (k % 4) * game.blockSize ;
+					this.children[k].rect.y = Math.floor(k / 4 ) * game.blockSize;
+
+					this.children[k].innerRect.blockGradient.blockGradientStart.color = game.colorGradientStart;
+					this.children[k].innerRect.blockGradient.blockGradientEnd.color = game.colorGradientEnd;
+				}
+
+				game.drawMovingBlock();
+			}
+		}
 
 		Rectangle {
 			id:infoRect;
@@ -52,8 +116,8 @@ Rectangle{
 			Rectangle {
 				id:nextBlockViewRect;
 
-				width: game.blockSize * 6 + game.spaceBetweenBlocks * 3;
-				height: game.blockSize * 6 + game.spaceBetweenBlocks * 3;
+				width: game.blockSize * 6;
+				height: game.blockSize * 6;
 
 				anchors.top: parent.top;
 				anchors.left:parent.left;
@@ -75,60 +139,12 @@ Rectangle{
 					CellDelegate{ } CellDelegate{ } CellDelegate{ } CellDelegate{ }
 					CellDelegate{ } CellDelegate{ } CellDelegate{ } CellDelegate{ }
 
-					Timer {
-						id: nextBlockTimer;
-
-						interval: game.dropTime;
-						running: true;
-						repeat: true;
-
-						onTriggered: {
-
-							// TODO:вынести в отдельную функцию
-
-							var colorGradientStart = ["#E49C8B","#E297D8","#E7CD6E","#B2C016","#7298E3"];
-							var colorGradientEnd = ["#CE573D","#D151BD","#D9B42F","#919C11","#366DD9"];
-							var colorIndex = Math.floor(Math.random() * 4);
-
-							for(var i = 0; i< 16; i++)
-							{
-								nextTetraminos.children[i].innerRect.blockGradient.blockGradientStart.color = colorGradientStart[colorIndex];
-								nextTetraminos.children[i].innerRect.blockGradient.blockGradientEnd.color = colorGradientEnd[colorIndex];
-							}
-
-							var j = [0x44C0, 0x8E00, 0x6440, 0x0E20];
-							var l = [0x4460, 0x0E80, 0xC440, 0x2E00];
-							var o = [0xCC00, 0xCC00, 0xCC00, 0xCC00];
-							var i = [0x0F00, 0x2222, 0x00F0, 0x4444];
-							var s = [0x06C0, 0x8C40, 0x6C00, 0x4620];
-							var t = [0x0E40, 0x4C40, 0x4E00, 0x4640];
-							var z = [0x0C60, 0x4C80, 0xC600, 0x2640];
-
-							var pieces = [i,j,l,o,s,t,z];
-							var indexBlockView = Math.floor(Math.random() * 3);
-							var next = pieces[Math.floor(Math.random() * 7)];
-							var nextBlock = next[indexBlockView];
-
-							var bit;
-							var indexBlock = 0;
-							for(bit = 0x8000 ; bit > 0 ; bit = bit >> 1) {
-								if (nextBlock & bit) {
-									nextTetraminos.children[indexBlock].innerRect.visible = true;
-								}
-								else
-								{
-									nextTetraminos.children[indexBlock].innerRect.visible = false;
-								}
-								indexBlock++;
-							}
-						}
-					}
-
 					onCompleted: {
 						for (var i = 0; i < 16; i ++) {
-							this.children[i].rect.x = (i % 4) * (game.blockSize + game.spaceBetweenBlocks);
-							this.children[i].rect.y = Math.floor(i / 4 ) * (game.blockSize + game.spaceBetweenBlocks);
+							this.children[i].rect.x = (i % 4) * game.blockSize;
+							this.children[i].rect.y = Math.floor(i / 4 ) * game.blockSize;
 						}
+						game.drawNextBlockView();
 					}
 				}
 			}
@@ -326,6 +342,74 @@ Rectangle{
 				pauseRect.show();
 				return true;
 			}
+		}
+
+		Timer {
+			id: nextBlockViewTimer;
+
+			interval: game.dropTime;
+			running: true;
+			repeat: true;
+
+			onTriggered: {
+				game.getNewBlock();
+				game.getNewColor();
+				game.drawNextBlockView();
+			}
+		}
+
+		function getNewColor () {
+			engine.randomColor();
+
+			this.colorGradientStart = engine.getGradientStart();
+			this.colorGradientEnd = engine.getGradientEnd();
+		}
+
+		function getNewBlock () {
+			this.nextBlock = engine.randomBlock();
+		}
+
+		function drawNextBlockView () {
+			for(var i = 0; i< 16; i++)
+			{
+				nextTetraminos.children[i].innerRect.blockGradient.blockGradientStart.color = game.colorGradientStart;
+				nextTetraminos.children[i].innerRect.blockGradient.blockGradientEnd.color = game.colorGradientEnd;
+			}
+
+			var bit;
+			var indexBlock = 0;
+			for(bit = 0x8000 ; bit > 0 ; bit = bit >> 1) {
+				if (game.nextBlock & bit) {
+					nextTetraminos.children[indexBlock].rect.value = 1;
+				}
+				else
+				{
+					nextTetraminos.children[indexBlock].rect.value = 0;
+				}
+				indexBlock++;
+			}
+		}
+
+		function drawMovingBlock () {
+			var bit;
+			var indexBlock = 0;
+			for(bit = 0x8000 ; bit > 0 ; bit = bit >> 1) {
+				if (game.currentBlock & bit) {
+					movingTetraminos.children[indexBlock].rect.value = 1;
+				}
+				else
+				{
+					movingTetraminos.children[indexBlock].rect.value = 0;
+				}
+				indexBlock++;
+			}
+		}
+
+		//FIXME: проверка не только границ
+		function hasCollisions (x,y,value) {
+			if ( ( x < 0 || x > game.width || y > game.height - game.blockSize) && value > 0)
+				return true;
+			return false;
 		}
 	}
 }
