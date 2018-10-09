@@ -33,11 +33,13 @@ Item {
 
 	Timer {
 		id: spinnerUpdateTimer;
+
 		interval: spinner.interval;
+		repeat: true;
+
 		onTriggered: {
 			spinner.activeSpinner = (spinner.activeSpinner + 1) % (spinner.circlesCount);
 			spinner.UpdateRectangle();
-			this.restart();
 		}
 	}
 
