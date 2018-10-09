@@ -18,7 +18,6 @@ Rectangle {
 		width: game.blockSize;
 		height: game.blockSize;
 
-		color: "#FCE27E";
 		focus: false;
 
 		visible: true;
@@ -35,7 +34,7 @@ Rectangle {
 
 				position: 0;
 
-				color: "#FDB2A5";
+				color: "#05090C";
 			}
 
 			GradientStop {
@@ -43,7 +42,7 @@ Rectangle {
 
 				position: 1;
 
-				color: "#F95234";
+				color: "#05090C";
 			}
 		}
 	}
