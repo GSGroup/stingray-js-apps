@@ -1,8 +1,10 @@
 Rectangle {
 	id: rect;
 
-	width: game.blockSize + game.spaceBetweenBlocks * 2;
-	height: game.blockSize + game.spaceBetweenBlocks * 2;
+	property int value: 0;
+
+	width: game.blockSize ;
+	height: game.blockSize;
 
 	color: "#05090C";
 	focus: false;
@@ -15,17 +17,17 @@ Rectangle {
 		x: game.spaceBetweenBlocks;
 		y: game.spaceBetweenBlocks;
 
-		width: game.blockSize;
-		height: game.blockSize;
+		width: game.blockSize - game.spaceBetweenBlocks * 2;
+		height: game.blockSize - game.spaceBetweenBlocks * 2;
 
 		focus: false;
 
-		visible: true;
+		visible: rect.value > 0;
 
 		Gradient {
 			id: blockGradient;
 
-			width: game.blockSize;
+			width: game.blockSize - game.spaceBetweenBlocks * 2;
 
 			anchors.fill: parent;
 
@@ -34,7 +36,7 @@ Rectangle {
 
 				position: 0;
 
-				color: "#05090C";
+				color: "#E49C8B";
 			}
 
 			GradientStop {
@@ -42,7 +44,7 @@ Rectangle {
 
 				position: 1;
 
-				color: "#05090C";
+				color: "#CE573D";
 			}
 		}
 	}
