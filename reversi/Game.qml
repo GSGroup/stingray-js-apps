@@ -61,7 +61,6 @@ Rectangle {
 		visible: false;
 		z: 1;
 		style: Shadow;
-//		text: "ASDASD";
 		styleColor: "#333";
 	}
 
