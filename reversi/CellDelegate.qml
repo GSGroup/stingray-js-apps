@@ -11,21 +11,28 @@ Rectangle {
 	
 	ReversiDisc {
 		id: white;
+
+		width: model.disc == "White" ? 50 : 0;
+
+		anchors.centerIn: parent;
+
 		color: "#fff";
 		borderColor: "#000";
-		anchors.centerIn: parent;
-		width: model.disc == "White" ? 50: 0;
 	}
 
 	ReversiDisc {
 		id: black;
+
+		width: model.disc == "Black" ? 50 : 0;
+
+		anchors.centerIn: parent;
+
 		color: "#000";
 		borderColor: "#fff";
-		anchors.centerIn: parent;
-		width: model.disc == "Black" ? 50: 0;
 	}
+
 	Cursor {
-		visible: parent.activeFocus ? true: false;
+		visible: parent.activeFocus;
 	}
 }
 
