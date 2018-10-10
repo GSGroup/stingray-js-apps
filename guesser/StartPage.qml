@@ -18,7 +18,9 @@ Item {
 		text: "Загадайте карту и нажмите кнопку «Продолжить»";
 	}
 
-	CardGrid { id: cards; }
+	CardGrid {
+		id: cards;
+	}
 
 	Button {
 		id: startButton;
@@ -37,8 +39,10 @@ Item {
 
 	function cardIsAdded(cards, number) {
 		for (var i in cards)
+		{
 			if (cards[i].number == number)
 				return true;
+		}
 		return false;
 	}
 

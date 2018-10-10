@@ -45,8 +45,8 @@ Item {
 				duration: 300;
 
 				onRunningChanged: {
-				if (!this.running)
-					image.show = cardProto.show;
+					if (!this.running)
+						image.show = cardProto.show;
 				}
 			}
 		}

@@ -42,8 +42,6 @@ Item {
 
 		text: "Еще раз";
 		
-		onSelectPressed: {
-			finalPageProto.accepted();
-		}
+		onSelectPressed: { finalPageProto.accepted(); }
 	}
 }
