@@ -1,5 +1,5 @@
 {
 	"id": "fontanero",
 	"display": { "name": "Fontanero", "icon": "fontanero.png" },
-	"purpose": "application"
+	"application": { }
 }
