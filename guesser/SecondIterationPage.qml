@@ -17,10 +17,10 @@ Item {
 		spacing: 40;
 
 		model: ListModel {
-			ListElement {}
-			ListElement {}
-			ListElement {}
-			ListElement {}
+			ListElement { }
+			ListElement { }
+			ListElement { }
+			ListElement { }
 		}
 
 		delegate: Item {
@@ -45,8 +45,10 @@ Item {
 
 	function cardIsAdded(cards, number) {
 		for (var i in cards)
+		{
 			if (cards[i].number == number)
 				return true;
+		}
 		return false;
 	}
 

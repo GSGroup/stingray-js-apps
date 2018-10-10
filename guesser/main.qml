@@ -5,7 +5,9 @@ Application {
 
 	displayName: qsTr("Угадыватель");
 
-	Game { id: game; }
+	Game {
+		id: game;
+	}
 
 	onVisibleChanged: {
 		if (visible)
