@@ -9,7 +9,7 @@ var s = [0x06C0, 0x8C40, 0x6C00, 0x4620];
 var t = [0x0E40, 0x4C40, 0x4E00, 0x4640];
 var z = [0x0C60, 0x4C80, 0xC600, 0x2640];
 
-var colorGradientStart = ["#E49C8B","#E297D8","#E7CD6E","#B2C016","#7298E3"];
+var colorGradientStart = ["#D8725A","#DF81D4","#E6CD70","#C5D317","#5F8BE3"];
 var colorGradientEnd = ["#CE573D","#D151BD","#D9B42F","#919C11","#366DD9"];
 
 //выдача цвета

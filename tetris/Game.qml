@@ -1,4 +1,5 @@
 import "MenuDelegate.qml";
+import "LevelDelegate.qml";
 import "CellDelegate.qml";
 import "engine.js" as engine;
 
@@ -8,7 +9,7 @@ Rectangle{
 	width:safeArea.width;
 	height:safeArea.height;
 
-	color:"#05090C";
+	color:colorTheme.globalBackgroundColor;
 
 	visible:true;
 
@@ -37,7 +38,7 @@ Rectangle{
 
 		anchors.centerIn: parent;
 
-		color: "#3F4042";
+		color: colorTheme.backgroundColor;
 		focus: true;
 		radius: 5;
 
@@ -108,7 +109,7 @@ Rectangle{
 			anchors.bottomMargin: game.space;
 			anchors.leftMargin: game.blockSize * 3;
 
-			color: "#05090C";
+			color: colorTheme.globalBackgroundColor;
 			focus: false;
 
 			visible: true;
@@ -122,7 +123,7 @@ Rectangle{
 				anchors.top: parent.top;
 				anchors.left:parent.left;
 
-				color: "#05090C";
+				color: colorTheme.globalBackgroundColor;
 
 				Item {
 					id: nextTetraminos;
@@ -158,11 +159,8 @@ Rectangle{
 				anchors.leftMargin: game.blockSize;
 
 				text: qsTr("Уровень");
-				color: "#FFFAEC";
-				font: Font {
-					family: "Roboto Regular";
-					pixelSize: 24;
-				}
+				color: colorTheme.highlightPanelColor;
+				font: captionSmall;
 			}
 
 			Text {
@@ -174,11 +172,8 @@ Rectangle{
 				anchors.leftMargin: game.blockSize;
 
 				text: qsTr("Счет");
-				color: "#FFFAEC";
-				font: Font {
-					family: "Roboto Regular";
-					pixelSize: 24;
-				}
+				color: colorTheme.highlightPanelColor;
+				font: captionSmall;
 			}
 		}
 
@@ -186,43 +181,41 @@ Rectangle{
 			id: backMenu;
 
 			width: 0;
-			height: game.blockSize * 8;
+			height: game.blockSize * 4;
 
 			anchors.centerIn: parent;
 
 			focus: false;
-			color: parent.color;
-			radius: 5;
+			color: colorTheme.backgroundColor;
 			clip: true;
 
 			visible: false;
-			opacity: 0.7;
 
 			Behavior on width { animation: Animation { duration: 300; } }
 
 			ListView {
 				id: backGrid;
 
-				property int cellWidth: game.blockSize * 6;
-				property int cellHeight: game.blockSize * 8;
+				property int cellWidth: game.blockSize * 8;
+				property int cellHeight: game.blockSize * 1.5;
 
-				width: game.blockSize * 6;
-				height: game.blockSize * 8;
+				width: cellWidth;
+				height: cellHeight * menuModel.count;
 
-				anchors.horizontalCenter: parent.horizontalCenter;
-				anchors.top: parent.top;
+				anchors.centerIn: parent;
 
 				focus: true;
 
 				visible: parent.width > 0;
 
 				model: ListModel {
-					ListElement {text: "Продолжить"}
-					ListElement {text: "Новая игра"}
-					ListElement {text: "Помощь"}
+					id:menuModel;
+
+					ListElement {text: "Выйти из Тетриса"}
+					ListElement {text: "Поиграть еще"}
 				}
 
-				delegate: MenuDelegate{}
+				delegate: MenuDelegate { }
 
 				onSelectPressed: {
 					switch (backGrid.currentIndex) {
@@ -236,11 +229,6 @@ Rectangle{
 						backMenu.focus = false;
 						backMenu.visible = false;
 						break;
-					case 2:
-						help.visible = true;
-						help.focus = true;
-						backGrid.visible = false;
-						return true;
 					}
 				}
 
@@ -251,32 +239,80 @@ Rectangle{
 				}
 			}
 
-			BigText {
-				id: help;
+			function show() {
+				this.currentIndex = 0;
+				this.width = game.width;
+				this.focus = true;
+				this.visible = true;
+			}
+		}
 
-				anchors.left: parent.left;
-				anchors.right: parent.right;
-				anchors.verticalCenter: parent.verticalCenter;
-				anchors.margins: game.space * 10;
+		Rectangle {
+			id: exitMenu;
 
-				horizontalAlignment: Text.AlignHCenter;
+			width: 0;
+			height: game.blockSize * 4.5;
 
-				color: "#FFFFFF";
-				focus: false;
-				text: qsTr ("Use your arrow keys to move the Tetriminos (game pieces). The aim is to create a horizontal line of ten units without gaps" +
-							" by moving Tetriminos and rotating it by 90 degree. When such a line is created, it gets destroyed and any block above the" +
-							" deleted line will fall.");
-				font: smallFont;
+			anchors.centerIn: parent;
 
-				visible: false;
+			focus: false;
+			color: "#000000";
+			clip: true;
 
-				wrapMode: Text.Wrap;
+			visible: false;
+
+			Text {
+				y: 9;
+
+				anchors.horizontalCenter: parent.horizontalCenter;
+
+				text: qsTr("Игра окончена");
+				color: colorTheme.highlightPanelColor;
+				font: bodyFont;
+			}
+
+			ListView {
+				id: exitGrid;
+
+				property int cellWidth: game.blockSize * 8;
+				property int cellHeight: game.blockSize * 1.5;
+
+				width: cellWidth;
+				height: cellHeight * menuModel.count;
+
+				anchors.bottom: parent.bottom;
+				anchors.horizontalCenter: parent.horizontalCenter;
+
+				focus: true;
+
+				visible: parent.width > 0;
+
+				model: ListModel {
+					id:menuModel;
+
+					ListElement {text: "Выйти из Тетриса"}
+					ListElement {text: "Поиграть еще"}
+				}
+
+				delegate: MenuDelegate { }
+
+				onSelectPressed: {
+					switch (exitGrid.currentIndex) {
+					case 0:
+						exitMenu.width = 0;
+						exitMenu.focus = false;
+						exitMenu.visible = false;
+						break;
+					case 1:
+						exitMenu.width = 0;
+						exitMenu.focus = false;
+						exitMenu.visible = false;
+						break;
+					}
+				}
 
 				onKeyPressed: {
-					if (key == "Select") {
-						this.visible = false;
-						this.focus = false;
-						backGrid.visible = true;
+					if (key == "8") {
 						return true;
 					}
 				}
@@ -284,7 +320,89 @@ Rectangle{
 
 			function show() {
 				this.currentIndex = 0;
-				this.width = game.width * 2;
+				this.width = game.width;
+				this.focus = true;
+				this.visible = true;
+			}
+		}
+
+		Rectangle {
+			id: levelMenu;
+
+			width: 0;
+			height: game.blockSize * 3;
+
+			anchors.centerIn: parent;
+
+			focus: false;
+			color: colorTheme.backgroundColor;
+			clip: true;
+
+			visible: false;
+
+			Text {
+				y: 9;
+
+				anchors.horizontalCenter: parent.horizontalCenter;
+
+				text: qsTr("Выберите уровень");
+				color: colorTheme.highlightPanelColor;
+				font: captionSmall;
+			}
+
+			ListView {
+				id: levelGrid;
+
+				property int cellWidth: game.width / levelModel.count;
+				property int cellHeight: game.blockSize * 1.5;
+
+				width: game.width;
+				height: cellHeight;
+
+				anchors.bottom: parent.bottom;
+
+				focus: true;
+				orientation: Horizontal;
+
+				visible: parent.width > 0;
+
+				model: ListModel {
+					id:levelModel;
+
+					ListElement {text: "1"}
+					ListElement {text: "2"}
+					ListElement {text: "3"}
+					ListElement {text: "4"}
+					ListElement {text: "5"}
+					ListElement {text: "6"}
+					ListElement {text: "7"}
+					ListElement {text: "8"}
+					ListElement {text: "9"}
+					ListElement {text: "10"}
+				}
+
+				delegate: LevelDelegate { }
+
+				onSelectPressed: {
+					levelMenu.width = 0;
+					levelMenu.focus = false;
+					levelMenu.visible = false;
+				}
+
+				onKeyPressed: {
+					if (key == "8") {
+						return true;
+					}
+
+					if (key == "6") {
+						return true;
+					}
+				}
+			}
+
+			function show() {
+				this.currentIndex = 0;
+				this.width = game.width;
 				this.focus = true;
 				this.visible = true;
 			}
@@ -299,23 +417,16 @@ Rectangle{
 			anchors.centerIn: parent;
 
 			focus: true;
-			color: parent.color;
-			radius: 5;
+			color: colorTheme.backgroundColor;
 
 			visible: false;
-			opacity: 1.0;
 
 			Text {
 				anchors.centerIn: parent;
 
-				text: qsTr("Пауза");
-				color: "#FFFFFF";
-				font: smallFont;
-			}
-
-			function show() {
-				this.visible = true;
-				this.focus = true;
+				text: qsTr("Пауза...");
+				color: colorTheme.highlightPanelColor;
+				font: bodyFont;
 			}
 
 			onKeyPressed: {
@@ -330,6 +441,12 @@ Rectangle{
 					return true;
 				}
 			}
+
+			function show() {
+				this.visible = true;
+				this.focus = true;
+			}
+
 		}
 
 		onKeyPressed: {
@@ -340,6 +457,16 @@ Rectangle{
 
 			if (key == "8") {
 				pauseRect.show();
+				return true;
+			}
+
+			if (key == "7") {
+				levelMenu.show();
+				return true;
+			}
+
+			if (key == "6") {
+				exitMenu.show();
 				return true;
 			}
 		}
@@ -405,7 +532,7 @@ Rectangle{
 			}
 		}
 
-		//FIXME: проверка не только границ
+		//FIXME: проверка не только выхода за границы
 		function hasCollisions (x,y,value) {
 			if ( ( x < 0 || x > game.width || y > game.height - game.blockSize) && value > 0)
 				return true;

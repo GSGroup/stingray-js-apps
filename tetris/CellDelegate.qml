@@ -6,7 +6,7 @@ Rectangle {
 	width: game.blockSize ;
 	height: game.blockSize;
 
-	color: "#05090C";
+	color: colorTheme.globalBackgroundColor;
 	focus: false;
 
 	visible: true;
@@ -30,6 +30,8 @@ Rectangle {
 			width: game.blockSize - game.spaceBetweenBlocks * 2;
 
 			anchors.fill: parent;
+
+			orientation: Gradient.Horizontal;
 
 			GradientStop {
 				id: blockGradientStart;
