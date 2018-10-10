@@ -1,5 +1,5 @@
 {
 	"id": "2048",
 	"display": { "name": "2048", "icon": "2048.png" },
-	"purpose": "application"
+	"application": { }
 }

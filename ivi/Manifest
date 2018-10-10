@@ -1,5 +1,5 @@
 {
-        "id": "ivi",
-		"display": { "name": "ivi.ru", "icon": "resources/icon.png" },
-	"purpose": "application"
+	"id": "ivi",
+	"display": { "name": "ivi.ru", "icon": "resources/icon.png" },
+	"application": { }
 }

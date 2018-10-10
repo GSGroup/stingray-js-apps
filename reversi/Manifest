@@ -1,5 +1,5 @@
 {
 	"id": "reversi",
 	"display": { "name": "Reversi", "icon": "reversi.png" },
-	"purpose": "application"
+	"application": { }
 }
