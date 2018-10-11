@@ -1,5 +1,3 @@
-var currentColorIndex = 0;
-
 //блоки и варианты их поворота по частовой стрелке
 var j = [0x44C0, 0x8E00, 0x6440, 0x0E20];
 var l = [0x4460, 0x0E80, 0xC440, 0x2E00];
@@ -14,22 +12,24 @@ var colorGradientEnd = ["#CE573D","#D151BD","#D9B42F","#919C11","#366DD9"];
 
 //выдача цвета
 this.randomColor = function () {
-	currentColorIndex = Math.floor(Math.random() * 5);
+	return Math.floor(Math.random() * 5);
 }
 
-this.getGradientStart = function () {
-	return colorGradientStart[currentColorIndex];
+this.getGradientStart = function (colorIndex) {
+	return colorGradientStart[colorIndex];
 }
 
-this.getGradientEnd = function () {
-	return colorGradientEnd[currentColorIndex];
+this.getGradientEnd = function (colorIndex) {
+	return colorGradientEnd[colorIndex];
 }
 
 //выдача случайного элемента
 this.randomBlock = function () {
 	var pieces = [i,j,l,o,s,t,z];
+
 	var indexBlockView = Math.floor(Math.random() * 4);
 	var next = pieces[Math.floor(Math.random() * 7)];
+
 	var nextBlock = next[indexBlockView];
 
 	return nextBlock;

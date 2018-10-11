@@ -27,7 +27,7 @@ Rectangle {
 		Gradient {
 			id: blockGradient;
 
-			width: game.blockSize - game.spaceBetweenBlocks * 2;
+			width: parent.width;
 
 			anchors.fill: parent;
 

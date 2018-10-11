@@ -20,18 +20,18 @@ Rectangle{
 
 		property int glassWidth: 10;
 		property int glassHigh: 20;
+
 		property real dropTime: 16000.0;
 
 		property int space: 6;
 		property int spaceBetweenBlocks: 1 ;
 		property int blockSize: (safeArea.height - space * 4) / glassHigh;
 
-		property int currentBlock: 0x44C0;
+		property int currentBlock: 0xCC00;
 		property int nextBlock: 0x4460;
 
-		property string colorGradientStart: "#E49C8B";
-		property string colorGradientEnd: "#CE573D";
-		//TODO:ввести текущий и цвет в инфоблоке
+		property int nextBlockColor: 0;
+		property int currentBlockColor: 1;
 
 		width: blockSize * glassWidth;
 		height: blockSize * glassHigh;
@@ -68,33 +68,41 @@ Rectangle{
 				onTriggered: {
 					var noCollisions = true;
 
-					for (var j = 15; j > 0; j --) {
+					for (var j = 0; j < 16; j++) {
 						if( game.hasCollisions( movingTetraminos.children[j].rect.x,
 												movingTetraminos.children[j].rect.y + game.blockSize,
-												movingTetraminos.children[j].rect.value ) ) {
+												movingTetraminos.children[j].rect.value) ) {
 							noCollisions = false;
 							break;
 						}
 					}
 
-					if( noCollisions ){
-						for (var i = 15; i > 0; i --)
+					if ( noCollisions  ){
+						for (var i = 0; i < 16 ; i++)
 							movingTetraminos.children[i].rect.y += game.blockSize;
+					}
+					else {
+						game.initNewMovingBlock();
 					}
 				}
 			}
 
 			onCompleted: {
+
+				movingTetraminos.initMovingBlockCoord();
+
+				game.drawMovingBlock();
+			}
+
+			function initMovingBlockCoord () {
 				for (var k = 0; k < 16; k ++) {
 					this.children[k].rect.color = game.color;
 					this.children[k].rect.x = (k % 4) * game.blockSize ;
 					this.children[k].rect.y = Math.floor(k / 4 ) * game.blockSize;
 
-					this.children[k].innerRect.blockGradient.blockGradientStart.color = game.colorGradientStart;
-					this.children[k].innerRect.blockGradient.blockGradientEnd.color = game.colorGradientEnd;
+					this.children[k].innerRect.blockGradient.blockGradientStart.color = engine.getGradientStart(game.currentBlockColor);
+					this.children[k].innerRect.blockGradient.blockGradientEnd.color = engine.getGradientEnd(game.currentBlockColor);
 				}
-
-				game.drawMovingBlock();
 			}
 		}
 
@@ -178,7 +186,7 @@ Rectangle{
 		}
 
 		Rectangle {
-			id: backMenu;
+			id: exitMenu;
 
 			width: 0;
 			height: game.blockSize * 4;
@@ -194,7 +202,7 @@ Rectangle{
 			Behavior on width { animation: Animation { duration: 300; } }
 
 			ListView {
-				id: backGrid;
+				id: exitGrid;
 
 				property int cellWidth: game.blockSize * 8;
 				property int cellHeight: game.blockSize * 1.5;
@@ -212,22 +220,32 @@ Rectangle{
 					id:menuModel;
 
 					ListElement {text: "Выйти из Тетриса"}
-					ListElement {text: "Поиграть еще"}
+					ListElement {text: "Продолжить игру"}
+					ListElement {text: "Новая игра"}
 				}
 
 				delegate: MenuDelegate { }
 
 				onSelectPressed: {
-					switch (backGrid.currentIndex) {
+					switch (exitGrid.currentIndex) {
 					case 0:
-						backMenu.width = 0;
-						backMenu.focus = false;
-						backMenu.visible = false;
+						exitMenu.width = 0;
+						exitMenu.focus = false;
+						exitMenu.visible = false;
 						break;
 					case 1:
-						backMenu.width = 0;
-						backMenu.focus = false;
-						backMenu.visible = false;
+						exitMenu.width = 0;
+						exitMenu.focus = false;
+						exitMenu.visible = false;
+
+						animTimer.start();
+						break;
+					case 2:
+						exitMenu.width = 0;
+						exitMenu.focus = false;
+						exitMenu.visible = false;
+
+						game.initNewMovingBlock();
 						break;
 					}
 				}
@@ -240,6 +258,8 @@ Rectangle{
 			}
 
 			function show() {
+				animTimer.stop();
+
 				this.currentIndex = 0;
 				this.width = game.width;
 				this.focus = true;
@@ -248,7 +268,7 @@ Rectangle{
 		}
 
 		Rectangle {
-			id: exitMenu;
+			id: gameOverMenu;
 
 			width: 0;
 			height: game.blockSize * 4.5;
@@ -272,7 +292,7 @@ Rectangle{
 			}
 
 			ListView {
-				id: exitGrid;
+				id: gameOverGrid;
 
 				property int cellWidth: game.blockSize * 8;
 				property int cellHeight: game.blockSize * 1.5;
@@ -297,22 +317,31 @@ Rectangle{
 				delegate: MenuDelegate { }
 
 				onSelectPressed: {
-					switch (exitGrid.currentIndex) {
+					switch (gameOverGrid.currentIndex) {
 					case 0:
-						exitMenu.width = 0;
-						exitMenu.focus = false;
-						exitMenu.visible = false;
+						gameOverMenu.width = 0;
+						gameOverMenu.focus = false;
+						gameOverMenu.visible = false;
+
+						//FIX заменить на выход из приложения
+						animTimer.start();
 						break;
 					case 1:
-						exitMenu.width = 0;
-						exitMenu.focus = false;
-						exitMenu.visible = false;
+						gameOverMenu.width = 0;
+						gameOverMenu.focus = false;
+						gameOverMenu.visible = false;
+
+						animTimer.start();
 						break;
 					}
 				}
 
 				onKeyPressed: {
 					if (key == "8") {
+						return true;
+					}
+
+					if (key == "7") {
 						return true;
 					}
 				}
@@ -323,6 +352,8 @@ Rectangle{
 				this.width = game.width;
 				this.focus = true;
 				this.visible = true;
+
+				animTimer.stop();
 			}
 		}
 
@@ -387,6 +418,8 @@ Rectangle{
 					levelMenu.width = 0;
 					levelMenu.focus = false;
 					levelMenu.visible = false;
+
+					animTimer.start();
 				}
 
 				onKeyPressed: {
@@ -405,6 +438,8 @@ Rectangle{
 				this.width = game.width;
 				this.focus = true;
 				this.visible = true;
+
+				animTimer.stop();
 			}
 		}
 
@@ -434,6 +469,8 @@ Rectangle{
 					this.visible = false;
 					this.focus   = false;
 
+					animTimer.start();
+
 					return true;
 				}
 
@@ -445,13 +482,15 @@ Rectangle{
 			function show() {
 				this.visible = true;
 				this.focus = true;
+
+				animTimer.stop();
 			}
 
 		}
 
 		onKeyPressed: {
 			if (key == "Select") {
-				backMenu.show();
+				exitMenu.show();
 				return true;
 			}
 
@@ -466,30 +505,13 @@ Rectangle{
 			}
 
 			if (key == "6") {
-				exitMenu.show();
+				gameOverMenu.show();
 				return true;
 			}
 		}
 
-		Timer {
-			id: nextBlockViewTimer;
-
-			interval: game.dropTime;
-			running: true;
-			repeat: true;
-
-			onTriggered: {
-				game.getNewBlock();
-				game.getNewColor();
-				game.drawNextBlockView();
-			}
-		}
-
 		function getNewColor () {
-			engine.randomColor();
-
-			this.colorGradientStart = engine.getGradientStart();
-			this.colorGradientEnd = engine.getGradientEnd();
+			this.nextBlockColor = engine.randomColor();
 		}
 
 		function getNewBlock () {
@@ -499,8 +521,8 @@ Rectangle{
 		function drawNextBlockView () {
 			for(var i = 0; i< 16; i++)
 			{
-				nextTetraminos.children[i].innerRect.blockGradient.blockGradientStart.color = game.colorGradientStart;
-				nextTetraminos.children[i].innerRect.blockGradient.blockGradientEnd.color = game.colorGradientEnd;
+				nextTetraminos.children[i].innerRect.blockGradient.blockGradientStart.color = engine.getGradientStart(game.nextBlockColor);
+				nextTetraminos.children[i].innerRect.blockGradient.blockGradientEnd.color = engine.getGradientEnd(game.nextBlockColor);
 			}
 
 			var bit;
@@ -516,8 +538,8 @@ Rectangle{
 				indexBlock++;
 			}
 		}
-
 		function drawMovingBlock () {
+		//FIXME повторяется
 			var bit;
 			var indexBlock = 0;
 			for(bit = 0x8000 ; bit > 0 ; bit = bit >> 1) {
@@ -534,9 +556,24 @@ Rectangle{
 
 		//FIXME: проверка не только выхода за границы
 		function hasCollisions (x,y,value) {
-			if ( ( x < 0 || x > game.width || y > game.height - game.blockSize) && value > 0)
+			if ( ( x < 0 || x > game.width || y >= game.height) && value > 0)
 				return true;
+
 			return false;
+		}
+
+		function initNewMovingBlock () {
+			game.currentBlock = game.nextBlock;
+			game.currentBlockColor = game.nextBlockColor;
+
+			game.getNewBlock();
+			game.getNewColor();
+			game.drawNextBlockView();
+
+			movingTetraminos.initMovingBlockCoord();
+			game.drawMovingBlock();
+
+			animTimer.restart();
 		}
 	}
 }
