@@ -7,30 +7,27 @@ var s = [0x06C0, 0x8C40, 0x6C00, 0x4620];
 var t = [0x0E40, 0x4C40, 0x4E00, 0x4640];
 var z = [0x0C60, 0x4C80, 0xC600, 0x2640];
 
+var	pieces = [i,j,l,o,s,t,z];
+
 var colorGradientStart = ["#D8725A","#DF81D4","#E6CD70","#C5D317","#5F8BE3"];
 var colorGradientEnd = ["#CE573D","#D151BD","#D9B42F","#919C11","#366DD9"];
 
-//выдача цвета
-this.randomColor = function () {
+this.randomColor = function() {
 	return Math.floor(Math.random() * 5);
 }
 
-this.getGradientStart = function (colorIndex) {
+this.getGradientStart = function(colorIndex) {
 	return colorGradientStart[colorIndex];
 }
 
-this.getGradientEnd = function (colorIndex) {
+this.getGradientEnd = function(colorIndex) {
 	return colorGradientEnd[colorIndex];
 }
 
-//выдача случайного элемента
-this.randomBlock = function () {
-	var pieces = [i,j,l,o,s,t,z];
+this.getBlock = function(blockIndex, rotationIndex) {
+	var blockType = pieces[blockIndex];
 
-	var indexBlockView = Math.floor(Math.random() * 4);
-	var next = pieces[Math.floor(Math.random() * 7)];
+	var block = blockType[rotationIndex];
 
-	var nextBlock = next[indexBlockView];
-
-	return nextBlock;
+	return block;
 }

@@ -1,7 +1,7 @@
 Rectangle {
 	id: rect;
 
-	property int value: 0;
+	property int value: -1;
 
 	width: game.blockSize ;
 	height: game.blockSize;
@@ -22,7 +22,7 @@ Rectangle {
 
 		focus: false;
 
-		visible: rect.value > 0;
+		visible: parent.value > 0;
 
 		Gradient {
 			id: blockGradient;
@@ -49,5 +49,12 @@ Rectangle {
 				color: "#CE573D";
 			}
 		}
+	}
+
+	onValueChanged: {
+		if (value === 0)
+			this.color = colorTheme.backgroundColor;
+		if (value === -1)
+			this.color = colorTheme.globalBackgroundColor;
 	}
 }
