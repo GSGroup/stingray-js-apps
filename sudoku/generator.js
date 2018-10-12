@@ -23,7 +23,7 @@ var hiddenMatrix = [
 ];
 
 this.getMatrix = function () {
-    var baseMatrix = [
+	var baseMatrix = [
 		[1, 2, 3, 4, 5, 6, 7, 8, 9],
 		[4, 5, 6, 7, 8, 9, 1, 2, 3],
 		[7, 8, 9, 1, 2, 3, 4, 5, 6],

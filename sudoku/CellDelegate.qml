@@ -31,8 +31,8 @@ Item {
 	Text {
 		id: subText;
 
-    	anchors.horizontalCenter: parent.horizontalCenter;
-    	anchors.verticalCenter: parent.verticalCenter;
+		anchors.horizontalCenter: parent.horizontalCenter;
+		anchors.verticalCenter: parent.verticalCenter;
 		anchors.margins: 5;
 
 		horizontalAlignment: Text.AlignHCenter;
@@ -51,13 +51,13 @@ Item {
 		Behavior on color { Animation { duration: 300; }}
 	}
 
-    Text {
-        id: hint1;
+	Text {
+		id: hint1;
 
 		anchors.horizontalCenter:parent.horizontalCenter;
 		anchors.verticalCenter: parent.verticalCenter;
-        anchors.leftMargin:5;
-        anchors.topMargin:12;
+		anchors.leftMargin:5;
+		anchors.topMargin:12;
 
 		color: cellItemDelegate.focused ? "#FFFFFF" : "#375900";
 
@@ -66,7 +66,7 @@ Item {
 			  pixelSize:20;
 		}
 
-        text:  model.isBase?"":(model.shownValue===""?(model.isHint1?"1":"  " ):"")+"   "+
+		text:  model.isBase?"":(model.shownValue===""?(model.isHint1?"1":"  " ):"")+"   "+
 			  (model.isBase?"":(model.shownValue===""?(model.isHint2?"2":"   "):""))+"  "+
 			  (model.isBase?"":(model.shownValue===""?(model.isHint3?"3":"   "):""))+"\n"+
 			  (model.isBase?"":(model.shownValue===""?(model.isHint4?"4":"   "):""))+"  "+
@@ -77,6 +77,6 @@ Item {
 			  (model.isBase?"":(model.shownValue===""?(model.isHint9?"9":"   "):""));
 
 		Behavior on color { Animation { duration: 300; }}
-    }
+	}
 }
 
