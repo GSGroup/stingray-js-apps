@@ -15,8 +15,8 @@ Item {
                 SmallText {
                     id: player;
                     anchors.top: parent.top;
-					anchors.left: parent.left;
-					anchors.leftMargin: progress.width + 10;
+					anchors.left: progress.right;
+					anchors.leftMargin: 10;
 
                     text: model.player;
                 }
