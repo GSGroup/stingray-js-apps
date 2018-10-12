@@ -6,12 +6,12 @@ import "engine.js" as engine;
 Rectangle{
 	id: mainWindow;
 
-	width:safeArea.width;
-	height:safeArea.height;
+	width: safeArea.width;
+	height: safeArea.height;
 
-	color:colorTheme.globalBackgroundColor;
+	color: colorTheme.globalBackgroundColor;
 
-	visible:true;
+	visible: true;
 
 	focus: true;
 
@@ -27,11 +27,21 @@ Rectangle{
 		property int spaceBetweenBlocks: 1 ;
 		property int blockSize: (safeArea.height - space * 4) / glassHigh;
 
-		property int currentBlock: 0xCC00;
+		property int currentBlock: 0x0F00;
 		property int nextBlock: 0x4460;
+
+		property int currentBlockViewIndex: 0;
+		property int nextBlockViewIndex: 1;
+		property int currentRotationIndex: 0;
+		property int nextRotationIndex: 1;
 
 		property int nextBlockColor: 0;
 		property int currentBlockColor: 1;
+
+		property int directionX: 0;
+		property int directionY: 0;
+
+		property int stepSize: game.blockSize;
 
 		width: blockSize * glassWidth;
 		height: blockSize * glassHigh;
@@ -45,10 +55,12 @@ Rectangle{
 		Item {
 			id: movingTetraminos;
 
-			x: game.width / 2 - rect.width * 2;
+			property real startPointX: game.width / 2 - rect.width * 2;
+
+			x: startPointX;
 			y: 0;
 
-			focus: false;
+			focus: true;
 
 			visible: true;
 
@@ -64,27 +76,34 @@ Rectangle{
 				running: true;
 				repeat: true;
 
-				//TOFIX:нужна адекватная проверка
 				onTriggered: {
-					var noCollisions = true;
-
-					for (var j = 0; j < 16; j++) {
-						if( game.hasCollisions( movingTetraminos.children[j].rect.x,
-												movingTetraminos.children[j].rect.y + game.blockSize,
-												movingTetraminos.children[j].rect.value) ) {
-							noCollisions = false;
-							break;
-						}
-					}
-
-					if ( noCollisions  ){
-						for (var i = 0; i < 16 ; i++)
-							movingTetraminos.children[i].rect.y += game.blockSize;
-					}
-					else {
+					if(!game.moveBlock(0,game.stepSize))
 						game.initNewMovingBlock();
-					}
 				}
+			}
+
+			onKeyPressed: {
+				switch (key) {
+					case 'Right':
+						game.directionX = 1;
+						game.directionY = 0;
+						break;
+					case 'Left':
+						game.directionX = -1;
+						game.directionY = 0;
+						break;
+					case 'Down':
+						game.directionX = 0;
+						game.directionY = 1;
+						break;
+					case 'Up':
+						game.rotate();
+						game.drawMovingBlock();
+						game.directionX = 0;
+						game.directionY = 0;
+						break;
+				}
+				game.moveBlock(game.directionX * game.stepSize,game.directionY * game.stepSize);
 			}
 
 			onCompleted: {
@@ -94,7 +113,7 @@ Rectangle{
 				game.drawMovingBlock();
 			}
 
-			function initMovingBlockCoord () {
+			function initMovingBlockCoord() {
 				for (var k = 0; k < 16; k ++) {
 					this.children[k].rect.color = game.color;
 					this.children[k].rect.x = (k % 4) * game.blockSize ;
@@ -107,13 +126,13 @@ Rectangle{
 		}
 
 		Rectangle {
-			id:infoRect;
+			id: infoRect;
 
 			width: parent.width;
 			height: parent.height;
 
 			anchors.top: parent.top;
-			anchors.left:parent.right;
+			anchors.left: parent.right;
 			anchors.bottomMargin: game.space;
 			anchors.leftMargin: game.blockSize * 3;
 
@@ -123,13 +142,13 @@ Rectangle{
 			visible: true;
 
 			Rectangle {
-				id:nextBlockViewRect;
+				id: nextBlockViewRect;
 
 				width: game.blockSize * 6;
 				height: game.blockSize * 6;
 
 				anchors.top: parent.top;
-				anchors.left:parent.left;
+				anchors.left: parent.left;
 
 				color: colorTheme.globalBackgroundColor;
 
@@ -159,7 +178,7 @@ Rectangle{
 			}
 
 			Text {
-				id:levelText;
+				id: levelText;
 
 				anchors.left: parent.left;
 				anchors.top: nextBlockViewRect.bottom;
@@ -217,7 +236,7 @@ Rectangle{
 				visible: parent.width > 0;
 
 				model: ListModel {
-					id:menuModel;
+					id: menuModel;
 
 					ListElement {text: "Выйти из Тетриса"}
 					ListElement {text: "Продолжить игру"}
@@ -251,7 +270,7 @@ Rectangle{
 				}
 
 				onKeyPressed: {
-					if (key == "8") {
+					if (key === "8") {
 						return true;
 					}
 				}
@@ -308,7 +327,7 @@ Rectangle{
 				visible: parent.width > 0;
 
 				model: ListModel {
-					id:menuModel;
+					id: menuModel;
 
 					ListElement {text: "Выйти из Тетриса"}
 					ListElement {text: "Поиграть еще"}
@@ -323,9 +342,10 @@ Rectangle{
 						gameOverMenu.focus = false;
 						gameOverMenu.visible = false;
 
-						//FIX заменить на выход из приложения
+						//FIXME заменить на выход из приложения
 						animTimer.start();
 						break;
+
 					case 1:
 						gameOverMenu.width = 0;
 						gameOverMenu.focus = false;
@@ -337,11 +357,11 @@ Rectangle{
 				}
 
 				onKeyPressed: {
-					if (key == "8") {
+					if (key === "8") {
 						return true;
 					}
 
-					if (key == "7") {
+					if (key === "7") {
 						return true;
 					}
 				}
@@ -423,11 +443,11 @@ Rectangle{
 				}
 
 				onKeyPressed: {
-					if (key == "8") {
+					if (key === "8") {
 						return true;
 					}
 
-					if (key == "6") {
+					if (key === "6") {
 						return true;
 					}
 				}
@@ -465,7 +485,7 @@ Rectangle{
 			}
 
 			onKeyPressed: {
-				if (key == "8") {
+				if (key === "8") {
 					this.visible = false;
 					this.focus   = false;
 
@@ -474,7 +494,7 @@ Rectangle{
 					return true;
 				}
 
-				if (key == "Select") {
+				if (key === "Select") {
 					return true;
 				}
 			}
@@ -489,37 +509,40 @@ Rectangle{
 		}
 
 		onKeyPressed: {
-			if (key == "Select") {
+			if (key === "Select") {
 				exitMenu.show();
 				return true;
 			}
 
-			if (key == "8") {
+			if (key === "8") {
 				pauseRect.show();
 				return true;
 			}
 
-			if (key == "7") {
+			if (key === "7") {
 				levelMenu.show();
 				return true;
 			}
 
-			if (key == "6") {
+			if (key === "6") {
 				gameOverMenu.show();
 				return true;
 			}
 		}
 
-		function getNewColor () {
+		function getNewColor() {
 			this.nextBlockColor = engine.randomColor();
 		}
 
-		function getNewBlock () {
-			this.nextBlock = engine.randomBlock();
+		function getNewBlock() {
+			game.nextBlockViewIndex = Math.floor(Math.random() * 7);
+			game.nextRotationIndex  = Math.floor(Math.random() * 4);
+
+			this.nextBlock = engine.getBlock(game.nextBlockViewIndex,game.nextRotationIndex);
 		}
 
-		function drawNextBlockView () {
-			for(var i = 0; i< 16; i++)
+		function drawNextBlockView() {
+			for (var i = 0; i< 16; i++)
 			{
 				nextTetraminos.children[i].innerRect.blockGradient.blockGradientStart.color = engine.getGradientStart(game.nextBlockColor);
 				nextTetraminos.children[i].innerRect.blockGradient.blockGradientEnd.color = engine.getGradientEnd(game.nextBlockColor);
@@ -527,22 +550,21 @@ Rectangle{
 
 			var bit;
 			var indexBlock = 0;
-			for(bit = 0x8000 ; bit > 0 ; bit = bit >> 1) {
+			for (bit = 0x8000 ; bit > 0 ; bit = bit >> 1) {
 				if (game.nextBlock & bit) {
 					nextTetraminos.children[indexBlock].rect.value = 1;
 				}
 				else
 				{
-					nextTetraminos.children[indexBlock].rect.value = 0;
+					nextTetraminos.children[indexBlock].rect.value = -1;
 				}
 				indexBlock++;
 			}
 		}
-		function drawMovingBlock () {
-		//FIXME повторяется
+		function drawMovingBlock() {
 			var bit;
 			var indexBlock = 0;
-			for(bit = 0x8000 ; bit > 0 ; bit = bit >> 1) {
+			for (bit = 0x8000 ; bit > 0 ; bit = bit >> 1) {
 				if (game.currentBlock & bit) {
 					movingTetraminos.children[indexBlock].rect.value = 1;
 				}
@@ -554,17 +576,52 @@ Rectangle{
 			}
 		}
 
-		//FIXME: проверка не только выхода за границы
-		function hasCollisions (x,y,value) {
-			if ( ( x < 0 || x > game.width || y >= game.height) && value > 0)
-				return true;
-
+		function getBlock(x,y) {
 			return false;
 		}
 
-		function initNewMovingBlock () {
+		function checkCollisions (x,y) {
+			var result = false;
+
+			if ((x < 0 || x >= game.width || y >= game.height || game.getBlock(x,y)))
+				result = true;
+
+			return result;
+		}
+
+		function moveBlock(deltaX, deltaY) {
+
+			for (var j = 0; j < 16; j++) {
+				if (movingTetraminos.children[j].rect.value <= 0)
+					continue;
+
+				var x = movingTetraminos.children[j].rect.x;
+				var y = movingTetraminos.children[j].rect.y;
+
+				x += movingTetraminos.startPointX;
+
+				if (game.checkCollisions(x + deltaX, y + deltaY))
+					return false;
+			}
+
+			for (var i = 0; i < 16 ; i++){
+				movingTetraminos.children[i].rect.x += deltaX;
+				movingTetraminos.children[i].rect.y += deltaY;
+			}
+			return true;
+		}
+
+		function rotate() {
+			game.currentRotationIndex = (game.currentRotationIndex == 3 ? 0 : game.currentRotationIndex + 1);
+			game.currentBlock = engine.getBlock(game.currentBlockViewIndex,game.currentRotationIndex);
+		}
+
+		function initNewMovingBlock() {
 			game.currentBlock = game.nextBlock;
 			game.currentBlockColor = game.nextBlockColor;
+
+			game.currentBlockViewIndex = game.nextBlockViewIndex;
+			game.currentRotationIndex  = game.nextRotationIndex;
 
 			game.getNewBlock();
 			game.getNewColor();
