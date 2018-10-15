@@ -1,7 +1,7 @@
 Item {
-                width:150;
-                height:modelIndex>2?40:0;
-                visible: modelIndex>2;
+                width:200;
+                height:40;
+
 				anchors.horizontalCenter: parent.horizontalCenter;
 
 				Image {
@@ -15,7 +15,9 @@ Item {
                 SmallText {
                     id: player;
                     anchors.top: parent.top;
-					anchors.horizontalCenter: parent.horizontalCenter;
+					anchors.left: progress.right;
+					anchors.leftMargin: 10;
+
                     text: model.player;
                 }
 
@@ -23,7 +25,6 @@ Item {
                     id:time;
                     anchors.top: parent.top;
                     anchors.right: parent.right;
-					anchors.leftMargin: 15;
                     text: Math.floor(model.time/60)+":"+model.time%60;
                 }
             }
