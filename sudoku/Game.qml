@@ -76,8 +76,7 @@ Rectangle {
 		width: gameView.cellWidth;
 		height: gameView.cellHeight*9;
 
-		visible: false;
-		opacity: visible ? 1.0 : 0.01;
+		opacity: 0;
 
 		model: DigitChooseModel {}
 		delegate: DigitChooserDelegate {}
@@ -92,19 +91,20 @@ Rectangle {
 				(!gameItem.fullStateCheck())?(gameOverText+="WIN!"):(gameOverText+="LOSE");
 				gameItem.gameOverEvent(gameOverText);
 			}
-			digitChooser.visible = false;
-			hintDigitChooser.visible = false;
-			eraser.visible = false;
-			showHintButton.visible = false;
+
+			digitChooser.opacity = 0;
+			hintDigitChooser.opacity = 0;
+			eraser.opacity = 0;
+			showHintButton.opacity = 0;
 			gameView.wall.color = "#00000000"
 			gameView.setFocus();
 		}
 
 		onBackPressed: {
-			digitChooser.visible = false;
-			hintDigitChooser.visible = false;
-			eraser.visible = false;
-			showHintButton.visible = false;
+			digitChooser.opacity = 0;
+			hintDigitChooser.opacity = 0;
+			eraser.opacity = 0;
+			showHintButton.opacity = 0;
 			gameView.wall.color = "#00000000"
 			gameView.setFocus();
 		}
@@ -127,27 +127,25 @@ Rectangle {
 		width: gameView.cellWidth;
 		height: gameView.cellHeight*9;
 
-		visible: false;
-		opacity: visible ? 1.0 : 0.01;
+		opacity: 0;
 
 		model: HintDigitChooseModel {}
 
 		delegate: HintDigitChooserDelegate {}
 
 		onSelectPressed:{
-			this.opacity = 0;
-			digitChooser.visible = false;
-			eraser.visible = false;
-			hintDigitChooser.visible = false;
+			digitChooser.opacity = 0;
+			eraser.opacity = 0;
+			hintDigitChooser.opacity = 0;
 			gameView.setFocus();
 			gameView.wall.color = "#00000000"
 			gameView.model.setProperty(gameView.currentIndex, 'isHint'+(currentIndex+1), !(gameView.model.get(gameView.currentIndex)['isHint'+(currentIndex+1)]));
 		}
 
 		onBackPressed: {
-			digitChooser.visible = false;
-			hintDigitChooser.visible = false;
-			eraser.visible = false;
+			digitChooser.opacity = 0;
+			hintDigitChooser.opacity = 0;
+			eraser.opacity = 0;
 			gameView.wall.color = "#00000000"
 			gameView.setFocus();
 		}
@@ -182,8 +180,7 @@ Rectangle {
 
 		color: eraser.activeFocus ? colorTheme.activeBorderColor : "#000000"; //colorTheme.backgroundColor;
 
-		visible: false;
-		opacity: visible ? 1.0 : 0.01;
+		opacity: 0;
 
 		Image {
 			anchors.fill: parent;
@@ -192,10 +189,10 @@ Rectangle {
 
 		onSelectPressed: {
 			parent.setShownValue(gameView.currentIndex,0);
-			eraser.visible = false;
-			digitChooser.visible = false;
-			hintDigitChooser.visible = false;
-			showHintButton.visible = false;
+			eraser.opacity = 0;
+			digitChooser.opacity = 0;
+			hintDigitChooser.opacity = 0;
+			showHintButton.opacity = 0;
 			gameView.wall.color = "#00000000"
 			gameView.setFocus();
 		}
@@ -205,10 +202,10 @@ Rectangle {
 		}
 
 		onBackPressed: {
-			digitChooser.visible = false;
-			hintDigitChooser.visible = false;
-			eraser.visible = false;
-			showHintButton.visible = false;
+			digitChooser.opacity = 0;
+			hintDigitChooser.opacity = 0;
+			eraser.opacity = 0;
+			showHintButton.opacity = 0;
 			gameView.wall.color = "#00000000"
 			gameView.setFocus();
 		}
@@ -229,8 +226,7 @@ Rectangle {
 		radius: 0;
 		color: showHintButton.activeFocus ? colorTheme.activeBorderColor : "#000000"; //colorTheme.backgroundColor;
 
-		visible: false;
-		opacity: visible ? 1.0 : 0.01;
+		opacity: 0;
 
 		Image {
 			  anchors.fill: parent;
@@ -273,9 +269,9 @@ Rectangle {
 		onSelectPressed: {
 			if (!gameView.model.get(gameView.currentIndex)['isBase']){
 				log("Show digit chooser");
-				digitChooser.visible = true;
-				hintDigitChooser.visible = true;
-				eraser.visible = true;
+				digitChooser.opacity = 1;
+				hintDigitChooser.opacity = 1;
+				eraser.opacity = 1;
 				digitChooser.setFocus();
 				wall.color = "#00000055";
 			}
@@ -323,10 +319,10 @@ Rectangle {
 
 	function gameHide() {
 		log("Game hide");
-		this.digitChooser.visible = false;
-		this.eraser.visible = false;
-		this.hintDigitChooser.visible = false;
-		this.showHintButton.visible = false;
+		digitChooser.opacity = 0;
+		eraser.opacity = 0;
+		hintDigitChooser.opacity = 0;
+		showHintButton.opacity = 0;
 	}
 
 	function gameReset(){
@@ -553,5 +549,4 @@ Rectangle {
 		}
 		return false;
 	}
-
 }
