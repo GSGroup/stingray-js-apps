@@ -1,5 +1,5 @@
 Item {
-	    id: subMenu;
+		id: subMenu;
 		focus: true;
 
 		signal continueEvent();

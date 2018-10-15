@@ -1,5 +1,7 @@
+import "GameStatsDelegate.qml";
+
 Item {
-        id: gameStats;
+		id: gameStats;
 		property int difficulty;
 		
 		Item {
@@ -80,32 +82,32 @@ Item {
 			
 			function reSetHeader(){
 
-			    this.headerItem.firstPlace.player.text = this.listView.model.get(0).player;
-			    this.headerItem.firstPlace.time.text =  Math.floor(this.listView.model.get(0).time/60)+":"+
+				this.headerItem.firstPlace.player.text = this.listView.model.get(0).player;
+				this.headerItem.firstPlace.time.text =  Math.floor(this.listView.model.get(0).time/60)+":"+
 												   this.listView.model.get(0).time%60;
-			    this.headerItem.secondPlace.player.text = this.listView.model.get(1).player;
-			    this.headerItem.secondPlace.time.text = Math.floor(this.listView.model.get(1).time/60)+":"+
-												    this.listView.model.get(1).time%60;
-			    this.headerItem.thirdPlace.player.text = this.listView.model.get(2).player;
-			    this.headerItem.thirdPlace.time.text = Math.floor(this.listView.model.get(2).time/60)+":"+
-												    this.listView.model.get(2).time%60;
+				this.headerItem.secondPlace.player.text = this.listView.model.get(1).player;
+				this.headerItem.secondPlace.time.text = Math.floor(this.listView.model.get(1).time/60)+":"+
+													this.listView.model.get(1).time%60;
+				this.headerItem.thirdPlace.player.text = this.listView.model.get(2).player;
+				this.headerItem.thirdPlace.time.text = Math.floor(this.listView.model.get(2).time/60)+":"+
+													this.listView.model.get(2).time%60;
 				
 			}
 		}
 
 				
-        ListView {
-            id:listView;
-            anchors.top: gameStats.headerItem.bottom;
-//            anchors.left: parent.left;
-//            anchors.right: parent.right;
+		ListView {
+			id:listView;
+
+			anchors.top: gameStats.headerItem.bottom;
 			anchors.horizontalCenter: headerItem.horizontalCenter;
-            width: 200;
-            height: 700;
-            model: ListModel { }
-            delegate: GameStatsDelegate {}
-			}
-        function load(data){
+			width: 200;
+			height: 250;
+			model: ListModel { }
+			delegate: GameStatsDelegate {}
+		}
+
+		function load(data){
 				this.stats=[];
 				var statistic;
 				if(!(statistic = load("sudokuStats")))
@@ -121,21 +123,21 @@ Item {
 					});
 				}
 				if(this.stats.length==0) this.stats = data["stats"];
-                this.stats.sort(this.statsCompare);
+				this.stats.sort(this.statsCompare);
 				this.filterByDifficulty(this.difficulty);
-        }
+		}
 
-        function statsCompare(a,b){
-                if (a.time < b.time){
-                        return -1;
-                }
-                else if (a.time > b.time){
-                        return 1;
-                }
-                else {
-                        return 0;
-                }
-        }
+		function statsCompare(a,b){
+				if (a.time < b.time){
+					return -1;
+				}
+				else if (a.time > b.time){
+					return 1;
+				}
+				else {
+					return 0;
+				}
+		}
 
 		function filterByDifficulty(difficulty){
 			log("FILTERING BY DIFFICULTY "+difficulty);
@@ -150,36 +152,35 @@ Item {
 			
 		}
 
-        function addNrestat(argObj){
+		function addNrestat(argObj){
 			 log("ADDNRESTAT");
-                var tmpModel = [];
+				var tmpModel = [];
 				var tmpObj ={};
 				var isInList = false;
-                for(var i=0; i<this.listView.model.count; ++i){
+				for(var i=0; i<this.listView.model.count; ++i){
 					tmpObj = this.listView.model.get(i);
 					if(tmpObj.player==argObj.player && tmpObj.difficulty==argObj.difficulty){
 						isInList = true;
 						tmpObj.isBetter=(tmpObj.time>=argObj.time);
 						tmpObj.time = argObj.time;
-												
 					}
-                    tmpModel.push(tmpObj);
-                }
-                if(!isInList){ 
+					tmpModel.push(tmpObj);
+				}
+				if(!isInList){
 					argObj.isBetter=true;
 					tmpModel.push(argObj);
 				}
-                tmpModel.sort(this.statsCompare);
-                this.listView.model.reset();
-                for(var i=0; i<Math.min(8,tmpModel.length);++i){
+				tmpModel.sort(this.statsCompare);
+				this.listView.model.reset();
+				for(var i=0; i<Math.min(8,tmpModel.length);++i){
 						this.listView.model.append(tmpModel[i]);
-                }
+				}
 
 				this.headerItem.reSetHeader();
 
 				this.modelToStats();
 				this.saveStats();
-        }
+		}
 
 		function modelToStats(){
 				 var difficulty = this.listView.model.get(0).difficulty;
@@ -199,7 +200,7 @@ Item {
 		}
 		
 		function saveStats(){
-		    var statistic = [];
+			var statistic = [];
 			var tmpObj;
 			for(var i =0 ; i<this.stats.length; ++i){
 

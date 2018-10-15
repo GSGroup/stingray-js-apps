@@ -133,7 +133,6 @@ Item {
 		}
 	}	
 
-                    
 	onBackPressed: {
 		pageStack.currentIndex = 0;
 		gameMenu.setFocus();

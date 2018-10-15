@@ -1,13 +1,14 @@
-import controls.Button
-import controls.FocusablePanel
-import EditPlayerNamePanel
-import PlayerChooser
+import controls.Button;
+import controls.FocusablePanel;
+import "DifficultyChooser.qml";
+import "EditPlayerNamePanel.qml";
+import "PlayerChooser.qml";
 
 Item {
-        id: mainMenu;
+		id: mainMenu;
 		focus: true;
 
-        signal newGameEvent(difficulty, player,diffInt);
+		signal newGameEvent(difficulty, player,diffInt);
 		signal playEvent(difficulty,player);
 		signal difficultySet(difficulty);
 		signal helpEvent();
@@ -22,61 +23,64 @@ Item {
 		}
 		
 		SmallText {
-			id:playerLabel;
-			anchors.top: parent.top;
-			anchors.topMargin: 12;
-			anchors.left: parent.left;
-			anchors.leftMargin: 5;
+			id: playerLabel;
+
+			anchors.top: mainMenuTheme.top;
+			anchors.topMargin: 253;
+			anchors.left: mainMenuTheme.left;
+			anchors.leftMargin: 440;
+
 			color: "#581B18";
 			text: "PLAYER:";
 		}
 
-        PlayerChooser {
-                id: playerChooser;
-//                anchors.left: parent.left;
-				width: 400;
-//				anchors.horizontalCenter: parent.horizontalCenter;
-                anchors.left: parent.left;
-				anchors.leftMargin: 55;
-                anchors.top: parent.top;
-				anchors.topMargin: -2;
+		PlayerChooser {
+				id: playerChooser;
+
+				width: 350;
+
+				anchors.left: mainMenuTheme.left;
+				anchors.leftMargin: 518;
+				anchors.top: mainMenuTheme.top;
+				anchors.topMargin: 246;
 				
 				onDownPressed: {
 					difficultyChooser.setFocus();
 				
 				}
-                
-                onSelectPressed: {
-                    pNameEdit.show();
-                }
+
+				onSelectPressed: {
+					pNameEdit.show();
+				}
 
 				onCurrentIndexChanged: {
 					parent.enablePlayBtnEvent(playerChooser.listView.model.get(playerChooser.listView.currentIndex).player,
 						difficultyChooser.listView.model.get(difficultyChooser.listView.currentIndex).factor);
 				}
-        }
+		}
 
 		SmallText {
 			id:levelLabel;
+
 			anchors.horizontalCenter: playerLabel.horizontalCenter;
 			anchors.top: playerLabel.bottom;
-			anchors.topMargin: 45;
+			anchors.topMargin: 42;
+
 			color: "#581B18";
 			text: "LEVEL:";
 		}
 
 
-        DifficultyChooser {
-                id: difficultyChooser;
+		DifficultyChooser {
+				id: difficultyChooser;
 
-                anchors.top: playerChooser.bottom ; 
-				anchors.topMargin: 18;
-                anchors.left: parent.left;
-			   	anchors.leftMargin: 55;
-				width: 400;
+				width: 350;
 
+				anchors.left: mainMenuTheme.left;
+				anchors.leftMargin: 518;
+				anchors.top: mainMenuTheme.top;
+				anchors.topMargin: 315;
 
-                
 				onUpPressed: {
 					playerChooser.setFocus();
 				}
@@ -90,13 +94,13 @@ Item {
 					parent.enablePlayBtnEvent(playerChooser.listView.model.get(playerChooser.listView.currentIndex).player,
 						difficultyChooser.listView.model.get(difficultyChooser.listView.currentIndex).factor);
 				}
-        }
+		}
 
 		FocusablePanel {
 			id: newGameButton;
 			anchors.top: difficultyChooser.bottom;
 			anchors.horizontalCenter: parent.horizontalCenter;
-			anchors.topMargin: 15;
+			anchors.topMargin: 10;
 //			anchors.bottomMargin: 10;
 			width: 250;
 			height: 50;
@@ -130,7 +134,7 @@ Item {
 			onSelectPressed: {
 				log("newGameButton PRESSED!");
 				parent.newGameEvent(mainMenu.difficultyChooser.listView.model.get(difficultyChooser.currentIndex).name,
-                    mainMenu.playerChooser.listView.model.get(playerChooser.currentIndex).player,
+					mainMenu.playerChooser.listView.model.get(playerChooser.currentIndex).player,
 					mainMenu.difficultyChooser.listView.model.get(difficultyChooser.currentIndex).factor);
 			}
 		}
@@ -143,7 +147,7 @@ Item {
 
 			width: 250;
 			height: 50;
-            enabled: false;
+			enabled: false;
 
 
 			Image {
@@ -173,7 +177,7 @@ Item {
 			onSelectPressed: {
 				log("playButton PRESSED!");
 				parent.playEvent(mainMenu.difficultyChooser.listView.model.get(difficultyChooser.currentIndex).text,
-                    mainMenu.playerChooser.listView.model.get(playerChooser.currentIndex).text);
+					mainMenu.playerChooser.listView.model.get(playerChooser.currentIndex).text);
 			}
 		}
 
@@ -208,7 +212,7 @@ Item {
 			}
 
 			onUpPressed: {
-                playButton.enabled?playButton.setFocus():newGameButton.setFocus();
+				playButton.enabled?playButton.setFocus():newGameButton.setFocus();
 			}
 
 			onDownPressed: {
@@ -221,40 +225,41 @@ Item {
 			}
 		}
 
-        EditPlayerNamePanel {
-                id: pNameEdit;
-                anchors.top: playerChooser.bottom;
-                anchors.horizontalCenter: parent.horizontalCenter;
-                opacity: 0.01;
+		EditPlayerNamePanel {
+			id: pNameEdit;
+			anchors.top: playerChooser.bottom;
+			anchors.horizontalCenter: parent.horizontalCenter;
+			visible: false;
 
-                onAccepted: {
-                        log("set player name");
-                        mainMenu.playerChooser.listView.model.setProperty(mainMenu.playerChooser.currentIndex,'player',text);
-                        this.opacity = 0.01;
-                        mainMenu.playerChooser.setFocus();
-                }
+			onAccepted: {
+				log("set player name");
+				mainMenu.playerChooser.listView.model.setProperty(mainMenu.playerChooser.currentIndex,'player',text);
+				visible = false;
+				mainMenu.playerChooser.setFocus();
+			}
+		}
 
-        }
+		function load(data)
+		{
+			log("loading players..");
 
-        function load(data)
-        {
-              log("loading players..");
+			if(!(this.players = load("sudokuPlayers")))
+			{
+				this.players = data ["players"];
+			}
 
-				if(!(this.players = load("sudokuPlayers")))
-				{
-						this.players = data ["players"];
-				}
+			for (var i = 0; i < this.players.length; ++i)
+			{
+				mainMenu.playerChooser.append(this.players[i]);
+			}
 
-                for (var i = 0; i < this.players.length; ++i){
-                        mainMenu.playerChooser.append(this.players[i]);
-                }
-
-                log("loading difficulty levels..");
-				this.difflevels = data ["difflevels"];
-				for (var  i= 0; i< this.difflevels.length; ++i ){
-					    mainMenu.difficultyChooser.append(this.difflevels[i]);
-				}
-        }
+			log("loading difficulty levels..");
+			this.difflevels = data ["difflevels"];
+			for (var  i= 0; i< this.difflevels.length; ++i )
+			{
+				mainMenu.difficultyChooser.append(this.difflevels[i]);
+			}
+		}
 
 		function reFillPlayerChooser(data){
 				 mainMenu.playerChooser.listView.model.reset();

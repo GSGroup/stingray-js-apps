@@ -1,3 +1,5 @@
+import "PlayerChooserDelegate.qml";
+
 Item {
 	id: pChooserItem;
 	property bool showArrows: true;
