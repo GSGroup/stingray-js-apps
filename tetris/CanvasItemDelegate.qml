@@ -1,16 +1,17 @@
 Rectangle {
 	id: rect;
 
-	property int value: -1;
+	property int value: model.value;
 
-	width: game.blockSize;
+	width: game.blockSize ;
 	height: game.blockSize;
 
-	color: colorTheme.globalBackgroundColor;
+	color: colorTheme.backgroundColor;
+	focus: false;
 
 	visible: true;
 
-	Rectangle{
+	Rectangle {
 		id: innerRect;
 
 		x: game.spaceBetweenBlocks;
@@ -21,10 +22,13 @@ Rectangle {
 
 		focus: false;
 
-		visible: rect.value > 0;
+		visible: parent.value > 0;
 
 		Gradient {
 			id: blockGradient;
+
+			property string gradientStartColor: model.gradientStartColor;
+			property string gradientStopColor: model.gradientStopColor;
 
 			width: parent.width;
 
@@ -32,12 +36,13 @@ Rectangle {
 
 			orientation: Gradient.Horizontal;
 
+
 			GradientStop {
 				id: blockGradientStart;
 
 				position: 0;
 
-				color: "#E49C8B";
+				color: blockGradient.gradientStartColor;
 			}
 
 			GradientStop {
@@ -45,7 +50,7 @@ Rectangle {
 
 				position: 1;
 
-				color: "#CE573D";
+				color: blockGradient.gradientStopColor;
 			}
 		}
 	}

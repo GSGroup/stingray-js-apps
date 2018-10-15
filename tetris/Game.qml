@@ -1,6 +1,7 @@
 import "MenuDelegate.qml";
 import "LevelDelegate.qml";
 import "CellDelegate.qml";
+import "CanvasItemDelegate.qml";
 import "engine.js" as engine;
 
 Rectangle{
@@ -21,7 +22,7 @@ Rectangle{
 		property int glassWidth: 10;
 		property int glassHigh: 20;
 
-		property real dropTime: 16000.0;
+		property int dropTime: 16000;
 
 		property int space: 6;
 		property int spaceBetweenBlocks: 1 ;
@@ -52,6 +53,40 @@ Rectangle{
 		focus: true;
 		radius: 5;
 
+		ListModel {
+			id: gameCanvasModel;
+
+			property int value;
+			property string gradientStartColor;
+			property string gradientStopColor;
+		}
+
+		GridView
+		{
+			id: gameView;
+
+			property int numCells: game.glassHigh * game.glassWidth;
+
+			anchors.fill: parent;
+
+			width: game.width;
+			height : game.height;
+
+			cellWidth: game.blockSize;
+			cellHeight: game.blockSize;
+
+			orientation: GridView.Vertical;
+
+			model: gameCanvasModel;
+
+			delegate: CanvasItemDelegate { }
+
+			onCompleted: {
+				for(var i = 0; i < gameView.numCells; i++)
+					gameCanvasModel.append({value: 0, gradientStartColor: "#E49C8B", gradientStopColor: "#CE573D",});
+			}
+		}
+
 		Item {
 			id: movingTetraminos;
 
@@ -77,8 +112,10 @@ Rectangle{
 				repeat: true;
 
 				onTriggered: {
-					if(!game.moveBlock(0,game.stepSize))
+					if(!game.moveBlock(0,game.stepSize)) {
+						//game.makeBlockPartOfCanvas();
 						game.initNewMovingBlock();
+					}
 				}
 			}
 
@@ -102,22 +139,24 @@ Rectangle{
 						game.directionX = 0;
 						game.directionY = 0;
 						break;
+					default: return true;
 				}
 				game.moveBlock(game.directionX * game.stepSize,game.directionY * game.stepSize);
+
+				return true;
 			}
 
 			onCompleted: {
-
 				movingTetraminos.initMovingBlockCoord();
 
 				game.drawMovingBlock();
 			}
 
 			function initMovingBlockCoord() {
-				for (var k = 0; k < 16; k ++) {
+				for (var k = 0; k < 16; ++k) {
 					this.children[k].rect.color = game.color;
 					this.children[k].rect.x = (k % 4) * game.blockSize ;
-					this.children[k].rect.y = Math.floor(k / 4 ) * game.blockSize;
+					this.children[k].rect.y = Math.floor(k / 4) * game.blockSize;
 
 					this.children[k].innerRect.blockGradient.blockGradientStart.color = engine.getGradientStart(game.currentBlockColor);
 					this.children[k].innerRect.blockGradient.blockGradientEnd.color = engine.getGradientEnd(game.currentBlockColor);
@@ -556,7 +595,7 @@ Rectangle{
 				}
 				else
 				{
-					nextTetraminos.children[indexBlock].rect.value = -1;
+					nextTetraminos.children[indexBlock].rect.value = 0;
 				}
 				indexBlock++;
 			}
@@ -577,38 +616,44 @@ Rectangle{
 		}
 
 		function getBlock(x,y) {
+			var indx = y / game.blockSize * game.glassWidth + x / game.blockSize;
+
+			if(gameCanvasModel.get(indx).value === 1)
+				return true;
+
 			return false;
 		}
 
-		function checkCollisions (x,y) {
+		function hasCollisions(x,y) {
 			var result = false;
 
-			if ((x < 0 || x >= game.width || y >= game.height || game.getBlock(x,y)))
+			if ((x < 0) || (x >= game.width) || (y >= game.height) /*|| game.getBlock(x,y)*/){
 				result = true;
+			}
 
 			return result;
 		}
 
 		function moveBlock(deltaX, deltaY) {
+			var result = true;
 
-			for (var j = 0; j < 16; j++) {
-				if (movingTetraminos.children[j].rect.value <= 0)
-					continue;
-
+			for (var j = 0; j < 16; ++j) {
 				var x = movingTetraminos.children[j].rect.x;
 				var y = movingTetraminos.children[j].rect.y;
 
 				x += movingTetraminos.startPointX;
 
-				if (game.checkCollisions(x + deltaX, y + deltaY))
-					return false;
+				if (game.hasCollisions(x + deltaX, y + deltaY))
+					result = false;
 			}
 
-			for (var i = 0; i < 16 ; i++){
-				movingTetraminos.children[i].rect.x += deltaX;
-				movingTetraminos.children[i].rect.y += deltaY;
+			if (result) {
+				for (var i = 0; i < 16 ; ++i) {
+					movingTetraminos.children[i].rect.x += deltaX;
+					movingTetraminos.children[i].rect.y += deltaY;
+				}
 			}
-			return true;
+			return result;
 		}
 
 		function rotate() {
@@ -631,6 +676,25 @@ Rectangle{
 			game.drawMovingBlock();
 
 			animTimer.restart();
+		}
+
+		function makeBlockPartOfCanvas() {
+			for (var i = 0; i < 16; i++) {
+				var x = movingTetraminos.children[i].rect.x;
+				var y = movingTetraminos.children[i].rect.y;
+				var indx = y / game.blockSize * game.glassWidth + x / game.blockSize;
+				var value = movingTetraminos.children[i].rect.value;
+
+				if (value) {
+					gameCanvasModel.setProperty(indx,'value',value);
+
+					var colorGradientStart = engine.getGradientStart(game.currentBlockColor);
+					var colorGradientStop  = engine.getGradientEnd(game.currentBlockColor);
+
+					gameCanvasModel.setProperty(indx,'gradientStartColor',colorGradientStart);
+					gameCanvasModel.setProperty(indx,'gradientStopColor',colorGradientStop);
+				}
+			}
 		}
 	}
 }
