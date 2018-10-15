@@ -234,7 +234,7 @@ Item {
 			onAccepted: {
 				log("set player name");
 				mainMenu.playerChooser.listView.model.setProperty(mainMenu.playerChooser.currentIndex,'player',text);
-				this.opacity = 0.01;
+				visible = false;
 				mainMenu.playerChooser.setFocus();
 			}
 		}
