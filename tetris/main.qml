@@ -12,11 +12,8 @@ Application {
 		anchors.fill: parent;
 
 		color: colorTheme.backgroundColor;
-
 		focus: true;
 
-		Game {
-			focus:true;
-		}
+		Game { }
 	}
 }

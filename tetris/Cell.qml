@@ -19,8 +19,6 @@ Rectangle {
 		width: game.blockSize - game.spaceBetweenBlocks * 2;
 		height: game.blockSize - game.spaceBetweenBlocks * 2;
 
-		focus: false;
-
 		visible: rect.value > 0;
 
 		Gradient {
