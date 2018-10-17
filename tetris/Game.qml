@@ -1,7 +1,14 @@
+import "LevelMenu.qml";
+import "ExitMenu.qml";
+import "GameOverMenu.qml";
+import "InfoRect.qml";
+import "PauseRect.qml";
+import "Cell.qml";
+
 import "MenuDelegate.qml";
 import "LevelDelegate.qml";
-import "CellDelegate.qml";
 import "CanvasItemDelegate.qml";
+
 import "engine.js" as engine;
 
 Rectangle{
@@ -99,10 +106,10 @@ Rectangle{
 
 			visible: true;
 
-			CellDelegate{ } CellDelegate{ } CellDelegate{ } CellDelegate{ }
-			CellDelegate{ } CellDelegate{ } CellDelegate{ } CellDelegate{ }
-			CellDelegate{ } CellDelegate{ } CellDelegate{ } CellDelegate{ }
-			CellDelegate{ } CellDelegate{ } CellDelegate{ } CellDelegate{ }
+			Cell { } Cell { } Cell { } Cell { }
+			Cell { } Cell { } Cell { } Cell { }
+			Cell { } Cell { } Cell { } Cell { }
+			Cell { } Cell { } Cell { } Cell { }
 
 			Timer {
 				id: animTimer;
@@ -139,7 +146,7 @@ Rectangle{
 						game.directionX = 0;
 						game.directionY = 0;
 						break;
-					default: return true;
+					default: return false;
 				}
 				game.moveBlock(game.directionX * game.stepSize,game.directionY * game.stepSize);
 
@@ -164,7 +171,7 @@ Rectangle{
 			}
 		}
 
-		Rectangle {
+		InfoRect {
 			id: infoRect;
 
 			width: parent.width;
@@ -176,74 +183,11 @@ Rectangle{
 			anchors.leftMargin: game.blockSize * 3;
 
 			color: colorTheme.globalBackgroundColor;
-			focus: false;
 
 			visible: true;
-
-			Rectangle {
-				id: nextBlockViewRect;
-
-				width: game.blockSize * 6;
-				height: game.blockSize * 6;
-
-				anchors.top: parent.top;
-				anchors.left: parent.left;
-
-				color: colorTheme.globalBackgroundColor;
-
-				Item {
-					id: nextTetraminos;
-
-					x: game.blockSize;
-					y: game.blockSize;
-
-					focus: false;
-
-					visible: true;
-
-					CellDelegate{ } CellDelegate{ } CellDelegate{ } CellDelegate{ }
-					CellDelegate{ } CellDelegate{ } CellDelegate{ } CellDelegate{ }
-					CellDelegate{ } CellDelegate{ } CellDelegate{ } CellDelegate{ }
-					CellDelegate{ } CellDelegate{ } CellDelegate{ } CellDelegate{ }
-
-					onCompleted: {
-						for (var i = 0; i < 16; i ++) {
-							this.children[i].rect.x = (i % 4) * game.blockSize;
-							this.children[i].rect.y = Math.floor(i / 4 ) * game.blockSize;
-						}
-						game.drawNextBlockView();
-					}
-				}
-			}
-
-			Text {
-				id: levelText;
-
-				anchors.left: parent.left;
-				anchors.top: nextBlockViewRect.bottom;
-				anchors.topMargin: game.blockSize;
-				anchors.leftMargin: game.blockSize;
-
-				text: qsTr("Уровень");
-				color: colorTheme.highlightPanelColor;
-				font: captionSmall;
-			}
-
-			Text {
-				id: scoreRect;
-
-				anchors.left: parent.left;
-				anchors.top: levelText.bottom;
-				anchors.topMargin: game.blockSize;
-				anchors.leftMargin: game.blockSize;
-
-				text: qsTr("Счет");
-				color: colorTheme.highlightPanelColor;
-				font: captionSmall;
-			}
 		}
 
-		Rectangle {
+		ExitMenu {
 			id: exitMenu;
 
 			width: 0;
@@ -251,81 +195,24 @@ Rectangle{
 
 			anchors.centerIn: parent;
 
-			focus: false;
+			focus: true;
 			color: colorTheme.backgroundColor;
 			clip: true;
 
 			visible: false;
 
-			Behavior on width { animation: Animation { duration: 300; } }
-
-			ListView {
-				id: exitGrid;
-
-				property int cellWidth: game.blockSize * 8;
-				property int cellHeight: game.blockSize * 1.5;
-
-				width: cellWidth;
-				height: cellHeight * menuModel.count;
-
-				anchors.centerIn: parent;
-
-				focus: true;
-
-				visible: parent.width > 0;
-
-				model: ListModel {
-					id: menuModel;
-
-					ListElement {text: "Выйти из Тетриса"}
-					ListElement {text: "Продолжить игру"}
-					ListElement {text: "Новая игра"}
-				}
-
-				delegate: MenuDelegate { }
-
-				onSelectPressed: {
-					switch (exitGrid.currentIndex) {
-					case 0:
-						exitMenu.width = 0;
-						exitMenu.focus = false;
-						exitMenu.visible = false;
-						break;
-					case 1:
-						exitMenu.width = 0;
-						exitMenu.focus = false;
-						exitMenu.visible = false;
-
-						animTimer.start();
-						break;
-					case 2:
-						exitMenu.width = 0;
-						exitMenu.focus = false;
-						exitMenu.visible = false;
-
-						game.initNewMovingBlock();
-						break;
-					}
-				}
-
-				onKeyPressed: {
-					if (key === "8") {
-						return true;
-					}
-				}
-			}
-
 			function show() {
-				animTimer.stop();
+				exitMenu.width = game.width;
+				exitMenu.visible = true;
 
-				this.currentIndex = 0;
-				this.width = game.width;
-				this.focus = true;
-				this.visible = true;
+				exitGrid.currentIndex = 0;
+				exitMenu.setFocus();
+
+				animTimer.stop();
 			}
 		}
 
-		Rectangle {
+		GameOverMenu {
 			id: gameOverMenu;
 
 			width: 0;
@@ -333,90 +220,23 @@ Rectangle{
 
 			anchors.centerIn: parent;
 
-			focus: false;
+			focus: true;
 			color: "#000000";
-			clip: true;
 
 			visible: false;
 
-			Text {
-				y: 9;
-
-				anchors.horizontalCenter: parent.horizontalCenter;
-
-				text: qsTr("Игра окончена");
-				color: colorTheme.highlightPanelColor;
-				font: bodyFont;
-			}
-
-			ListView {
-				id: gameOverGrid;
-
-				property int cellWidth: game.blockSize * 8;
-				property int cellHeight: game.blockSize * 1.5;
-
-				width: cellWidth;
-				height: cellHeight * menuModel.count;
-
-				anchors.bottom: parent.bottom;
-				anchors.horizontalCenter: parent.horizontalCenter;
-
-				focus: true;
-
-				visible: parent.width > 0;
-
-				model: ListModel {
-					id: menuModel;
-
-					ListElement {text: "Выйти из Тетриса"}
-					ListElement {text: "Поиграть еще"}
-				}
-
-				delegate: MenuDelegate { }
-
-				onSelectPressed: {
-					switch (gameOverGrid.currentIndex) {
-					case 0:
-						gameOverMenu.width = 0;
-						gameOverMenu.focus = false;
-						gameOverMenu.visible = false;
-
-						//FIXME заменить на выход из приложения
-						animTimer.start();
-						break;
-
-					case 1:
-						gameOverMenu.width = 0;
-						gameOverMenu.focus = false;
-						gameOverMenu.visible = false;
-
-						animTimer.start();
-						break;
-					}
-				}
-
-				onKeyPressed: {
-					if (key === "8") {
-						return true;
-					}
-
-					if (key === "7") {
-						return true;
-					}
-				}
-			}
-
 			function show() {
-				this.currentIndex = 0;
-				this.width = game.width;
-				this.focus = true;
-				this.visible = true;
+				gameOverMenu.width = game.width;
+				gameOverMenu.visible = true;
+
+				gameOverGrid.currentIndex = 0;
+				gameOverGrid.setFocus();
 
 				animTimer.stop();
 			}
 		}
 
-		Rectangle {
+		LevelMenu {
 			id: levelMenu;
 
 			width: 0;
@@ -424,85 +244,24 @@ Rectangle{
 
 			anchors.centerIn: parent;
 
-			focus: false;
+			focus: true;
 			color: colorTheme.backgroundColor;
 			clip: true;
 
 			visible: false;
 
-			Text {
-				y: 9;
-
-				anchors.horizontalCenter: parent.horizontalCenter;
-
-				text: qsTr("Выберите уровень");
-				color: colorTheme.highlightPanelColor;
-				font: captionSmall;
-			}
-
-			ListView {
-				id: levelGrid;
-
-				property int cellWidth: game.width / levelModel.count;
-				property int cellHeight: game.blockSize * 1.5;
-
-				width: game.width;
-				height: cellHeight;
-
-				anchors.bottom: parent.bottom;
-
-				focus: true;
-				orientation: Horizontal;
-
-				visible: parent.width > 0;
-
-				model: ListModel {
-					id:levelModel;
-
-					ListElement {text: "1"}
-					ListElement {text: "2"}
-					ListElement {text: "3"}
-					ListElement {text: "4"}
-					ListElement {text: "5"}
-					ListElement {text: "6"}
-					ListElement {text: "7"}
-					ListElement {text: "8"}
-					ListElement {text: "9"}
-					ListElement {text: "10"}
-				}
-
-				delegate: LevelDelegate { }
-
-				onSelectPressed: {
-					levelMenu.width = 0;
-					levelMenu.focus = false;
-					levelMenu.visible = false;
-
-					animTimer.start();
-				}
-
-				onKeyPressed: {
-					if (key === "8") {
-						return true;
-					}
-
-					if (key === "6") {
-						return true;
-					}
-				}
-			}
-
 			function show() {
-				this.currentIndex = 0;
-				this.width = game.width;
-				this.focus = true;
-				this.visible = true;
+				levelMenu.width = game.width;
+				levelMenu.visible = true;
+
+				levelGrid.setFocus();
+				levelGrid.currentIndex = 0;
 
 				animTimer.stop();
 			}
 		}
 
-		Rectangle {
+		PauseRect {
 			id: pauseRect;
 
 			width: game.width;
@@ -515,36 +274,12 @@ Rectangle{
 
 			visible: false;
 
-			Text {
-				anchors.centerIn: parent;
-
-				text: qsTr("Пауза...");
-				color: colorTheme.highlightPanelColor;
-				font: bodyFont;
-			}
-
-			onKeyPressed: {
-				if (key === "8") {
-					this.visible = false;
-					this.focus   = false;
-
-					animTimer.start();
-
-					return true;
-				}
-
-				if (key === "Select") {
-					return true;
-				}
-			}
-
 			function show() {
-				this.visible = true;
-				this.focus = true;
+				pauseRect.visible = true;
+				pauseRect.setFocus();
 
 				animTimer.stop();
 			}
-
 		}
 
 		onKeyPressed: {
@@ -567,6 +302,7 @@ Rectangle{
 				gameOverMenu.show();
 				return true;
 			}
+			return true;
 		}
 
 		function getNewColor() {
