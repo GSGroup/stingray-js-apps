@@ -1,0 +1,65 @@
+Rectangle {
+	id: infoRect;
+
+	Rectangle {
+		id: nextBlockViewRect;
+
+		width: game.blockSize * 6;
+		height: game.blockSize * 6;
+
+		anchors.top: parent.top;
+		anchors.left: parent.left;
+
+		color: colorTheme.globalBackgroundColor;
+
+		Item {
+			id: nextTetraminos;
+
+			x: game.blockSize;
+			y: game.blockSize;
+
+			focus: false;
+
+			visible: true;
+
+			Cell { } Cell { } Cell { } Cell { }
+			Cell { } Cell { } Cell { } Cell { }
+			Cell { } Cell { } Cell { } Cell { }
+			Cell { } Cell { } Cell { } Cell { }
+
+			onCompleted: {
+				for (var i = 0; i < 16; i ++) {
+					this.children[i].rect.x = (i % 4) * game.blockSize;
+					this.children[i].rect.y = Math.floor(i / 4 ) * game.blockSize;
+				}
+				game.drawNextBlockView();
+			}
+		}
+	}
+
+	Text {
+		id: levelText;
+
+		anchors.left: parent.left;
+		anchors.top: nextBlockViewRect.bottom;
+		anchors.topMargin: game.blockSize;
+		anchors.leftMargin: game.blockSize;
+
+		text: qsTr("Уровень");
+		color: colorTheme.highlightPanelColor;
+		font: captionSmall;
+	}
+
+	Text {
+		id: scoreRect;
+
+		anchors.left: parent.left;
+		anchors.top: levelText.bottom;
+		anchors.topMargin: game.blockSize;
+		anchors.leftMargin: game.blockSize;
+
+		text: qsTr("Счет");
+		color: colorTheme.highlightPanelColor;
+		font: captionSmall;
+	}
+}
