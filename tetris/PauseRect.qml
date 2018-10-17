@@ -19,4 +19,9 @@ Rectangle {
 
 		return true;
 	}
+
+	function show() {
+		pauseRect.visible = true;
+		pauseRect.setFocus();
+	}
 }

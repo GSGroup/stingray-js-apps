@@ -63,4 +63,12 @@ Rectangle {
 			}
 		}
 	}
+
+	function show(width) {
+		gameOverMenu.width = width;
+		gameOverMenu.visible = true;
+
+		gameOverGrid.currentIndex = 0;
+		gameOverGrid.setFocus();
+	}
 }

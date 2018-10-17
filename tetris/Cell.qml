@@ -1,7 +1,10 @@
+import "engine.js" as engine
+
 Rectangle {
 	id: rect;
 
 	property int value: -1;
+	property alias blockColor:innerRect.indexColor;
 
 	width: game.blockSize;
 	height: game.blockSize;
@@ -12,6 +15,8 @@ Rectangle {
 
 	Rectangle{
 		id: innerRect;
+
+		property int indexColor: 0;
 
 		x: game.spaceBetweenBlocks;
 		y: game.spaceBetweenBlocks;
@@ -35,7 +40,7 @@ Rectangle {
 
 				position: 0;
 
-				color: "#E49C8B";
+				color: engine.getGradientStart(innerRect.indexColor);
 			}
 
 			GradientStop {
@@ -43,7 +48,7 @@ Rectangle {
 
 				position: 1;
 
-				color: "#CE573D";
+				color: engine.getGradientEnd(innerRect.indexColor);
 			}
 		}
 	}
