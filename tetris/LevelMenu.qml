@@ -58,4 +58,12 @@ Rectangle {
 			}
 		}
 	}
+
+	function show(width) {
+		levelMenu.width = width;
+		levelMenu.visible = true;
+
+		levelGrid.setFocus();
+		levelGrid.currentIndex = 0;
+	}
 }

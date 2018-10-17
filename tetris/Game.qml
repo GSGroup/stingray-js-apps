@@ -28,26 +28,11 @@ Rectangle{
 		property int glassWidth: 10;
 		property int glassHigh: 20;
 
-		property int dropTime: 16000;
-
 		property int space: 6;
-		property int spaceBetweenBlocks: 1 ;
-		property int blockSize: (safeArea.height - space * 4) / glassHigh;
+		property int spaceBetweenBlocks: 1;
+		property int blockSize: (safeArea.height - space * 4) / game.glassHigh;
 
-		property int currentBlock: 0x0F00;
-		property int nextBlock: 0x4460;
-
-		property int currentBlockViewIndex: 0;
-		property int nextBlockViewIndex: 1;
-		property int currentRotationIndex: 0;
-		property int nextRotationIndex: 1;
-
-		property int nextBlockColor: 0;
-		property int currentBlockColor: 1;
-
-		property int directionX: 0;
-		property int directionY: 0;
-
+		property int dropTime: 16000;
 		property int stepSize: game.blockSize;
 
 		width: blockSize * glassWidth;
@@ -127,25 +112,25 @@ Rectangle{
 
 			onKeyPressed: {
 				switch (key) {
-					case 'Right':
-						game.directionX = 1;
-						game.directionY = 0;
-						break;
-					case 'Left':
-						game.directionX = -1;
-						game.directionY = 0;
-						break;
-					case 'Down':
-						game.directionX = 0;
-						game.directionY = 1;
-						break;
-					case 'Up':
-						game.rotate();
-						game.drawMovingBlock();
-						game.directionX = 0;
-						game.directionY = 0;
-						break;
-					default: return false;
+				case 'Right':
+					game.directionX = 1;
+					game.directionY = 0;
+					break;
+				case 'Left':
+					game.directionX = -1;
+					game.directionY = 0;
+					break;
+				case 'Down':
+					game.directionX = 0;
+					game.directionY = 1;
+					break;
+				case 'Up':
+					game.rotate();
+					game.drawMovingBlock();
+					game.directionX = 0;
+					game.directionY = 0;
+					break;
+				default: return false;
 				}
 				game.moveBlock(game.directionX * game.stepSize,game.directionY * game.stepSize);
 
@@ -160,16 +145,14 @@ Rectangle{
 
 			function initMovingBlockCoord() {
 				for (var k = 0; k < 16; ++k) {
-					this.children[k].rect.color = game.color;
-					this.children[k].rect.x = (k % 4) * game.blockSize ;
-					this.children[k].rect.y = Math.floor(k / 4) * game.blockSize;
+					this.children[k].color = game.color;
+					this.children[k].x = (k % 4) * game.blockSize ;
+					this.children[k].y = Math.floor(k / 4) * game.blockSize;
 
-					this.children[k].innerRect.blockGradient.blockGradientStart.color = engine.getGradientStart(game.currentBlockColor);
-					this.children[k].innerRect.blockGradient.blockGradientEnd.color = engine.getGradientEnd(game.currentBlockColor);
+					this.children[k].blockColor = game.currentBlockColor;
 				}
 			}
 		}
-
 		InfoRect {
 			id: infoRect;
 
@@ -198,16 +181,6 @@ Rectangle{
 			clip: true;
 
 			visible: false;
-
-			function show() {
-				exitMenu.width = game.width;
-				exitMenu.visible = true;
-
-				exitGrid.currentIndex = 0;
-				exitMenu.setFocus();
-
-				animTimer.stop();
-			}
 		}
 
 		GameOverMenu {
@@ -222,16 +195,6 @@ Rectangle{
 			color: "#000000";
 
 			visible: false;
-
-			function show() {
-				gameOverMenu.width = game.width;
-				gameOverMenu.visible = true;
-
-				gameOverGrid.currentIndex = 0;
-				gameOverGrid.setFocus();
-
-				animTimer.stop();
-			}
 		}
 
 		LevelMenu {
@@ -247,16 +210,6 @@ Rectangle{
 			clip: true;
 
 			visible: false;
-
-			function show() {
-				levelMenu.width = game.width;
-				levelMenu.visible = true;
-
-				levelGrid.setFocus();
-				levelGrid.currentIndex = 0;
-
-				animTimer.stop();
-			}
 		}
 
 		PauseRect {
@@ -271,33 +224,30 @@ Rectangle{
 			color: colorTheme.backgroundColor;
 
 			visible: false;
-
-			function show() {
-				pauseRect.visible = true;
-				pauseRect.setFocus();
-
-				animTimer.stop();
-			}
 		}
 
 		onKeyPressed: {
-			if (key === "Select") {
-				exitMenu.show();
+			if (key == "Select") {
+				animTimer.stop();
+				exitMenu.show(game.width);
 				return true;
 			}
 
-			if (key === "8") {
+			if (key == "8") {
+				animTimer.stop();
 				pauseRect.show();
 				return true;
 			}
 
-			if (key === "7") {
-				levelMenu.show();
+			if (key == "7") {
+				animTimer.stop();
+				levelMenu.show(game.width);
 				return true;
 			}
 
-			if (key === "6") {
-				gameOverMenu.show();
+			if (key == "6") {
+				animTimer.stop();
+				gameOverMenu.show(game.width);
 				return true;
 			}
 			return true;
@@ -314,45 +264,25 @@ Rectangle{
 			this.nextBlock = engine.getBlock(game.nextBlockViewIndex,game.nextRotationIndex);
 		}
 
-		function drawNextBlockView() {
-			for (var i = 0; i< 16; ++i)
-			{
-				nextTetraminos.children[i].innerRect.blockGradient.blockGradientStart.color = engine.getGradientStart(game.nextBlockColor);
-				nextTetraminos.children[i].innerRect.blockGradient.blockGradientEnd.color = engine.getGradientEnd(game.nextBlockColor);
-			}
-
-			var bit;
-			var indexBlock = 0;
-			for (bit = 0x8000 ; bit > 0 ; bit = bit >> 1) {
-				if (game.nextBlock & bit) {
-					nextTetraminos.children[indexBlock].rect.value = 1;
-				}
-				else
-				{
-					nextTetraminos.children[indexBlock].rect.value = 0;
-				}
-				indexBlock++;
-			}
-		}
 		function drawMovingBlock() {
 			var bit;
 			var indexBlock = 0;
 			for (bit = 0x8000 ; bit > 0 ; bit = bit >> 1) {
 				if (game.currentBlock & bit) {
-					movingTetraminos.children[indexBlock].rect.value = 1;
+					movingTetraminos.children[indexBlock].value = 1;
 				}
 				else
 				{
-					movingTetraminos.children[indexBlock].rect.value = 0;
+					movingTetraminos.children[indexBlock].value = 0;
 				}
 				indexBlock++;
 			}
 		}
 
 		function getBlock(x,y) {
-			var indx = y / game.blockSize * game.glassWidth + x / game.blockSize;
+			var indx = game.index(x,y);
 
-			if(gameCanvasModel.get(indx).value === 1)
+			if(gameCanvasModel.get(indx).value == 1)
 				return true;
 
 			return false;
@@ -361,7 +291,7 @@ Rectangle{
 		function hasCollisions(x,y) {
 			var result = false;
 
-			if ((x < 0) || (x >= game.width) || (y >= game.height) /*|| game.getBlock(x,y)*/){
+			if ((x < 0) || (x >= game.width) || (y >= game.height) || game.getBlock(x,y)){
 				result = true;
 			}
 
@@ -372,19 +302,19 @@ Rectangle{
 			var result = true;
 
 			for (var j = 0; j < 16; ++j) {
-				var x = movingTetraminos.children[j].rect.x;
-				var y = movingTetraminos.children[j].rect.y;
+				var x = movingTetraminos.children[j].x;
+				var y = movingTetraminos.children[j].y;
 
 				x += movingTetraminos.startPointX;
 
-				if (game.hasCollisions(x + deltaX, y + deltaY))
+				if (game.hasCollisions(x + deltaX, y + deltaY) && movingTetraminos.children[j].value > 0)
 					result = false;
 			}
 
 			if (result) {
 				for (var i = 0; i < 16 ; ++i) {
-					movingTetraminos.children[i].rect.x += deltaX;
-					movingTetraminos.children[i].rect.y += deltaY;
+					movingTetraminos.children[i].x += deltaX;
+					movingTetraminos.children[i].y += deltaY;
 				}
 			}
 			return result;
@@ -414,10 +344,8 @@ Rectangle{
 
 		function makeBlockPartOfCanvas() {
 			for (var i = 0; i < 16; ++i) {
-				var x = movingTetraminos.children[i].rect.x;
-				var y = movingTetraminos.children[i].rect.y;
-				var indx = y / game.blockSize * game.glassWidth + x / game.blockSize;
-				var value = movingTetraminos.children[i].rect.value;
+				var indx = game.index(movingTetraminos.children[i].x,movingTetraminos.children[i].y);
+				var value = movingTetraminos.children[i].value;
 
 				if (value) {
 					gameCanvasModel.setProperty(indx,'value',value);
@@ -429,6 +357,27 @@ Rectangle{
 					gameCanvasModel.setProperty(indx,'gradientStopColor',colorGradientStop);
 				}
 			}
+		}
+
+		function index(x, y){
+			var indx = Math.floor(y / game.blockSize) * game.glassWidth + Math.floor(x / game.blockSize);
+			return indx;
+		}
+
+		onCompleted: {
+			game.currentBlock = 0x0F00;
+			game.nextBlock = 0x4460;
+
+			game.currentBlockViewIndex = 0;
+			game.nextBlockViewIndex = 1;
+			game.currentRotationIndex = 0;
+			game.nextRotationIndex = 1;
+
+			game.nextBlockColor = 0;
+			game.currentBlockColor = 1;
+
+			game.directionX = 0;
+			game.directionY = 0;
 		}
 	}
 }

@@ -56,9 +56,17 @@ Rectangle {
 		}
 
 		onKeyPressed: {
-			if (key === "8" || key === "7" || key === "6") {
+			if (key == "8" || key == "7" || key == "6") {
 				return true;
 			}
 		}
+	}
+
+	function show(width) {
+		exitMenu.width = width;
+		exitMenu.visible = true;
+
+		exitGrid.currentIndex = 0;
+		exitMenu.setFocus();
 	}
 }
