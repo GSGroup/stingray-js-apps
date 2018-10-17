@@ -7,9 +7,6 @@ Rectangle {
 		width: game.blockSize * 6;
 		height: game.blockSize * 6;
 
-		anchors.top: parent.top;
-		anchors.left: parent.left;
-
 		color: colorTheme.globalBackgroundColor;
 
 		Item {

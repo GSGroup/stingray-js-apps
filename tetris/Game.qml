@@ -17,11 +17,10 @@ Rectangle{
 	width: safeArea.width;
 	height: safeArea.height;
 
+	focus: true;
 	color: colorTheme.globalBackgroundColor;
 
 	visible: true;
-
-	focus: true;
 
 	Rectangle {
 		id: game;
@@ -179,7 +178,6 @@ Rectangle{
 
 			anchors.top: parent.top;
 			anchors.left: parent.right;
-			anchors.bottomMargin: game.space;
 			anchors.leftMargin: game.blockSize * 3;
 
 			color: colorTheme.globalBackgroundColor;
@@ -317,7 +315,7 @@ Rectangle{
 		}
 
 		function drawNextBlockView() {
-			for (var i = 0; i< 16; i++)
+			for (var i = 0; i< 16; ++i)
 			{
 				nextTetraminos.children[i].innerRect.blockGradient.blockGradientStart.color = engine.getGradientStart(game.nextBlockColor);
 				nextTetraminos.children[i].innerRect.blockGradient.blockGradientEnd.color = engine.getGradientEnd(game.nextBlockColor);
@@ -415,7 +413,7 @@ Rectangle{
 		}
 
 		function makeBlockPartOfCanvas() {
-			for (var i = 0; i < 16; i++) {
+			for (var i = 0; i < 16; ++i) {
 				var x = movingTetraminos.children[i].rect.x;
 				var y = movingTetraminos.children[i].rect.y;
 				var indx = y / game.blockSize * game.glassWidth + x / game.blockSize;

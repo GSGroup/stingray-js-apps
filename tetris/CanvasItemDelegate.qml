@@ -7,7 +7,6 @@ Rectangle {
 	height: game.blockSize;
 
 	color: colorTheme.backgroundColor;
-	focus: false;
 
 	visible: true;
 
@@ -19,8 +18,6 @@ Rectangle {
 
 		width: game.blockSize - game.spaceBetweenBlocks * 2;
 		height: game.blockSize - game.spaceBetweenBlocks * 2;
-
-		focus: false;
 
 		visible: parent.value > 0;
 
