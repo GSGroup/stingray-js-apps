@@ -15,7 +15,7 @@ Rectangle {
 	
 	BigText {
 		id: titleText;
-		text: "Reversi";
+		text: "Реверси";
 		anchors.top: parent.top;
 		anchors.horizontalCenter: parent.horizontalCenter;
 	}
@@ -27,7 +27,7 @@ Rectangle {
 		spacing: 10;
 
 		MainText {
-			text: "White";
+			text: "Белые";
 		}
 
 		MainText {
@@ -46,7 +46,7 @@ Rectangle {
 		spacing: 10;
 
 		MainText {
-			text: "Black";
+			text: "Черные";
 		}
 
 		MainText {
@@ -115,11 +115,11 @@ Rectangle {
 					var whiteIsWinner = game.whiteCounter > game.blackCounter;					
 					if(whiteIsWinner)
 					{
-						gameOver.text = game.playerWhite ? "You won!" : "Game Over";
+						gameOver.text = game.playerWhite ? "Вы выиграли!" : "Игра окончена";
 					}
 					else
 					{
-						gameOver.text = !game.playerWhite ? "You won!" : "Game Over";
+						gameOver.text = !game.playerWhite ? "Вы выиграли!" : "Игра окончена";
 					}
 					game.over = true;
 					gameOver.visible = true;
@@ -152,7 +152,7 @@ Rectangle {
 				anchors.centerIn: parent;
 				anchors.bottomMargin: 10;
 
-				text: "Help";
+				text: "Помощь";
 			}
 
 			Rectangle {
@@ -179,7 +179,7 @@ Rectangle {
 				anchors.centerIn: parent;
 				anchors.bottomMargin: 10;
 
-				text: "Start with white";
+				text: "Начать белыми";
 			}
 
 			Rectangle {
@@ -206,7 +206,7 @@ Rectangle {
 				anchors.centerIn: parent;
 				anchors.bottomMargin: 10;
 
-				text: "Start with black";
+				text: "Начать черными";
 			}
 
 			Rectangle {
@@ -235,7 +235,7 @@ Rectangle {
 				anchors.centerIn: parent;
 				anchors.bottomMargin: 10;
 
-				text: "Easy";
+				text: "Легко";
 			}
 
 			Rectangle {
@@ -276,12 +276,12 @@ Rectangle {
 					if (game.difficultyLevel == 0)
 					{
 						game.difficultyLevel = 10;
-						difftext.text = "Hard";
+						difftext.text = "Сложно";
 					}
 					else if (game.difficultyLevel == 1)
 					{
 						game.difficultyLevel = -10;
-						difftext.text = "Easy";
+						difftext.text = "Легко";
 					}
 					break;
 			}
