@@ -31,13 +31,13 @@ Item {
 		case 'Up':
 			directionX = 0;
 			directionY = 0;
-
 			game.rotate();
 			this.drawMovingBlock(game.currentBlock);
 			break;
+
 		default: return false;
 		}
-		this.moveBlock(directionX * game.stepSize,directionY * game.stepSize);
+		this.moveBlock(directionX * game.stepSize, directionY * game.stepSize);
 
 		return true;
 	}
@@ -66,7 +66,7 @@ Item {
 		}
 
 		if (result) {
-			for (var i = 0; i < 16 ; ++i) {
+			for (var i = 0; i < 16; ++i) {
 				this.children[i].x += deltaX;
 				this.children[i].y += deltaY;
 			}
@@ -77,15 +77,9 @@ Item {
 	function drawMovingBlock(blockView) {
 		var bit;
 		var indexBlock = 0;
-		for (bit = 0x8000 ; bit > 0 ; bit = bit >> 1) {
-			if (blockView & bit) {
-				this.children[indexBlock].value = 1;
-			}
-			else
-			{
-				this.children[indexBlock].value = 0;
-			}
-			indexBlock++;
+		for (bit = 0x8000; bit > 0; bit = bit >> 1) {
+			this.children[indexBlock].value = blockView & bit;
+			++indexBlock;
 		}
 	}
 }

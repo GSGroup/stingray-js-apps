@@ -6,57 +6,42 @@ Rectangle {
 
 	visible: false;
 
-	Text {
+	BodyText {
 		y: 9;
 
-		anchors.horizontalCenter: parent.horizontalCenter;
+		anchors.horizontalCenter: gameOverRect.horizontalCenter;
 
 		text: qsTr("Игра окончена");
 		color: colorTheme.highlightPanelColor;
-		font: bodyFont;
 	}
 
 	ListView {
 		id: gameOverGrid;
 
-		property int cellWidth: game.blockSize * 8;
-		property int cellHeight: game.blockSize * 1.5;
+		width: game.blockSize * 8;
+		height: game.blockSize * 1.5 * model.count;
 
-		width: cellWidth;
-		height: cellHeight * menuModel.count;
-
-		anchors.bottom: parent.bottom;
-		anchors.horizontalCenter: parent.horizontalCenter;
+		anchors.bottom: gameOverRect.bottom;
+		anchors.horizontalCenter: gameOverRect.horizontalCenter;
 
 		focus: true;
 
-		visible: parent.width > 0;
+		visible: true;
 
 		model: ListModel {
 			id: menuModel;
 
-			ListElement {text: "Выйти из Тетриса"}
-			ListElement {text: "Поиграть еще"}
+			ListElement { text: "Выйти из Тетриса" }
+			ListElement { text: "Поиграть еще" }
 		}
 		delegate: MenuDelegate { }
 
 		onSelectPressed: {
 			switch (gameOverGrid.currentIndex) {
-			case 0:
-				gameOverRect.width = 0;
-				gameOverRect.visible = false;
-
-				//FIXME заменить на выход из приложения
-				movingTetraminos.setFocus();
-				animTimer.start();
-				break;
-
+			case 0://FIXME: выход из приложения
 			case 1:
-				gameOverRect.width = 0;
 				gameOverRect.visible = false;
-
 				movingTetraminos.setFocus();
-				animTimer.start();
 				break;
 			}
 		}

@@ -3,8 +3,6 @@ Rectangle {
 
 	color: colorTheme.globalBackgroundColor;
 
-	visible: true;
-
 	Rectangle {
 		id: nextBlockViewRect;
 
@@ -21,8 +19,6 @@ Rectangle {
 
 			focus: false;
 
-			visible: true;
-
 			Cell { } Cell { } Cell { } Cell { }
 			Cell { } Cell { } Cell { } Cell { }
 			Cell { } Cell { } Cell { } Cell { }
@@ -30,53 +26,43 @@ Rectangle {
 		}
 	}
 
-	Text {
+	CaptionSmallText {
 		id: levelText;
 
-		anchors.left: parent.left;
 		anchors.top: nextBlockViewRect.bottom;
 		anchors.topMargin: game.blockSize;
 		anchors.leftMargin: game.blockSize;
 
 		text: qsTr("Уровень");
 		color: colorTheme.highlightPanelColor;
-		font: captionSmall;
 	}
 
-	Text {
+	CaptionSmallText {
 		id: scoreRect;
 
-		anchors.left: parent.left;
 		anchors.top: levelText.bottom;
 		anchors.topMargin: game.blockSize;
 		anchors.leftMargin: game.blockSize;
 
 		text: qsTr("Счет");
 		color: colorTheme.highlightPanelColor;
-		font: captionSmall;
 	}
 
-	function drawNextBlockView(nextBlockColor,nextBlock) {
-		for (var i = 0; i< 16; ++i){
+	function drawNextBlockView(nextBlockColor, nextBlock) {
+		for (var i = 0; i< 16; ++i) {
 			nextTetraminos.children[i].blockColor = nextBlockColor;
 		}
 
 		var bit;
 		var indexBlock = 0;
-		for (bit = 0x8000 ; bit > 0 ; bit = bit >> 1) {
-			if (nextBlock & bit) {
-				nextTetraminos.children[indexBlock].value = 1;
-			}
-			else
-			{
-				nextTetraminos.children[indexBlock].value = 0;
-			}
-			indexBlock++;
+		for (bit = 0x8000; bit > 0; bit = bit >> 1) {
+			nextTetraminos.children[indexBlock].value = nextBlock & bit;
+			++indexBlock;
 		}
 	}
 
 	onCompleted: {
-		for (var i = 0; i < 16; i ++) {
+		for (var i = 0; i < 16; ++i) {
 			nextTetraminos.children[i].x = (i % 4) * game.blockSize;
 			nextTetraminos.children[i].y = Math.floor(i / 4 ) * game.blockSize;
 		}

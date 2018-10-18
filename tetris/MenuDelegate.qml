@@ -1,26 +1,19 @@
-Item {
-	id: itemMenu;
+Rectangle {
+	id: itemRect;
 
-	width: parent.cellWidth;
-	height: parent.cellHeight;
+	width: itemMenu.width;
+	height: itemMenu.height * 2 / 3;
 
-	anchors.horizontalCenter: parent.horizontalCenter;
+	anchors.centerIn: itemMenu;
 
-	Rectangle {
+	color: itemMenu.activeFocus ? colorTheme.activeFocusTop : colorTheme.nonFocusablePanelColor;
 
-		width: parent.width;
-		height: parent.height * 2 / 3;
+	BodyText {
+		id: textItem;
 
-		anchors.centerIn: parent;
+		anchors.centerIn: itemRect;
 
-		color: parent.activeFocus ? colorTheme.activeFocusTop : colorTheme.nonFocusablePanelColor;
-
-		Text {
-			anchors.centerIn: parent;
-
-			text: model.text;
-			color: itemMenu.activeFocus ? colorTheme.globalBackgroundColor : colorTheme.highlightPanelColor;
-			font: bodyFont;
-		}
+		color: itemMenu.activeFocus ? colorTheme.globalBackgroundColor : colorTheme.highlightPanelColor;
+		text: model.text;
 	}
 }

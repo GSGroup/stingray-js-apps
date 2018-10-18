@@ -13,15 +13,13 @@ import "CanvasItemDelegate.qml";
 import "engine.js" as engine;
 
 Rectangle{
-	id: mainWindow;
+	id: mainScreen;
 
 	width: safeArea.width;
 	height: safeArea.height;
 
 	focus: true;
 	color: colorTheme.globalBackgroundColor;
-
-	visible: true;
 
 	Rectangle {
 		id: game;
@@ -39,7 +37,7 @@ Rectangle{
 		width: blockSize * glassWidth;
 		height: blockSize * glassHigh;
 
-		anchors.centerIn: parent;
+		anchors.centerIn: mainWindow;
 
 		color: colorTheme.backgroundColor;
 		focus: true;
@@ -56,15 +54,8 @@ Rectangle{
 		GridView {
 			id: gameView;
 
-			property int numCells: game.glassHigh * game.glassWidth;
-
-			anchors.fill: parent;
-
 			width: game.width;
 			height : game.height;
-
-			cellWidth: game.blockSize;
-			cellHeight: game.blockSize;
 
 			orientation: GridView.Vertical;
 
@@ -72,7 +63,7 @@ Rectangle{
 			delegate: CanvasItemDelegate { }
 
 			onCompleted: {
-				for (var i = 0; i < gameView.numCells; i++)
+				for (var i = 0; i < game.glassHigh * game.glassWidth; ++i)
 					gameCanvasModel.append({value: 0, gradientStartColor: "#E49C8B", gradientStopColor: "#CE573D",});
 			}
 		}
@@ -92,7 +83,7 @@ Rectangle{
 			repeat: true;
 
 			onTriggered: {
-				if (!movingTetraminos.moveBlock(0,game.stepSize)) {
+				if (!movingTetraminos.moveBlock(0, game.stepSize)) {
 					game.initNewMovingBlock();
 				}
 			}
@@ -101,11 +92,10 @@ Rectangle{
 		InfoRect {
 			id: infoItem;
 
-			width: parent.width;
-			height: parent.height;
+			width: game.width;
+			height: game.height;
 
-			anchors.top: parent.top;
-			anchors.left: parent.right;
+			anchors.left: game.right;
 			anchors.leftMargin: game.blockSize * 3;
 		}
 
@@ -115,7 +105,7 @@ Rectangle{
 			width: game.width;
 			height: game.blockSize * 4;
 
-			anchors.centerIn: parent;
+			anchors.centerIn: game;
 		}
 
 		GameOverMenu {
@@ -124,7 +114,7 @@ Rectangle{
 			width: game.width;
 			height: game.blockSize * 4.5;
 
-			anchors.centerIn: parent;
+			anchors.centerIn: game;
 		}
 
 		LevelMenu {
@@ -133,7 +123,7 @@ Rectangle{
 			width: game.width;
 			height: game.blockSize * 3;
 
-			anchors.centerIn: parent;
+			anchors.centerIn: game;
 		}
 
 		PauseRect {
@@ -142,26 +132,26 @@ Rectangle{
 			width: game.width;
 			height: game.blockSize * 6 + game.space * 4;
 
-			anchors.centerIn: parent;
+			anchors.centerIn: game;
 		}
 
 		onKeyPressed: {
-			if (key == "Select") {
+			if (key === "Select") {
 				exitMenu.show();
 				return true;
 			}
 
-			if (key == "8") {
+			if (key === "8") {
 				pauseMenu.show();
 				return true;
 			}
 
-			if (key == "7") {
+			if (key === "7") {
 				levelMenu.show();
 				return true;
 			}
 
-			if (key == "6") {
+			if (key === "6") {
 				gameOverMenu.show();
 				return true;
 			}
@@ -176,7 +166,7 @@ Rectangle{
 			game.nextBlockViewIndex = Math.floor(Math.random() * 7);
 			game.nextRotationIndex  = Math.floor(Math.random() * 4);
 
-			game.nextBlock = engine.getBlock(game.nextBlockViewIndex,game.nextRotationIndex);
+			game.nextBlock = engine.getBlock(game.nextBlockViewIndex, game.nextRotationIndex);
 		}
 
 		function getBlock(x,y) {
@@ -191,7 +181,7 @@ Rectangle{
 		function hasCollisions(x,y) {
 			var result = false;
 
-			if ((x < 0) || (x >= game.width) || (y >= game.height) || game.getBlock(x,y)){
+			if ((x < 0) || (x >= game.width) || (y >= game.height) || game.getBlock(x,y)) {
 				result = true;
 			}
 
@@ -200,7 +190,7 @@ Rectangle{
 
 		function rotate() {
 			game.currentRotationIndex = (game.currentRotationIndex == 3 ? 0 : game.currentRotationIndex + 1);
-			game.currentBlock = engine.getBlock(game.currentBlockViewIndex,game.currentRotationIndex);
+			game.currentBlock = engine.getBlock(game.currentBlockViewIndex, game.currentRotationIndex);
 		}
 
 		function initNewMovingBlock() {
@@ -213,7 +203,7 @@ Rectangle{
 			game.getNewBlock();
 			game.getNewColor();
 
-			infoItem.drawNextBlockView(game.nextBlockColor,game.nextBlock);
+			infoItem.drawNextBlockView(game.nextBlockColor, game.nextBlock);
 
 			movingTetraminos.initMovingBlockCoord();
 			movingTetraminos.drawMovingBlock(game.currentBlock);
@@ -223,7 +213,7 @@ Rectangle{
 
 		function makeBlockPartOfCanvas() {
 			for (var i = 0; i < 16; ++i) {
-				var indx = game.index(movingTetraminos.children[i].x,movingTetraminos.children[i].y);
+				var indx = game.index(movingTetraminos.children[i].x, movingTetraminos.children[i].y);
 				var value = movingTetraminos.children[i].value;
 
 				if (value) {
@@ -232,15 +222,14 @@ Rectangle{
 					var colorGradientStart = engine.getGradientStart(game.currentBlockColor);
 					var colorGradientStop  = engine.getGradientEnd(game.currentBlockColor);
 
-					gameCanvasModel.setProperty(indx,'gradientStartColor',colorGradientStart);
-					gameCanvasModel.setProperty(indx,'gradientStopColor',colorGradientStop);
+					gameCanvasModel.setProperty(indx, 'gradientStartColor', colorGradientStart);
+					gameCanvasModel.setProperty(indx, 'gradientStopColor', colorGradientStop);
 				}
 			}
 		}
 
-		function index(x, y){
-			var indx = Math.floor(y / game.blockSize) * game.glassWidth + Math.floor(x / game.blockSize);
-			return indx;
+		function index(x, y) {
+			return (Math.floor(y / game.blockSize) * game.glassWidth + Math.floor(x / game.blockSize));
 		}
 
 		onCompleted: {
@@ -261,7 +250,7 @@ Rectangle{
 			movingTetraminos.initMovingBlockCoord();
 			movingTetraminos.drawMovingBlock(game.currentBlock);
 
-			infoItem.drawNextBlockView(game.nextBlockColor,game.nextBlock);
+			infoItem.drawNextBlockView(game.nextBlockColor, game.nextBlock);
 		}
 	}
 }

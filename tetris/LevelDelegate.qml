@@ -1,26 +1,16 @@
-Item {
+Rectangle {
 	id: itemLevel;
 
 	width: parent.cellWidth;
 	height: parent.cellHeight;
 
-	Rectangle {
-		id: levelRect;
+	color: itemLevel.activeFocus ? colorTheme.activeFocusTop : colorTheme.nonFocusablePanelColor;
 
-		width: parent.cellWidth;
-		height: parent.cellHeight;
+	BodyText {
+		anchors.centerIn: levelRect;
 
-		anchors.fill: parent;
+		color: itemLevel.activeFocus ? colorTheme.globalBackgroundColor : colorTheme.highlightPanelColor;
 
-		color: itemLevel.activeFocus ? colorTheme.activeFocusTop : colorTheme.nonFocusablePanelColor;
-
-		Text {
-			anchors.centerIn: parent;
-
-			color: itemLevel.activeFocus ? colorTheme.globalBackgroundColor : colorTheme.highlightPanelColor;
-			font: bodyFont;
-
-			text: model.text;
-		}
+		text: model.text;
 	}
 }

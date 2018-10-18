@@ -10,62 +10,48 @@ Rectangle {
 	ListView {
 		id: exitGrid;
 
-		property int cellWidth: game.blockSize * 8;
-		property int cellHeight: game.blockSize * 1.5;
+		width: game.blockSize * 8;
+		height: game.blockSize * 1.5 * model.count;
 
-		width: cellWidth;
-		height: cellHeight * menuModel.count;
-
-		anchors.centerIn: parent;
+		anchors.centerIn: exitRect;
 
 		focus: true;
 
-		visible: parent.width > 0;
+		visible: true;
 
 		model: ListModel {
 			id: menuModel;
 
-			ListElement {text: "Выйти из Тетриса"}
-			ListElement {text: "Продолжить игру"}
-			ListElement {text: "Новая игра"}
+			ListElement { text: "Выйти из Тетриса" }
+			ListElement { text: "Продолжить игру" }
+			ListElement { text: "Новая игра" }
 		}
 		delegate: MenuDelegate { }
 
 		onSelectPressed: {
+			exitRect.visible = false;
+			movingTetraminos.setFocus();
+
 			switch (exitGrid.currentIndex) {
 			case 0:
-				exitRect.visible = false;
-
-				//FIXME:выход из игры
-				movingTetraminos.setFocus();
-				animTimer.start();
-				break;
 			case 1:
-				exitRect.visible = false;
-
-				movingTetraminos.setFocus();
-				animTimer.start();
 				break;
 			case 2:
-				exitRect.visible = false;
-
-				movingTetraminos.setFocus();
 				game.initNewMovingBlock();
 				break;
 			}
 		}
 
 		onKeyPressed: {
-			if (key == "8" || key == "7" || key == "6") {
+			if (key === "8" || key === "7" || key === "6") {
 				return true;
 			}
 		}
 	}
 
 	function show() {
-		exitRect.visible = true;
-
 		exitGrid.currentIndex = 0;
+		exitRect.visible = true;
 		exitRect.setFocus();
 	}
 }
