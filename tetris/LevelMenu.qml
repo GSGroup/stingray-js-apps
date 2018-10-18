@@ -1,6 +1,12 @@
 Rectangle {
 	id: levelRect;
 
+	focus: true;
+	color: colorTheme.backgroundColor;
+	clip: true;
+
+	visible: false;
+
 	Text {
 		y: 9;
 
@@ -58,10 +64,8 @@ Rectangle {
 		}
 	}
 
-	function show(width) {
-		levelRect.width = width;
+	function show() {
 		levelRect.visible = true;
-
 		levelGrid.setFocus();
 		levelGrid.currentIndex = 0;
 	}

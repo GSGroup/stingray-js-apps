@@ -1,6 +1,11 @@
 Rectangle {
 	id: pauseRect;
 
+	focus: true;
+	color: colorTheme.backgroundColor;
+
+	visible: false;
+
 	Text {
 		anchors.centerIn: parent;
 
@@ -16,7 +21,6 @@ Rectangle {
 			movingTetraminos.setFocus();
 			animTimer.start();
 		}
-
 		return true;
 	}
 
