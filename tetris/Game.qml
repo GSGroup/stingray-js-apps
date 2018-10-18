@@ -4,6 +4,7 @@ import "GameOverMenu.qml";
 import "InfoRect.qml";
 import "PauseRect.qml";
 import "Cell.qml";
+import "MovingTetraminos.qml";
 
 import "MenuDelegate.qml";
 import "LevelDelegate.qml";
@@ -52,8 +53,7 @@ Rectangle{
 			property string gradientStopColor;
 		}
 
-		GridView
-		{
+		GridView {
 			id: gameView;
 
 			property int numCells: game.glassHigh * game.glassWidth;
@@ -69,19 +69,18 @@ Rectangle{
 			orientation: GridView.Vertical;
 
 			model: gameCanvasModel;
-
 			delegate: CanvasItemDelegate { }
 
 			onCompleted: {
-				for(var i = 0; i < gameView.numCells; i++)
+				for (var i = 0; i < gameView.numCells; i++)
 					gameCanvasModel.append({value: 0, gradientStartColor: "#E49C8B", gradientStopColor: "#CE573D",});
 			}
 		}
 
-		Item {
+		MovingTetraminos {
 			id: movingTetraminos;
 
-			property real startPointX: game.width / 2 - rect.width * 2;
+			property real startPointX: game.width / 2 - game.blockSize * 2;
 
 			x: startPointX;
 			y: 0;
@@ -89,72 +88,24 @@ Rectangle{
 			focus: true;
 
 			visible: true;
+		}
 
-			Cell { } Cell { } Cell { } Cell { }
-			Cell { } Cell { } Cell { } Cell { }
-			Cell { } Cell { } Cell { } Cell { }
-			Cell { } Cell { } Cell { } Cell { }
+		Timer {
+			id: animTimer;
 
-			Timer {
-				id: animTimer;
+			interval: game.dropTime / (game.glassHigh - 4);
+			running: true;
+			repeat: true;
 
-				interval: game.dropTime / (game.glassHigh - 4);
-				running: true;
-				repeat: true;
-
-				onTriggered: {
-					if(!game.moveBlock(0,game.stepSize)) {
-						//game.makeBlockPartOfCanvas();
-						game.initNewMovingBlock();
-					}
-				}
-			}
-
-			onKeyPressed: {
-				switch (key) {
-				case 'Right':
-					game.directionX = 1;
-					game.directionY = 0;
-					break;
-				case 'Left':
-					game.directionX = -1;
-					game.directionY = 0;
-					break;
-				case 'Down':
-					game.directionX = 0;
-					game.directionY = 1;
-					break;
-				case 'Up':
-					game.rotate();
-					game.drawMovingBlock();
-					game.directionX = 0;
-					game.directionY = 0;
-					break;
-				default: return false;
-				}
-				game.moveBlock(game.directionX * game.stepSize,game.directionY * game.stepSize);
-
-				return true;
-			}
-
-			onCompleted: {
-				movingTetraminos.initMovingBlockCoord();
-
-				game.drawMovingBlock();
-			}
-
-			function initMovingBlockCoord() {
-				for (var k = 0; k < 16; ++k) {
-					this.children[k].color = game.color;
-					this.children[k].x = (k % 4) * game.blockSize ;
-					this.children[k].y = Math.floor(k / 4) * game.blockSize;
-
-					this.children[k].blockColor = game.currentBlockColor;
+			onTriggered: {
+				if (!movingTetraminos.moveBlock(0,game.stepSize)) {
+					game.initNewMovingBlock();
 				}
 			}
 		}
+
 		InfoRect {
-			id: infoRect;
+			id: infoItem;
 
 			width: parent.width;
 			height: parent.height;
@@ -213,7 +164,7 @@ Rectangle{
 		}
 
 		PauseRect {
-			id: pauseRect;
+			id: pauseMenu;
 
 			width: game.width;
 			height: game.blockSize * 6 + game.space * 4;
@@ -235,7 +186,7 @@ Rectangle{
 
 			if (key == "8") {
 				animTimer.stop();
-				pauseRect.show();
+				pauseMenu.show();
 				return true;
 			}
 
@@ -254,35 +205,20 @@ Rectangle{
 		}
 
 		function getNewColor() {
-			this.nextBlockColor = engine.randomColor();
+			game.nextBlockColor = engine.randomColor();
 		}
 
 		function getNewBlock() {
 			game.nextBlockViewIndex = Math.floor(Math.random() * 7);
 			game.nextRotationIndex  = Math.floor(Math.random() * 4);
 
-			this.nextBlock = engine.getBlock(game.nextBlockViewIndex,game.nextRotationIndex);
-		}
-
-		function drawMovingBlock() {
-			var bit;
-			var indexBlock = 0;
-			for (bit = 0x8000 ; bit > 0 ; bit = bit >> 1) {
-				if (game.currentBlock & bit) {
-					movingTetraminos.children[indexBlock].value = 1;
-				}
-				else
-				{
-					movingTetraminos.children[indexBlock].value = 0;
-				}
-				indexBlock++;
-			}
+			game.nextBlock = engine.getBlock(game.nextBlockViewIndex,game.nextRotationIndex);
 		}
 
 		function getBlock(x,y) {
 			var indx = game.index(x,y);
 
-			if(gameCanvasModel.get(indx).value == 1)
+			if (gameCanvasModel.get(indx).value == 1)
 				return true;
 
 			return false;
@@ -295,28 +231,6 @@ Rectangle{
 				result = true;
 			}
 
-			return result;
-		}
-
-		function moveBlock(deltaX, deltaY) {
-			var result = true;
-
-			for (var j = 0; j < 16; ++j) {
-				var x = movingTetraminos.children[j].x;
-				var y = movingTetraminos.children[j].y;
-
-				x += movingTetraminos.startPointX;
-
-				if (game.hasCollisions(x + deltaX, y + deltaY) && movingTetraminos.children[j].value > 0)
-					result = false;
-			}
-
-			if (result) {
-				for (var i = 0; i < 16 ; ++i) {
-					movingTetraminos.children[i].x += deltaX;
-					movingTetraminos.children[i].y += deltaY;
-				}
-			}
 			return result;
 		}
 
@@ -334,10 +248,11 @@ Rectangle{
 
 			game.getNewBlock();
 			game.getNewColor();
-			game.drawNextBlockView();
+
+			infoItem.drawNextBlockView(game.nextBlockColor,game.nextBlock);
 
 			movingTetraminos.initMovingBlockCoord();
-			game.drawMovingBlock();
+			movingTetraminos.drawMovingBlock(game.currentBlock);
 
 			animTimer.restart();
 		}
@@ -378,6 +293,11 @@ Rectangle{
 
 			game.directionX = 0;
 			game.directionY = 0;
+
+			movingTetraminos.initMovingBlockCoord();
+			movingTetraminos.drawMovingBlock(game.currentBlock);
+
+			infoItem.drawNextBlockView(game.nextBlockColor,game.nextBlock);
 		}
 	}
 }

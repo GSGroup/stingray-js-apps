@@ -1,5 +1,5 @@
 Rectangle {
-	id: levelMenu;
+	id: levelRect;
 
 	Text {
 		y: 9;
@@ -41,12 +41,11 @@ Rectangle {
 			ListElement {text: "9"}
 			ListElement {text: "10"}
 		}
-
 		delegate: LevelDelegate { }
 
 		onSelectPressed: {
-			levelMenu.width = 0;
-			levelMenu.visible = false;
+			levelRect.width = 0;
+			levelRect.visible = false;
 
 			movingTetraminos.setFocus();
 			animTimer.start();
@@ -60,8 +59,8 @@ Rectangle {
 	}
 
 	function show(width) {
-		levelMenu.width = width;
-		levelMenu.visible = true;
+		levelRect.width = width;
+		levelRect.visible = true;
 
 		levelGrid.setFocus();
 		levelGrid.currentIndex = 0;
