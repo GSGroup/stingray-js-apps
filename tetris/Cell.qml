@@ -4,34 +4,29 @@ Rectangle {
 	id: rect;
 
 	property int value: -1;
-	property alias blockColor:innerRect.indexColor;
+	property int spaceBetweenBlocks : game.spaceBetweenBlocks;
+	property alias blockColor: innerRect.indexColor;
 
 	width: game.blockSize;
 	height: game.blockSize;
 
 	color: colorTheme.globalBackgroundColor;
 
-	visible: true;
-
 	Rectangle{
 		id: innerRect;
 
 		property int indexColor: 0;
 
-		x: game.spaceBetweenBlocks;
-		y: game.spaceBetweenBlocks;
+		x: rect.spaceBetweenBlocks;
+		y: rect.spaceBetweenBlocks;
 
-		width: game.blockSize - game.spaceBetweenBlocks * 2;
-		height: game.blockSize - game.spaceBetweenBlocks * 2;
+		width: rect.width - rect.spaceBetweenBlocks * 2;
+		height: rect.height - rect.spaceBetweenBlocks * 2;
 
 		visible: rect.value > 0;
 
 		Gradient {
 			id: blockGradient;
-
-			width: parent.width;
-
-			anchors.fill: parent;
 
 			orientation: Gradient.Horizontal;
 

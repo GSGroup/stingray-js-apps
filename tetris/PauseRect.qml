@@ -6,21 +6,17 @@ Rectangle {
 
 	visible: false;
 
-	Text {
+	BodyText {
 		anchors.centerIn: parent;
 
 		text: qsTr("Пауза...");
 		color: colorTheme.highlightPanelColor;
-		font: bodyFont;
 	}
 
-	onKeyPressed: {
-		if (key === "8") {
-			pauseRect.visible = false;
+	on8Pressed: {
+		pauseRect.visible = false;
+		movingTetraminos.setFocus();
 
-			movingTetraminos.setFocus();
-			animTimer.start();
-		}
 		return true;
 	}
 
