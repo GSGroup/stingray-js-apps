@@ -1,5 +1,5 @@
 Rectangle {
-	id: gameOverMenu;
+	id: gameOverRect;
 
 	Text {
 		y: 9;
@@ -33,14 +33,13 @@ Rectangle {
 			ListElement {text: "Выйти из Тетриса"}
 			ListElement {text: "Поиграть еще"}
 		}
-
 		delegate: MenuDelegate { }
 
 		onSelectPressed: {
 			switch (gameOverGrid.currentIndex) {
 			case 0:
-				gameOverMenu.width = 0;
-				gameOverMenu.visible = false;
+				gameOverRect.width = 0;
+				gameOverRect.visible = false;
 
 				//FIXME заменить на выход из приложения
 				movingTetraminos.setFocus();
@@ -48,8 +47,8 @@ Rectangle {
 				break;
 
 			case 1:
-				gameOverMenu.width = 0;
-				gameOverMenu.visible = false;
+				gameOverRect.width = 0;
+				gameOverRect.visible = false;
 
 				movingTetraminos.setFocus();
 				animTimer.start();
@@ -65,8 +64,8 @@ Rectangle {
 	}
 
 	function show(width) {
-		gameOverMenu.width = width;
-		gameOverMenu.visible = true;
+		gameOverRect.width = width;
+		gameOverRect.visible = true;
 
 		gameOverGrid.currentIndex = 0;
 		gameOverGrid.setFocus();

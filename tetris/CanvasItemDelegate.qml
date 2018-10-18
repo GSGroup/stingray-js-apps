@@ -33,7 +33,6 @@ Rectangle {
 
 			orientation: Gradient.Horizontal;
 
-
 			GradientStop {
 				id: blockGradientStart;
 

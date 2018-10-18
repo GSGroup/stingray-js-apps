@@ -23,35 +23,6 @@ Rectangle {
 			Cell { } Cell { } Cell { } Cell { }
 			Cell { } Cell { } Cell { } Cell { }
 			Cell { } Cell { } Cell { } Cell { }
-
-			function drawNextBlockView() {
-				for (var i = 0; i< 16; ++i)
-				{
-					nextTetraminos.children[i].blockColor = game.nextBlockColor;
-				}
-
-				var bit;
-				var indexBlock = 0;
-				for (bit = 0x8000 ; bit > 0 ; bit = bit >> 1) {
-					if (game.nextBlock & bit) {
-						nextTetraminos.children[indexBlock].value = 1;
-					}
-					else
-					{
-						nextTetraminos.children[indexBlock].value = 0;
-					}
-					indexBlock++;
-				}
-			}
-
-			onCompleted: {
-				for (var i = 0; i < 16; i ++) {
-					nextTetraminos.children[i].x = (i % 4) * game.blockSize;
-					nextTetraminos.children[i].y = Math.floor(i / 4 ) * game.blockSize;
-				}
-
-				nextTetraminos.drawNextBlockView();
-			}
 		}
 	}
 
@@ -79,5 +50,31 @@ Rectangle {
 		text: qsTr("Счет");
 		color: colorTheme.highlightPanelColor;
 		font: captionSmall;
+	}
+
+	function drawNextBlockView(nextBlockColor,nextBlock) {
+		for (var i = 0; i< 16; ++i){
+			nextTetraminos.children[i].blockColor = nextBlockColor;
+		}
+
+		var bit;
+		var indexBlock = 0;
+		for (bit = 0x8000 ; bit > 0 ; bit = bit >> 1) {
+			if (nextBlock & bit) {
+				nextTetraminos.children[indexBlock].value = 1;
+			}
+			else
+			{
+				nextTetraminos.children[indexBlock].value = 0;
+			}
+			indexBlock++;
+		}
+	}
+
+	onCompleted: {
+		for (var i = 0; i < 16; i ++) {
+			nextTetraminos.children[i].x = (i % 4) * game.blockSize;
+			nextTetraminos.children[i].y = Math.floor(i / 4 ) * game.blockSize;
+		}
 	}
 }

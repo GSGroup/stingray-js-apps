@@ -1,5 +1,5 @@
 Rectangle {
-	id: exitMenu;
+	id: exitRect;
 
 	Behavior on width { animation: Animation { duration: 300; } }
 
@@ -25,29 +25,28 @@ Rectangle {
 			ListElement {text: "Продолжить игру"}
 			ListElement {text: "Новая игра"}
 		}
-
 		delegate: MenuDelegate { }
 
 		onSelectPressed: {
 			switch (exitGrid.currentIndex) {
 			case 0:
-				exitMenu.width = 0;
-				exitMenu.visible = false;
+				exitRect.width = 0;
+				exitRect.visible = false;
 
 				//FIXME:выход из игры
 				movingTetraminos.setFocus();
 				animTimer.start();
 				break;
 			case 1:
-				exitMenu.width = 0;
-				exitMenu.visible = false;
+				exitRect.width = 0;
+				exitRect.visible = false;
 
 				movingTetraminos.setFocus();
 				animTimer.start();
 				break;
 			case 2:
-				exitMenu.width = 0;
-				exitMenu.visible = false;
+				exitRect.width = 0;
+				exitRect.visible = false;
 
 				movingTetraminos.setFocus();
 				game.initNewMovingBlock();
@@ -63,10 +62,10 @@ Rectangle {
 	}
 
 	function show(width) {
-		exitMenu.width = width;
-		exitMenu.visible = true;
+		exitRect.width = width;
+		exitRect.visible = true;
 
 		exitGrid.currentIndex = 0;
-		exitMenu.setFocus();
+		exitRect.setFocus();
 	}
 }
