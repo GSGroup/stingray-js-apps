@@ -6,10 +6,10 @@ Rectangle {
 	id: game;
 
 	property bool easy;
+	property bool playerWhite;
 
 	anchors.fill: parent;
 
-	playerWhite: true;
 	over: false;
 	whiteCounter: 2;
 	blackCounter: 2;
@@ -38,9 +38,6 @@ Rectangle {
 	}
 
 	Row {
-		width: childrenWidth;
-		height: childrenHeight;
-
 		anchors.right: boardRect.right;
 		anchors.bottom: boardRect.top;
 
@@ -53,6 +50,22 @@ Rectangle {
 		MainText {
 			id: blackText;
 			text: "2";
+		}
+	}
+
+	Column {
+		anchors.verticalCenter: parent.verticalCenter;
+		anchors.right: boardRect.left;
+		anchors.rightMargin: 20;
+
+		spacing: 10;
+
+		MainText {
+			text: game.playerWhite ? "Вы играете белыми" : "Вы играете черными";
+		}
+
+		MainText {
+			text: game.easy ? "Сложность низкая" : "Сложность высокая";
 		}
 	}
 
