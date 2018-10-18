@@ -5,9 +5,10 @@ import "CellDelegate.qml";
 Rectangle {
 	id: game;
 
+	property bool easy;
+
 	anchors.fill: parent;
 
-	difficultyLevel: 0;
 	playerWhite: true;
 	over: false;
 	whiteCounter: 2;
@@ -235,7 +236,7 @@ Rectangle {
 				anchors.centerIn: parent;
 				anchors.bottomMargin: 10;
 
-				text: "Легко";
+				text: game.easy ? "Сложно" : "Легко";
 			}
 
 			Rectangle {
@@ -273,17 +274,8 @@ Rectangle {
 					game.playerWhite = false;
 					break;
 				case "Blue":
-					if (game.difficultyLevel == 0)
-					{
-						game.difficultyLevel = 10;
-						difftext.text = "Сложно";
-					}
-					else if (game.difficultyLevel == 1)
-					{
-						game.difficultyLevel = -10;
-						difftext.text = "Легко";
-					}
-					break;
+					game.easy = !game.easy;
+					return true;
 			}
 
 			if (game.over)
@@ -298,15 +290,6 @@ Rectangle {
 			log("key: " +  key);
 			if (key == "Select")
 			{
-				if (game.difficultyLevel == 10)
-				{
-					game.difficultyLevel = 1;
-				}
-				else if (game.difficultyLevel == -10)
-				{
-					game.difficultyLevel = 0;
-				}
-
 				if (aiMoveTimer.running) //ai is "thinking"
 					return true;
 
