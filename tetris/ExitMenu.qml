@@ -1,7 +1,11 @@
 Rectangle {
 	id: exitRect;
 
-	Behavior on width { animation: Animation { duration: 300; } }
+	focus: true;
+	color: colorTheme.backgroundColor;
+	clip: true;
+
+	visible: false;
 
 	ListView {
 		id: exitGrid;
@@ -30,7 +34,6 @@ Rectangle {
 		onSelectPressed: {
 			switch (exitGrid.currentIndex) {
 			case 0:
-				exitRect.width = 0;
 				exitRect.visible = false;
 
 				//FIXME:выход из игры
@@ -38,14 +41,12 @@ Rectangle {
 				animTimer.start();
 				break;
 			case 1:
-				exitRect.width = 0;
 				exitRect.visible = false;
 
 				movingTetraminos.setFocus();
 				animTimer.start();
 				break;
 			case 2:
-				exitRect.width = 0;
 				exitRect.visible = false;
 
 				movingTetraminos.setFocus();
@@ -61,8 +62,7 @@ Rectangle {
 		}
 	}
 
-	function show(width) {
-		exitRect.width = width;
+	function show() {
 		exitRect.visible = true;
 
 		exitGrid.currentIndex = 0;

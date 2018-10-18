@@ -1,6 +1,10 @@
 Item {
 	id: movingItem;
 
+	focus: true;
+
+	visible: true;
+
 	Cell { } Cell { } Cell { } Cell { }
 	Cell { } Cell { } Cell { } Cell { }
 	Cell { } Cell { } Cell { } Cell { }
@@ -55,7 +59,7 @@ Item {
 			var x = this.children[j].x;
 			var y = this.children[j].y;
 
-			x += this.startPointX;
+			x += this.x;
 
 			if (game.hasCollisions(x + deltaX, y + deltaY))
 				result = false;
@@ -84,5 +88,4 @@ Item {
 			indexBlock++;
 		}
 	}
-
 }

@@ -1,6 +1,11 @@
 Rectangle {
 	id: gameOverRect;
 
+	focus: true;
+	color: "#000000";
+
+	visible: false;
+
 	Text {
 		y: 9;
 
@@ -63,10 +68,8 @@ Rectangle {
 		}
 	}
 
-	function show(width) {
-		gameOverRect.width = width;
+	function show() {
 		gameOverRect.visible = true;
-
 		gameOverGrid.currentIndex = 0;
 		gameOverGrid.setFocus();
 	}

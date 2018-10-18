@@ -80,21 +80,15 @@ Rectangle{
 		MovingTetraminos {
 			id: movingTetraminos;
 
-			property real startPointX: game.width / 2 - game.blockSize * 2;
-
-			x: startPointX;
+			x: game.width / 2 - game.blockSize * 2;
 			y: 0;
-
-			focus: true;
-
-			visible: true;
 		}
 
 		Timer {
 			id: animTimer;
 
 			interval: game.dropTime / (game.glassHigh - 4);
-			running: true;
+			running: !(exitMenu.visible || levelMenu.visible || pauseMenu.visible || gameOverMenu.visible);
 			repeat: true;
 
 			onTriggered: {
@@ -113,54 +107,33 @@ Rectangle{
 			anchors.top: parent.top;
 			anchors.left: parent.right;
 			anchors.leftMargin: game.blockSize * 3;
-
-			color: colorTheme.globalBackgroundColor;
-
-			visible: true;
 		}
 
 		ExitMenu {
 			id: exitMenu;
 
-			width: 0;
+			width: game.width;
 			height: game.blockSize * 4;
 
 			anchors.centerIn: parent;
-
-			focus: true;
-			color: colorTheme.backgroundColor;
-			clip: true;
-
-			visible: false;
 		}
 
 		GameOverMenu {
 			id: gameOverMenu;
 
-			width: 0;
+			width: game.width;
 			height: game.blockSize * 4.5;
 
 			anchors.centerIn: parent;
-
-			focus: true;
-			color: "#000000";
-
-			visible: false;
 		}
 
 		LevelMenu {
 			id: levelMenu;
 
-			width: 0;
+			width: game.width;
 			height: game.blockSize * 3;
 
 			anchors.centerIn: parent;
-
-			focus: true;
-			color: colorTheme.backgroundColor;
-			clip: true;
-
-			visible: false;
 		}
 
 		PauseRect {
@@ -170,35 +143,26 @@ Rectangle{
 			height: game.blockSize * 6 + game.space * 4;
 
 			anchors.centerIn: parent;
-
-			focus: true;
-			color: colorTheme.backgroundColor;
-
-			visible: false;
 		}
 
 		onKeyPressed: {
 			if (key == "Select") {
-				animTimer.stop();
-				exitMenu.show(game.width);
+				exitMenu.show();
 				return true;
 			}
 
 			if (key == "8") {
-				animTimer.stop();
 				pauseMenu.show();
 				return true;
 			}
 
 			if (key == "7") {
-				animTimer.stop();
-				levelMenu.show(game.width);
+				levelMenu.show();
 				return true;
 			}
 
 			if (key == "6") {
-				animTimer.stop();
-				gameOverMenu.show(game.width);
+				gameOverMenu.show();
 				return true;
 			}
 			return true;

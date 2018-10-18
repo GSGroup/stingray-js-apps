@@ -1,6 +1,10 @@
 Rectangle {
 	id: infoRect;
 
+	color: colorTheme.globalBackgroundColor;
+
+	visible: true;
+
 	Rectangle {
 		id: nextBlockViewRect;
 
