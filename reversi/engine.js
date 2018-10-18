@@ -162,7 +162,7 @@ this.GetPositionalBonus = function(y,x,white)
 			}
 		}
 
-		if(game.difficultyLevel > 0 && ((lX == 0 && lY != 0) || (lX != 0 && lY == 0)))
+		if(!game.easy && ((lX == 0 && lY != 0) || (lX != 0 && lY == 0)))
 		{
 			var cell1, cell2;
 
