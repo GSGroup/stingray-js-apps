@@ -16,7 +16,7 @@ Rectangle {
 	
 	BigText {
 		id: titleText;
-		text: "Реверси";
+		text: qsTr("Reversi");
 		anchors.top: parent.top;
 		anchors.horizontalCenter: parent.horizontalCenter;
 	}
@@ -28,7 +28,7 @@ Rectangle {
 		spacing: 10;
 
 		MainText {
-			text: "Белые";
+			text: qsTr("White");
 		}
 
 		MainText {
@@ -44,7 +44,7 @@ Rectangle {
 		spacing: 10;
 
 		MainText {
-			text: "Черные";
+			text: qsTr("Black");
 		}
 
 		MainText {
@@ -61,11 +61,11 @@ Rectangle {
 		spacing: 10;
 
 		MainText {
-			text: game.playerWhite ? "Вы играете белыми" : "Вы играете черными";
+			text: qsTr(game.playerWhite ? "You're playing with white" : "You're playing with black");
 		}
 
 		MainText {
-			text: game.easy ? "Сложность низкая" : "Сложность высокая";
+			text: qsTr(game.easy ? "Low difficulty" : "High difficulty");
 		}
 	}
 
@@ -129,11 +129,11 @@ Rectangle {
 					var whiteIsWinner = game.whiteCounter > game.blackCounter;					
 					if(whiteIsWinner)
 					{
-						gameOver.text = game.playerWhite ? "Вы выиграли!" : "Игра окончена";
+						gameOver.text = qsTr(game.playerWhite ? "You won!" : "Game over");
 					}
 					else
 					{
-						gameOver.text = !game.playerWhite ? "Вы выиграли!" : "Игра окончена";
+						gameOver.text = qsTr(!game.playerWhite ? "You won!" : "Game over");
 					}
 					game.over = true;
 					gameOver.visible = true;
@@ -166,7 +166,7 @@ Rectangle {
 				anchors.centerIn: parent;
 				anchors.bottomMargin: 10;
 
-				text: "Помощь";
+				text: qsTr("Help");
 			}
 
 			Rectangle {
@@ -193,7 +193,7 @@ Rectangle {
 				anchors.centerIn: parent;
 				anchors.bottomMargin: 10;
 
-				text: "Начать белыми";
+				text: qsTr("Start with white");
 			}
 
 			Rectangle {
@@ -220,7 +220,7 @@ Rectangle {
 				anchors.centerIn: parent;
 				anchors.bottomMargin: 10;
 
-				text: "Начать черными";
+				text: qsTr("Start with black");
 			}
 
 			Rectangle {
@@ -249,7 +249,7 @@ Rectangle {
 				anchors.centerIn: parent;
 				anchors.bottomMargin: 10;
 
-				text: game.easy ? "Сложно" : "Легко";
+				text: qsTr(game.easy ? "Hard" : "Easy");
 			}
 
 			Rectangle {
