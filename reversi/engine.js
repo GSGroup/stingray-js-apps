@@ -4,7 +4,7 @@ this.WriteModel = function() {
 	for (var idx = 0; idx < 64; ++idx)
 	{
 		if (gameView.model.get(idx).disc != fieldState[idx])
-			gameView.model.set(idx, {disc: fieldState[idx]});
+			gameView.model.set(idx, { disc: fieldState[idx] });
 	}
 }
 
@@ -20,12 +20,12 @@ function Set(y, x, color) {
 
 this.Init = function () {
 	for (var x = 0; x < 64; ++x)
-		gameView.model.append({disc: "Empty"});
+		gameView.model.append({ disc: "Empty" });
 
-	gameView.model.set(27, {disc: "Black"});
-	gameView.model.set(28, {disc: "White"});
-	gameView.model.set(35, {disc: "White"});
-	gameView.model.set(36, {disc: "Black"});
+	gameView.model.set(27, { disc: "Black" });
+	gameView.model.set(28, { disc: "White" });
+	gameView.model.set(35, { disc: "White" });
+	gameView.model.set(36, { disc: "Black" });
 
 	for (var idx = 0; idx < 64; ++idx)
 		fieldState.push(gameView.model.get(idx).disc);
