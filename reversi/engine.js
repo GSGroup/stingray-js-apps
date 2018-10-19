@@ -1,10 +1,10 @@
 var fieldState = [];
 
-this.WriteModel = function() {
+this.WriteModel = function(model) {
 	for (var idx = 0; idx < 64; ++idx)
 	{
-		if (gameView.model.get(idx).disc != fieldState[idx])
-			gameView.model.set(idx, { disc: fieldState[idx] });
+		if (model.get(idx).disc != fieldState[idx])
+			model.set(idx, { disc: fieldState[idx] });
 	}
 }
 
@@ -18,20 +18,20 @@ function Set(y, x, color) {
 	fieldState[idx] = color;
 }
 
-this.Init = function () {
+this.Init = function (model) {
 	for (var x = 0; x < 64; ++x)
-		gameView.model.append({ disc: "Empty" });
+		model.append({ disc: "Empty" });
 
-	gameView.model.set(27, { disc: "Black" });
-	gameView.model.set(28, { disc: "White" });
-	gameView.model.set(35, { disc: "White" });
-	gameView.model.set(36, { disc: "Black" });
+	model.set(27, { disc: "Black" });
+	model.set(28, { disc: "White" });
+	model.set(35, { disc: "White" });
+	model.set(36, { disc: "Black" });
 
 	for (var idx = 0; idx < 64; ++idx)
-		fieldState.push(gameView.model.get(idx).disc);
+		fieldState.push(model.get(idx).disc);
 }
 
-this.Reset = function () {
+this.Reset = function (model) {
 	for (var x = 0; x < 64; ++x)
 		fieldState[x] = "Empty";
 
@@ -40,7 +40,7 @@ this.Reset = function () {
 	fieldState[35] = "White";
 	fieldState[36] = "Black";
 
-	this.WriteModel();
+	this.WriteModel(model);
 }
 
 this.MakeMove = function (yp, xp, white, simulate)	{
@@ -237,7 +237,7 @@ function insertPriority (v, elem) {
 		v.push(elem);
 }
 
-this.NextMove = function (white, simulate) {
+this.NextMove = function (white, simulate, model) {
 		var moves = []; 
 		for (var y = 0; y < 8; ++y)
 		{
@@ -268,6 +268,7 @@ this.NextMove = function (white, simulate) {
 		var move = moves[Math.floor(Math.random() * i)];
 		log("move: " + move.y + ", " + move.x + ", weight: " + move.p);
 		this.MakeMove(move.y, move.x, white, false);
-		this.WriteModel();
+		this.WriteModel(model);
+
 		return true;
 }

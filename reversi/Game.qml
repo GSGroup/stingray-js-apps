@@ -118,12 +118,12 @@ Rectangle {
 		interval: 500;
 
 		onTriggered:  {
-			engine.NextMove(!game.playerWhite, false); //my move
+			engine.NextMove(!game.playerWhite, false, gameView.model); //my move
 			game.update();
 			
-			if (!engine.NextMove(game.playerWhite, true)) //no next move for player
+			if (!engine.NextMove(game.playerWhite, true, gameView.model)) //no next move for player
 			{
-				if (!engine.NextMove(!game.playerWhite, true)) //no next move for ai also, game over
+				if (!engine.NextMove(!game.playerWhite, true, gameView.model)) //no next move for ai also, game over
 				{
 					log ("GAMEOVER");
 					var whiteIsWinner = game.whiteCounter > game.blackCounter;					
@@ -274,7 +274,7 @@ Rectangle {
 					if (aiMoveTimer.running) //ai is "thinking"
 						return;
 
-					engine.NextMove(game.playerWhite, false);
+					engine.NextMove(game.playerWhite, false, gameView.model);
 					game.update();
 					aiMoveTimer.start();
 					break;
@@ -293,7 +293,7 @@ Rectangle {
 
 			if (game.over)
 			{
-				engine.Reset();
+				engine.Reset(gameView.model);
 				game.update();
 				gameOver.visible = false;
 				game.over = false;
@@ -310,7 +310,7 @@ Rectangle {
 				if (engine.MakeMove(Math.floor(gameView.currentIndex / 8), gameView.currentIndex % 8, game.playerWhite, false) <= 0)
 					return true;
 
-				engine.WriteModel();
+				engine.WriteModel(gameView.model);
 				game.update();
 				aiMoveTimer.start();
 

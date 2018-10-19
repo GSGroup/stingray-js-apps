@@ -1,4 +1,4 @@
 ListModel {
-	onCompleted: { engine.Init(); }
+	onCompleted: { engine.Init(this); }
 }
 
