@@ -1,5 +1,5 @@
 {
 	"id": "reversi",
-	"display": { "name": "Reversi", "icon": "reversi.png" },
+	"display": { "name": "Реверси", "icon": "reversi.png" },
 	"application": { }
 }

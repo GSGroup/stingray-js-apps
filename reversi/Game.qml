@@ -1,21 +1,21 @@
 import "engine.js" as engine;
-import "BoardModel.qml";
 import "CellDelegate.qml";
 
 Rectangle {
 	id: game;
 
+	property bool easy;
+	property bool playerWhite;
+
 	anchors.fill: parent;
 
-	difficultyLevel: 0;
-	playerWhite: true;
 	over: false;
 	whiteCounter: 2;
 	blackCounter: 2;
 	
 	BigText {
 		id: titleText;
-		text: "Reversi";
+		text: qsTr("Reversi");
 		anchors.top: parent.top;
 		anchors.horizontalCenter: parent.horizontalCenter;
 	}
@@ -27,7 +27,7 @@ Rectangle {
 		spacing: 10;
 
 		MainText {
-			text: "White";
+			text: qsTr("White");
 		}
 
 		MainText {
@@ -37,21 +37,34 @@ Rectangle {
 	}
 
 	Row {
-		width: childrenWidth;
-		height: childrenHeight;
-
 		anchors.right: boardRect.right;
 		anchors.bottom: boardRect.top;
 
 		spacing: 10;
 
 		MainText {
-			text: "Black";
+			text: qsTr("Black");
 		}
 
 		MainText {
 			id: blackText;
 			text: "2";
+		}
+	}
+
+	Column {
+		anchors.verticalCenter: parent.verticalCenter;
+		anchors.right: boardRect.left;
+		anchors.rightMargin: 20;
+
+		spacing: 10;
+
+		MainText {
+			text: qsTr(game.playerWhite ? "You're playing with white" : "You're playing with black");
+		}
+
+		MainText {
+			text: qsTr(game.easy ? "Low difficulty" : "High difficulty");
 		}
 	}
 
@@ -93,8 +106,8 @@ Rectangle {
 			cellWidth: 65;
 			orintation: GridView.Horizontal;
 
-			model: BoardModel {}
-			delegate: CellDelegate {}
+			model: ListModel { }
+			delegate: CellDelegate { }
 		}		
 	}
 
@@ -104,22 +117,22 @@ Rectangle {
 		interval: 500;
 
 		onTriggered:  {
-			engine.NextMove(!game.playerWhite, false); //my move
+			engine.NextMove(!game.playerWhite, false, gameView.model); //my move
 			game.update();
 			
-			if (!engine.NextMove(game.playerWhite, true)) //no next move for player
+			if (!engine.NextMove(game.playerWhite, true, gameView.model)) //no next move for player
 			{
-				if (!engine.NextMove(!game.playerWhite, true)) //no next move for ai also, game over
+				if (!engine.NextMove(!game.playerWhite, true, gameView.model)) //no next move for ai also, game over
 				{
 					log ("GAMEOVER");
 					var whiteIsWinner = game.whiteCounter > game.blackCounter;					
 					if(whiteIsWinner)
 					{
-						gameOver.text = game.playerWhite ? "You won!" : "Game Over";
+						gameOver.text = qsTr(game.playerWhite ? "You won!" : "Game over");
 					}
 					else
 					{
-						gameOver.text = !game.playerWhite ? "You won!" : "Game Over";
+						gameOver.text = qsTr(!game.playerWhite ? "You won!" : "Game over");
 					}
 					game.over = true;
 					gameOver.visible = true;
@@ -152,7 +165,7 @@ Rectangle {
 				anchors.centerIn: parent;
 				anchors.bottomMargin: 10;
 
-				text: "Help";
+				text: qsTr("Help");
 			}
 
 			Rectangle {
@@ -179,7 +192,7 @@ Rectangle {
 				anchors.centerIn: parent;
 				anchors.bottomMargin: 10;
 
-				text: "Start with white";
+				text: qsTr("Start with white");
 			}
 
 			Rectangle {
@@ -206,7 +219,7 @@ Rectangle {
 				anchors.centerIn: parent;
 				anchors.bottomMargin: 10;
 
-				text: "Start with black";
+				text: qsTr("Start with black");
 			}
 
 			Rectangle {
@@ -235,7 +248,7 @@ Rectangle {
 				anchors.centerIn: parent;
 				anchors.bottomMargin: 10;
 
-				text: "Easy";
+				text: qsTr(game.easy ? "Hard" : "Easy");
 			}
 
 			Rectangle {
@@ -260,7 +273,7 @@ Rectangle {
 					if (aiMoveTimer.running) //ai is "thinking"
 						return;
 
-					engine.NextMove(game.playerWhite, false);
+					engine.NextMove(game.playerWhite, false, gameView.model);
 					game.update();
 					aiMoveTimer.start();
 					break;
@@ -273,22 +286,13 @@ Rectangle {
 					game.playerWhite = false;
 					break;
 				case "Blue":
-					if (game.difficultyLevel == 0)
-					{
-						game.difficultyLevel = 10;
-						difftext.text = "Hard";
-					}
-					else if (game.difficultyLevel == 1)
-					{
-						game.difficultyLevel = -10;
-						difftext.text = "Easy";
-					}
-					break;
+					game.easy = !game.easy;
+					return true;
 			}
 
 			if (game.over)
 			{
-				engine.Reset();
+				engine.Reset(gameView.model);
 				game.update();
 				gameOver.visible = false;
 				game.over = false;
@@ -298,15 +302,6 @@ Rectangle {
 			log("key: " +  key);
 			if (key == "Select")
 			{
-				if (game.difficultyLevel == 10)
-				{
-					game.difficultyLevel = 1;
-				}
-				else if (game.difficultyLevel == -10)
-				{
-					game.difficultyLevel = 0;
-				}
-
 				if (aiMoveTimer.running) //ai is "thinking"
 					return true;
 
@@ -314,6 +309,7 @@ Rectangle {
 				if (engine.MakeMove(Math.floor(gameView.currentIndex / 8), gameView.currentIndex % 8, game.playerWhite, false) <= 0)
 					return true;
 
+				engine.WriteModel(gameView.model);
 				game.update();
 				aiMoveTimer.start();
 
@@ -342,4 +338,6 @@ Rectangle {
 		whiteText.text = game.whiteCounter;
 		blackText.text = game.blackCounter;
 	}
+
+	onCompleted: { engine.Init(gameView.model); }
 }
