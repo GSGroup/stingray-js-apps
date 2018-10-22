@@ -1,5 +1,4 @@
 import "engine.js" as engine;
-import "BoardModel.qml";
 import "CellDelegate.qml";
 
 Rectangle {
@@ -107,8 +106,8 @@ Rectangle {
 			cellWidth: 65;
 			orintation: GridView.Horizontal;
 
-			model: BoardModel {}
-			delegate: CellDelegate {}
+			model: ListModel { }
+			delegate: CellDelegate { }
 		}		
 	}
 
@@ -339,4 +338,6 @@ Rectangle {
 		whiteText.text = game.whiteCounter;
 		blackText.text = game.blackCounter;
 	}
+
+	onCompleted: { engine.Init(gameView.model); }
 }
