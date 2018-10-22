@@ -1,4 +1,0 @@
-ListModel {
-	onCompleted: { engine.Init(); }
-}
-
