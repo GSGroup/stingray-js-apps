@@ -10,36 +10,12 @@ Item {
 	Cell { } Cell { } Cell { } Cell { }
 	Cell { } Cell { } Cell { } Cell { }
 
-	//FIXME:вынести во вне
-	onKeyPressed: {
-		var directionX = 0;
-		var directionY = 0;
+	function getBlockCoorX(index) {
+		return this.children[index].x;
+	}
 
-		switch (key) {
-		case 'Right':
-			directionX = 1;
-			directionY = 0;
-			break;
-		case 'Left':
-			directionX = -1;
-			directionY = 0;
-			break;
-		case 'Down':
-			directionX = 0;
-			directionY = 1;
-			break;
-		case 'Up':
-			directionX = 0;
-			directionY = 0;
-			game.rotate();
-			this.drawMovingBlock(game.currentBlock);
-			break;
-
-		default: return false;
-		}
-		this.moveBlock(directionX * game.stepSize, directionY * game.stepSize);
-
-		return true;
+	function getBlockCoorY(index) {
+		return this.children[index].y;
 	}
 
 	function initMovingBlockCoord() {
@@ -53,25 +29,10 @@ Item {
 	}
 
 	function moveBlock(deltaX, deltaY) {
-		var result = true;
-
-		for (var j = 0; j < 16; ++j) {
-			var x = this.children[j].x;
-			var y = this.children[j].y;
-
-			x += this.x;
-
-			if (game.hasCollisions(x + deltaX, y + deltaY))
-				result = false;
+		for (var i = 0; i < 16; ++i) {
+			this.children[i].x += deltaX;
+			this.children[i].y += deltaY;
 		}
-
-		if (result) {
-			for (var i = 0; i < 16; ++i) {
-				this.children[i].x += deltaX;
-				this.children[i].y += deltaY;
-			}
-		}
-		return result;
 	}
 
 	function drawMovingBlock(blockView) {
