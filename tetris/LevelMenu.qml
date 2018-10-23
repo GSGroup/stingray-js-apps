@@ -7,7 +7,7 @@ Rectangle {
 
 	visible: false;
 
-	CaptionSmallText {
+	SmallCaptionText {
 		y: 9;
 
 		anchors.horizontalCenter: parent.horizontalCenter;

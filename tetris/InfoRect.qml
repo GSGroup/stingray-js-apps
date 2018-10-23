@@ -26,7 +26,7 @@ Rectangle {
 		}
 	}
 
-	CaptionSmallText {
+	SmallCaptionText {
 		id: levelText;
 
 		anchors.top: nextBlockViewRect.bottom;
@@ -37,7 +37,7 @@ Rectangle {
 		color: colorTheme.highlightPanelColor;
 	}
 
-	CaptionSmallText {
+	SmallCaptionText {
 		id: scoreRect;
 
 		anchors.top: levelText.bottom;

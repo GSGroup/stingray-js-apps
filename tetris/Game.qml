@@ -73,6 +73,53 @@ Rectangle{
 
 			x: game.width / 2 - game.blockSize * 2;
 			y: 0;
+
+			//FIXME:вынести во вне
+			onKeyPressed: {
+				var directionX = 0;
+				var directionY = 0;
+
+				switch (key) {
+				case 'Right':
+					directionX = 1;
+					directionY = 0;
+					break;
+				case 'Left':
+					directionX = -1;
+					directionY = 0;
+					break;
+				case 'Down':
+					directionX = 0;
+					directionY = 1;
+					break;
+				case 'Up':
+					directionX = 0;
+					directionY = 0;
+					engine.rotate();
+					drawMovingBlock(engine.currentBlock);
+					break;
+
+				default: return false;
+				}
+				var result = true;
+
+				for (var j = 0; j < 16; ++j) {
+					var x = getBlockCoorX(j);
+					var y = getBlockCoorY(j);
+
+					x += movingTetraminos.x;
+					y += movingTetraminos.y;
+
+					if (engine.hasCollisions(x + deltaX, y + deltaY))
+						result = false;
+				}
+
+				if (result) {
+					moveBlock(directionX * game.stepSize, directionY * game.stepSize);
+
+					return true;
+				}
+			}
 		}
 
 		Timer {
@@ -178,21 +225,6 @@ Rectangle{
 			return false;
 		}
 
-		function hasCollisions(x,y) {
-			var result = false;
-
-			if ((x < 0) || (x >= game.width) || (y >= game.height) || game.getBlock(x,y)) {
-				result = true;
-			}
-
-			return result;
-		}
-
-		function rotate() {
-			game.currentRotationIndex = (game.currentRotationIndex == 3 ? 0 : game.currentRotationIndex + 1);
-			game.currentBlock = engine.getBlock(game.currentBlockViewIndex, game.currentRotationIndex);
-		}
-
 		function initNewMovingBlock() {
 			game.currentBlock = game.nextBlock;
 			game.currentBlockColor = game.nextBlockColor;
@@ -233,19 +265,7 @@ Rectangle{
 		}
 
 		onCompleted: {
-			game.currentBlock = 0x0F00;
-			game.nextBlock = 0x4460;
 
-			game.currentBlockViewIndex = 0;
-			game.nextBlockViewIndex = 1;
-			game.currentRotationIndex = 0;
-			game.nextRotationIndex = 1;
-
-			game.nextBlockColor = 0;
-			game.currentBlockColor = 1;
-
-			game.directionX = 0;
-			game.directionY = 0;
 
 			movingTetraminos.initMovingBlockCoord();
 			movingTetraminos.drawMovingBlock(game.currentBlock);

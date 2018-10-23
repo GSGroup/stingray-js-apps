@@ -25,7 +25,44 @@ this.getGradientEnd = function(colorIndex) {
 }
 
 this.getBlock = function(blockIndex, rotationIndex) {
-	var blockType = pieces[blockIndex][rotationIndex];
+	return pieces[blockIndex][rotationIndex];
+}
 
-	return block;
+
+var currentBlock = 0x0F00;
+var nextBlock = 0x4460;
+
+var currentBlockViewIndex = 0;
+var nextBlockViewIndex = 1;
+
+var currentRotationIndex = 0;
+var nextRotationIndex = 1;
+
+var nextBlockColor = 0;
+var currentBlockColor = 1;
+
+function hasCollisions(x,y) {
+	var result = false;
+
+	if ((x < 0) || (x >= game.width) || (y >= game.height) || game.getBlock(x,y)) {
+		result = true;
+	}
+
+	return result;
+}
+
+function rotate() {
+	currentRotationIndex = (currentRotationIndex == 3 ? 0 : currentRotationIndex + 1);
+	currentBlock = pieces[currentBlockViewIndex][currentRotationIndex];
+}
+
+function initNewMovingBlock() {
+	game.currentBlock = game.nextBlock;
+	game.currentBlockColor = game.nextBlockColor;
+
+	game.currentBlockViewIndex = game.nextBlockViewIndex;
+	game.currentRotationIndex  = game.nextRotationIndex;
+
+	game.getNewBlock();
+	game.getNewColor();
 }
