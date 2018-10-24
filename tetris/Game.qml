@@ -130,8 +130,11 @@ Rectangle{
 			repeat: true;
 
 			onTriggered: {
-				if (!movingTetraminos.moveBlock(0, game.stepSize)) {
-					game.initNewMovingBlock();
+				if (!movingTetraminos.checkColllisions(0, game.stepSize)){
+					movingTetraminos.moveBlock(0, game.stepSize);
+				}
+				else {
+					game.nextStep();
 				}
 			}
 		}
@@ -153,15 +156,43 @@ Rectangle{
 			height: game.blockSize * 4;
 
 			anchors.centerIn: game;
+
+			onBackToGame: {
+				exitMenu.visible = false;
+				movingTetraminos.setFocus();
+			}
+
+			onSetNewGame: {
+				exitMenu.visible = false;
+				movingTetraminos.setFocus();
+				game.restartGame();
+			}
+
+			onKeyPressed: {
+				if (key === "8" || key === "7" || key === "6") {
+					return true;
+				}
+			}
 		}
 
 		GameOverMenu {
 			id: gameOverMenu;
 
 			width: game.width;
-			height: game.blockSize * 4.5;
+			height: gameConsts.getBlockSize() * 4;
 
 			anchors.centerIn: game;
+
+			onKeyPressed: {
+				if (key === "8" || key === "7") {
+					return true;
+				}
+			}
+
+			onVisibleChanged: {
+				if(!visible)
+					movingTetraminos.setFocus();
+			}
 		}
 
 		LevelMenu {
@@ -260,8 +291,40 @@ Rectangle{
 			}
 		}
 
-		function index(x, y) {
-			return (Math.floor(y / game.blockSize) * game.glassWidth + Math.floor(x / game.blockSize));
+		function nextStep() {
+			engine.setMovingBlockProperties();
+
+			var currentBlock = engine.getCurrentBlock();
+			var colorIndex = engine.getCurrentColorIndex();
+			var blockSize = gameConsts.getBlockSize();
+			movingTetraminos.setMovingBlockView(currentBlock, colorTheme.backgroundColor, colorIndex, blockSize);
+
+			var nextColorIndex = engine.getNextColorIndex();
+			var nextBlock = engine.getNextBlock();
+			infoItem.showNextBlockView(nextColorIndex, nextBlock, blockSize);
+
+			animTimer.restart();
+		}
+
+		function clearCanvas() {
+
+		}
+
+		function restartGame() {
+			game.clearCanvas();
+
+			engine.init();
+
+			var currentBlock = engine.getCurrentBlock();
+			var colorIndex = engine.getCurrentColorIndex();
+			var blockSize = gameConsts.getBlockSize();
+			movingTetraminos.setMovingBlockView(currentBlock, colorTheme.backgroundColor, colorIndex, blockSize);
+
+			var nextColorIndex = engine.getNextColorIndex();
+			var nextBlock = engine.getNextBlock();
+			infoItem.showNextBlockView(nextColorIndex, nextBlock, blockSize);
+
+			animTimer.restart();
 		}
 
 		onCompleted: {
