@@ -74,6 +74,8 @@ Rectangle {
 
 		spacing: 10;
 
+		visible: !mainMenu.visible;
+
 		MainText {
 			text: qsTr("White");
 		}
@@ -89,6 +91,8 @@ Rectangle {
 		anchors.bottom: boardRect.top;
 
 		spacing: 10;
+
+		visible: !mainMenu.visible;
 
 		MainText {
 			text: qsTr("Black");
@@ -106,6 +110,8 @@ Rectangle {
 		anchors.rightMargin: 20;
 
 		spacing: 10;
+
+		visible: !game.multiplayer && !mainMenu.visible;
 
 		MainText {
 			text: qsTr(game.playerWhite ? "You're playing with white" : "You're playing with black");
@@ -143,6 +149,8 @@ Rectangle {
 		height: 65 * 8;
 
 		anchors.centerIn: parent;
+
+		visible: !mainMenu.visible;
 		
 		GridView {
 			id: gameView;
@@ -200,6 +208,8 @@ Rectangle {
 		anchors.bottom: parent.bottom;
 		anchors.left: parent.left;
 		anchors.right: parent.right;
+
+		visible: !game.multiplayer && !mainMenu.visible;
 
 		Rectangle {
 			id: red;
@@ -366,6 +376,7 @@ Rectangle {
 	function startGame() {
 		engine.Reset(gameView.model);
 		game.update();
+		mainMenu.visible = false;
 		gameOver.visible = false;
 		game.over = false;
 	}
