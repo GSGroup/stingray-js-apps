@@ -7,7 +7,7 @@ Rectangle {
 	color: itemLevel.activeFocus ? colorTheme.activeFocusTop : colorTheme.nonFocusablePanelColor;
 
 	BodyText {
-		anchors.centerIn: levelRect;
+		anchors.centerIn: itemLevel;
 
 		color: itemLevel.activeFocus ? colorTheme.globalBackgroundColor : colorTheme.highlightPanelColor;
 

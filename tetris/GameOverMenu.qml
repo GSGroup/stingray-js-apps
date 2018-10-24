@@ -2,60 +2,66 @@ Rectangle {
 	id: gameOverRect;
 
 	focus: true;
-	color: "#000000";
+	color: colorTheme.backgroundColor;
 
 	visible: false;
 
-	BodyText {
-		y: 9;
+	Column {
+		id: gameOverColumn;
 
-		anchors.horizontalCenter: gameOverRect.horizontalCenter;
+		width: 240;
+		height: gameOverRect.height;
 
-		text: qsTr("Игра окончена");
-		color: colorTheme.highlightPanelColor;
-	}
+		anchors.centerIn: gameOverRect;
 
-	ListView {
-		id: gameOverGrid;
-
-		width: game.blockSize * 8;
-		height: game.blockSize * 1.5 * model.count;
-
-		anchors.bottom: gameOverRect.bottom;
-		anchors.horizontalCenter: gameOverRect.horizontalCenter;
-
+		spacing: 6;
 		focus: true;
 
 		visible: true;
 
-		model: ListModel {
-			id: menuModel;
+		BodyText {
+			width: gameOverColumn.width;
+			height: 30;
 
-			ListElement { text: "Выйти из Тетриса" }
-			ListElement { text: "Поиграть еще" }
+			horizontalAlignment: Text.AlignHCenter;
+			verticalAlignment: Text.AlignVCenter;
+
+			text: qsTr("Игра окончена");
+			color: colorTheme.highlightPanelColor;
+			font: bodyFont;
 		}
-		delegate: MenuDelegate { }
 
-		onSelectPressed: {
-			switch (gameOverGrid.currentIndex) {
-			case 0://FIXME: выход из приложения
-			case 1:
+		MenuDelegate {
+			id: exitGame;
+
+			width: gameOverColumn.width;
+			height: 30;
+
+			focus: true;
+			menuText: "Поиграть еще";
+
+			onSelectPressed: {
 				gameOverRect.visible = false;
-				movingTetraminos.setFocus();
-				break;
 			}
 		}
 
-		onKeyPressed: {
-			if (key === "8" || key === "7") {
-				return true;
+		MenuDelegate {
+			id: continueGame;
+
+			width: gameOverColumn.width;
+			height: 30;
+
+			focus: true;
+			menuText: "Выйти";
+
+			onSelectPressed: {
+				viewsFinder.closeApp();
 			}
 		}
 	}
 
 	function show() {
 		gameOverRect.visible = true;
-		gameOverGrid.currentIndex = 0;
-		gameOverGrid.setFocus();
+		exitGame.setFocus();
 	}
 }

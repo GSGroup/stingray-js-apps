@@ -1,57 +1,72 @@
 Rectangle {
 	id: exitRect;
 
+	signal setNewGame();
+	signal backToGame();
+
 	focus: true;
 	color: colorTheme.backgroundColor;
-	clip: true;
 
 	visible: false;
 
-	ListView {
-		id: exitGrid;
+	Column {
+		id: gameExitColumn;
 
-		width: game.blockSize * 8;
-		height: game.blockSize * 1.5 * model.count;
+		width: 240;
+		height: exitRect.height;
 
 		anchors.centerIn: exitRect;
 
+		spacing: 6;
 		focus: true;
 
 		visible: true;
 
-		model: ListModel {
-			id: menuModel;
+		MenuDelegate {
+			id: exitGameItem;
 
-			ListElement { text: "Выйти из Тетриса" }
-			ListElement { text: "Продолжить игру" }
-			ListElement { text: "Новая игра" }
-		}
-		delegate: MenuDelegate { }
+			width: gameExitColumn.width;
+			height: 30;
 
-		onSelectPressed: {
-			exitRect.visible = false;
-			movingTetraminos.setFocus();
+			focus: true;
+			menuText: "Выйти из Тетриса";
 
-			switch (exitGrid.currentIndex) {
-			case 0:
-			case 1:
-				break;
-			case 2:
-				game.initNewMovingBlock();
-				break;
+			onSelectPressed: {
+				viewsFinder.closeApp();
 			}
 		}
 
-		onKeyPressed: {
-			if (key === "8" || key === "7" || key === "6") {
-				return true;
+		MenuDelegate {
+			id: continueGameItem;
+
+			width: gameExitColumn.width;
+			height: 30;
+
+			focus: true;
+			menuText: "Продолжить игру";
+
+			onSelectPressed: {
+				exitRect.backToGame();
+			}
+		}
+
+		MenuDelegate {
+			id: newGameItem;
+
+			width: gameExitColumn.width;
+			height: 30;
+
+			focus: true;
+			menuText: "Новая игра";
+
+			onSelectPressed: {
+				exitRect.setNewGame();
 			}
 		}
 	}
 
 	function show() {
-		exitGrid.currentIndex = 0;
 		exitRect.visible = true;
-		exitRect.setFocus();
+		exitGameItem.setFocus();
 	}
 }

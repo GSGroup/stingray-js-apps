@@ -1,33 +1,32 @@
-//блоки и варианты их поворота по частовой стрелке
-var pieces =[
-	[0x44C0, 0x8E00, 0x6440, 0x0E20],
-	[0x4460, 0x0E80, 0xC440, 0x2E00],
-	[0xCC00, 0xCC00, 0xCC00, 0xCC00],
-	[0x0F00, 0x2222, 0x00F0, 0x4444],
-	[0x06C0, 0x8C40, 0x6C00, 0x4620],
-	[0x0E40, 0x4C40, 0x4E00, 0x4640],
-	[0x0C60, 0x4C80, 0xC600, 0x2640]
-];
+var gameConsts = require("tetris", "tetrisConsts.js");
 
-var colorGradientStart = ["#D8725A", "#DF81D4", "#E6CD70", "#C5D317", "#5F8BE3"];
-var colorGradientEnd = ["#CE573D", "#D151BD", "#D9B42F"," #919C11", "#366DD9"];
+var currentBlock;
+var nextBlock;
+var currentBlockViewIndex;
+var nextBlockViewIndex;
+var currentRotationIndex;
+var nextRotationIndex;
 
-this.randomColor = function() {
-	return Math.floor(Math.random() * colorGradientStart.length);
+var nextColorIndex;
+var currentColorIndex;
+
+var dropTime;
+
+this.getCurrentBlock = function() {
+	return gameConsts.getBlockView(currentBlockViewIndex, currentRotationIndex);
+}
+
+this.getNextColorIndex = function() {
+	return nextColorIndex;
 }
 
 this.getGradientStart = function(colorIndex) {
 	return colorGradientStart[colorIndex];
 }
 
-this.getGradientEnd = function(colorIndex) {
-	return colorGradientEnd[colorIndex];
+this.getNextBlock = function() {
+	return gameConsts.getBlockView(nextBlockViewIndex, nextRotationIndex);
 }
-
-this.getBlock = function(blockIndex, rotationIndex) {
-	return pieces[blockIndex][rotationIndex];
-}
-
 
 var currentBlock = 0x0F00;
 var nextBlock = 0x4460;
@@ -56,13 +55,15 @@ function rotate() {
 	currentBlock = pieces[currentBlockViewIndex][currentRotationIndex];
 }
 
-function initNewMovingBlock() {
-	game.currentBlock = game.nextBlock;
-	game.currentBlockColor = game.nextBlockColor;
+this.init = function() {
+	currentBlockViewIndex = gameConsts.randomBlockView();
+	nextBlockViewIndex = gameConsts.randomBlockView();
 
-	game.currentBlockViewIndex = game.nextBlockViewIndex;
-	game.currentRotationIndex  = game.nextRotationIndex;
+	currentRotationIndex = gameConsts.randomRotation();
+	nextRotationIndex = gameConsts.randomRotation();
 
-	game.getNewBlock();
-	game.getNewColor();
+	nextColorIndex = gameConsts.randomColor();
+	currentColorIndex = gameConsts.randomColor();
+
+	dropTime = 16000;
 }
