@@ -1,17 +1,65 @@
 import "engine.js" as engine;
 import "CellDelegate.qml";
+import "MenuDelegate.qml";
 
 Rectangle {
 	id: game;
 
 	property bool easy;
 	property bool playerWhite;
+	property bool multiplayer: true;
 
 	anchors.fill: parent;
 
 	over: false;
 	whiteCounter: 2;
 	blackCounter: 2;
+
+	Rectangle {
+		id: mainMenu;
+
+		width: 520;
+		height: 520;
+
+		anchors.centerIn: parent;
+
+		focus: true;
+		color: "#eee4dab0";
+
+		visible: true;
+
+		ListView {
+			height: 240;
+
+			anchors.horizontalCenter: parent.horizontalCenter;
+			anchors.verticalCenter: parent.verticalCenter;
+
+			focus: true;
+
+			model: ListModel {
+				ListElement { text: "Start playing alone"; }
+				ListElement { text: "Start playing together"; }
+				ListElement { text: "Continue"; }
+			}
+			delegate: MenuDelegate{}
+
+			onSelectPressed: {
+				switch (this.currentIndex) {
+				case 0:
+					game.multiplayer = false;
+					game.startGame();
+					break;
+				case 1:
+					game.multiplayer = true;
+					game.startGame();
+					break;
+				case 2:
+					mainMenu.visible = false;
+					break;
+				}
+			}
+		}
+	}
 	
 	BigText {
 		id: titleText;
