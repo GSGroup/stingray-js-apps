@@ -9,7 +9,6 @@ Item {
 	property alias contentWidth: listView.contentWidth;
 	property alias model: listView.model;
 	property alias backgroundVisible: chooserBackground.visible;
-	property alias inverted: chooserBackground.inverted;
 	property bool showArrows: true;
 	property bool arrowsInPanel: true;
 	property bool keyNavigationWraps;
@@ -20,8 +19,7 @@ Item {
 	
 	ActivePanel {
 		id: chooserBackground;
-		color: inverted ? (parent.activeFocus ? colorTheme.highlightPanelColor : colorTheme.passiveHighlightPanel) 
-						: (parent.activeFocus ? colorTheme.activeFocusColor : colorTheme.focusablePanelColor);
+		color: parent.activeFocus ? colorTheme.activeFocusColor : colorTheme.focusablePanelColor;
 		focus: false;
 		anchors.fill: parent;
 	}
