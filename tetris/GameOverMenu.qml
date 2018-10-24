@@ -31,7 +31,7 @@ Rectangle {
 			font: bodyFont;
 		}
 
-		MenuDelegate {
+		MenuItem {
 			id: exitGame;
 
 			width: gameOverColumn.width;
@@ -45,7 +45,7 @@ Rectangle {
 			}
 		}
 
-		MenuDelegate {
+		MenuItem {
 			id: continueGame;
 
 			width: gameOverColumn.width;

@@ -5,8 +5,8 @@ import "InfoRect.qml";
 import "PauseRect.qml";
 import "Cell.qml";
 import "MovingTetraminos.qml";
+import "MenuItem.qml";
 
-import "MenuDelegate.qml";
 import "LevelDelegate.qml";
 import "CanvasItemDelegate.qml";
 
@@ -47,15 +47,14 @@ Rectangle{
 			id: gameCanvasModel;
 
 			property int value;
-			property string gradientStartColor;
-			property string gradientStopColor;
+			property int colorIndex;
 		}
 
 		GridView {
 			id: gameView;
 
 			width: game.width;
-			height : game.height;
+			height: game.height;
 
 			orientation: GridView.Vertical;
 
@@ -63,8 +62,8 @@ Rectangle{
 			delegate: CanvasItemDelegate { }
 
 			onCompleted: {
-				for (var i = 0; i < game.glassHigh * game.glassWidth; ++i)
-					gameCanvasModel.append({value: 0, gradientStartColor: "#E49C8B", gradientStopColor: "#CE573D",});
+				for (var i = 0; i < gameConsts.getGlassWidth() * gameConsts.getGlassHeight(); ++i)
+					gameCanvasModel.append({ value: 0, colorIndex: 0 });
 			}
 		}
 
@@ -101,23 +100,19 @@ Rectangle{
 
 				default: return false;
 				}
-				var result = true;
+			}
 
+			function tryRotate()
+			{
+				return true;
+			}
+
+			function checkColllisions(deltaX, deltaY)
+			{
+				var result = false;
 				for (var j = 0; j < 16; ++j) {
-					var x = getBlockCoorX(j);
-					var y = getBlockCoorY(j);
-
-					x += movingTetraminos.x;
-					y += movingTetraminos.y;
-
-					if (engine.hasCollisions(x + deltaX, y + deltaY))
-						result = false;
-				}
-
-				if (result) {
-					moveBlock(directionX * game.stepSize, directionY * game.stepSize);
-
-					return true;
+					if (engine.hasCollisions(this.getBlockCoorX(j) + movingTetraminos.x + deltaX, this.getBlockCoorY(j) + movingTetraminos.y + deltaY))
+						result = true;
 				}
 			}
 		}
@@ -276,33 +271,19 @@ Rectangle{
 
 		function makeBlockPartOfCanvas() {
 			for (var i = 0; i < 16; ++i) {
-				var indx = game.index(movingTetraminos.children[i].x, movingTetraminos.children[i].y);
-				var value = movingTetraminos.children[i].value;
+				var index = game.index(movingTetraminos.children[i].x, movingTetraminos.children[i].y);
 
-				if (value) {
-					gameCanvasModel.setProperty(indx,'value',value);
-
-					var colorGradientStart = engine.getGradientStart(game.currentBlockColor);
-					var colorGradientStop  = engine.getGradientEnd(game.currentBlockColor);
-
-					gameCanvasModel.setProperty(indx, 'gradientStartColor', colorGradientStart);
-					gameCanvasModel.setProperty(indx, 'gradientStopColor', colorGradientStop);
+				if (movingTetraminos.children[i].value) {
+					gameCanvasModel.setProperty(index,'value',value);
+					gameCanvasModel.setProperty(index, 'indexColor', engine.getCurrentColorIndex());
 				}
 			}
 		}
 
 		function nextStep() {
 			engine.setMovingBlockProperties();
-
-			var currentBlock = engine.getCurrentBlock();
-			var colorIndex = engine.getCurrentColorIndex();
-			var blockSize = gameConsts.getBlockSize();
-			movingTetraminos.setMovingBlockView(currentBlock, colorTheme.backgroundColor, colorIndex, blockSize);
-
-			var nextColorIndex = engine.getNextColorIndex();
-			var nextBlock = engine.getNextBlock();
-			infoItem.showNextBlockView(nextColorIndex, nextBlock, blockSize);
-
+			movingTetraminos.setMovingBlockView(engine.getCurrentBlock(), engine.getCurrentColorIndex());
+			infoItem.showNextBlockView(engine.getNextColorIndex(), engine.getNextBlock());
 			animTimer.restart();
 		}
 
@@ -312,28 +293,16 @@ Rectangle{
 
 		function restartGame() {
 			game.clearCanvas();
-
 			engine.init();
-
-			var currentBlock = engine.getCurrentBlock();
-			var colorIndex = engine.getCurrentColorIndex();
-			var blockSize = gameConsts.getBlockSize();
-			movingTetraminos.setMovingBlockView(currentBlock, colorTheme.backgroundColor, colorIndex, blockSize);
-
-			var nextColorIndex = engine.getNextColorIndex();
-			var nextBlock = engine.getNextBlock();
-			infoItem.showNextBlockView(nextColorIndex, nextBlock, blockSize);
-
+			movingTetraminos.setMovingBlockView(engine.getCurrentBlock(), engine.getCurrentColorIndex());
+			infoItem.showNextBlockView(engine.getNextColorIndex(), engine.getNextBlock());
 			animTimer.restart();
 		}
 
 		onCompleted: {
-
-
-			movingTetraminos.initMovingBlockCoord();
-			movingTetraminos.drawMovingBlock(game.currentBlock);
-
-			infoItem.drawNextBlockView(game.nextBlockColor, game.nextBlock);
+			engine.init();
+			movingTetraminos.setMovingBlockView(engine.getCurrentBlock(), engine.getCurrentColorIndex());
+			infoItem.showNextBlockView(engine.getNextColorIndex(), engine.getNextBlock());
 		}
 	}
 }
