@@ -1,5 +1,4 @@
 import "CategoryDelegate.qml";
-import controls.Panel;
 
 import "js/constants.js" as constants;
 
