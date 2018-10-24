@@ -15,13 +15,13 @@ Rectangle {
 	Rectangle{
 		id: innerRect;
 
-		property int indexColor: 0;
+		x: gameConsts.getSpaceBetweenBlocks();
+		y: gameConsts.getSpaceBetweenBlocks();
 
-		x: rect.spaceBetweenBlocks;
-		y: rect.spaceBetweenBlocks;
+		width: rect.width - gameConsts.getSpaceBetweenBlocks() * 2;
+		height: rect.height - gameConsts.getSpaceBetweenBlocks() * 2;
 
-		width: rect.width - rect.spaceBetweenBlocks * 2;
-		height: rect.height - rect.spaceBetweenBlocks * 2;
+		color: gameConsts.getColor(rect.blockColorIndex);
 
 		visible: rect.value > 0;
 

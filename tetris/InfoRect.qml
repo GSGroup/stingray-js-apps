@@ -48,9 +48,13 @@ Rectangle {
 		color: colorTheme.highlightPanelColor;
 	}
 
-	function drawNextBlockView(nextBlockColor, nextBlock) {
-		for (var i = 0; i< 16; ++i) {
-			nextTetraminos.children[i].blockColor = nextBlockColor;
+	function showNextBlockView(colorIndex, blockView) {
+		for (var k = 0; k < 16; ++k) {
+			nextTetraminos.children[k].x = (k % 4) * gameConsts.getBlockSize() ;
+			nextTetraminos.children[k].y = Math.floor(k / 4) * gameConsts.getBlockSize();
+
+			nextTetraminos.children[k].color = colorTheme.globalBackgroundColor;
+			nextTetraminos.children[k].blockColorIndex = colorIndex;
 		}
 
 		var bit;

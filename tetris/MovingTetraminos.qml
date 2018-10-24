@@ -1,3 +1,5 @@
+import "tetrisConsts.js" as gameConsts
+
 Item {
 	id: movingItem;
 
@@ -42,5 +44,20 @@ Item {
 			this.children[indexBlock].value = blockView & bit;
 			++indexBlock;
 		}
+	}
+
+	function setMovingBlockView(blockView, blockColorIndex, backColor) {
+		if(backColor === undefined) {
+			backColor = colorTheme.backgroundColor;
+		}
+		for (var k = 0; k < 16; ++k) {
+			movingItem.children[k].x = (k % 4) * gameConsts.getBlockSize() ;
+			movingItem.children[k].y = Math.floor(k / 4) * gameConsts.getBlockSize();
+
+			movingItem.children[k].color = backColor;
+			movingItem.children[k].blockColorIndex = blockColorIndex;
+		}
+
+		this.updateBlockView(blockView);
 	}
 }

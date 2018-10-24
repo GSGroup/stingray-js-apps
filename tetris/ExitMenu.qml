@@ -22,7 +22,7 @@ Rectangle {
 
 		visible: true;
 
-		MenuDelegate {
+		MenuItem {
 			id: exitGameItem;
 
 			width: gameExitColumn.width;
@@ -36,7 +36,7 @@ Rectangle {
 			}
 		}
 
-		MenuDelegate {
+		MenuItem {
 			id: continueGameItem;
 
 			width: gameExitColumn.width;
@@ -50,7 +50,7 @@ Rectangle {
 			}
 		}
 
-		MenuDelegate {
+		MenuItem {
 			id: newGameItem;
 
 			width: gameExitColumn.width;

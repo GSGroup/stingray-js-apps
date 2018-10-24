@@ -1,10 +1,8 @@
 Rectangle {
 	id: rect;
 
-	property int value: model.value;
-
-	width: game.blockSize ;
-	height: game.blockSize;
+	width: gameConsts.getBlockSize();
+	height: gameConsts.getBlockSize();
 
 	color: colorTheme.backgroundColor;
 
@@ -14,31 +12,8 @@ Rectangle {
 		x: game.spaceBetweenBlocks;
 		y: game.spaceBetweenBlocks;
 
-		width: rect.width - game.spaceBetweenBlocks * 2;
-		height: rect.height - game.spaceBetweenBlocks * 2;
+		color: gameConsts.getColor(model.colorIndex);
 
-		visible: rect.value > 0;
-
-		Gradient {
-			id: blockGradient;
-
-			orientation: Gradient.Horizontal;
-
-			GradientStop {
-				id: blockGradientStart;
-
-				position: 0;
-
-				color: model.gradientStartColor;
-			}
-
-			GradientStop {
-				id: blockGradientEnd;
-
-				position: 1;
-
-				color: model.gradientStopColor;
-			}
-		}
+		visible: model.value > 0;
 	}
 }
