@@ -267,6 +267,12 @@ Rectangle {
 	onBackPressed: { viewsFinder.closeApp(); }
 
 	onKeyPressed: {
+			if (game.over)
+			{
+				game.startGame();
+				return true;
+			}
+
 			switch (key)
 			{
 				case "Red":
@@ -278,25 +284,16 @@ Rectangle {
 					aiMoveTimer.start();
 					break;
 				case "Green":
-					game.over = true;
 					game.playerWhite = true;
-					break;
+					game.startGame();
+					return true;
 				case "Yellow":
-					game.over = true;
 					game.playerWhite = false;
-					break;
+					game.startGame();
+					return true;
 				case "Blue":
 					game.easy = !game.easy;
 					return true;
-			}
-
-			if (game.over)
-			{
-				engine.Reset(gameView.model);
-				game.update();
-				gameOver.visible = false;
-				game.over = false;
-				return true;
 			}
 
 			log("key: " +  key);
@@ -316,6 +313,13 @@ Rectangle {
 				return true;
 			}
 		return false;
+	}
+
+	function startGame() {
+		engine.Reset(gameView.model);
+		game.update();
+		gameOver.visible = false;
+		game.over = false;
 	}
 
 	function update() {
