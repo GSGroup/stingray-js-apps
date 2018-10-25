@@ -28,7 +28,6 @@ Rectangle {
 
 			text: qsTr("Игра окончена");
 			color: colorTheme.highlightPanelColor;
-			font: bodyFont;
 		}
 
 		MenuItem {

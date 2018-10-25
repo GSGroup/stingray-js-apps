@@ -1,16 +1,14 @@
 import "LevelMenu.qml";
 import "ExitMenu.qml";
 import "GameOverMenu.qml";
-import "InfoRect.qml";
 import "PauseRect.qml";
-import "Cell.qml";
-import "MovingTetraminos.qml";
 import "MenuItem.qml";
 
 import "LevelDelegate.qml";
-import "CanvasItemDelegate.qml";
+import "ItemDelegate.qml";
 
 import "engine.js" as engine;
+import "tetrisConsts.js" as gameConsts;
 
 Rectangle{
 	id: mainScreen;
@@ -24,18 +22,12 @@ Rectangle{
 	Rectangle {
 		id: game;
 
-		property int glassWidth: 10;
-		property int glassHigh: 20;
-
 		property int space: 6;
-		property int spaceBetweenBlocks: 1;
-		property int blockSize: (safeArea.height - space * 4) / game.glassHigh;
+		property int stepSize: gameConsts.getBlockSize();
+		property int startX: gameConsts.getGameWidth() / 2 - gameConsts.getBlockSize() * 2;
 
-		property int dropTime: 16000;
-		property int stepSize: game.blockSize;
-
-		width: blockSize * glassWidth;
-		height: blockSize * glassHigh;
+		width: gameConsts.getGameWidth();
+		height: gameConsts.getGameHeight();
 
 		anchors.centerIn: mainWindow;
 
@@ -43,37 +35,56 @@ Rectangle{
 		focus: true;
 		radius: 5;
 
-		ListModel {
-			id: gameCanvasModel;
-
-			property int value;
-			property int colorIndex;
-		}
-
 		GridView {
 			id: gameView;
 
 			width: game.width;
 			height: game.height;
 
+			cellWidth: gameConsts.getBlockSize();
+			cellHeight: gameConsts.getBlockSize();
 			orientation: GridView.Vertical;
 
-			model: gameCanvasModel;
-			delegate: CanvasItemDelegate { }
+			ListModel {
+				id: gameCanvasModel;
 
-			onCompleted: {
-				for (var i = 0; i < gameConsts.getGlassWidth() * gameConsts.getGlassHeight(); ++i)
-					gameCanvasModel.append({ value: 0, colorIndex: 0 });
+				property int value;
+				property int colorIndex;
+				property string backColor;
 			}
+
+			model: gameCanvasModel;
+			delegate: ItemDelegate { }
 		}
 
-		MovingTetraminos {
+		Item {
 			id: movingTetraminos;
 
-			x: game.width / 2 - game.blockSize * 2;
+			x: game.startX;
 			y: 0;
 
-			//FIXME:вынести во вне
+			GridView {
+				id: blockView;
+
+				width: gameConsts.getBlockSize() * 4;
+				height: gameConsts.getBlockSize() * 4;
+
+				orientation: Vertical;
+				cellWidth: gameConsts.getBlockSize();
+				cellHeight: gameConsts.getBlockSize();
+
+				ListModel {
+					id: movingBlockModel;
+
+					property int value;
+					property int colorIndex;
+					property string backColor;
+				}
+
+				model: movingBlockModel;
+				delegate: ItemDelegate { }
+			}
+
 			onKeyPressed: {
 				var directionX = 0;
 				var directionY = 0;
@@ -92,27 +103,18 @@ Rectangle{
 					directionY = 1;
 					break;
 				case 'Up':
-					directionX = 0;
-					directionY = 0;
-					engine.rotate();
-					drawMovingBlock(engine.currentBlock);
-					break;
-
+					if (engine.tryRotate()) {
+						engine.rotate();
+						engine.updateBlockView(blockView.model);
+					}
+					return true;
 				default: return false;
 				}
-			}
 
-			function tryRotate()
-			{
-				return true;
-			}
-
-			function checkColllisions(deltaX, deltaY)
-			{
-				var result = false;
-				for (var j = 0; j < 16; ++j) {
-					if (engine.hasCollisions(this.getBlockCoorX(j) + movingTetraminos.x + deltaX, this.getBlockCoorY(j) + movingTetraminos.y + deltaY))
-						result = true;
+				if (!engine.checkColllisions(movingTetraminos.x + directionX * game.stepSize, movingTetraminos.y + directionY * game.stepSize)) {
+					movingTetraminos.x += directionY * game.stepSize;
+					movingTetraminos.y += directionX * game.stepSize;
+					return true;
 				}
 			}
 		}
@@ -120,35 +122,97 @@ Rectangle{
 		Timer {
 			id: animTimer;
 
-			interval: game.dropTime / (game.glassHigh - 4);
+			interval: engine.getTimerInterval();
 			running: !(exitMenu.visible || levelMenu.visible || pauseMenu.visible || gameOverMenu.visible);
 			repeat: true;
 
 			onTriggered: {
-				if (!movingTetraminos.checkColllisions(0, game.stepSize)){
-					movingTetraminos.moveBlock(0, game.stepSize);
+				if (!engine.checkColllisions(movingTetraminos.x, movingTetraminos.y + game.stepSize)) {
+					movingTetraminos.y += game.stepSize;
 				}
 				else {
-					game.nextStep();
+					engine.nextStep(blockView.model, nextBlockView.model);
+
+					movingTetraminos.x = game.startX;
+					movingTetraminos.y = 0;
+
+					animTimer.restart();
 				}
 			}
 		}
 
-		InfoRect {
+		Rectangle {
 			id: infoItem;
 
 			width: game.width;
 			height: game.height;
 
 			anchors.left: game.right;
-			anchors.leftMargin: game.blockSize * 3;
+			anchors.leftMargin: gameConsts.getBlockSize() * 3;
+
+			color: colorTheme.globalBackgroundColor;
+
+			Item {
+				id: nextTetraminos;
+
+				width: gameConsts.getBlockSize() * 6;
+				height: gameConsts.getBlockSize() * 6;
+
+				color: colorTheme.globalBackgroundColor;
+
+				GridView {
+					id: nextBlockView;
+
+					x: gameConsts.getBlockSize();
+					y: gameConsts.getBlockSize();
+
+					width: gameConsts.getBlockSize() * 4;
+					height: gameConsts.getBlockSize() * 4;
+
+					orientation: Vertical;
+					cellWidth: gameConsts.getBlockSize();
+					cellHeight: gameConsts.getBlockSize();
+
+					ListModel {
+						id: nextBlockModel;
+
+						property int value;
+						property int colorIndex;
+						property string backColor;
+					}
+
+					model: nextBlockModel;
+					delegate: ItemDelegate { }
+				}
+			}
+
+			SmallCaptionText {
+				id: levelText;
+
+				anchors.top: nextTetraminos.bottom;
+				anchors.leftMargin: gameConsts.getBlockSize();
+
+				text: qsTr("Уровень");
+				color: colorTheme.highlightPanelColor;
+			}
+
+			SmallCaptionText {
+				id: scoreRect;
+
+				anchors.top: levelText.bottom;
+				anchors.topMargin: gameConsts.getBlockSize();
+				anchors.leftMargin: gameConsts.getBlockSize();
+
+				text: qsTr("Счет");
+				color: colorTheme.highlightPanelColor;
+			}
 		}
 
 		ExitMenu {
 			id: exitMenu;
 
 			width: game.width;
-			height: game.blockSize * 4;
+			height: gameConsts.getBlockSize() * 4;
 
 			anchors.centerIn: game;
 
@@ -160,7 +224,8 @@ Rectangle{
 			onSetNewGame: {
 				exitMenu.visible = false;
 				movingTetraminos.setFocus();
-				game.restartGame();
+				engine.restartGame();
+				animTimer.restart();
 			}
 
 			onKeyPressed: {
@@ -194,16 +259,20 @@ Rectangle{
 			id: levelMenu;
 
 			width: game.width;
-			height: game.blockSize * 3;
+			height: gameConsts.getBlockSize() * 3;
 
 			anchors.centerIn: game;
+
+			onVisibleChanged: {
+				movingTetraminos.setFocus();
+			}
 		}
 
 		PauseRect {
 			id: pauseMenu;
 
 			width: game.width;
-			height: game.blockSize * 6 + game.space * 4;
+			height: gameConsts.getBlockSize() * 6 + game.space * 4;
 
 			anchors.centerIn: game;
 		}
@@ -231,78 +300,8 @@ Rectangle{
 			return true;
 		}
 
-		function getNewColor() {
-			game.nextBlockColor = engine.randomColor();
-		}
-
-		function getNewBlock() {
-			game.nextBlockViewIndex = Math.floor(Math.random() * 7);
-			game.nextRotationIndex  = Math.floor(Math.random() * 4);
-
-			game.nextBlock = engine.getBlock(game.nextBlockViewIndex, game.nextRotationIndex);
-		}
-
-		function getBlock(x,y) {
-			var indx = game.index(x,y);
-
-			if (gameCanvasModel.get(indx).value == 1)
-				return true;
-
-			return false;
-		}
-
-		function initNewMovingBlock() {
-			game.currentBlock = game.nextBlock;
-			game.currentBlockColor = game.nextBlockColor;
-
-			game.currentBlockViewIndex = game.nextBlockViewIndex;
-			game.currentRotationIndex  = game.nextRotationIndex;
-
-			game.getNewBlock();
-			game.getNewColor();
-
-			infoItem.drawNextBlockView(game.nextBlockColor, game.nextBlock);
-
-			movingTetraminos.initMovingBlockCoord();
-			movingTetraminos.drawMovingBlock(game.currentBlock);
-
-			animTimer.restart();
-		}
-
-		function makeBlockPartOfCanvas() {
-			for (var i = 0; i < 16; ++i) {
-				var index = game.index(movingTetraminos.children[i].x, movingTetraminos.children[i].y);
-
-				if (movingTetraminos.children[i].value) {
-					gameCanvasModel.setProperty(index,'value',value);
-					gameCanvasModel.setProperty(index, 'indexColor', engine.getCurrentColorIndex());
-				}
-			}
-		}
-
-		function nextStep() {
-			engine.setMovingBlockProperties();
-			movingTetraminos.setMovingBlockView(engine.getCurrentBlock(), engine.getCurrentColorIndex());
-			infoItem.showNextBlockView(engine.getNextColorIndex(), engine.getNextBlock());
-			animTimer.restart();
-		}
-
-		function clearCanvas() {
-
-		}
-
-		function restartGame() {
-			game.clearCanvas();
-			engine.init();
-			movingTetraminos.setMovingBlockView(engine.getCurrentBlock(), engine.getCurrentColorIndex());
-			infoItem.showNextBlockView(engine.getNextColorIndex(), engine.getNextBlock());
-			animTimer.restart();
-		}
-
 		onCompleted: {
-			engine.init();
-			movingTetraminos.setMovingBlockView(engine.getCurrentBlock(), engine.getCurrentColorIndex());
-			infoItem.showNextBlockView(engine.getNextColorIndex(), engine.getNextBlock());
+			engine.initGame(gameView.model, blockView.model, nextBlockView.model);
 		}
 	}
 }
