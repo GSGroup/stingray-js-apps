@@ -42,7 +42,7 @@ Rectangle {
 
 		ListView {
 			id: menuList;
-			height: 240;
+			height: 270;
 
 			anchors.horizontalCenter: parent.horizontalCenter;
 			anchors.verticalCenter: parent.verticalCenter;
