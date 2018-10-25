@@ -1,12 +1,12 @@
 Item {
 	width: 390;
-	height: 80;
+	height: 90;
 
 	anchors.horizontalCenter: parent.horizontalCenter;
 
 	Rectangle {
 		width: parent.width;
-		height: parent.height - 15;
+		height: parent.height - 25;
 
 		anchors.centerIn: parent;
 
