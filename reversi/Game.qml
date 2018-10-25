@@ -127,6 +127,16 @@ Rectangle {
 		}
 	}
 
+	MainText {
+		anchors.verticalCenter: parent.verticalCenter;
+		anchors.right: boardRect.left;
+		anchors.rightMargin: 20;
+
+		visible: game.multiplayer && !mainMenu.visible;
+
+		text: game.playerWhite ? "Ходят белые" : "Ходят черные";
+	}
+
 	BigText {
 		id: gameOver;
 
@@ -337,51 +347,88 @@ Rectangle {
 	}
 
 	onKeyPressed: {
-			if (game.over)
-			{
-				game.startGame();
+		if (game.over)
+		{
+			game.startGame();
+			return true;
+		}
+
+		if (game.multiplayer)
+		{
+			if (engine.MakeMove(Math.floor(gameView.currentIndex / 8), gameView.currentIndex % 8, game.playerWhite, false) <= 0)
 				return true;
+
+			engine.WriteModel(gameView.model);
+			game.update();
+			game.playerWhite = !game.playerWhite;
+
+			if (!engine.NextMove(game.playerWhite, true, gameView.model)) // no next move for current player
+			{
+				if (!engine.NextMove(!game.playerWhite, true, gameView.model)) // no next move for other player, too. Game over
+				{
+					if(game.whiteCounter > game.blackCounter)
+					{
+						gameOver.text = "Игра окончена. Белые выиграли!";
+					}
+					else if (game.whiteCounter < game.blackCounter)
+					{
+						gameOver.text = "Игра окончена. Черные выиграли!";
+					}
+					else
+					{
+						gameOver.text = "Игра окончена. Ничья.";
+					}
+					game.over = true;
+					gameOver.visible = true;
+				}
+				else
+				{
+					game.playerWhite = !game.playerWhite;	//skip move
+				}
 			}
 
-			switch (key)
-			{
-				case "Red":
-					if (aiMoveTimer.running) //ai is "thinking"
-						return;
+			return true;
+		}
 
-					engine.NextMove(game.playerWhite, false, gameView.model);
-					game.update();
-					aiMoveTimer.start();
-					break;
-				case "Green":
-					game.playerWhite = true;
-					game.startGame();
-					return true;
-				case "Yellow":
-					game.playerWhite = false;
-					game.startGame();
-					return true;
-				case "Blue":
-					game.easy = !game.easy;
-					return true;
-			}
-
-			log("key: " +  key);
-			if (key == "Select")
-			{
+		switch (key)
+		{
+			case "Red":
 				if (aiMoveTimer.running) //ai is "thinking"
-					return true;
+					return;
 
-				log("player moves into " + Math.floor(gameView.currentIndex / 8) + ", " + gameView.currentIndex % 8);
-				if (engine.MakeMove(Math.floor(gameView.currentIndex / 8), gameView.currentIndex % 8, game.playerWhite, false) <= 0)
-					return true;
-
-				engine.WriteModel(gameView.model);
+				engine.NextMove(game.playerWhite, false, gameView.model);
 				game.update();
 				aiMoveTimer.start();
-
+				break;
+			case "Green":
+				game.playerWhite = true;
+				game.startGame();
 				return true;
-			}
+			case "Yellow":
+				game.playerWhite = false;
+				game.startGame();
+				return true;
+			case "Blue":
+				game.easy = !game.easy;
+				return true;
+		}
+
+		log("key: " +  key);
+		if (key == "Select")
+		{
+			if (aiMoveTimer.running) //ai is "thinking"
+				return true;
+
+			log("player moves into " + Math.floor(gameView.currentIndex / 8) + ", " + gameView.currentIndex % 8);
+			if (engine.MakeMove(Math.floor(gameView.currentIndex / 8), gameView.currentIndex % 8, game.playerWhite, false) <= 0)
+				return true;
+
+			engine.WriteModel(gameView.model);
+			game.update();
+			aiMoveTimer.start();
+
+			return true;
+		}
 		return false;
 	}
 
