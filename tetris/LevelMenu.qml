@@ -1,3 +1,5 @@
+import "tetrisConsts.js" as gameConsts;
+
 Rectangle {
 	id: levelRect;
 
@@ -19,11 +21,11 @@ Rectangle {
 	ListView {
 		id: levelGrid;
 
-		property int cellWidth: game.width / levelModel.count;
-		property int cellHeight: game.blockSize * 1.5;
+		property int cellWidth: gameConsts.getGameWidth() / levelModel.count;
+		property int cellHeight: gameConsts.getBlockSize() * 1.5;
 
-		width: game.width;
-		height: cellHeight;
+		width: this.contentWidth;
+		height: this.contentHeight;
 
 		anchors.bottom: parent.bottom;
 
@@ -35,22 +37,21 @@ Rectangle {
 		model: ListModel {
 			id:levelModel;
 
-			ListElement {text: "1"}
-			ListElement {text: "2"}
-			ListElement {text: "3"}
-			ListElement {text: "4"}
-			ListElement {text: "5"}
-			ListElement {text: "6"}
-			ListElement {text: "7"}
-			ListElement {text: "8"}
-			ListElement {text: "9"}
-			ListElement {text: "10"}
+			ListElement { text: "1" }
+			ListElement { text: "2" }
+			ListElement { text: "3" }
+			ListElement { text: "4" }
+			ListElement { text: "5" }
+			ListElement { text: "6" }
+			ListElement { text: "7" }
+			ListElement { text: "8" }
+			ListElement { text: "9" }
+			ListElement { text: "10" }
 		}
 		delegate: LevelDelegate { }
 
 		onSelectPressed: {
 			levelRect.visible = false;
-			movingTetraminos.setFocus();
 		}
 
 		onKeyPressed: {
