@@ -322,7 +322,14 @@ Rectangle {
 		}
 	}
 
-	onBackPressed: { viewsFinder.closeApp(); }
+	onBackPressed: {
+		if (mainMenu.visible)
+			viewsFinder.closeApp();
+		else
+			mainMenu.visible = true;
+
+		return true;
+	}
 
 	onKeyPressed: {
 			if (game.over)
