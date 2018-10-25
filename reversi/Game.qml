@@ -29,6 +29,17 @@ Rectangle {
 
 		visible: true;
 
+		BigText {
+			id: titleText;
+
+			anchors.top: parent.top;
+			anchors.topMargin: 20;
+			anchors.horizontalCenter: parent.horizontalCenter;
+
+			text: qsTr("Reversi");
+			color: "#000";
+		}
+
 		ListView {
 			id: menuList;
 			height: 240;
@@ -60,13 +71,6 @@ Rectangle {
 				}
 			}
 		}
-	}
-	
-	BigText {
-		id: titleText;
-		text: qsTr("Reversi");
-		anchors.top: parent.top;
-		anchors.horizontalCenter: parent.horizontalCenter;
 	}
 	
 	Row {
