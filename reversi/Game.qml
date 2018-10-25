@@ -8,6 +8,7 @@ Rectangle {
 	property bool easy;
 	property bool playerWhite;
 	property bool multiplayer: true;
+	property bool started;
 
 	anchors.fill: parent;
 
@@ -29,6 +30,7 @@ Rectangle {
 		visible: true;
 
 		ListView {
+			id: menuList;
 			height: 240;
 
 			anchors.horizontalCenter: parent.horizontalCenter;
@@ -39,7 +41,6 @@ Rectangle {
 			model: ListModel {
 				ListElement { text: "Start playing alone"; }
 				ListElement { text: "Start playing together"; }
-				ListElement { text: "Continue"; }
 			}
 			delegate: MenuDelegate{}
 
@@ -381,6 +382,11 @@ Rectangle {
 	}
 
 	function startGame() {
+		if (!game.started)
+		{
+			menuList.model.append({ text: "Continue" });
+			game.started = true;
+		}
 		engine.Reset(gameView.model);
 		game.update();
 		mainMenu.visible = false;
