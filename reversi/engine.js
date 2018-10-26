@@ -254,8 +254,6 @@ this.NextMove = function (white, simulate, model) {
 					insertPriority(moves, elem);
 					if (simulate)
 						return true;
-
-					log("possible move: " + y + ", " + x + ", discs: " + sum + ", bonus: " + bonus);
 				}
 			}
 		}
