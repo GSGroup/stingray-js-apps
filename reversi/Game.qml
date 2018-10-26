@@ -26,8 +26,6 @@ Rectangle {
 		focus: true;
 		color: "#eee4dab0";
 
-		visible: true;
-
 		BigText {
 			id: titleText;
 
@@ -41,10 +39,11 @@ Rectangle {
 
 		ListView {
 			id: menuList;
+
+			width: 390;
 			height: 270;
 
-			anchors.horizontalCenter: parent.horizontalCenter;
-			anchors.verticalCenter: parent.verticalCenter;
+			anchors.centerIn: parent;
 
 			focus: true;
 
@@ -52,21 +51,23 @@ Rectangle {
 				ListElement { text: "Start playing alone"; }
 				ListElement { text: "Start playing together"; }
 			}
-			delegate: MenuDelegate{}
+
+			delegate: MenuDelegate { width: parent.width; }
 
 			onSelectPressed: {
-				switch (this.currentIndex) {
-				case 0:
-					game.multiplayer = false;
-					game.startGame();
-					break;
-				case 1:
-					game.multiplayer = true;
-					game.startGame();
-					break;
-				case 2:
-					mainMenu.visible = false;
-					break;
+				switch (this.currentIndex)
+				{
+					case 0:
+						game.multiplayer = false;
+						game.startGame();
+						break;
+					case 1:
+						game.multiplayer = true;
+						game.startGame();
+						break;
+					case 2:
+						mainMenu.visible = false;
+						break;
 				}
 			}
 		}
