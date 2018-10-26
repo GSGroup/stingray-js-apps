@@ -78,6 +78,14 @@ Rectangle{
 				delegate: ItemDelegate { }
 			}
 
+			onUpPressed:{
+				if (engine.tryRotate())
+				{
+					engine.rotate();
+					engine.updateBlockView(blockView.model);
+				}
+			}
+
 			onKeyPressed: {
 				var directionX = 0;
 				var directionY = 0;
@@ -96,15 +104,9 @@ Rectangle{
 						directionX = 0;
 						directionY = 1;
 						break;
-					case 'Up':
-						if (engine.tryRotate())
-						{
-							engine.rotate();
-							engine.updateBlockView(blockView.model);
-						}
-						return true;
 					default: return false;
 				}
+
 				var stepX = directionX * game.stepSize;
 				var stepY = directionY * game.stepSize;
 				if (!engine.hasColllisions(movingTetraminos.x + stepX, movingTetraminos.y + stepY))
@@ -271,30 +273,24 @@ Rectangle{
 			anchors.centerIn: game;
 		}
 
-		onKeyPressed: {
-			if (key === "Select")
-			{
-				exitMenu.show();
-				return true;
-			}
+		onSelectPressed: {
+			exitMenu.show();
+			return true;
+		}
 
-			if (key === "8")
-			{
-				pauseMenu.show();
-				return true;
-			}
+		on8Pressed: {
+			pauseMenu.show();
+			return true;;
+		}
 
-			if (key === "7")
-			{
-				levelMenu.show();
-				return true;
-			}
+		on7Pressed: {
+			levelMenu.show();
+			return true;
+		}
 
-			if (key === "6")
-			{
-				gameOverMenu.show();
-				return true;
-			}
+		on6Pressed: {
+		{
+			gameOverMenu.show();
 			return true;
 		}
 
