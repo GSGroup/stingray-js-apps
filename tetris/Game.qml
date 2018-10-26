@@ -77,6 +77,7 @@ Rectangle{
 				{
 					movingTetraminos.x += stepX;
 					movingTetraminos.y += stepY;
+					engine.updateProperties(movingTetraminos.x, movingTetraminos.y, blockView.model);
 				}
 			}
 		}
@@ -92,6 +93,7 @@ Rectangle{
 				if (!engine.hasColllisions(movingTetraminos.x, movingTetraminos.y + game.stepSize))
 				{
 					movingTetraminos.y += game.stepSize;
+					engine.updateProperties(movingTetraminos.x, movingTetraminos.y, blockView.model);
 				}
 				else
 				{

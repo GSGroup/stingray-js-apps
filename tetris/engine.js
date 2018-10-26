@@ -114,7 +114,7 @@ this.clearCanvas = function(model) {
 	}
 }
 
-this.makeBlockPartOfCanvas = function() {
+this.makeBlockPartOfCanvas = function(model) {
 }
 
 this.tryRotate = function() {
@@ -129,14 +129,34 @@ this.hasColllisions = function(x, y) {
 	return false;
 }
 
-function hasBorderCollisions(x, y) {
-	for (var k = 0; k < 16; ++k)
-	{
-		var blockX = x + (k % 4) * gameConsts.getBlockSize() ;
-		var blockY = y + Math.floor(k / 4) * gameConsts.getBlockSize();
+this.updateProperties = function(x, y, model) {
+	var blockX;
+	var blockY;
 
-		if (blockX < 0 || blockX >= gameConsts.getGameWidth() || blockY >= gameConsts.getGameHeight())
-		{
+	for (var k = 0; k < 16; ++k) {
+		blockX = x + (k % 4) * gameConsts.getBlockSize() ;
+		blockY = y + Math.floor(k / 4) * gameConsts.getBlockSize();
+
+		if ( (blockX < 0 || blockX >= gameConsts.getGameWidth() || blockY >= gameConsts.getGameHeight())) {
+			movingBlockState[k].value = -1;
+			model.set(k, { value: -1, backColor: colorTheme.globalBackgroundColor });
+		}
+		else if (movingBlockState[k].value === -1){
+			movingBlockState[k].value = 0;
+			model.set(k, { value: 0, backColor: colorTheme.backgroundColor });
+		}
+	}
+}
+
+function hasBorderCollisions(x, y) {
+	var blockX;
+	var blockY;
+
+	for (var k = 0; k < 16; ++k) {
+		blockX = x + (k % 4) * gameConsts.getBlockSize() ;
+		blockY = y + Math.floor(k / 4) * gameConsts.getBlockSize();
+
+		if ( (blockX < 0 || blockX >= gameConsts.getGameWidth() || blockY >= gameConsts.getGameHeight()) && movingBlockState[k].value > 0) {
 			return true;
 		}
 	}
