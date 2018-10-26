@@ -133,7 +133,7 @@ Rectangle {
 
 		visible: game.multiplayer && !mainMenu.visible;
 
-		text: game.playerWhite ? "Ходят белые" : "Ходят черные";
+		text: qsTr(game.playerWhite ? "White is moving" : "Black is moving");
 	}
 
 	BigText {
@@ -367,15 +367,15 @@ Rectangle {
 				{
 					if(game.whiteCounter > game.blackCounter)
 					{
-						gameOver.text = "Игра окончена. Белые выиграли!";
+						gameOver.text = qsTr("Game over. White won!");
 					}
 					else if (game.whiteCounter < game.blackCounter)
 					{
-						gameOver.text = "Игра окончена. Черные выиграли!";
+						gameOver.text = qsTr("Game over. Black won!");
 					}
 					else
 					{
-						gameOver.text = "Игра окончена. Ничья.";
+						gameOver.text = qsTr("Game over. Draw.");
 					}
 					game.over = true;
 					gameOver.visible = true;
