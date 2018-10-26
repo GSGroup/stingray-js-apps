@@ -9,12 +9,11 @@ Rectangle {
 	property bool playerWhite;
 	property bool multiplayer: true;
 	property bool started;
+	property bool over;
+	property int whiteCounter: 2;
+	property int blackCounter: 2;
 
 	anchors.fill: parent;
-
-	over: false;
-	whiteCounter: 2;
-	blackCounter: 2;
 
 	Rectangle {
 		id: mainMenu;
