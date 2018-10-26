@@ -1,61 +1,57 @@
+import "MenuItem.qml";
+
 Rectangle {
 	id: gameOverRect;
+
+	signal backToGame();
 
 	focus: true;
 	color: colorTheme.backgroundColor;
 
 	visible: false;
 
+	BodyText {
+		id: menuText;
+
+		width: 240;
+		height: 30;
+
+		anchors.topMargin: 6;
+		anchors.horizontalCenter: gameOverRect.horizontalCenter;
+
+		horizontalAlignment: Text.AlignHCenter;
+		verticalAlignment: Text.AlignVCenter;
+
+		text: qsTr("Игра окончена");
+		color: colorTheme.highlightPanelColor;
+	}
+
 	Column {
 		id: gameOverColumn;
 
-		width: 240;
 		height: gameOverRect.height;
 
-		anchors.centerIn: gameOverRect;
+		anchors.horizontalCenter: gameOverRect.horizontalCenter;
+		anchors.top: menuText.bottom;
+		anchors.topMargin: 6;
 
 		spacing: 6;
 		focus: true;
 
-		visible: true;
-
-		BodyText {
-			width: gameOverColumn.width;
-			height: 30;
-
-			horizontalAlignment: Text.AlignHCenter;
-			verticalAlignment: Text.AlignVCenter;
-
-			text: qsTr("Игра окончена");
-			color: colorTheme.highlightPanelColor;
-		}
-
 		MenuItem {
 			id: exitGame;
 
-			width: gameOverColumn.width;
-			height: 30;
-
-			focus: true;
 			menuText: "Поиграть еще";
 
-			onSelectPressed: {
-				gameOverRect.visible = false;
-			}
+			onSelectPressed: { gameOverRect.backToGame(); }
 		}
 
 		MenuItem {
 			id: continueGame;
 
-			width: gameOverColumn.width;
-			height: 30;
-
-			focus: true;
 			menuText: "Выйти";
 
-			onSelectPressed: {
-				viewsFinder.closeApp();
-			}
+			onSelectPressed: { viewsFinder.closeApp(); }
 		}
 	}
 
