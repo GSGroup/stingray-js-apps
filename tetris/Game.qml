@@ -178,7 +178,11 @@ Rectangle{
 
 			onSetNewGame: {
 				exitMenu.visible = false;
+
 				movingTetraminos.setFocus();
+				movingTetraminos.x = game.startX;
+				movingTetraminos.y = 0;
+
 				engine.restartGame();
 			}
 		}

@@ -22,6 +22,10 @@ var pieces =[
 var canvasState = [];
 var movingBlockState = [];
 
+this.getTimerInterval = function() {
+	return dropTime / (gameConsts.getGlassHeight() - 4) / currentLevel;
+}
+
 this.initCanvas = function(model) {
 	for (var idx = 0; idx < gameConsts.getBlockNumber(); ++idx)
 	{
@@ -66,7 +70,6 @@ this.getDropTime = function() {
 
 this.initGame = function(gameViewModel, blockViewModel, nextBlockViewModel) {
 	init();
-
 	this.initCanvas(gameViewModel);
 	this.initMovingTetraminos(blockViewModel);
 	this.initNextTetraminos(nextBlockViewModel);
@@ -74,19 +77,38 @@ this.initGame = function(gameViewModel, blockViewModel, nextBlockViewModel) {
 
 this.nextStep = function(blockViewModel, nextBlockViewModel) {
 	setProperties();
-
 	this.updateMovingTetraminos(blockViewModel);
 	this.updateNextTetraminos(nextBlockViewModel);
 }
 
 this.updateMovingTetraminos = function(model) {
-	for (var bit = 0x8000, indexBlock = 0; bit > 0; bit = bit >> 1 , ++indexBlock)
+	for (var bit = 0x8000, indexBlock = 0; bit > 0; bit = bit >> 1, ++indexBlock)
 	{
 		var value = pieces[currentBlockViewIndex][currentRotationIndex] & bit;
 		model.set(indexBlock, { value: value, colorIndex: currentColorIndex });
 		movingBlockState[indexBlock].value = value;
 		movingBlockState[indexBlock].colorIndex = currentColorIndex;
 	}
+}
+
+function updateBlockState() {
+	for (var bit = 0x8000, indexBlock = 0; bit > 0; bit = bit >> 1, ++indexBlock) {
+		movingBlockState[indexBlock].value =  pieces[currentBlockViewIndex][currentRotationIndex] & bit;
+		movingBlockState[indexBlock].colorIndex = currentColorIndex;
+
+		++indexBlock;
+	}
+}
+
+this.updateBlockModel = function(model) {
+	for (var idx = 0; idx < 16; ++idx) {
+		model.set(idx, { value: movingBlockState[idx].value, colorIndex: movingBlockState[idx].colorIndex });
+	}
+}
+
+this.updateMovingTetraminos = function(model) {
+	updateBlockState()
+	this.updateBlockModel(model);
 }
 
 this.updateNextTetraminos = function(model) {
@@ -117,8 +139,18 @@ this.clearCanvas = function(model) {
 this.makeBlockPartOfCanvas = function(model) {
 }
 
-this.tryRotate = function() {
-	return true;
+this.tryRotate = function(x, y, model) {
+	var rotationIndex = currentRotationIndex;
+	currentRotationIndex = (currentRotationIndex === 3 ? 0 : currentRotationIndex + 1);
+	updateBlockState();
+	if (!this.checkColllisions(x,y)) {
+		this.updateBlockModel(model);
+		this.updateProperties(x, y, model)
+	}
+	else {
+		currentRotationIndex = rotationIndex;
+		updateBlockState();
+	}
 }
 
 this.hasColllisions = function(x, y) {
@@ -139,11 +171,11 @@ this.updateProperties = function(x, y, model) {
 
 		if ( (blockX < 0 || blockX >= gameConsts.getGameWidth() || blockY >= gameConsts.getGameHeight())) {
 			movingBlockState[k].value = -1;
-			model.set(k, { value: -1, backColor: colorTheme.globalBackgroundColor });
+			model.set(k, { value: -1 });
 		}
 		else if (movingBlockState[k].value === -1){
 			movingBlockState[k].value = 0;
-			model.set(k, { value: 0, backColor: colorTheme.backgroundColor });
+			model.set(k, { value: 0 });
 		}
 	}
 }
