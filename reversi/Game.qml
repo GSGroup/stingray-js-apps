@@ -194,7 +194,6 @@ Rectangle {
 			{
 				if (!engine.NextMove(!game.playerWhite, true, gameView.model)) //no next move for ai also, game over
 				{
-					log ("GAMEOVER");
 					var whiteIsWinner = game.whiteCounter > game.blackCounter;					
 					if(whiteIsWinner)
 					{
@@ -412,7 +411,6 @@ Rectangle {
 				return true;
 		}
 
-		log("key: " +  key);
 		if (key == "Select")
 		{
 			if (aiMoveTimer.running) //ai is "thinking"
