@@ -6,7 +6,7 @@ Rectangle {
 	width: gameConsts.getBlockSize();
 	height: gameConsts.getBlockSize();
 
-	color: model.backColor;
+	color: model.value === -1 ? colorTheme.globalBackgroundColor : colorTheme.backgroundColor;
 
 	Rectangle {
 		id: innerRect;
