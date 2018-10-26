@@ -345,6 +345,9 @@ Rectangle {
 
 		if (game.multiplayer)
 		{
+			if (key != "Select")
+				return true;
+
 			if (engine.MakeMove(Math.floor(gameView.currentIndex / 8), gameView.currentIndex % 8, game.playerWhite, false) <= 0)
 				return true;
 
