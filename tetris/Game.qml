@@ -2,9 +2,6 @@ import "LevelMenu.qml";
 import "ExitMenu.qml";
 import "GameOverMenu.qml";
 import "PauseRect.qml";
-import "MenuItem.qml";
-
-import "LevelDelegate.qml";
 import "ItemDelegate.qml";
 
 import "engine.js" as engine;
@@ -24,12 +21,13 @@ Rectangle{
 
 		property int space: 6;
 		property int stepSize: gameConsts.getBlockSize();
+		property int currentLevel: 1;
 		property int startX: gameConsts.getGameWidth() / 2 - gameConsts.getBlockSize() * 2;
 
 		width: gameConsts.getGameWidth();
 		height: gameConsts.getGameHeight();
 
-		anchors.centerIn: mainWindow;
+		anchors.centerIn: mainScreen;
 
 		color: colorTheme.backgroundColor;
 		focus: true;
@@ -43,17 +41,13 @@ Rectangle{
 
 			cellWidth: gameConsts.getBlockSize();
 			cellHeight: gameConsts.getBlockSize();
-			orientation: GridView.Vertical;
+			orientation: Vertical;
 
-			ListModel {
-				id: gameCanvasModel;
-
+			model: ListModel {
 				property int value;
 				property int colorIndex;
 				property string backColor;
 			}
-
-			model: gameCanvasModel;
 			delegate: ItemDelegate { }
 		}
 
@@ -62,6 +56,9 @@ Rectangle{
 
 			x: game.startX;
 			y: 0;
+
+			width: gameConsts.getBlockSize() * 4;
+			height: gameConsts.getBlockSize() * 4;
 
 			GridView {
 				id: blockView;
@@ -73,15 +70,11 @@ Rectangle{
 				cellWidth: gameConsts.getBlockSize();
 				cellHeight: gameConsts.getBlockSize();
 
-				ListModel {
-					id: movingBlockModel;
-
+				model: ListModel {
 					property int value;
 					property int colorIndex;
 					property string backColor;
 				}
-
-				model: movingBlockModel;
 				delegate: ItemDelegate { }
 			}
 
@@ -89,31 +82,35 @@ Rectangle{
 				var directionX = 0;
 				var directionY = 0;
 
-				switch (key) {
-				case 'Right':
-					directionX = 1;
-					directionY = 0;
-					break;
-				case 'Left':
-					directionX = -1;
-					directionY = 0;
-					break;
-				case 'Down':
-					directionX = 0;
-					directionY = 1;
-					break;
-				case 'Up':
-					if (engine.tryRotate()) {
-						engine.rotate();
-						engine.updateBlockView(blockView.model);
-					}
-					return true;
-				default: return false;
+				switch (key)
+				{
+					case 'Right':
+						directionX = 1;
+						directionY = 0;
+						break;
+					case 'Left':
+						directionX = -1;
+						directionY = 0;
+						break;
+					case 'Down':
+						directionX = 0;
+						directionY = 1;
+						break;
+					case 'Up':
+						if (engine.tryRotate())
+						{
+							engine.rotate();
+							engine.updateBlockView(blockView.model);
+						}
+						return true;
+					default: return false;
 				}
-
-				if (!engine.checkColllisions(movingTetraminos.x + directionX * game.stepSize, movingTetraminos.y + directionY * game.stepSize)) {
-					movingTetraminos.x += directionY * game.stepSize;
-					movingTetraminos.y += directionX * game.stepSize;
+				var stepX = directionX * game.stepSize;
+				var stepY = directionY * game.stepSize;
+				if (!engine.hasColllisions(movingTetraminos.x + stepX, movingTetraminos.y + stepY))
+				{
+					movingTetraminos.x += stepX;
+					movingTetraminos.y += stepY;
 					return true;
 				}
 			}
@@ -122,21 +119,20 @@ Rectangle{
 		Timer {
 			id: animTimer;
 
-			interval: engine.getTimerInterval();
+			interval: engine.getDropTime() / (gameConsts.getGlassHeight() - 4) / game.currentLevel;
 			running: !(exitMenu.visible || levelMenu.visible || pauseMenu.visible || gameOverMenu.visible);
 			repeat: true;
 
 			onTriggered: {
-				if (!engine.checkColllisions(movingTetraminos.x, movingTetraminos.y + game.stepSize)) {
+				if (!engine.hasColllisions(movingTetraminos.x, movingTetraminos.y + game.stepSize))
+				{
 					movingTetraminos.y += game.stepSize;
 				}
-				else {
+				else
+				{
 					engine.nextStep(blockView.model, nextBlockView.model);
-
 					movingTetraminos.x = game.startX;
 					movingTetraminos.y = 0;
-
-					animTimer.restart();
 				}
 			}
 		}
@@ -173,15 +169,11 @@ Rectangle{
 					cellWidth: gameConsts.getBlockSize();
 					cellHeight: gameConsts.getBlockSize();
 
-					ListModel {
-						id: nextBlockModel;
-
+					model: ListModel {
 						property int value;
 						property int colorIndex;
 						property string backColor;
 					}
-
-					model: nextBlockModel;
 					delegate: ItemDelegate { }
 				}
 			}
@@ -225,11 +217,11 @@ Rectangle{
 				exitMenu.visible = false;
 				movingTetraminos.setFocus();
 				engine.restartGame();
-				animTimer.restart();
 			}
 
 			onKeyPressed: {
-				if (key === "8" || key === "7" || key === "6") {
+				if (key === "8" || key === "7" || key === "6")
+				{
 					return true;
 				}
 			}
@@ -243,15 +235,16 @@ Rectangle{
 
 			anchors.centerIn: game;
 
-			onKeyPressed: {
-				if (key === "8" || key === "7") {
-					return true;
-				}
+			onBackToGame: {
+				gameOverMenu.visible = false;
+				movingTetraminos.setFocus();
 			}
 
-			onVisibleChanged: {
-				if(!visible)
-					movingTetraminos.setFocus();
+			onKeyPressed: {
+				if (key === "8" || key === "7")
+				{
+					return true;
+				}
 			}
 		}
 
@@ -263,7 +256,8 @@ Rectangle{
 
 			anchors.centerIn: game;
 
-			onVisibleChanged: {
+			onBackToGame: {
+				levelMenu.visible = false;
 				movingTetraminos.setFocus();
 			}
 		}
@@ -278,30 +272,32 @@ Rectangle{
 		}
 
 		onKeyPressed: {
-			if (key === "Select") {
+			if (key === "Select")
+			{
 				exitMenu.show();
 				return true;
 			}
 
-			if (key === "8") {
+			if (key === "8")
+			{
 				pauseMenu.show();
 				return true;
 			}
 
-			if (key === "7") {
+			if (key === "7")
+			{
 				levelMenu.show();
 				return true;
 			}
 
-			if (key === "6") {
+			if (key === "6")
+			{
 				gameOverMenu.show();
 				return true;
 			}
 			return true;
 		}
 
-		onCompleted: {
-			engine.initGame(gameView.model, blockView.model, nextBlockView.model);
-		}
+		onCompleted: { engine.initGame(gameView.model, blockView.model, nextBlockView.model); }
 	}
 }

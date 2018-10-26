@@ -13,12 +13,7 @@ Rectangle {
 		color: colorTheme.highlightPanelColor;
 	}
 
-	on8Pressed: {
-		pauseRect.visible = false;
-		movingTetraminos.setFocus();
-
-		return true;
-	}
+	on8Pressed: { pauseRect.visible = false; }
 
 	function show() {
 		pauseRect.visible = true;
