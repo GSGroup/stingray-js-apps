@@ -1,8 +1,5 @@
 Item {
-	width: 390;
 	height: 90;
-
-	anchors.horizontalCenter: parent.horizontalCenter;
 
 	Rectangle {
 		width: parent.width;
@@ -14,11 +11,11 @@ Item {
 
 		radius: 10;
 
-		Text {
+		BigText {
 			anchors.centerIn: parent;
 
-			font: bigFont;
 			text: qsTr(model.text);
+			color: "#000";
 		}
 	}
 }
