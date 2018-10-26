@@ -13,8 +13,6 @@ Rectangle {
 	property int whiteCounter: 2;
 	property int blackCounter: 2;
 
-	anchors.fill: parent;
-
 	Rectangle {
 		id: mainMenu;
 
