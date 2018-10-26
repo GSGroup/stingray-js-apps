@@ -146,8 +146,12 @@ Rectangle {
 		z: 1;
 		style: Shadow;
 		styleColor: "#333";
+		text: game.whiteCounter == game.blackCounter ? qsTr("Game over. Draw.") :
+			game.multiplayer ? game.whiteCounter > game.blackCounter ? qsTr("Game over. White won!") : qsTr("Game over. Black won!") :
+			game.playerWhite ? game.whiteCounter > game.blackCounter ? qsTr("You won!") : qsTr("Game over.") :
+			game.whiteCounter > game.blackCounter ? qsTr("Game over.") : qsTr("You won!");
 
-		visible: false;
+		visible: game.over;
 
 		Rectangle {
 			anchors.fill: parent;
@@ -194,23 +198,9 @@ Rectangle {
 			if (!engine.NextMove(game.playerWhite, true, gameView.model)) //no next move for player
 			{
 				if (!engine.NextMove(!game.playerWhite, true, gameView.model)) //no next move for ai also, game over
-				{
-					var whiteIsWinner = game.whiteCounter > game.blackCounter;					
-					if(whiteIsWinner)
-					{
-						gameOver.text = qsTr(game.playerWhite ? "You won!" : "Game over");
-					}
-					else
-					{
-						gameOver.text = qsTr(!game.playerWhite ? "You won!" : "Game over");
-					}
 					game.over = true;
-					gameOver.visible = true;
-				}
 				else
-				{
 					this.restart(); //one more time
-				}
 			}
 		}
 	}
@@ -336,19 +326,22 @@ Rectangle {
 		}
 	}
 
-	onBackPressed: {
-		if (mainMenu.visible)
-			viewsFinder.closeApp();
-		else
-			mainMenu.visible = true;
-
-		return true;
-	}
-
 	onKeyPressed: {
 		if (game.over)
 		{
-			game.startGame();
+			if (key == "Select" || key == "Back")
+				game.finishGame();
+
+			return true;
+		}
+
+		if (key == "Back")
+		{
+			if (mainMenu.visible)
+				viewsFinder.closeApp();
+			else
+				mainMenu.visible = true;
+
 			return true;
 		}
 
@@ -364,26 +357,9 @@ Rectangle {
 			if (!engine.NextMove(game.playerWhite, true, gameView.model)) // no next move for current player
 			{
 				if (!engine.NextMove(!game.playerWhite, true, gameView.model)) // no next move for other player, too. Game over
-				{
-					if(game.whiteCounter > game.blackCounter)
-					{
-						gameOver.text = qsTr("Game over. White won!");
-					}
-					else if (game.whiteCounter < game.blackCounter)
-					{
-						gameOver.text = qsTr("Game over. Black won!");
-					}
-					else
-					{
-						gameOver.text = qsTr("Game over. Draw.");
-					}
 					game.over = true;
-					gameOver.visible = true;
-				}
 				else
-				{
 					game.playerWhite = !game.playerWhite;	//skip move
-				}
 			}
 
 			return true;
@@ -439,8 +415,15 @@ Rectangle {
 		engine.Reset(gameView.model);
 		game.update();
 		mainMenu.visible = false;
-		gameOver.visible = false;
 		game.over = false;
+	}
+
+	function finishGame() {
+		game.over = false;
+		menuList.model.remove(2);
+		game.started = false;
+		mainMenu.visible = true;
+		engine.Reset(gameView.model);
 	}
 
 	function update() {
