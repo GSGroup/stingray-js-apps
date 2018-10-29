@@ -3,9 +3,8 @@ import "MenuItem.qml";
 Rectangle {
 	id: gameOverRect;
 
-	signal backToGame();
+	signal setNewGame();
 
-	focus: true;
 	color: colorTheme.backgroundColor;
 
 	visible: false;
@@ -39,15 +38,15 @@ Rectangle {
 		focus: true;
 
 		MenuItem {
-			id: exitGame;
+			id: newGame;
 
 			menuText: "Поиграть еще";
 
-			onSelectPressed: { gameOverRect.backToGame(); }
+			onSelectPressed: { gameOverRect.setNewGame(); }
 		}
 
 		MenuItem {
-			id: continueGame;
+			id: exitGame;
 
 			menuText: "Выйти";
 

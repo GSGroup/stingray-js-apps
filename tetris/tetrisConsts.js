@@ -28,6 +28,14 @@ this.getGameHeight = function() {
 	return gameHeight;
 }
 
+this.getGlassWidth = function() {
+	return glassWidth;
+}
+
+this.getGlassHeight = function() {
+	return glassHeight;
+}
+
 this.getBlockSize = function() {
 	return blockSize;
 }

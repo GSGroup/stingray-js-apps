@@ -5,6 +5,7 @@ Rectangle {
 	id: levelRect;
 
 	signal backToGame();
+	signal levelChanged(level);
 
 	focus: true;
 	color: colorTheme.backgroundColor;
@@ -53,14 +54,7 @@ Rectangle {
 		}
 		delegate: LevelDelegate { }
 
-		onSelectPressed: { levelRect.backToGame(); }
-
-		onKeyPressed: {
-			if (key === "8" || key === "6")
-			{
-				return true;
-			}
-		}
+		onSelectPressed: { levelRect.levelChanged(levelGrid.currentIndex + 1); }
 	}
 
 	function show() {
