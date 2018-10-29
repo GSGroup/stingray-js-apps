@@ -1,6 +1,8 @@
 Rectangle {
 	id: pauseRect;
 
+	signal continueGame();
+
 	focus: true;
 	color: colorTheme.backgroundColor;
 
@@ -13,7 +15,7 @@ Rectangle {
 		color: colorTheme.highlightPanelColor;
 	}
 
-	on8Pressed: { pauseRect.visible = false; }
+	onUpPressed: { pauseRect.continueGame(); }
 
 	function show() {
 		pauseRect.visible = true;

@@ -6,7 +6,6 @@ Rectangle {
 	signal setNewGame();
 	signal backToGame();
 
-	focus: true;
 	color: colorTheme.backgroundColor;
 
 	visible: false;

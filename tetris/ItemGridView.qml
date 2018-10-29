@@ -9,7 +9,6 @@ GridView {
 	model: ListModel {
 		property int value;
 		property int colorIndex;
-		property string backColor;
 	}
 	delegate: ItemDelegate { }
 }

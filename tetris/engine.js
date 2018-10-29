@@ -6,8 +6,9 @@ var currentRotationIndex;
 var nextRotationIndex;
 var nextColorIndex;
 var currentColorIndex;
-var dropTime;
 var currentLevel;
+var gameScore;
+var numLines;
 
 var pieces =[
 	[0x44C0, 0x8E00, 0x6440, 0x0E20],
@@ -22,15 +23,19 @@ var pieces =[
 var canvasState = [];
 var movingBlockState = [];
 
-this.getTimerInterval = function() {
-	return dropTime / (gameConsts.getGlassHeight() - 4) / currentLevel;
+this.getCurrentLevel = function() {
+	return currentLevel;
+}
+
+this.getGameScore = function() {
+	return gameScore;
 }
 
 this.initCanvas = function(model) {
 	for (var idx = 0; idx < gameConsts.getBlockNumber(); ++idx)
 	{
-		model.append({ value: 0, colorIndex: 0, backColor: colorTheme.backgroundColor });
-		canvasState.push({ value: model.get(idx).value, colorIndex: model.get(idx).value });
+		model.append({ value: 0, colorIndex: 0 });
+		canvasState.push({ value: 0, colorIndex: 0 });
 	}
 }
 
@@ -38,7 +43,7 @@ this.initMovingTetraminos = function(model) {
 	for (var bit = 0x8000; bit > 0; bit = bit >> 1)
 	{
 		var value = pieces[currentBlockViewIndex][currentRotationIndex] & bit;
-		model.append({ value: value, colorIndex: currentColorIndex, backColor: colorTheme.backgroundColor });
+		model.append({ value: value, colorIndex: currentColorIndex });
 		movingBlockState.push({ value: value, colorIndex: currentColorIndex });
 	}
 }
@@ -47,7 +52,7 @@ this.initNextTetraminos = function(model) {
 	for (var bit = 0x8000; bit > 0; bit = bit >> 1)
 	{
 		var value = pieces[nextBlockViewIndex][nextRotationIndex] & bit;
-		model.append({ value: value, colorIndex: 0, backColor: colorTheme.globalBackgroundColor });
+		model.append({ value: value, colorIndex: 0 });
 	}
 }
 
@@ -60,12 +65,14 @@ function init() {
 	nextBlockViewIndex = randomBlockViewIndex();
 	nextColorIndex = gameConsts.randomColorIndex();
 
-	dropTime = 16000;
 	currentLevel = 1;
+	gameScore = 0;
+	numLines = currentLevel * 10;
 }
 
-this.getDropTime = function() {
-	return dropTime;
+this.setCurrentLevel = function(level) {
+	currentLevel = level;
+	numLines = numLines % 10 + level * 10;
 }
 
 this.initGame = function(gameViewModel, blockViewModel, nextBlockViewModel) {
@@ -82,33 +89,23 @@ this.nextStep = function(blockViewModel, nextBlockViewModel) {
 }
 
 this.updateMovingTetraminos = function(model) {
-	for (var bit = 0x8000, indexBlock = 0; bit > 0; bit = bit >> 1, ++indexBlock)
-	{
-		var value = pieces[currentBlockViewIndex][currentRotationIndex] & bit;
-		model.set(indexBlock, { value: value, colorIndex: currentColorIndex });
-		movingBlockState[indexBlock].value = value;
-		movingBlockState[indexBlock].colorIndex = currentColorIndex;
-	}
+	updateBlockState()
+	this.updateBlockModel(model);
 }
 
 function updateBlockState() {
-	for (var bit = 0x8000, indexBlock = 0; bit > 0; bit = bit >> 1, ++indexBlock) {
+	for (var bit = 0x8000, indexBlock = 0; bit > 0; bit = bit >> 1, ++indexBlock)
+	{
 		movingBlockState[indexBlock].value =  pieces[currentBlockViewIndex][currentRotationIndex] & bit;
 		movingBlockState[indexBlock].colorIndex = currentColorIndex;
-
-		++indexBlock;
 	}
 }
 
 this.updateBlockModel = function(model) {
-	for (var idx = 0; idx < 16; ++idx) {
+	for (var idx = 0; idx < 16; ++idx)
+	{
 		model.set(idx, { value: movingBlockState[idx].value, colorIndex: movingBlockState[idx].colorIndex });
 	}
-}
-
-this.updateMovingTetraminos = function(model) {
-	updateBlockState()
-	this.updateBlockModel(model);
 }
 
 this.updateNextTetraminos = function(model) {
@@ -136,18 +133,108 @@ this.clearCanvas = function(model) {
 	}
 }
 
-this.makeBlockPartOfCanvas = function(model) {
+this.parkBlock = function(x, y) {
+	for (var k = 0; k < 16; ++k)
+	{
+		var blockX = x + (k % 4) * gameConsts.getBlockSize() ;
+		var blockY = y + Math.floor(k / 4) * gameConsts.getBlockSize();
+
+		if (movingBlockState[k].value > 0)
+		{
+			canvasState[index(blockX, blockY)].value = movingBlockState[k].value;
+			canvasState[index(blockX, blockY)].colorIndex = movingBlockState[k].colorIndex;
+		}
+	}
+
+	checkLines();
+}
+
+this.updateCanvasModel = function(model) {
+	for(var idx = 0; idx < gameConsts.getBlockNumber(); ++idx)
+	{
+		model.set(idx,{ value: canvasState[idx].value, colorIndex: canvasState[idx].colorIndex });
+	}
+}
+
+function removeLine(idx) {
+	for (var i = idx; i >= gameConsts.getGlassWidth(); --i)
+	{
+		canvasState[i].value = canvasState[i - gameConsts.getGlassWidth()].value;
+		canvasState[i].colorIndex = canvasState[i - gameConsts.getGlassWidth()].colorIndex;
+	}
+
+	for ( i = 0; i < gameConsts.getGlassWidth(); ++i)
+	{
+		canvasState[i].value = 0;
+		canvasState[i].colorIndex = 0;
+	}
+}
+
+function calcScores(compeletedRowsNumber) {
+	if (compeletedRowsNumber === 1)
+	{
+		gameScore += 100 * currentLevel;
+	}
+	else if (compeletedRowsNumber === 2)
+	{
+		gameScore += 300 * currentLevel;
+	}
+	else if (compeletedRowsNumber === 3)
+	{
+		gameScore += 700 * currentLevel;
+	}
+	else if (compeletedRowsNumber === 4)
+	{
+		gameScore += 1500 * currentLevel;
+	}
+
+	numLines += compeletedRowsNumber;
+	currentLevel = Math.floor(numLines / 10);
+}
+
+function checkLines() {
+	var completedRowsCounter = 0;
+	var checkAgain;
+	var blockCounter;
+
+	do
+	{
+		checkAgain = false;
+		blockCounter = 0;
+		for (var idx = 0; idx < gameConsts.getBlockNumber(); ++idx)
+		{
+			if(canvasState[idx].value > 0)
+			{
+				++blockCounter;
+			}
+			if ((idx + 1) % gameConsts.getGlassWidth() == 0)
+			{
+				if((blockCounter === gameConsts.getGlassWidth()))
+				{
+					removeLine(idx);
+					checkAgain = true;
+					++completedRowsCounter;
+					break;
+				}
+				blockCounter = 0;
+			}
+		}
+	} while (checkAgain === true);
+
+	calcScores(completedRowsCounter);
 }
 
 this.tryRotate = function(x, y, model) {
 	var rotationIndex = currentRotationIndex;
 	currentRotationIndex = (currentRotationIndex === 3 ? 0 : currentRotationIndex + 1);
 	updateBlockState();
-	if (!this.checkColllisions(x,y)) {
+	if (!this.hasColllisions(x,y))
+	{
 		this.updateBlockModel(model);
 		this.updateProperties(x, y, model)
 	}
-	else {
+	else
+	{
 		currentRotationIndex = rotationIndex;
 		updateBlockState();
 	}
@@ -162,18 +249,18 @@ this.hasColllisions = function(x, y) {
 }
 
 this.updateProperties = function(x, y, model) {
-	var blockX;
-	var blockY;
+	for (var k = 0; k < 16; ++k)
+	{
+		var blockX = x + (k % 4) * gameConsts.getBlockSize() ;
+		var blockY = y + Math.floor(k / 4) * gameConsts.getBlockSize();
 
-	for (var k = 0; k < 16; ++k) {
-		blockX = x + (k % 4) * gameConsts.getBlockSize() ;
-		blockY = y + Math.floor(k / 4) * gameConsts.getBlockSize();
-
-		if ( (blockX < 0 || blockX >= gameConsts.getGameWidth() || blockY >= gameConsts.getGameHeight())) {
+		if ((blockX < 0 || blockX >= gameConsts.getGameWidth() || blockY >= gameConsts.getGameHeight()))
+		{
 			movingBlockState[k].value = -1;
 			model.set(k, { value: -1 });
 		}
-		else if (movingBlockState[k].value === -1){
+		else if (movingBlockState[k].value === -1)
+		{
 			movingBlockState[k].value = 0;
 			model.set(k, { value: 0 });
 		}
@@ -181,14 +268,13 @@ this.updateProperties = function(x, y, model) {
 }
 
 function hasBorderCollisions(x, y) {
-	var blockX;
-	var blockY;
+	for (var k = 0; k < 16; ++k)
+	{
+		var blockX = x + (k % 4) * gameConsts.getBlockSize() ;
+		var blockY = y + Math.floor(k / 4) * gameConsts.getBlockSize();
 
-	for (var k = 0; k < 16; ++k) {
-		blockX = x + (k % 4) * gameConsts.getBlockSize() ;
-		blockY = y + Math.floor(k / 4) * gameConsts.getBlockSize();
-
-		if ( (blockX < 0 || blockX >= gameConsts.getGameWidth() || blockY >= gameConsts.getGameHeight()) && movingBlockState[k].value > 0) {
+		if ((blockX < 0 || blockX >= gameConsts.getGameWidth() || blockY >= gameConsts.getGameHeight()) && movingBlockState[k].value > 0)
+		{
 			return true;
 		}
 	}
@@ -196,8 +282,17 @@ function hasBorderCollisions(x, y) {
 }
 
 function hasCanvasCollisions(x, y) {
-	var result = false;
-	return result;
+	for (var k = 0; k < 16; ++k)
+	{
+		var blockX = x + (k % 4) * gameConsts.getBlockSize() ;
+		var blockY = y + Math.floor(k / 4) * gameConsts.getBlockSize();
+
+		if (movingBlockState[k].value > 0 && canvasState[index(blockX, blockY)].value > 0)
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
 function randomBlockViewIndex() {
@@ -209,11 +304,7 @@ function randomRotationIndex() {
 }
 
 function index(x, y) {
-	return (Math.floor(y / gameConsts.getBlockSize()) * gameConsts.getGlassWidth() + Math.floor(x / gameConsts.getBlockSize()));
-}
-
-this.rotate = function() {
-	currentRotationIndex = (currentRotationIndex === 3 ? 0 : currentRotationIndex + 1);
+	return Math.floor(y / gameConsts.getBlockSize()) * gameConsts.getGlassWidth() + Math.floor(x / gameConsts.getBlockSize());
 }
 
 function setProperties() {

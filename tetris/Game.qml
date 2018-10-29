@@ -21,8 +21,10 @@ Rectangle{
 
 		property int space: 6;
 		property int stepSize: gameConsts.getBlockSize();
-		property int currentLevel: 1;
 		property int startX: gameConsts.getGameWidth() / 2 - gameConsts.getBlockSize() * 2;
+		property int currentLevel: 1;
+		property int gameScore: 0;
+		property int dropTime: 16000;
 
 		width: gameConsts.getGameWidth();
 		height: gameConsts.getGameHeight();
@@ -49,6 +51,8 @@ Rectangle{
 			width: gameConsts.getBlockSize() * 4;
 			height: gameConsts.getBlockSize() * 4;
 
+			focus: true;
+
 			ItemGridView {
 				id: blockView;
 
@@ -56,13 +60,7 @@ Rectangle{
 				height: gameConsts.getBlockSize() * 4;
 			}
 
-			onUpPressed: {
-				if (engine.tryRotate())
-				{
-					engine.rotate();
-					engine.updateBlockView(blockView.model);
-				}
-			}
+			onSelectPressed: { engine.tryRotate(movingTetraminos.x, movingTetraminos.y, blockView.model); }
 
 			onRightPressed: { this.move(1, 0); }
 
@@ -85,7 +83,7 @@ Rectangle{
 		Timer {
 			id: animTimer;
 
-			interval: engine.getDropTime() / (gameConsts.getGlassHeight() - 4) / game.currentLevel;
+			interval: game.dropTime / (gameConsts.getGlassHeight() - 4) / game.currentLevel;
 			running: !(exitMenu.visible || levelMenu.visible || pauseMenu.visible || gameOverMenu.visible);
 			repeat: true;
 
@@ -97,9 +95,21 @@ Rectangle{
 				}
 				else
 				{
+					engine.parkBlock(movingTetraminos.x, movingTetraminos.y)
+					game.updateInfo();
+					engine.updateCanvasModel(gameView.model);
 					engine.nextStep(blockView.model, nextBlockView.model);
-					movingTetraminos.x = game.startX;
-					movingTetraminos.y = 0;
+
+					if(!engine.hasColllisions(game.startX, 0))
+					{
+						movingTetraminos.x = game.startX;
+						movingTetraminos.y = 0;
+					}
+					else
+					{
+						movingTetraminos.visible = false;
+						gameOverMenu.show();
+					}
 				}
 			}
 		}
@@ -135,23 +145,23 @@ Rectangle{
 			}
 
 			SmallCaptionText {
-				id: levelText;
+				id: levelRect;
 
 				anchors.top: nextTetraminos.bottom;
 				anchors.leftMargin: gameConsts.getBlockSize();
 
-				text: qsTr("Уровень");
+				text: qsTr("Уровень ") + game.currentLevel;
 				color: colorTheme.highlightPanelColor;
 			}
 
 			SmallCaptionText {
 				id: scoreRect;
 
-				anchors.top: levelText.bottom;
+				anchors.top: levelRect.bottom;
 				anchors.topMargin: gameConsts.getBlockSize();
 				anchors.leftMargin: gameConsts.getBlockSize();
 
-				text: qsTr("Счет");
+				text: qsTr("Счет    ") + game.gameScore;
 				color: colorTheme.highlightPanelColor;
 			}
 		}
@@ -164,13 +174,6 @@ Rectangle{
 
 			anchors.centerIn: game;
 
-			onKeyPressed: {
-				if (key === "8" || key === "7" || key === "6")
-				{
-					return true;
-				}
-			}
-
 			onBackToGame: {
 				exitMenu.visible = false;
 				movingTetraminos.setFocus();
@@ -178,12 +181,7 @@ Rectangle{
 
 			onSetNewGame: {
 				exitMenu.visible = false;
-
-				movingTetraminos.setFocus();
-				movingTetraminos.x = game.startX;
-				movingTetraminos.y = 0;
-
-				engine.restartGame();
+				game.setNewGame();
 			}
 		}
 
@@ -195,16 +193,9 @@ Rectangle{
 
 			anchors.centerIn: game;
 
-			onKeyPressed: {
-				if (key === "8" || key === "7")
-				{
-					return true;
-				}
-			}
-
-			onBackToGame: {
+			onSetNewGame: {
 				gameOverMenu.visible = false;
-				movingTetraminos.setFocus();
+				game.setNewGame();
 			}
 		}
 
@@ -216,9 +207,11 @@ Rectangle{
 
 			anchors.centerIn: game;
 
-			onBackToGame: {
-				levelMenu.visible = false;
+			onLevelChanged: {
+				levelRect.visible = false;
 				movingTetraminos.setFocus();
+				game.currentLevel = level;
+				engine.setCurrentLevel(game.currentLevel);
 			}
 		}
 
@@ -229,16 +222,42 @@ Rectangle{
 			height: gameConsts.getBlockSize() * 6 + game.space * 4;
 
 			anchors.centerIn: game;
+
+			onContinueGame: {
+				pauseRect.visible = false;
+				movingTetraminos.setFocus();
+			}
 		}
 
-		onSelectPressed: { exitMenu.show(); }
+		function updateInfo() {
+			game.currentLevel = engine.getCurrentLevel();
+			game.gameScore = engine.getGameScore();
+		}
 
-		on8Pressed: { pauseMenu.show(); }
+		function setNewGame() {
+			movingTetraminos.setFocus();
+			movingTetraminos.visible = true;
+			movingTetraminos.x = game.startX;
+			movingTetraminos.y = 0;
+
+			engine.restartGame(gameView.model, blockView.model, nextBlockView.model);
+			game.currentLevel = 1;
+			game.gameScore = 0;
+		}
+
+		onUpPressed: { pauseMenu.show(); }
+
+		onMenuPressed: { exitMenu.show(); }
+
+		onExitPressed: { exitMenu.show(); }
+
+		onLastPressed: { exitMenu.show(); }
 
 		on7Pressed: { levelMenu.show(); }
 
-		on6Pressed: { gameOverMenu.show(); }
-
-		onCompleted: { engine.initGame(gameView.model, blockView.model, nextBlockView.model); }
+		onCompleted: {
+			engine.initGame(gameView.model, blockView.model, nextBlockView.model);
+			movingTetraminos.setFocus();
+		}
 	}
 }
