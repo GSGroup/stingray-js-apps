@@ -2,7 +2,7 @@ import "LevelMenu.qml";
 import "ExitMenu.qml";
 import "GameOverMenu.qml";
 import "PauseRect.qml";
-import "ItemDelegate.qml";
+import "ItemGridView.qml";
 
 import "engine.js" as engine;
 import "tetrisConsts.js" as gameConsts;
@@ -33,22 +33,11 @@ Rectangle{
 		focus: true;
 		radius: 5;
 
-		GridView {
+		ItemGridView {
 			id: gameView;
 
 			width: game.width;
 			height: game.height;
-
-			cellWidth: gameConsts.getBlockSize();
-			cellHeight: gameConsts.getBlockSize();
-			orientation: Vertical;
-
-			model: ListModel {
-				property int value;
-				property int colorIndex;
-				property string backColor;
-			}
-			delegate: ItemDelegate { }
 		}
 
 		Item {
@@ -60,25 +49,14 @@ Rectangle{
 			width: gameConsts.getBlockSize() * 4;
 			height: gameConsts.getBlockSize() * 4;
 
-			GridView {
+			ItemGridView {
 				id: blockView;
 
 				width: gameConsts.getBlockSize() * 4;
 				height: gameConsts.getBlockSize() * 4;
-
-				orientation: Vertical;
-				cellWidth: gameConsts.getBlockSize();
-				cellHeight: gameConsts.getBlockSize();
-
-				model: ListModel {
-					property int value;
-					property int colorIndex;
-					property string backColor;
-				}
-				delegate: ItemDelegate { }
 			}
 
-			onUpPressed:{
+			onUpPressed: {
 				if (engine.tryRotate())
 				{
 					engine.rotate();
@@ -86,34 +64,19 @@ Rectangle{
 				}
 			}
 
-			onKeyPressed: {
-				var directionX = 0;
-				var directionY = 0;
+			onRightPressed: { this.move(1, 0); }
 
-				switch (key)
-				{
-					case 'Right':
-						directionX = 1;
-						directionY = 0;
-						break;
-					case 'Left':
-						directionX = -1;
-						directionY = 0;
-						break;
-					case 'Down':
-						directionX = 0;
-						directionY = 1;
-						break;
-					default: return false;
-				}
+			onLeftPressed: { this.move(-1, 0); }
 
+			onDownPressed: { this.move(0, 1); }
+
+			function move(directionX, directionY) {
 				var stepX = directionX * game.stepSize;
 				var stepY = directionY * game.stepSize;
 				if (!engine.hasColllisions(movingTetraminos.x + stepX, movingTetraminos.y + stepY))
 				{
 					movingTetraminos.x += stepX;
 					movingTetraminos.y += stepY;
-					return true;
 				}
 			}
 		}
@@ -158,7 +121,7 @@ Rectangle{
 
 				color: colorTheme.globalBackgroundColor;
 
-				GridView {
+				ItemGridView {
 					id: nextBlockView;
 
 					x: gameConsts.getBlockSize();
@@ -166,17 +129,6 @@ Rectangle{
 
 					width: gameConsts.getBlockSize() * 4;
 					height: gameConsts.getBlockSize() * 4;
-
-					orientation: Vertical;
-					cellWidth: gameConsts.getBlockSize();
-					cellHeight: gameConsts.getBlockSize();
-
-					model: ListModel {
-						property int value;
-						property int colorIndex;
-						property string backColor;
-					}
-					delegate: ItemDelegate { }
 				}
 			}
 
@@ -210,6 +162,13 @@ Rectangle{
 
 			anchors.centerIn: game;
 
+			onKeyPressed: {
+				if (key === "8" || key === "7" || key === "6")
+				{
+					return true;
+				}
+			}
+
 			onBackToGame: {
 				exitMenu.visible = false;
 				movingTetraminos.setFocus();
@@ -219,13 +178,6 @@ Rectangle{
 				exitMenu.visible = false;
 				movingTetraminos.setFocus();
 				engine.restartGame();
-			}
-
-			onKeyPressed: {
-				if (key === "8" || key === "7" || key === "6")
-				{
-					return true;
-				}
 			}
 		}
 
@@ -237,16 +189,16 @@ Rectangle{
 
 			anchors.centerIn: game;
 
-			onBackToGame: {
-				gameOverMenu.visible = false;
-				movingTetraminos.setFocus();
-			}
-
 			onKeyPressed: {
 				if (key === "8" || key === "7")
 				{
 					return true;
 				}
+			}
+
+			onBackToGame: {
+				gameOverMenu.visible = false;
+				movingTetraminos.setFocus();
 			}
 		}
 
@@ -273,26 +225,13 @@ Rectangle{
 			anchors.centerIn: game;
 		}
 
-		onSelectPressed: {
-			exitMenu.show();
-			return true;
-		}
+		onSelectPressed: { exitMenu.show(); }
 
-		on8Pressed: {
-			pauseMenu.show();
-			return true;;
-		}
+		on8Pressed: { pauseMenu.show(); }
 
-		on7Pressed: {
-			levelMenu.show();
-			return true;
-		}
+		on7Pressed: { levelMenu.show(); }
 
-		on6Pressed: {
-		{
-			gameOverMenu.show();
-			return true;
-		}
+		on6Pressed: { gameOverMenu.show(); }
 
 		onCompleted: { engine.initGame(gameView.model, blockView.model, nextBlockView.model); }
 	}
