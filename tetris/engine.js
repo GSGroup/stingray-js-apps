@@ -26,39 +26,35 @@ this.initCanvas = function(model) {
 	for (var idx = 0; idx < gameConsts.getBlockNumber(); ++idx)
 	{
 		model.append({ value: 0, colorIndex: 0, backColor: colorTheme.backgroundColor });
-		canvasState.push({ value: model.get(idx).value, colorIndex: model.get(idx).value});
+		canvasState.push({ value: model.get(idx).value, colorIndex: model.get(idx).value });
 	}
 }
 
 this.initMovingTetraminos = function(model) {
-	var bit;
-	var value;
-	for (bit = 0x8000; bit > 0; bit = bit >> 1)
+	for (var bit = 0x8000; bit > 0; bit = bit >> 1)
 	{
-		value = pieces[currentBlockViewIndex][currentRotationIndex] & bit;
+		var value = pieces[currentBlockViewIndex][currentRotationIndex] & bit;
 		model.append({ value: value, colorIndex: currentColorIndex, backColor: colorTheme.backgroundColor });
 		movingBlockState.push({ value: value, colorIndex: currentColorIndex });
 	}
 }
 
 this.initNextTetraminos = function(model) {
-	var bit;
-	var value;
-	for (bit = 0x8000; bit > 0; bit = bit >> 1)
+	for (var bit = 0x8000; bit > 0; bit = bit >> 1)
 	{
-		value = pieces[nextBlockViewIndex][nextRotationIndex] & bit;
+		var value = pieces[nextBlockViewIndex][nextRotationIndex] & bit;
 		model.append({ value: value, colorIndex: 0, backColor: colorTheme.globalBackgroundColor });
 	}
 }
 
 function init() {
-	currentBlockViewIndex = randomBlockView();
-	currentRotationIndex = randomRotation();
-	currentColorIndex = gameConsts.randomColor();
+	currentBlockViewIndex = randomBlockViewIndex();
+	currentRotationIndex = randomRotationIndex();
+	currentColorIndex = gameConsts.randomColorIndex();
 
-	nextRotationIndex = randomRotation();
-	nextBlockViewIndex = randomBlockView();
-	nextColorIndex = gameConsts.randomColor();
+	nextRotationIndex = randomRotationIndex();
+	nextBlockViewIndex = randomBlockViewIndex();
+	nextColorIndex = gameConsts.randomColorIndex();
 
 	dropTime = 16000;
 	currentLevel = 1;
@@ -84,33 +80,20 @@ this.nextStep = function(blockViewModel, nextBlockViewModel) {
 }
 
 this.updateMovingTetraminos = function(model) {
-	var bit;
-	var indexBlock = 0;
-	var value;
-	for (bit = 0x8000; bit > 0; bit = bit >> 1)
+	for (var bit = 0x8000, indexBlock = 0; bit > 0; bit = bit >> 1 , ++indexBlock)
 	{
-		value = pieces[currentBlockViewIndex][currentRotationIndex] & bit;
+		var value = pieces[currentBlockViewIndex][currentRotationIndex] & bit;
 		model.set(indexBlock, { value: value, colorIndex: currentColorIndex });
 		movingBlockState[indexBlock].value = value;
 		movingBlockState[indexBlock].colorIndex = currentColorIndex;
-		++indexBlock;
-	}
-
-	for (var idx = 0; idx < 16; ++idx)
-	{
-
 	}
 }
 
 this.updateNextTetraminos = function(model) {
-	var bit;
-	var indexBlock = 0;
-	var value;
-	for (bit = 0x8000; bit > 0; bit = bit >> 1)
+	for (var bit = 0x8000, indexBlock = 0; bit > 0; bit = bit >> 1, ++indexBlock)
 	{
-		value = pieces[nextBlockViewIndex][nextRotationIndex] & bit;
+		var value = pieces[nextBlockViewIndex][nextRotationIndex] & bit;
 		model.set(indexBlock, { value: value, colorIndex: nextColorIndex });
-		++indexBlock;
 	}
 }
 
@@ -123,9 +106,9 @@ this.restartGame = function(gameViewModel, blockViewModel, nextBlockViewModel) {
 }
 
 this.clearCanvas = function(model) {
-	for (var idx; idx < gameConsts.getBlockNumber(); ++i)
+	for (var idx = 0; idx < gameConsts.getBlockNumber(); ++idx)
 	{
-		model.set(idx,{ value: 0, colorIndex: 0 });
+		model.set(idx, { value: 0, colorIndex: 0 });
 		canvasState[idx].value = 0;
 		canvasState[idx].colorIndex = 0;
 	}
@@ -147,13 +130,10 @@ this.hasColllisions = function(x, y) {
 }
 
 function hasBorderCollisions(x, y) {
-	var blockX;
-	var blockY;
-
 	for (var k = 0; k < 16; ++k)
 	{
-		blockX = x + (k % 4) * gameConsts.getBlockSize() ;
-		blockY = y + Math.floor(k / 4) * gameConsts.getBlockSize();
+		var blockX = x + (k % 4) * gameConsts.getBlockSize() ;
+		var blockY = y + Math.floor(k / 4) * gameConsts.getBlockSize();
 
 		if (blockX < 0 || blockX >= gameConsts.getGameWidth() || blockY >= gameConsts.getGameHeight())
 		{
@@ -168,11 +148,11 @@ function hasCanvasCollisions(x, y) {
 	return result;
 }
 
-function randomBlockView() {
+function randomBlockViewIndex() {
 	return Math.floor(Math.random() * 7);
 }
 
-function randomRotation() {
+function randomRotationIndex() {
 	return Math.floor(Math.random() * 4);
 }
 
@@ -189,7 +169,7 @@ function setProperties() {
 	currentRotationIndex = nextRotationIndex;
 	currentColorIndex = nextColorIndex;
 
-	nextBlockViewIndex = randomBlockView();
-	nextRotationIndex = randomRotation();
-	nextColorIndex = gameConsts.randomColor();
+	nextBlockViewIndex = randomBlockViewIndex();
+	nextRotationIndex = randomRotationIndex();
+	nextColorIndex = gameConsts.randomColorIndex();
 }

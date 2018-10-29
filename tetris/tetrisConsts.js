@@ -8,7 +8,7 @@ var blockNumber = glassHeight * glassWidth;
 
 var colorCollection = [ "#CE573D", "#D151BD", "#D9B42F", "#919C11", "#366DD9" ];
 
-this.randomColor = function() {
+this.randomColorIndex = function() {
 	return Math.floor(Math.random() * colorCollection.length);
 }
 
