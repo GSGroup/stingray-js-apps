@@ -135,9 +135,10 @@ Rectangle {
 		style: Shadow;
 		styleColor: "#333";
 		text: game.whiteCounter == game.blackCounter ? qsTr("Game over. Draw.") :
-			game.multiplayer ? game.whiteCounter > game.blackCounter ? qsTr("Game over. White won!") : qsTr("Game over. Black won!") :
-			game.playerWhite ? game.whiteCounter > game.blackCounter ? qsTr("You won!") : qsTr("Game over.") :
-			game.whiteCounter > game.blackCounter ? qsTr("Game over.") : qsTr("You won!");
+			game.multiplayer && game.whiteCounter > game.blackCounter ? qsTr("Game over. White won!") :
+			game.multiplayer && game.whiteCounter < game.blackCounter ? qsTr("Game over. Black won!") :
+			game.playerWhite && game.whiteCounter > game.blackCounter || !game.playerWhite && game.whiteCounter < game.blackCounter	? "You won!" :
+			"Game over.";
 
 		visible: game.over;
 
