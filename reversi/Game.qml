@@ -148,6 +148,13 @@ Rectangle {
 
 			color: "#000c";
 		}
+
+		onSelectPressed: { game.finishGame(); }
+		onBackPressed: { game.finishGame(); }
+		onVisibleChanged: {
+			if (visible)
+				this.setFocus();
+		}
 	}
 
 	Rectangle {
@@ -172,7 +179,75 @@ Rectangle {
 
 			model: ListModel { }
 			delegate: CellDelegate { }
-		}		
+		}
+
+		onSelectPressed: {
+			if (game.multiplayer)
+			{
+				var weight = engine.MakeMove(Math.floor(gameView.currentIndex / 8), gameView.currentIndex % 8, game.playerWhite, false);
+				if (weight <= 0)
+					return true;
+
+				engine.WriteModel(gameView.model);
+				game.update(game.playerWhite, weight);
+				game.playerWhite = !game.playerWhite;
+
+				if (!engine.NextMove(game.playerWhite, true, gameView.model)) // no next move for current player
+				{
+					if (!engine.NextMove(!game.playerWhite, true, gameView.model)) // no next move for other player, too. Game over
+						game.over = true;
+					else
+						game.playerWhite = !game.playerWhite;	//skip move
+				}
+			}
+			else
+			{
+				if (aiMoveTimer.running) //ai is "thinking"
+					return true;
+
+				log("player moves into " + Math.floor(gameView.currentIndex / 8) + ", " + gameView.currentIndex % 8);
+				var weight = engine.MakeMove(Math.floor(gameView.currentIndex / 8), gameView.currentIndex % 8, game.playerWhite, false);
+				if (weight <= 0)
+					return true;
+
+				engine.WriteModel(gameView.model);
+				game.update(game.playerWhite, weight);
+				aiMoveTimer.start();
+			}
+		}
+
+		onRedPressed: {
+			if (game.multiplayer)
+				return;
+
+			if (aiMoveTimer.running) //ai is "thinking"
+				return;
+
+			var weight = engine.NextMove(game.playerWhite, false, gameView.model);
+			game.update(game.playerWhite, weight);
+			aiMoveTimer.start();
+		}
+
+		onGreenPressed: {
+			if (game.multiplayer)
+				return;
+
+			game.playerWhite = true;
+			game.startGame();
+		}
+
+		onYellowPressed: {
+			if (game.multiplayer)
+				return;
+			game.playerWhite = false;
+			game.startGame();
+		}
+
+		onBluePressed: {
+			if (game.multiplayer)
+				return;
+			game.easy = !game.easy;
+		}
 	}
 
 	Timer {
@@ -315,88 +390,11 @@ Rectangle {
 		}
 	}
 
-	onKeyPressed: {
-		if (game.over)
-		{
-			if (key == "Select" || key == "Back")
-				game.finishGame();
-
-			return true;
-		}
-
-		if (key == "Back")
-		{
-			if (mainMenu.visible)
-				viewsFinder.closeApp();
-			else
-				mainMenu.visible = true;
-
-			return true;
-		}
-
-		if (game.multiplayer)
-		{
-			if (key != "Select")
-				return true;
-			var weight = engine.MakeMove(Math.floor(gameView.currentIndex / 8), gameView.currentIndex % 8, game.playerWhite, false);
-			if (weight <= 0)
-				return true;
-
-			engine.WriteModel(gameView.model);
-			game.update(game.playerWhite, weight);
-			game.playerWhite = !game.playerWhite;
-
-			if (!engine.NextMove(game.playerWhite, true, gameView.model)) // no next move for current player
-			{
-				if (!engine.NextMove(!game.playerWhite, true, gameView.model)) // no next move for other player, too. Game over
-					game.over = true;
-				else
-					game.playerWhite = !game.playerWhite;	//skip move
-			}
-
-			return true;
-		}
-
-		switch (key)
-		{
-			case "Red":
-				if (aiMoveTimer.running) //ai is "thinking"
-					return;
-
-				var weight = engine.NextMove(game.playerWhite, false, gameView.model);
-				game.update(game.playerWhite, weight);
-				aiMoveTimer.start();
-				break;
-			case "Green":
-				game.playerWhite = true;
-				game.startGame();
-				return true;
-			case "Yellow":
-				game.playerWhite = false;
-				game.startGame();
-				return true;
-			case "Blue":
-				game.easy = !game.easy;
-				return true;
-		}
-
-		if (key == "Select")
-		{
-			if (aiMoveTimer.running) //ai is "thinking"
-				return true;
-
-			log("player moves into " + Math.floor(gameView.currentIndex / 8) + ", " + gameView.currentIndex % 8);
-			var weight = engine.MakeMove(Math.floor(gameView.currentIndex / 8), gameView.currentIndex % 8, game.playerWhite, false);
-			if (weight <= 0)
-				return true;
-
-			engine.WriteModel(gameView.model);
-			game.update(game.playerWhite, weight);
-			aiMoveTimer.start();
-
-			return true;
-		}
-		return false;
+	onBackPressed: {
+		if (mainMenu.visible)
+			viewsFinder.closeApp();
+		else
+			mainMenu.visible = true;
 	}
 
 	function startGame() {
