@@ -134,11 +134,12 @@ Rectangle {
 		z: 1;
 		style: Shadow;
 		styleColor: "#333";
-		text: game.whiteCounter == game.blackCounter ? qsTr("Game over. Draw.") :
-			game.multiplayer && game.whiteCounter > game.blackCounter ? qsTr("Game over. White won!") :
-			game.multiplayer && game.whiteCounter < game.blackCounter ? qsTr("Game over. Black won!") :
-			game.playerWhite && game.whiteCounter > game.blackCounter || !game.playerWhite && game.whiteCounter < game.blackCounter	? "You won!" :
-			"Game over.";
+		text: game.whiteCounter == game.blackCounter ? qsTr("Draw.") :
+			game.multiplayer && game.whiteCounter > game.blackCounter ? qsTr("White won!") :
+			game.multiplayer && game.whiteCounter < game.blackCounter ? qsTr("Black won!") :
+			game.playerWhite && game.whiteCounter > game.blackCounter || !game.playerWhite && game.whiteCounter < game.blackCounter
+			? "You won!"
+			: "You lose";
 
 		visible: game.over;
 
@@ -239,6 +240,7 @@ Rectangle {
 		onYellowPressed: {
 			if (game.multiplayer)
 				return;
+
 			game.playerWhite = false;
 			game.startGame();
 		}
@@ -246,6 +248,7 @@ Rectangle {
 		onBluePressed: {
 			if (game.multiplayer)
 				return;
+
 			game.easy = !game.easy;
 		}
 	}

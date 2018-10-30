@@ -67,8 +67,8 @@
     <message>
         <location filename="Game.qml" line="202"/>
         <location filename="Game.qml" line="206"/>
-        <source>Game over</source>
-        <translation>Игра окончена</translation>
+        <source>You lose</source>
+        <translation>Вы проиграли</translation>
     </message>
     <message>
         <location filename="Game.qml" line="241"/>
@@ -97,18 +97,18 @@
     </message>
     <message>
         <location filename="Game.qml" line="371"/>
-        <source>Game over. White won!</source>
-        <translation>Игра окончена. Победили белые!</translation>
+        <source>White won!</source>
+        <translation>Победили белые!</translation>
     </message>
     <message>
         <location filename="Game.qml" line="375"/>
-        <source>Game over. Black won!</source>
-        <translation>Игра окончена. Победили черные!</translation>
+        <source>Black won!</source>
+        <translation>Победили черные!</translation>
     </message>
     <message>
         <location filename="Game.qml" line="379"/>
-        <source>Game over. Draw.</source>
-        <translation>Игра окончена. Ничья.</translation>
+        <source>Draw</source>
+        <translation>Ничья</translation>
     </message>
     <message>
         <location filename="Game.qml" line="438"/>
