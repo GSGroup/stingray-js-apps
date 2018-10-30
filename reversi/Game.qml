@@ -80,12 +80,7 @@ Rectangle {
 		visible: !mainMenu.visible;
 
 		MainText {
-			text: qsTr("White");
-		}
-
-		MainText {
-			id: whiteText;
-			text: "2";
+			text: qsTr("White") + " " + game.whiteCounter;
 		}
 	}
 
@@ -98,12 +93,7 @@ Rectangle {
 		visible: !mainMenu.visible;
 
 		MainText {
-			text: qsTr("Black");
-		}
-
-		MainText {
-			id: blackText;
-			text: "2";
+			text: qsTr("Black") + " " + game.blackCounter;
 		}
 	}
 
@@ -190,8 +180,8 @@ Rectangle {
 		interval: 500;
 
 		onTriggered:  {
-			engine.NextMove(!game.playerWhite, false, gameView.model); //my move
-			game.update();
+			var weight = engine.NextMove(!game.playerWhite, false, gameView.model); //my move
+			game.update(!game.playerWhite, weight);
 			
 			if (!engine.NextMove(game.playerWhite, true, gameView.model)) //no next move for player
 			{
@@ -347,12 +337,12 @@ Rectangle {
 		{
 			if (key != "Select")
 				return true;
-
-			if (engine.MakeMove(Math.floor(gameView.currentIndex / 8), gameView.currentIndex % 8, game.playerWhite, false) <= 0)
+			var weight = engine.MakeMove(Math.floor(gameView.currentIndex / 8), gameView.currentIndex % 8, game.playerWhite, false);
+			if (weight <= 0)
 				return true;
 
 			engine.WriteModel(gameView.model);
-			game.update();
+			game.update(game.playerWhite, weight);
 			game.playerWhite = !game.playerWhite;
 
 			if (!engine.NextMove(game.playerWhite, true, gameView.model)) // no next move for current player
@@ -372,8 +362,8 @@ Rectangle {
 				if (aiMoveTimer.running) //ai is "thinking"
 					return;
 
-				engine.NextMove(game.playerWhite, false, gameView.model);
-				game.update();
+				var weight = engine.NextMove(game.playerWhite, false, gameView.model);
+				game.update(game.playerWhite, weight);
 				aiMoveTimer.start();
 				break;
 			case "Green":
@@ -395,11 +385,12 @@ Rectangle {
 				return true;
 
 			log("player moves into " + Math.floor(gameView.currentIndex / 8) + ", " + gameView.currentIndex % 8);
-			if (engine.MakeMove(Math.floor(gameView.currentIndex / 8), gameView.currentIndex % 8, game.playerWhite, false) <= 0)
+			var weight = engine.MakeMove(Math.floor(gameView.currentIndex / 8), gameView.currentIndex % 8, game.playerWhite, false);
+			if (weight <= 0)
 				return true;
 
 			engine.WriteModel(gameView.model);
-			game.update();
+			game.update(game.playerWhite, weight);
 			aiMoveTimer.start();
 
 			return true;
@@ -414,7 +405,7 @@ Rectangle {
 			game.started = true;
 		}
 		engine.Reset(gameView.model);
-		game.update();
+		game.whiteCounter = game.blackCounter = 2;
 		mainMenu.visible = false;
 		game.over = false;
 	}
@@ -427,25 +418,20 @@ Rectangle {
 		engine.Reset(gameView.model);
 	}
 
-	function update() {
-		game.whiteCounter = 0;
-		game.blackCounter = 0;
+	function update(white, weight) {
+		if (!weight)
+			return;
 
-		for (var i = 0; i < gameView.model.count; i++)
+		if (white)
 		{
-			switch (gameView.model.get(i).disc)
-			{
-				case 'White':
-					game.whiteCounter++;
-					break;
-				case 'Black':
-					game.blackCounter++;
-					break;
-			}
+			game.whiteCounter += weight + 1;
+			game.blackCounter -= weight;
 		}
-
-		whiteText.text = game.whiteCounter;
-		blackText.text = game.blackCounter;
+		else
+		{
+			game.blackCounter += weight + 1;
+			game.whiteCounter -= weight;
+		}
 	}
 
 	onCompleted: { engine.Init(gameView.model); }
