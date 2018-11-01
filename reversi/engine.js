@@ -254,8 +254,6 @@ this.NextMove = function (white, simulate, model) {
 					insertPriority(moves, elem);
 					if (simulate)
 						return true;
-
-					log("possible move: " + y + ", " + x + ", discs: " + sum + ", bonus: " + bonus);
 				}
 			}
 		}
@@ -267,8 +265,8 @@ this.NextMove = function (white, simulate, model) {
 		for (i = 0; i < moves.length && moves[i].p == moves[0].p; i++);
 		var move = moves[Math.floor(Math.random() * i)];
 		log("move: " + move.y + ", " + move.x + ", weight: " + move.p);
-		this.MakeMove(move.y, move.x, white, false);
+		var weight = this.MakeMove(move.y, move.x, white, false);
 		this.WriteModel(model);
 
-		return true;
+		return weight;
 }

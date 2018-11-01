@@ -1,23 +1,74 @@
 import "engine.js" as engine;
 import "CellDelegate.qml";
+import "MenuDelegate.qml";
 
 Rectangle {
 	id: game;
 
 	property bool easy;
 	property bool playerWhite;
+	property bool multiplayer: true;
+	property bool started;
+	property bool over;
+	property int whiteCounter: 2;
+	property int blackCounter: 2;
 
-	anchors.fill: parent;
+	Rectangle {
+		id: mainMenu;
 
-	over: false;
-	whiteCounter: 2;
-	blackCounter: 2;
-	
-	BigText {
-		id: titleText;
-		text: qsTr("Reversi");
-		anchors.top: parent.top;
-		anchors.horizontalCenter: parent.horizontalCenter;
+		width: 520;
+		height: 520;
+
+		anchors.centerIn: parent;
+
+		focus: true;
+		color: "#eee4dab0";
+
+		BigText {
+			id: titleText;
+
+			anchors.top: parent.top;
+			anchors.topMargin: 20;
+			anchors.horizontalCenter: parent.horizontalCenter;
+
+			text: qsTr("Reversi");
+			color: "#000";
+		}
+
+		ListView {
+			id: menuList;
+
+			width: 390;
+			height: 270;
+
+			anchors.centerIn: parent;
+
+			focus: true;
+
+			model: ListModel {
+				ListElement { text: "Start playing alone"; }
+				ListElement { text: "Start playing together"; }
+			}
+
+			delegate: MenuDelegate { width: parent.width; }
+
+			onSelectPressed: {
+				switch (this.currentIndex)
+				{
+					case 0:
+						game.multiplayer = false;
+						game.startGame();
+						break;
+					case 1:
+						game.multiplayer = true;
+						game.startGame();
+						break;
+					case 2:
+						mainMenu.visible = false;
+						break;
+				}
+			}
+		}
 	}
 	
 	Row {
@@ -26,13 +77,10 @@ Rectangle {
 
 		spacing: 10;
 
-		MainText {
-			text: qsTr("White");
-		}
+		visible: !mainMenu.visible;
 
 		MainText {
-			id: whiteText;
-			text: "2";
+			text: qsTr("White") + " " + game.whiteCounter;
 		}
 	}
 
@@ -42,13 +90,10 @@ Rectangle {
 
 		spacing: 10;
 
-		MainText {
-			text: qsTr("Black");
-		}
+		visible: !mainMenu.visible;
 
 		MainText {
-			id: blackText;
-			text: "2";
+			text: qsTr("Black") + " " + game.blackCounter;
 		}
 	}
 
@@ -59,6 +104,8 @@ Rectangle {
 
 		spacing: 10;
 
+		visible: !game.multiplayer && !mainMenu.visible;
+
 		MainText {
 			text: qsTr(game.playerWhite ? "You're playing with white" : "You're playing with black");
 		}
@@ -66,6 +113,16 @@ Rectangle {
 		MainText {
 			text: qsTr(game.easy ? "Low difficulty" : "High difficulty");
 		}
+	}
+
+	MainText {
+		anchors.verticalCenter: parent.verticalCenter;
+		anchors.right: boardRect.left;
+		anchors.rightMargin: 20;
+
+		visible: game.multiplayer && !mainMenu.visible;
+
+		text: qsTr(game.playerWhite ? "White is moving" : "Black is moving");
 	}
 
 	BigText {
@@ -77,14 +134,27 @@ Rectangle {
 		z: 1;
 		style: Shadow;
 		styleColor: "#333";
+		text: game.whiteCounter == game.blackCounter ? qsTr("Draw.") :
+			game.multiplayer && game.whiteCounter > game.blackCounter ? qsTr("White won!") :
+			game.multiplayer && game.whiteCounter < game.blackCounter ? qsTr("Black won!") :
+			game.playerWhite && game.whiteCounter > game.blackCounter || !game.playerWhite && game.whiteCounter < game.blackCounter
+			? "You won!"
+			: "You lose";
 
-		visible: false;
+		visible: game.over;
 
 		Rectangle {
 			anchors.fill: parent;
 			anchors.margins: -20;
 
 			color: "#000c";
+		}
+
+		onSelectPressed: { game.finishGame(); }
+		onBackPressed: { game.finishGame(); }
+		onVisibleChanged: {
+			if (visible)
+				this.setFocus();
 		}
 	}
 
@@ -95,6 +165,8 @@ Rectangle {
 		height: 65 * 8;
 
 		anchors.centerIn: parent;
+
+		visible: !mainMenu.visible;
 		
 		GridView {
 			id: gameView;
@@ -108,7 +180,77 @@ Rectangle {
 
 			model: ListModel { }
 			delegate: CellDelegate { }
-		}		
+		}
+
+		onSelectPressed: {
+			if (game.multiplayer)
+			{
+				var weight = engine.MakeMove(Math.floor(gameView.currentIndex / 8), gameView.currentIndex % 8, game.playerWhite, false);
+				if (weight <= 0)
+					return true;
+
+				engine.WriteModel(gameView.model);
+				game.update(game.playerWhite, weight);
+				game.playerWhite = !game.playerWhite;
+
+				if (!engine.NextMove(game.playerWhite, true, gameView.model)) // no next move for current player
+				{
+					if (!engine.NextMove(!game.playerWhite, true, gameView.model)) // no next move for other player, too. Game over
+						game.over = true;
+					else
+						game.playerWhite = !game.playerWhite;	//skip move
+				}
+			}
+			else
+			{
+				if (aiMoveTimer.running) //ai is "thinking"
+					return true;
+
+				log("player moves into " + Math.floor(gameView.currentIndex / 8) + ", " + gameView.currentIndex % 8);
+				var weight = engine.MakeMove(Math.floor(gameView.currentIndex / 8), gameView.currentIndex % 8, game.playerWhite, false);
+				if (weight <= 0)
+					return true;
+
+				engine.WriteModel(gameView.model);
+				game.update(game.playerWhite, weight);
+				aiMoveTimer.start();
+			}
+		}
+
+		onRedPressed: {
+			if (game.multiplayer)
+				return;
+
+			if (aiMoveTimer.running) //ai is "thinking"
+				return;
+
+			var weight = engine.NextMove(game.playerWhite, false, gameView.model);
+			game.update(game.playerWhite, weight);
+			aiMoveTimer.start();
+		}
+
+		onGreenPressed: {
+			if (game.multiplayer)
+				return;
+
+			game.playerWhite = true;
+			game.startGame();
+		}
+
+		onYellowPressed: {
+			if (game.multiplayer)
+				return;
+
+			game.playerWhite = false;
+			game.startGame();
+		}
+
+		onBluePressed: {
+			if (game.multiplayer)
+				return;
+
+			game.easy = !game.easy;
+		}
 	}
 
 	Timer {
@@ -117,30 +259,15 @@ Rectangle {
 		interval: 500;
 
 		onTriggered:  {
-			engine.NextMove(!game.playerWhite, false, gameView.model); //my move
-			game.update();
+			var weight = engine.NextMove(!game.playerWhite, false, gameView.model); //my move
+			game.update(!game.playerWhite, weight);
 			
 			if (!engine.NextMove(game.playerWhite, true, gameView.model)) //no next move for player
 			{
 				if (!engine.NextMove(!game.playerWhite, true, gameView.model)) //no next move for ai also, game over
-				{
-					log ("GAMEOVER");
-					var whiteIsWinner = game.whiteCounter > game.blackCounter;					
-					if(whiteIsWinner)
-					{
-						gameOver.text = qsTr(game.playerWhite ? "You won!" : "Game over");
-					}
-					else
-					{
-						gameOver.text = qsTr(!game.playerWhite ? "You won!" : "Game over");
-					}
 					game.over = true;
-					gameOver.visible = true;
-				}
 				else
-				{
 					this.restart(); //one more time
-				}
 			}
 		}
 	}
@@ -152,6 +279,8 @@ Rectangle {
 		anchors.bottom: parent.bottom;
 		anchors.left: parent.left;
 		anchors.right: parent.right;
+
+		visible: !game.multiplayer && !mainMenu.visible;
 
 		Rectangle {
 			id: red;
@@ -264,79 +393,47 @@ Rectangle {
 		}
 	}
 
-	onBackPressed: { viewsFinder.closeApp(); }
-
-	onKeyPressed: {
-			switch (key)
-			{
-				case "Red":
-					if (aiMoveTimer.running) //ai is "thinking"
-						return;
-
-					engine.NextMove(game.playerWhite, false, gameView.model);
-					game.update();
-					aiMoveTimer.start();
-					break;
-				case "Green":
-					game.over = true;
-					game.playerWhite = true;
-					break;
-				case "Yellow":
-					game.over = true;
-					game.playerWhite = false;
-					break;
-				case "Blue":
-					game.easy = !game.easy;
-					return true;
-			}
-
-			if (game.over)
-			{
-				engine.Reset(gameView.model);
-				game.update();
-				gameOver.visible = false;
-				game.over = false;
-				return true;
-			}
-
-			log("key: " +  key);
-			if (key == "Select")
-			{
-				if (aiMoveTimer.running) //ai is "thinking"
-					return true;
-
-				log("player moves into " + Math.floor(gameView.currentIndex / 8) + ", " + gameView.currentIndex % 8);
-				if (engine.MakeMove(Math.floor(gameView.currentIndex / 8), gameView.currentIndex % 8, game.playerWhite, false) <= 0)
-					return true;
-
-				engine.WriteModel(gameView.model);
-				game.update();
-				aiMoveTimer.start();
-
-				return true;
-			}
-		return false;
+	onBackPressed: {
+		if (mainMenu.visible)
+			viewsFinder.closeApp();
+		else
+			mainMenu.visible = true;
 	}
 
-	function update() {
-		game.whiteCounter = 0;
-		game.blackCounter = 0;
-
-		for (var i = 0; i < gameView.model.count; i++)
+	function startGame() {
+		if (!game.started)
 		{
-			switch (gameView.model.get(i).disc)
-			{
-				case 'White':
-					game.whiteCounter++;
-					break;
-				case 'Black':
-					game.blackCounter++;
-					break;
-			}
+			menuList.model.append({ text: "Continue" });
+			game.started = true;
 		}
+		engine.Reset(gameView.model);
+		game.whiteCounter = game.blackCounter = 2;
+		mainMenu.visible = false;
+		game.over = false;
+	}
 
-		whiteText.text = game.whiteCounter;
-		blackText.text = game.blackCounter;
+	function finishGame() {
+		game.over = false;
+		menuList.model.remove(2);
+		game.started = false;
+		mainMenu.visible = true;
+		engine.Reset(gameView.model);
+	}
+
+	function update(white, weight) {
+		if (!weight)
+			return;
+
+		if (white)
+		{
+			game.whiteCounter += weight + 1;
+			game.blackCounter -= weight;
+		}
+		else
+		{
+			game.blackCounter += weight + 1;
+			game.whiteCounter -= weight;
+		}
 	}
 
 	onCompleted: { engine.Init(gameView.model); }

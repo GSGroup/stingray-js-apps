@@ -9,5 +9,7 @@ Application {
 
 	Game {
 		id: game;
+
+		anchors.fill: parent;
 	}
 }
