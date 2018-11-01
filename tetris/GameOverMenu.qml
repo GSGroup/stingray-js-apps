@@ -4,6 +4,7 @@ Rectangle {
 	id: gameOverRect;
 
 	signal setNewGame();
+	signal exitGame();
 
 	color: colorTheme.backgroundColor;
 
@@ -38,7 +39,7 @@ Rectangle {
 		focus: true;
 
 		MenuItem {
-			id: newGame;
+			id: newGameItem;
 
 			menuText: "Поиграть еще";
 
@@ -46,16 +47,16 @@ Rectangle {
 		}
 
 		MenuItem {
-			id: exitGame;
+			id: exitGameItem;
 
 			menuText: "Выйти";
 
-			onSelectPressed: { viewsFinder.closeApp(); }
+			onSelectPressed: { gameOverRect.exitGame(); }
 		}
 	}
 
 	function show() {
 		gameOverRect.visible = true;
-		exitGame.setFocus();
+		exitGameItem.setFocus();
 	}
 }

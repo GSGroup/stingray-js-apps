@@ -166,13 +166,27 @@ Rectangle{
 			}
 		}
 
+		Rectangle{
+			id: menuScreen;
+
+			width: safeArea.width;
+			height: safeArea.height;
+
+			color: colorTheme.globalBackgroundColor;
+			opacity: 0.5;
+
+			visible: (exitMenu.visible || levelMenu.visible || pauseMenu.visible || gameOverMenu.visible);
+		}
+
 		ExitMenu {
 			id: exitMenu;
 
 			width: game.width;
-			height: gameConsts.getBlockSize() * 4;
+			height: 132;
 
 			anchors.centerIn: game;
+
+			onUpPressed: { }
 
 			onBackToGame: {
 				exitMenu.visible = false;
@@ -182,6 +196,12 @@ Rectangle{
 			onSetNewGame: {
 				exitMenu.visible = false;
 				game.setNewGame();
+			}
+
+			onExitGame: {
+				exitMenu.visible = false;
+				game.setNewGame();
+				viewsFinder.closeApp();
 			}
 		}
 
@@ -193,9 +213,17 @@ Rectangle{
 
 			anchors.centerIn: game;
 
+			onUpPressed: { }
+
 			onSetNewGame: {
 				gameOverMenu.visible = false;
 				game.setNewGame();
+			}
+
+			onExitGame: {
+				gameOverMenu.visible = false;
+				game.setNewGame();
+				viewsFinder.closeApp();
 			}
 		}
 
@@ -207,11 +235,18 @@ Rectangle{
 
 			anchors.centerIn: game;
 
+			onKeyPressed: {
+				if (key == "Up" || key == "Menu" || key == "Exit" || key == "Last")
+				{
+					return true;
+				}
+			}
+
 			onLevelChanged: {
-				levelRect.visible = false;
-				movingTetraminos.setFocus();
+				levelMenu.visible = false;
 				game.currentLevel = level;
 				engine.setCurrentLevel(game.currentLevel);
+				movingTetraminos.setFocus();
 			}
 		}
 
@@ -219,9 +254,16 @@ Rectangle{
 			id: pauseMenu;
 
 			width: game.width;
-			height: gameConsts.getBlockSize() * 6 + game.space * 4;
+			height: gameConsts.getBlockSize() * 2;
 
 			anchors.centerIn: game;
+
+			onKeyPressed: {
+				if (key == "Menu" || key == "Exit" || key == "Last")
+				{
+					return true;
+				}
+			}
 
 			onContinueGame: {
 				pauseRect.visible = false;
@@ -235,7 +277,8 @@ Rectangle{
 		}
 
 		function setNewGame() {
-			movingTetraminos.setFocus();
+			levelMenu.show();
+
 			movingTetraminos.visible = true;
 			movingTetraminos.x = game.startX;
 			movingTetraminos.y = 0;
@@ -253,11 +296,9 @@ Rectangle{
 
 		onLastPressed: { exitMenu.show(); }
 
-		on7Pressed: { levelMenu.show(); }
-
 		onCompleted: {
+			levelMenu.show();
 			engine.initGame(gameView.model, blockView.model, nextBlockView.model);
-			movingTetraminos.setFocus();
 		}
 	}
 }
