@@ -5,6 +5,7 @@ Rectangle {
 
 	signal setNewGame();
 	signal backToGame();
+	signal exitGame();
 
 	color: colorTheme.backgroundColor;
 
@@ -13,7 +14,9 @@ Rectangle {
 	Column {
 		id: gameExitColumn;
 
-		height: exitRect.height;
+		y: 15;
+
+		height: exitRect.height - 30;
 
 		anchors.centerIn: exitRect;
 
@@ -21,15 +24,15 @@ Rectangle {
 		focus: true;
 
 		MenuItem {
-			id: exitGameItem;
+			id: exitItem;
 
 			menuText: "Выйти из Тетриса";
 
-			onSelectPressed: { viewsFinder.closeApp(); }
+			onSelectPressed: { exitRect.exitGame(); }
 		}
 
 		MenuItem {
-			id: continueGameItem;
+			id: continueItem;
 
 			menuText: "Продолжить игру";
 
@@ -37,7 +40,7 @@ Rectangle {
 		}
 
 		MenuItem {
-			id: newGameItem;
+			id: newItem;
 
 			menuText: "Новая игра";
 
@@ -47,6 +50,6 @@ Rectangle {
 
 	function show() {
 		exitRect.visible = true;
-		exitGameItem.setFocus();
+		exitItem.setFocus();
 	}
 }

@@ -6,6 +6,9 @@ GridView {
 	cellWidth: gameConsts.getBlockSize();
 	cellHeight: gameConsts.getBlockSize();
 
+	focus: false;
+	handleNavigationKeys: false;
+
 	model: ListModel {
 		property int value;
 		property int colorIndex;

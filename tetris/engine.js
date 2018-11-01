@@ -51,8 +51,7 @@ this.initMovingTetraminos = function(model) {
 this.initNextTetraminos = function(model) {
 	for (var bit = 0x8000; bit > 0; bit = bit >> 1)
 	{
-		var value = pieces[nextBlockViewIndex][nextRotationIndex] & bit;
-		model.append({ value: value, colorIndex: 0 });
+		model.append({ value: pieces[nextBlockViewIndex][nextRotationIndex] & bit, colorIndex: 0 });
 	}
 }
 
@@ -111,8 +110,7 @@ this.updateBlockModel = function(model) {
 this.updateNextTetraminos = function(model) {
 	for (var bit = 0x8000, indexBlock = 0; bit > 0; bit = bit >> 1, ++indexBlock)
 	{
-		var value = pieces[nextBlockViewIndex][nextRotationIndex] & bit;
-		model.set(indexBlock, { value: value, colorIndex: nextColorIndex });
+		model.set(indexBlock, { value: pieces[nextBlockViewIndex][nextRotationIndex] & bit, colorIndex: nextColorIndex });
 	}
 }
 
@@ -145,7 +143,6 @@ this.parkBlock = function(x, y) {
 			canvasState[index(blockX, blockY)].colorIndex = movingBlockState[k].colorIndex;
 		}
 	}
-
 	checkLines();
 }
 
@@ -194,13 +191,10 @@ function calcScores(compeletedRowsNumber) {
 
 function checkLines() {
 	var completedRowsCounter = 0;
-	var checkAgain;
-	var blockCounter;
-
 	do
 	{
-		checkAgain = false;
-		blockCounter = 0;
+		var checkAgain = false;
+		var blockCounter = 0;
 		for (var idx = 0; idx < gameConsts.getBlockNumber(); ++idx)
 		{
 			if(canvasState[idx].value > 0)

@@ -7,9 +7,7 @@ Rectangle {
 	signal backToGame();
 	signal levelChanged(level);
 
-	focus: true;
 	color: colorTheme.backgroundColor;
-	clip: true;
 
 	visible: false;
 
