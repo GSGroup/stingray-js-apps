@@ -14,14 +14,12 @@ Rectangle {
     Image {
         id: posterDefaultImage;
 
-        width:  activeFocus ? constants.poster["width"]  + (constants.margin / 3)  : constants.poster["width"];
-        height: activeFocus ? constants.poster["height"] + (constants.margin / 3)  : constants.poster["height"];
+		width:  catalogDelegate.activeFocus ? constants.poster["width"]  + (constants.margin / 3)  : constants.poster["width"];
+		height: catalogDelegate.activeFocus ? constants.poster["height"] + (constants.margin / 3)  : constants.poster["height"];
 
         anchors.centerIn: parent;
 
         visible: posterImage.status !== Image.Ready;
-
-        activeFocus: catalogDelegate.activeFocus;
 
         source: constants.defaultPoster;
 
@@ -34,14 +32,12 @@ Rectangle {
     Image {
         id: posterImage;
 
-        width:  activeFocus ? constants.poster["width"]  + (constants.margin / 3)  : constants.poster["width"];
-        height: activeFocus ? constants.poster["height"] + (constants.margin / 3)  : constants.poster["height"];
+		width:  catalogDelegate.activeFocus ? constants.poster["width"]  + (constants.margin / 3)  : constants.poster["width"];
+		height: catalogDelegate.activeFocus ? constants.poster["height"] + (constants.margin / 3)  : constants.poster["height"];
 
         anchors.centerIn: parent;
 
         registerInCacheSystem: false;
-
-        activeFocus: catalogDelegate.activeFocus;
 
         source: model.poster;
 
