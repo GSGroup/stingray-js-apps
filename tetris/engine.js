@@ -23,14 +23,6 @@ var pieces =[
 var canvasState = [];
 var movingBlockState = [];
 
-this.getCurrentLevel = function() {
-	return currentLevel;
-}
-
-this.getGameScore = function() {
-	return gameScore;
-}
-
 this.initCanvas = function(model) {
 	for (var idx = 0; idx < gameConsts.getBlockNumber(); ++idx)
 	{
@@ -120,6 +112,8 @@ this.restartGame = function(gameViewModel, blockViewModel, nextBlockViewModel) {
 
 	this.updateMovingTetraminos(blockViewModel);
 	this.updateNextTetraminos(nextBlockViewModel);
+
+	return { score: gameScore, level: currentLevel };
 }
 
 this.clearCanvas = function(model) {
@@ -131,10 +125,10 @@ this.clearCanvas = function(model) {
 	}
 }
 
-this.parkBlock = function(x, y) {
+this.parkBlock = function(x, y, model) {
 	for (var k = 0; k < 16; ++k)
 	{
-		var blockX = x + (k % 4) * gameConsts.getBlockSize() ;
+		var blockX = x + (k % 4) * gameConsts.getBlockSize();
 		var blockY = y + Math.floor(k / 4) * gameConsts.getBlockSize();
 
 		if (movingBlockState[k].value > 0)
@@ -144,6 +138,9 @@ this.parkBlock = function(x, y) {
 		}
 	}
 	checkLines();
+	this.updateCanvasModel(model);
+
+	return { score: gameScore, level: currentLevel };
 }
 
 this.updateCanvasModel = function(model) {
@@ -197,19 +194,21 @@ function checkLines() {
 		var blockCounter = 0;
 		for (var idx = 0; idx < gameConsts.getBlockNumber(); ++idx)
 		{
-			if(canvasState[idx].value > 0)
+			if (canvasState[idx].value > 0)
 			{
 				++blockCounter;
 			}
+
 			if ((idx + 1) % gameConsts.getGlassWidth() == 0)
 			{
-				if((blockCounter === gameConsts.getGlassWidth()))
+				if (blockCounter === gameConsts.getGlassWidth())
 				{
 					removeLine(idx);
 					checkAgain = true;
 					++completedRowsCounter;
 					break;
 				}
+
 				blockCounter = 0;
 			}
 		}
@@ -235,10 +234,11 @@ this.tryRotate = function(x, y, model) {
 }
 
 this.hasColllisions = function(x, y) {
-	if(hasBorderCollisions(x, y) || hasCanvasCollisions(x, y))
+	if (hasBorderCollisions(x, y) || hasCanvasCollisions(x, y))
 	{
 		return true;
 	}
+
 	return false;
 }
 
@@ -248,7 +248,7 @@ this.updateProperties = function(x, y, model) {
 		var blockX = x + (k % 4) * gameConsts.getBlockSize() ;
 		var blockY = y + Math.floor(k / 4) * gameConsts.getBlockSize();
 
-		if ((blockX < 0 || blockX >= gameConsts.getGameWidth() || blockY >= gameConsts.getGameHeight()))
+		if (blockX < 0 || blockX >= gameConsts.getGameWidth() || blockY >= gameConsts.getGameHeight())
 		{
 			movingBlockState[k].value = -1;
 			model.set(k, { value: -1 });
@@ -272,6 +272,7 @@ function hasBorderCollisions(x, y) {
 			return true;
 		}
 	}
+
 	return false;
 }
 
@@ -286,6 +287,7 @@ function hasCanvasCollisions(x, y) {
 			return true;
 		}
 	}
+
 	return false;
 }
 

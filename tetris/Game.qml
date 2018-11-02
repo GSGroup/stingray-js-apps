@@ -95,12 +95,12 @@ Rectangle{
 				}
 				else
 				{
-					engine.parkBlock(movingTetraminos.x, movingTetraminos.y)
-					game.updateInfo();
-					engine.updateCanvasModel(gameView.model);
+					var info = engine.parkBlock(movingTetraminos.x, movingTetraminos.y, gameView.model)
+					game.updateInfo(info);
+
 					engine.nextStep(blockView.model, nextBlockView.model);
 
-					if(!engine.hasColllisions(game.startX, 0))
+					if (!engine.hasColllisions(game.startX, 0))
 					{
 						movingTetraminos.x = game.startX;
 						movingTetraminos.y = 0;
@@ -213,7 +213,12 @@ Rectangle{
 
 			anchors.centerIn: game;
 
-			onUpPressed: { }
+			onKeyPressed: {
+				if (key == "Up" || key == "Menu" || key == "Back" || key == "Last")
+				{
+					return true;
+				}
+			}
 
 			onSetNewGame: {
 				gameOverMenu.visible = false;
@@ -236,7 +241,7 @@ Rectangle{
 			anchors.centerIn: game;
 
 			onKeyPressed: {
-				if (key == "Up" || key == "Menu" || key == "Exit" || key == "Last")
+				if (key == "Up" || key == "Menu" || key == "Back" || key == "Last")
 				{
 					return true;
 				}
@@ -259,7 +264,7 @@ Rectangle{
 			anchors.centerIn: game;
 
 			onKeyPressed: {
-				if (key == "Menu" || key == "Exit" || key == "Last")
+				if (key == "Menu" || key == "Back" || key == "Last")
 				{
 					return true;
 				}
@@ -271,9 +276,9 @@ Rectangle{
 			}
 		}
 
-		function updateInfo() {
-			game.currentLevel = engine.getCurrentLevel();
-			game.gameScore = engine.getGameScore();
+		function updateInfo(info) {
+			game.gameScore = info.score;
+			game.currentLevel = info.level;
 		}
 
 		function setNewGame() {
@@ -283,16 +288,15 @@ Rectangle{
 			movingTetraminos.x = game.startX;
 			movingTetraminos.y = 0;
 
-			engine.restartGame(gameView.model, blockView.model, nextBlockView.model);
-			game.currentLevel = 1;
-			game.gameScore = 0;
+			var info = engine.restartGame(gameView.model, blockView.model, nextBlockView.model);
+			game.updateInfo(info);
 		}
 
 		onUpPressed: { pauseMenu.show(); }
 
 		onMenuPressed: { exitMenu.show(); }
 
-		onExitPressed: { exitMenu.show(); }
+		onBackPressed: { exitMenu.show(); }
 
 		onLastPressed: { exitMenu.show(); }
 
