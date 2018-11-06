@@ -134,7 +134,7 @@ Rectangle {
 		z: 1;
 		style: Shadow;
 		styleColor: "#333";
-		text: game.whiteCounter == game.blackCounter ? qsTr("Draw.") :
+		text: game.whiteCounter == game.blackCounter ? qsTr("Draw") :
 			game.multiplayer && game.whiteCounter > game.blackCounter ? qsTr("White won!") :
 			game.multiplayer && game.whiteCounter < game.blackCounter ? qsTr("Black won!") :
 			game.playerWhite && game.whiteCounter > game.blackCounter || !game.playerWhite && game.whiteCounter < game.blackCounter
