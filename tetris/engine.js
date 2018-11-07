@@ -9,6 +9,9 @@ var currentColorIndex;
 var currentLevel;
 var gameScore;
 var numLines;
+var completedRowsNumber = 0;
+var deleteInfo = { idx: -1, linesNumber: 0 };
+var blockSize = gameConsts.getBlockSize() - gameConsts.getSpaceBetweenBlocks() * 2;
 
 var pieces =[
 	[0x44C0, 0x8E00, 0x6440, 0x0E20],
@@ -26,7 +29,7 @@ var movingBlockState = [];
 this.initCanvas = function(model) {
 	for (var idx = 0; idx < gameConsts.getBlockNumber(); ++idx)
 	{
-		model.append({ value: 0, colorIndex: 0 });
+		model.append({ value: 0, colorIndex: 0, sizeW: blockSize });
 		canvasState.push({ value: 0, colorIndex: 0 });
 	}
 }
@@ -35,7 +38,7 @@ this.initMovingTetraminos = function(model) {
 	for (var bit = 0x8000; bit > 0; bit = bit >> 1)
 	{
 		var value = pieces[currentBlockViewIndex][currentRotationIndex] & bit;
-		model.append({ value: value, colorIndex: currentColorIndex });
+		model.append({ value: value, colorIndex: currentColorIndex, sizeW: blockSize });
 		movingBlockState.push({ value: value, colorIndex: currentColorIndex });
 	}
 }
@@ -43,7 +46,7 @@ this.initMovingTetraminos = function(model) {
 this.initNextTetraminos = function(model) {
 	for (var bit = 0x8000; bit > 0; bit = bit >> 1)
 	{
-		model.append({ value: pieces[nextBlockViewIndex][nextRotationIndex] & bit, colorIndex: 0 });
+		model.append({ value: pieces[nextBlockViewIndex][nextRotationIndex] & bit, colorIndex: 0, sizeW: blockSize });
 	}
 }
 
@@ -84,6 +87,14 @@ this.updateMovingTetraminos = function(model) {
 	this.updateBlockModel(model);
 }
 
+this.updateModelWidth = function(model)
+{
+	for (var idx = deleteInfo.idx; idx > deleteInfo.idx - gameConsts.getGlassWidth() * deleteInfo.linesNumber; --idx)
+	{
+		model.set(idx,{ value: canvasState[idx].value, colorIndex: canvasState[idx].colorIndex, sizeW: blockSize * 0.1 });
+	}
+}
+
 function updateBlockState() {
 	for (var bit = 0x8000, indexBlock = 0; bit > 0; bit = bit >> 1, ++indexBlock)
 	{
@@ -95,14 +106,14 @@ function updateBlockState() {
 this.updateBlockModel = function(model) {
 	for (var idx = 0; idx < 16; ++idx)
 	{
-		model.set(idx, { value: movingBlockState[idx].value, colorIndex: movingBlockState[idx].colorIndex });
+		model.set(idx, { value: movingBlockState[idx].value, colorIndex: movingBlockState[idx].colorIndex, sizeW: blockSize });
 	}
 }
 
 this.updateNextTetraminos = function(model) {
 	for (var bit = 0x8000, indexBlock = 0; bit > 0; bit = bit >> 1, ++indexBlock)
 	{
-		model.set(indexBlock, { value: pieces[nextBlockViewIndex][nextRotationIndex] & bit, colorIndex: nextColorIndex });
+		model.set(indexBlock, { value: pieces[nextBlockViewIndex][nextRotationIndex] & bit, colorIndex: nextColorIndex, sizeW: blockSize });
 	}
 }
 
@@ -119,13 +130,14 @@ this.restartGame = function(gameViewModel, blockViewModel, nextBlockViewModel) {
 this.clearCanvas = function(model) {
 	for (var idx = 0; idx < gameConsts.getBlockNumber(); ++idx)
 	{
-		model.set(idx, { value: 0, colorIndex: 0 });
+		model.set(idx, { value: 0, colorIndex: 0, sizeW: blockSize });
 		canvasState[idx].value = 0;
 		canvasState[idx].colorIndex = 0;
 	}
 }
 
 this.parkBlock = function(x, y, model) {
+	completedRowsNumber = 0;
 	for (var k = 0; k < 16; ++k)
 	{
 		var blockX = x + (k % 4) * gameConsts.getBlockSize();
@@ -137,90 +149,93 @@ this.parkBlock = function(x, y, model) {
 			canvasState[index(blockX, blockY)].colorIndex = movingBlockState[k].colorIndex;
 		}
 	}
-	checkLines();
-	this.updateCanvasModel(model);
 
-	return { score: gameScore, level: currentLevel };
+	this.updateCanvasModel(model);
 }
 
 this.updateCanvasModel = function(model) {
 	for(var idx = 0; idx < gameConsts.getBlockNumber(); ++idx)
 	{
-		model.set(idx,{ value: canvasState[idx].value, colorIndex: canvasState[idx].colorIndex });
+		model.set(idx,{ value: canvasState[idx].value, colorIndex: canvasState[idx].colorIndex, sizeW: blockSize });
 	}
 }
 
-function removeLines(idx, linesNumber) {
-	for (var i = idx; i >= gameConsts.getGlassWidth() * linesNumber; --i)
+this.removeLines = function(model) {
+	for (var i = deleteInfo.idx; i > gameConsts.getGlassWidth() * deleteInfo.linesNumber; --i)
 	{
-		canvasState[i].value = canvasState[i - gameConsts.getGlassWidth() * linesNumber].value;
-		canvasState[i].colorIndex = canvasState[i - gameConsts.getGlassWidth() * linesNumber].colorIndex;
+		canvasState[i].value = canvasState[i - gameConsts.getGlassWidth() * deleteInfo.linesNumber].value;
+		canvasState[i].colorIndex = canvasState[i - gameConsts.getGlassWidth() * deleteInfo.linesNumber].colorIndex;
 	}
 
-	for ( i = 0; i < gameConsts.getGlassWidth() * linesNumber; ++i)
+	for ( i = 0; i < gameConsts.getGlassWidth() * deleteInfo.linesNumber; ++i)
 	{
 		canvasState[i].value = 0;
 		canvasState[i].colorIndex = 0;
 	}
+
+	this.updateCanvasModel(model);
+	calcScores();
+
+	deleteInfo.linesNumber = 0;
+	deleteInfo.idx = -1;
+
+	return { score: gameScore, level: currentLevel };
 }
 
-function calcScores(compeletedRowsNumber) {
-	if (compeletedRowsNumber === 1)
+function calcScores() {
+	if (completedRowsNumber === 1)
 	{
 		gameScore += 100 * currentLevel;
 	}
-	else if (compeletedRowsNumber === 2)
+	else if (completedRowsNumber === 2)
 	{
 		gameScore += 300 * currentLevel;
 	}
-	else if (compeletedRowsNumber === 3)
+	else if (completedRowsNumber === 3)
 	{
 		gameScore += 700 * currentLevel;
 	}
-	else if (compeletedRowsNumber === 4)
+	else if (completedRowsNumber === 4)
 	{
 		gameScore += 1500 * currentLevel;
 	}
 
-	numLines += compeletedRowsNumber;
+	numLines += completedRowsNumber;
 	currentLevel = Math.floor(numLines / 10);
 }
 
-function checkLines() {
-	var completedRowsCounter = 0;
-	do
+this.checkLines = function() {
+
+	var blockCounter = 0;
+
+	deleteInfo.linesNumber = 0;
+	deleteInfo.idx = -1;
+
+	for (var idx = 0; idx < gameConsts.getBlockNumber(); ++idx)
 	{
-		var checkAgain = false;
-		var blockCounter = 0;
-		var linesCounter = 0;
-		for (var idx = 0; idx < gameConsts.getBlockNumber(); ++idx)
+		if (canvasState[idx].value > 0)
 		{
-			if (canvasState[idx].value > 0)
-			{
-				++blockCounter;
-			}
-
-			if ((idx + 1) % gameConsts.getGlassWidth() == 0)
-			{
-				if (blockCounter === gameConsts.getGlassWidth())
-				{
-					++completedRowsCounter;
-					++linesCounter;
-				}
-				else if (linesCounter > 0)
-				{
-					removeLines(idx - gameConsts.getGlassWidth(), linesCounter);
-					error("linesToRemove " + linesCounter);
-					checkAgain = true;
-					break;
-				}
-
-				blockCounter = 0;
-			}
+			++blockCounter;
 		}
-	} while (checkAgain === true);
 
-	calcScores(completedRowsCounter);
+		if ((idx + 1) % gameConsts.getGlassWidth() == 0)
+		{
+			if (blockCounter === gameConsts.getGlassWidth())
+			{
+				++completedRowsNumber;
+				++deleteInfo.linesNumber;
+				deleteInfo.idx = idx;
+			}
+			else if (deleteInfo.linesNumber > 0)
+			{
+				break;
+			}
+
+			blockCounter = 0;
+		}
+	}
+
+	return deleteInfo.linesNumber;
 }
 
 this.tryRotate = function(x, y, model) {
@@ -257,12 +272,12 @@ this.updateProperties = function(x, y, model) {
 		if (blockX < 0 || blockX >= gameConsts.getGameWidth() || blockY >= gameConsts.getGameHeight())
 		{
 			movingBlockState[k].value = -1;
-			model.set(k, { value: -1 });
+			model.setProperty(k, "value", -1);
 		}
 		else if (movingBlockState[k].value === -1)
 		{
 			movingBlockState[k].value = 0;
-			model.set(k, { value: 0 });
+			model.setProperty(k, "value", 0);
 		}
 	}
 }

@@ -12,6 +12,7 @@ GridView {
 	model: ListModel {
 		property int value;
 		property int colorIndex;
+		property int sizeW;
 	}
 	delegate: ItemDelegate { }
 }
