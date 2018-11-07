@@ -16,7 +16,7 @@ Rectangle {
 
 		anchors.horizontalCenter: parent.horizontalCenter;
 
-		text: qsTr("Выберите уровень");
+		text: tr("Выберите уровень");
 		color: colorTheme.highlightPanelColor;
 	}
 

@@ -11,7 +11,7 @@ Rectangle {
 	BodyText {
 		anchors.centerIn: parent;
 
-		text: qsTr("Пауза...");
+		text: tr("Пауза...");
 		color: colorTheme.highlightPanelColor;
 	}
 

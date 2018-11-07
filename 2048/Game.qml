@@ -155,7 +155,7 @@ Rectangle {
 			anchors.horizontalCenter: parent.horizontalCenter;
 			anchors.top: parent.top;
 			anchors.topMargin: game.space;
-			text: qsTr("BEST");
+			text: tr("BEST");
 			color: "#EEE4DA";
 			font: bigFont;
 		}
@@ -197,7 +197,7 @@ Rectangle {
 			anchors.horizontalCenter: parent.horizontalCenter;
 			anchors.top: parent.top;
 			anchors.topMargin: game.space;
-			text: qsTr("SCORE");
+			text: tr("SCORE");
 			color: "#EEE4DA";
 			font: bigFont;
 		}
@@ -227,7 +227,7 @@ Rectangle {
 			anchors.bottomMargin: game.cellSize / 2;
 			font: bigFont;
 			color: "#734A12";
-			text: qsTr("GAME OVER");
+			text: tr("GAME OVER");
 		}
 
 		Rectangle {
@@ -242,7 +242,7 @@ Rectangle {
 				anchors.centerIn: parent;
 				font: smallFont;
 				color: "#FFFFFF";
-				text: qsTr("Try again");
+				text: tr("Try again");
 			}
 		}
 
@@ -319,7 +319,7 @@ Rectangle {
 			visible: false;
 			focus: true;
 			wrapMode: Text.Wrap;
-			text: qsTr("Use your arrow keys to move the tiles. When two tiles with the same number touch, they merge into one!");
+			text: tr("Use your arrow keys to move the tiles. When two tiles with the same number touch, they merge into one!");
 
 			onSelectPressed: {
 				this.visible = false;

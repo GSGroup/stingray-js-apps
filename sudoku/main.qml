@@ -9,7 +9,7 @@ Application {
 		id: sudokuApplication;
 		focus: true;
 		name: "sudoku";
-		displayName: qsTr("Sudoku");
+		displayName: tr("Sudoku");
 		anchors.horizontalCenter: safeArea.horizontalCenter;
 		anchors.verticalCenter: safeArea.verticalCenter;		
 

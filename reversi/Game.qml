@@ -31,7 +31,7 @@ Rectangle {
 			anchors.topMargin: 20;
 			anchors.horizontalCenter: parent.horizontalCenter;
 
-			text: qsTr("Reversi");
+			text: tr("Reversi");
 			color: "#000";
 		}
 
@@ -80,7 +80,7 @@ Rectangle {
 		visible: !mainMenu.visible;
 
 		MainText {
-			text: qsTr("White") + " " + game.whiteCounter;
+			text: tr("White") + " " + game.whiteCounter;
 		}
 	}
 
@@ -93,7 +93,7 @@ Rectangle {
 		visible: !mainMenu.visible;
 
 		MainText {
-			text: qsTr("Black") + " " + game.blackCounter;
+			text: tr("Black") + " " + game.blackCounter;
 		}
 	}
 
@@ -107,11 +107,11 @@ Rectangle {
 		visible: !game.multiplayer && !mainMenu.visible;
 
 		MainText {
-			text: qsTr(game.playerWhite ? "You're playing with white" : "You're playing with black");
+			text: tr(game.playerWhite ? "You're playing with white" : "You're playing with black");
 		}
 
 		MainText {
-			text: qsTr(game.easy ? "Low difficulty" : "High difficulty");
+			text: tr(game.easy ? "Low difficulty" : "High difficulty");
 		}
 	}
 
@@ -122,7 +122,7 @@ Rectangle {
 
 		visible: game.multiplayer && !mainMenu.visible;
 
-		text: qsTr(game.playerWhite ? "White is moving" : "Black is moving");
+		text: tr(game.playerWhite ? "White is moving" : "Black is moving");
 	}
 
 	BigText {
@@ -134,9 +134,9 @@ Rectangle {
 		z: 1;
 		style: Shadow;
 		styleColor: "#333";
-		text: game.whiteCounter == game.blackCounter ? qsTr("Draw") :
-			game.multiplayer && game.whiteCounter > game.blackCounter ? qsTr("White won!") :
-			game.multiplayer && game.whiteCounter < game.blackCounter ? qsTr("Black won!") :
+		text: game.whiteCounter == game.blackCounter ? tr("Draw") :
+			game.multiplayer && game.whiteCounter > game.blackCounter ? tr("White won!") :
+			game.multiplayer && game.whiteCounter < game.blackCounter ? tr("Black won!") :
 			game.playerWhite && game.whiteCounter > game.blackCounter || !game.playerWhite && game.whiteCounter < game.blackCounter
 			? "You won!"
 			: "You lose";
@@ -294,7 +294,7 @@ Rectangle {
 				anchors.centerIn: parent;
 				anchors.bottomMargin: 10;
 
-				text: qsTr("Help");
+				text: tr("Help");
 			}
 
 			Rectangle {
@@ -321,7 +321,7 @@ Rectangle {
 				anchors.centerIn: parent;
 				anchors.bottomMargin: 10;
 
-				text: qsTr("Start with white");
+				text: tr("Start with white");
 			}
 
 			Rectangle {
@@ -348,7 +348,7 @@ Rectangle {
 				anchors.centerIn: parent;
 				anchors.bottomMargin: 10;
 
-				text: qsTr("Start with black");
+				text: tr("Start with black");
 			}
 
 			Rectangle {
@@ -377,7 +377,7 @@ Rectangle {
 				anchors.centerIn: parent;
 				anchors.bottomMargin: 10;
 
-				text: qsTr(game.easy ? "Hard" : "Easy");
+				text: tr(game.easy ? "Hard" : "Easy");
 			}
 
 			Rectangle {
