@@ -1,5 +1,4 @@
-this.init = function () {
-	fieldView.elements = []
+this.init = function (elements) {
 	for (var i = 0; i < 16; i ++)
 		fieldView.elements.push({val: 0, added: false, joined: false});
 	this.add();

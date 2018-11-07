@@ -53,17 +53,14 @@ Rectangle {
 			onCompleted: {
 				this.swapList = new Array(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15);
 				this.elements = new Array();
-				for (var i = 0; i < 16; i ++)
-					this.elements.push({val: 0, added: false, joined: false});
+
 				for (var i = 16; i < 32; i ++) {
 					this.children[i].value = 0;
 					this.children[i].added = false;
 					this.children[i].x = (i % 4) * this.cellWidth;
 					this.children[i].y = Math.floor(i / 4 - 4) * this.cellHeight;
 				}
-				engine.add();
-				engine.add();
-//				engine.set(0,0,2);
+				engine.init(elements);
 				this.draw();
 			}
 
@@ -341,6 +338,4 @@ Rectangle {
 //		backGrid.visible = !backGrid.visible;
 //		backGrid.currentIndex = 0;
 //	}
-onCompleted: {engine.init();}
-
 }
