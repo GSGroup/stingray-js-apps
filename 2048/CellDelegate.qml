@@ -1,23 +1,46 @@
 Rectangle {
 	id: rect;
-	height: parent.cellHeight;
-	width: parent.cellWidth;
+
 	property int value: -1;
 	property int added: false;
+
+	height: parent.cellHeight;
+	width: parent.cellWidth;
+
+	color: "#bcb0a200";
+	z: value ? 1 : 0;
+
 	Behavior on x { animation: Animation { duration: rect.value < 2 ? 0 : 500; } }
 	Behavior on y { animation: Animation { duration: rect.value < 2 ? 0 : 500; } }
-	z: value ? 1 : 0;
+
 
 	Rectangle {
 		id: innerRect;
-		radius: 10;
+
 		anchors.fill: parent;
 		anchors.margins: 10;
+
+		radius: 10;
+		color: rect.value == 0 ? "#ccc0b2" :
+			rect.value == 2 ? "#eee4da" :
+			rect.value == 4 ? "#ece0ca" :
+			rect.value == 8 ? "#eeb57e" :
+			rect.value == 16 ? "#f39562" :
+			rect.value == 32 ? "#fd7d60" :
+			rect.value == 64 ? "#f55837" :
+			rect.value == 128 ? "#f4ca78" :
+			rect.value == 256 ? "#edca6c" :
+			rect.value == 512 ? "#efca45" :
+			rect.value == 1024 ? "#f0c63c" :
+			rect.value == 2048 ? "#f0c129" :
+			"#000000";
+
 		Behavior on color { animation: Animation { duration: 150; } }
 		
 		Text {
-			text: rect.value ? rect.value : "";	
 			anchors.centerIn: parent;
+
+			text: rect.value ? rect.value : "";
 			color: rect.value <= 4 ? "#6D654E" : "#ffffff";
 			font: bigFont;
 		}
@@ -25,34 +48,14 @@ Rectangle {
 
 	Timer {
 		id: scaleTimer;
+
 		interval: 150;
-		onTriggered: {
-			innerRect.anchors.margins = 10;
-		}
+
+		onTriggered: { innerRect.anchors.margins = 10; }
 	}
 
 	function doscale () {
 		innerRect.anchors.margins = 0;
 		scaleTimer.restart();
 	}
-
-	onValueChanged: {
-		if (rect.value && rect.added) this.doscale();
-		switch (rect.value) {
-		case 0: innerRect.color =  "#ccc0b2"; break; 
-		case 2: innerRect.color = "#eee4da"; break;
-		case 4: innerRect.color = "#ECE0CA"; break;
-		case 8: innerRect.color = "#EEB57E"; break;
-		case 16: innerRect.color = "#F39562"; break;
-		case 32: innerRect.color = "#FD7D60"; break;
-		case 64: innerRect.color = "#F55837"; break;
-		case 128: innerRect.color = "#F4CA78"; break;
-		case 256: innerRect.color = "#EDCA6C"; break;
-		case 512: innerRect.color = "#EFCA45"; break;
-		case 1024: innerRect.color = "#F0C63C"; break;
-		case 2048: innerRect.color = "#F0C129"; break;
-		default: innerRect.color = "#000000"; 
-		}
-	}
-	color: "#bcb0a200";
 }
