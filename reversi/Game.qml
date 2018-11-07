@@ -107,11 +107,11 @@ Rectangle {
 		visible: !game.multiplayer && !mainMenu.visible;
 
 		MainText {
-			text: tr(game.playerWhite ? "You're playing with white" : "You're playing with black");
+			text: game.playerWhite ? tr("You're playing with white") : tr("You're playing with black");
 		}
 
 		MainText {
-			text: tr(game.easy ? "Low difficulty" : "High difficulty");
+			text: game.easy ? tr("Low difficulty") : tr("High difficulty");
 		}
 	}
 
@@ -122,7 +122,7 @@ Rectangle {
 
 		visible: game.multiplayer && !mainMenu.visible;
 
-		text: tr(game.playerWhite ? "White is moving" : "Black is moving");
+		text: game.playerWhite ? tr("White is moving") : tr("Black is moving");
 	}
 
 	BigText {
@@ -138,8 +138,8 @@ Rectangle {
 			game.multiplayer && game.whiteCounter > game.blackCounter ? tr("White won!") :
 			game.multiplayer && game.whiteCounter < game.blackCounter ? tr("Black won!") :
 			game.playerWhite && game.whiteCounter > game.blackCounter || !game.playerWhite && game.whiteCounter < game.blackCounter
-			? "You won!"
-			: "You lose";
+			? tr("You won!")
+			: tr("You lose");
 
 		visible: game.over;
 
@@ -377,7 +377,7 @@ Rectangle {
 				anchors.centerIn: parent;
 				anchors.bottomMargin: 10;
 
-				text: tr(game.easy ? "Hard" : "Easy");
+				text: game.easy ? tr("Hard") : tr("Easy");
 			}
 
 			Rectangle {
