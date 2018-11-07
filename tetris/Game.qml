@@ -150,7 +150,7 @@ Rectangle{
 				anchors.top: nextTetraminos.bottom;
 				anchors.leftMargin: gameConsts.getBlockSize();
 
-				text: qsTr("Уровень ") + game.currentLevel;
+				text: tr("Уровень ") + game.currentLevel;
 				color: colorTheme.highlightPanelColor;
 			}
 
@@ -161,7 +161,7 @@ Rectangle{
 				anchors.topMargin: gameConsts.getBlockSize();
 				anchors.leftMargin: gameConsts.getBlockSize();
 
-				text: qsTr("Счет    ") + game.gameScore;
+				text: tr("Счет    ") + game.gameScore;
 				color: colorTheme.highlightPanelColor;
 			}
 		}

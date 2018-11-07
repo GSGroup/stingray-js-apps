@@ -2,7 +2,7 @@ import "Game.qml";
 
 Application {
 	id: gameScreen;
-	displayName: qsTr("PACMAN");
+	displayName: tr("PACMAN");
 
 	Game {
 		width: parent.height;

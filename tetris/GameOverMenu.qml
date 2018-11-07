@@ -22,7 +22,7 @@ Rectangle {
 		horizontalAlignment: Text.AlignHCenter;
 		verticalAlignment: Text.AlignVCenter;
 
-		text: qsTr("Игра окончена");
+		text: tr("Игра окончена");
 		color: colorTheme.highlightPanelColor;
 	}
 

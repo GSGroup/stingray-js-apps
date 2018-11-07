@@ -3,7 +3,7 @@ import "Game.qml";
 Application {
 	id: guesserApp;
 
-	displayName: qsTr("Угадыватель");
+	displayName: tr("Угадыватель");
 
 	Game {
 		id: game;

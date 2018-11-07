@@ -14,7 +14,7 @@ Item {
 		BigText {
 			anchors.centerIn: parent;
 
-			text: qsTr(model.text);
+			text: tr(model.text);
 			color: "#000";
 		}
 	}
