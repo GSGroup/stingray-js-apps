@@ -44,7 +44,7 @@ Rectangle {
 
 			Timer {
 				id: animTimer;
-				interval: 300;
+				interval: 800;
 				onTriggered: {
 					fieldView.next();
 				}

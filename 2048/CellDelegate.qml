@@ -4,8 +4,8 @@ Rectangle {
 	width: parent.cellWidth;
 	property int value: -1;
 	property int added: false;
-	Behavior on x { animation: Animation { duration: rect.value < 2 || rect.added ? 0 : 300; } }
-	Behavior on y { animation: Animation { duration: rect.value < 2 || rect.added ? 0 : 300; } }
+	Behavior on x { animation: Animation { duration: rect.value < 2 ? 0 : 500; } }
+	Behavior on y { animation: Animation { duration: rect.value < 2 ? 0 : 500; } }
 	z: value ? 1 : 0;
 
 	Rectangle {
@@ -13,11 +13,7 @@ Rectangle {
 		radius: 10;
 		anchors.fill: parent;
 		anchors.margins: 10;
-		Behavior on color { animation: Animation { duration: rect.added ? 300 : 0; } }
-		Behavior on x { animation: Animation { duration: rect.added ? 150 : 0; } }
-		Behavior on y { animation: Animation { duration: rect.added ? 150 : 0; } }
-		Behavior on width { animation: Animation { duration: rect.added ? 150 : 0; } }
-		Behavior on height { animation: Animation { duration: rect.added ? 150 : 0; } }
+		Behavior on color { animation: Animation { duration: 150; } }
 		
 		Text {
 			text: rect.value ? rect.value : "";	
