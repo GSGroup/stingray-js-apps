@@ -1,47 +1,96 @@
-this.init = function (elements) {
+var elements = [];
+var swapList = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+var direction = 'Up';
+
+this.init = function() {
 	for (var i = 0; i < 16; i ++)
 		elements.push({val: 0, added: false, joined: false});
 	add();
 	add();
 }
 
+this.changeCells = function(cells, width, height) {
+	for (var i = 0; i < 16; ++i)
+	{
+		if (elements[i].joined)
+		{
+			cells[i + 16].value = cells[swapList[i]].value;
+		}
+		else
+		{
+			if (!elements[i].added)
+				cells[swapList[i]].value = elements[i].val;
+			else
+				cells[swapList[i]].value = 0;
+		}
+		cells[swapList[i]].added = elements[i].added;
+		cells[swapList[i]].x = (i % 4) * width;
+		cells[swapList[i]].y = Math.floor(i / 4) * height;
+	}
+}
+
+this.next = function(cells) {
+	for (var i = 16; i < 32; ++i)
+		cells[i].value = 0;
+
+	for (var i = 0; i < 16; ++i)
+	{
+		if (elements[i].added)
+			cells[swapList[i]].value = elements[i].val;
+
+		if (elements[i].joined)
+		{
+			cells[swapList[i]].added = true;
+			cells[swapList[i]].value *= 2;
+		}
+	}
+}
 
 this.tic = function () {
 	for (var i = 0; i < 16; i ++)
-		fieldView.elements[i] = {added: false, val: fieldView.elements[i].val, joined: false};
+		elements[i] = {added: false, val: elements[i].val, joined: false};
 }
 
 function rotate(i, j) {
-	switch (game.direction) {
-	case 'Down': return i * 4 + j;
-	case 'Up': return (3 - i) * 4 + j;
-	case 'Right': return j * 4 + i;
-	case 'Left': return j * 4 + 3 - i;
-	default: log("FATAL ERROR: invalid direction!!!"); return i * 4 + j;
+	switch (direction)
+	{
+		case 'Down':
+			return i * 4 + j;
+		case 'Up':
+			return (3 - i) * 4 + j;
+		case 'Right':
+			return j * 4 + i;
+		case 'Left':
+			return j * 4 + 3 - i;
+		default:
+			log("FATAL ERROR: invalid direction!!!");
+			return i * 4 + j;
 	}
 }
 
 function get(i, j) {
-	return fieldView.elements[rotate(i,j)];
+	return elements[rotate(i, j)];
 }
 
 function set(i, j, v) {
-	fieldView.elements[rotate(i,j)] =  {val: v, added: false, joined: false} ;
+	elements[rotate(i, j)] = { val: v, added: false, joined: false };
 }
 
 function setNew(i, j, v) {
-	fieldView.elements[rotate(i,j)] =  {val: v, added: true, joined: false} ;
+	elements[rotate(i, j)] = { val: v, added: true, joined: false };
 }
 
 function setJoined(i, j, v) {
-	fieldView.elements[rotate(i,j)] =  {val: v, added: false, joined: true};
+	elements[rotate(i, j)] =  { val: v, added: false, joined: true };
 }
 
 function swap(i1, j1, i2, j2) {
-    if (get(i1,j1).val == 0 && get(i2,j2).val == 0) return;
-	var x = fieldView.swapList[rotate(i1,j1)];
-	fieldView.swapList[rotate(i1,j1)] = fieldView.swapList[rotate(i2,j2)];
-	fieldView.swapList[rotate(i2,j2)] = x;
+    if (get(i1, j1).val == 0 && get(i2, j2).val == 0)
+		return;
+
+	var x = swapList[rotate(i1, j1)];
+	swapList[rotate(i1, j1)] = swapList[rotate(i2, j2)];
+	swapList[rotate(i2, j2)] = x;
 }
 
 
@@ -71,14 +120,15 @@ this.check = function () {
 }
 
 this.clear = function () {
-	for (var j = 0; j < 4; j ++)
-		for (var i = 0; i < 4; i ++) 
-			set(i,j,0);
+	for (var j = 0; j < 4; ++j)
+		for (var i = 0; i < 4; ++i)
+			set(i, j, 0);
 	add();
 	add();
 }
 
-this.turn = function () {
+this.turn = function(key) {
+	direction = key;
 	var changed = false;
 	var sum = 0;
 	for (var j = 0; j < 4; j ++) {
