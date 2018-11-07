@@ -44,23 +44,20 @@ Rectangle {
 
 			Timer {
 				id: animTimer;
+
 				interval: 800;
-				onTriggered: {
-					fieldView.next();
-				}
+
+				onTriggered: { engine.next(fieldView.children); }
 			}
 
 			onCompleted: {
-				this.swapList = new Array(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15);
-				this.elements = new Array();
-
 				for (var i = 16; i < 32; i ++) {
 					this.children[i].value = 0;
 					this.children[i].added = false;
 					this.children[i].x = (i % 4) * this.cellWidth;
 					this.children[i].y = Math.floor(i / 4 - 4) * this.cellHeight;
 				}
-				engine.init(elements);
+				engine.init();
 				this.draw();
 			}
 
@@ -81,8 +78,7 @@ Rectangle {
 				engine.tic();
 				switch (key) {
 				case "Up": case "Down": case "Left": case "Right":
-					game.direction = key;
-					var res = engine.turn();
+					var res = engine.turn(key);
 					if (res.changed) engine.add();
 					scoreText.val += res.sum;
 					if (scoreText.val > bestText.val) {
@@ -99,38 +95,8 @@ Rectangle {
 			}
 
 			function draw() {
-				log(this.swapList);
-				for (var i = 0; i < 16; i ++) {
-//					this.children[i].value = this.swapList[i]; //this.elements[i].val;
-					if (this.elements[i].joined) {
-//						this.children[this.swapList[i]].value = 2048;
-						this.children[i + 16].value = this.children[this.swapList[i]].value;
-					} else {
-						if (!this.elements[i].added)
-							this.children[this.swapList[i]].value = this.elements[i].val;
-						else 
-							this.children[this.swapList[i]].value = 0;
-					}
-					this.children[this.swapList[i]].added = this.elements[i].added;
-					this.children[this.swapList[i]].x = (i % 4) * this.cellWidth;
-					this.children[this.swapList[i]].y = Math.floor(i / 4) * this.cellHeight;
-//					log (oldx + ',' + oldy + " now at " + this.children[i].x + ',' + this.children[i].y);
-				}
+				engine.changeCells(this.children, this.cellWidth, this.cellHeight);
 				animTimer.restart();
-			}
-
-			function next() {
-				for (var i = 16; i < 32; i ++) 
-					this.children[i].value = 0;
-				for (var i = 0; i < 16; i ++) {
-					if (this.elements[i].added) {
-						this.children[this.swapList[i]].value = this.elements[i].val;
-					}
-					if (this.elements[i].joined) {
-						this.children[this.swapList[i]].added = true;
-						this.children[this.swapList[i]].value *= 2;
-					}
-				}
 			}
 		}
 	}
