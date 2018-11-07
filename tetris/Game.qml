@@ -25,6 +25,7 @@ Rectangle{
 		property int currentLevel: 1;
 		property int gameScore: 0;
 		property int dropTime: 16000;
+		property bool deletingLines: false;
 
 		width: gameConsts.getGameWidth();
 		height: gameConsts.getGameHeight();
@@ -58,6 +59,8 @@ Rectangle{
 
 				width: gameConsts.getBlockSize() * 4;
 				height: gameConsts.getBlockSize() * 4;
+
+				visible: !game.deletingLines;
 			}
 
 			onSelectPressed: { engine.tryRotate(movingTetraminos.x, movingTetraminos.y, blockView.model); }
@@ -88,27 +91,43 @@ Rectangle{
 			repeat: true;
 
 			onTriggered: {
-				if (!engine.hasColllisions(movingTetraminos.x, movingTetraminos.y + game.stepSize))
+				// удаляем ряд если есть флаг
+				if (game.deletingLines)
 				{
-					movingTetraminos.y += game.stepSize;
-					engine.updateProperties(movingTetraminos.x, movingTetraminos.y, blockView.model);
-				}
-				else
-				{
-					var info = engine.parkBlock(movingTetraminos.x, movingTetraminos.y, gameView.model)
-					game.updateInfo(info);
+					game.updateInfo(engine.removeLines(gameView.model));
 
-					engine.nextStep(blockView.model, nextBlockView.model);
-
-					if (!engine.hasColllisions(game.startX, 0))
+					// проверяем нужно ли удалять еще раз
+					if (engine.checkLines() > 0)
 					{
-						movingTetraminos.x = game.startX;
-						movingTetraminos.y = 0;
+						engine.updateModelWidth(gameView.model);
 					}
 					else
 					{
-						movingTetraminos.visible = false;
-						gameOverMenu.show();
+						game.deletingLines = false;
+						game.nextStep();
+					}
+				}
+				// если нет удаления работаем в обычном режиме
+				else
+				{
+					if (!engine.hasColllisions(movingTetraminos.x, movingTetraminos.y + game.stepSize))
+					{
+						movingTetraminos.y += game.stepSize;
+						engine.updateProperties(movingTetraminos.x, movingTetraminos.y, blockView.model);
+					}
+					else
+					{
+						engine.parkBlock(movingTetraminos.x, movingTetraminos.y, gameView.model)
+
+						if( engine.checkLines() > 0 )
+						{
+							engine.updateModelWidth(gameView.model);
+							game.deletingLines = true;
+						}
+						else
+						{
+							game.nextStep();
+						}
 					}
 				}
 			}
@@ -290,6 +309,21 @@ Rectangle{
 
 			var info = engine.restartGame(gameView.model, blockView.model, nextBlockView.model);
 			game.updateInfo(info);
+		}
+
+		function nextStep (){
+			engine.nextStep(blockView.model, nextBlockView.model);
+
+			if (!engine.hasColllisions(game.startX, 0))
+			{
+				movingTetraminos.x = game.startX;
+				movingTetraminos.y = 0;
+			}
+			else
+			{
+				movingTetraminos.visible = false;
+				gameOverMenu.show();
+			}
 		}
 
 		onUpPressed: { pauseMenu.show(); }

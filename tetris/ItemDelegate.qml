@@ -3,6 +3,8 @@ import "tetrisConsts.js" as gameConsts;
 Rectangle {
 	id: rect;
 
+	property int animationDuration: 1000;
+
 	width: gameConsts.getBlockSize();
 	height: gameConsts.getBlockSize();
 
@@ -12,14 +14,19 @@ Rectangle {
 	Rectangle {
 		id: innerRect;
 
-		x: gameConsts.getSpaceBetweenBlocks();
-		y: gameConsts.getSpaceBetweenBlocks();
+		anchors.centerIn: parent;
 
-		width: gameConsts.getBlockSize() - gameConsts.getSpaceBetweenBlocks() * 2;
-		height: gameConsts.getBlockSize() - gameConsts.getSpaceBetweenBlocks() * 2;
+		width: model.sizeW;
+		height: model.sizeW;
 
 		color: gameConsts.getColor(model.colorIndex);
 
 		visible: model.value > 0;
+
+		onWidthChanged: {
+		}
+
+		Behavior on width { animation: Animation { duration: rect.animationDuration; easingType: Animation.OutCirc;} }
+		Behavior on height { animation: Animation { duration: rect.animationDuration; easingType: Animation.OutCirc;} }
 	}
 }
