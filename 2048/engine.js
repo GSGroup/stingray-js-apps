@@ -76,10 +76,6 @@ function set(i, j, v) {
 	elements[rotate(i, j)] = { val: v, added: false, joined: false };
 }
 
-function setNew(i, j, v) {
-	elements[rotate(i, j)] = { val: v, added: true, joined: false };
-}
-
 function setJoined(i, j, v) {
 	elements[rotate(i, j)] =  { val: v, added: false, joined: true };
 }
@@ -93,20 +89,22 @@ function swap(i1, j1, i2, j2) {
 	swapList[rotate(i2, j2)] = x;
 }
 
-
 function add() {
 	var v = [];
-	for (var i = 0; i < 4; i ++) {
-		for (var j = 0; j < 4; j ++) {
-			if (get(i,j).val == '0')
-				v.push({'i': i, 'j': j});
-		}
+
+	for (var i = 0; i < 16; ++i)
+	{
+		if (!elements[i].val)
+			v.push(i);
 	}
-	if (v.length == 0) return false;
-	var ind = Math.floor(Math.random() * v.length);
-	setNew(v[ind].i, v[ind].j, Math.random() > 0.1 ? 2 : 4);
-	return true;
+
+	if (!v.length)
+		return;
+
+	var index = v[Math.floor(Math.random() * v.length)];
+	elements[index] = { val: Math.random() > 0.1 ? 2 : 4, added: true, joined: false };
 }
+
 this.add = add;
 
 this.check = function () {
