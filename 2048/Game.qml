@@ -87,9 +87,18 @@ Rectangle {
 					}
 					if (!engine.check()) {
 						restartMenu.visible = true;
+						restartMenu.message = tr("Game over");
 						restartMenu.setFocus();
 					}
 					fieldView.draw();
+
+					if (res.win)
+					{
+						restartMenu.visible = true;
+						restartMenu.message = tr("You win!");
+						restartMenu.setFocus();
+					}
+
 					return true;
 				}
 			}
@@ -179,30 +188,38 @@ Rectangle {
 
 	Rectangle {
 		id: restartMenu;
-		focus: true;
-		visible: false;
+
+		property string message;
+
 		anchors.fill: parent;
+
+		focus: true;
 		radius: 10;
 		color: "#EEE4DAB0";
+
+		visible: false;
 
 		Text {
 			anchors.centerIn: parent;
 			anchors.bottomMargin: game.cellSize / 2;
+
 			font: bigFont;
 			color: "#734A12";
-			text: tr("GAME OVER");
+			text: restartMenu.message;
 		}
 
 		Rectangle {
-			anchors.centerIn: parent;
-			anchors.topMargin: game.cellSize / 2;
-			color: "#734A12";
-			radius: 10;
 			width: game.cellSize;
 			height: game.cellSize / 2;
+			anchors.centerIn: parent;
+			anchors.topMargin: game.cellSize / 2;
+
+			color: "#734A12";
+			radius: 10;
 
 			Text {
 				anchors.centerIn: parent;
+
 				font: smallFont;
 				color: "#FFFFFF";
 				text: tr("Try again");
