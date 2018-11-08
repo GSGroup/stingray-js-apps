@@ -130,38 +130,56 @@ this.clear = function () {
 }
 
 this.turn = function(key) {
-	direction = key;
 	var changed = false;
 	var sum = 0;
-	for (var j = 0; j < 4; j ++) {
-		for (var i = 3; i >= 0; i --) {
+	var win = false;
+
+	direction = key;
+
+	for (var j = 0; j < 4; ++j)
+	{
+		for (var i = 3; i >= 0; --i)
+		{
 			var t = true;
-			while (get(i,j).val == 0) {
+			while (get(i, j).val == 0)
+			{
 				t = false;
-				for (var k = i; k > 0; k --) {
-					if (get(k - 1,j).val != 0) {
+				for (var k = i; k > 0; --k)
+				{
+					if (get(k - 1, j).val != 0)
+					{
 						t = true;
 						changed = true;
 					}
-					set(k,j,get(k - 1,j).val);
+					set(k, j, get(k - 1, j).val);
 					swap(k - 1, j, k, j);
 				}
-				set(0,j,0);
-				if (!t) break;
+				set(0, j, 0);
+				if (!t)
+					break;
 			}
-			if (!t) break;
-			if (i != 3) i ++; else continue;
-			if (get(i,j).val == get(i - 1,j).val && !get(i,j).joined && !get(i - 1,j).joined) {
+			if (!t)
+				break;
+
+			if (i != 3)
+				++i;
+			else
+				continue;
+
+			if (get(i, j).val == get(i - 1, j).val && !get(i, j).joined && !get(i - 1, j).joined)
+			{
 				changed = true;
-				setJoined(i,j,get(i,j).val * 2);
-				swap(i - 1,j,i,j);
-				sum += get(i,j).val;
-				set(i - 1,j,0);
-				i ++;
+				setJoined(i, j, get(i, j).val * 2);
+				if (get(i, j).val == 2048)
+					win = true;
+				swap(i - 1, j, i, j);
+				sum += get(i, j).val;
+				set(i - 1, j, 0);
+				++i;
 			}
-			i --;
+			--i;
 		}
 	}
-	log("CHANGED: ", changed);
-	return {'sum': sum, 'changed': changed};
+	log("CHANGED: " + changed + " win " + win);
+	return { 'sum': sum, 'changed': changed, 'win': win };
 }
