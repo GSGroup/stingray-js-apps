@@ -108,12 +108,16 @@ function add() {
 this.add = add;
 
 this.check = function () {
-	for (var j = 0; j < 4; j ++)
-		for (var i = 0; i < 4; i ++) {
-			if (get(i,j).val == 0) return true;
-			if (i != 3 && get(i,j).val == get(i + 1,j).val) return true;
-			if (j != 3 && get(i,j).val == get(i,j + 1).val) return true;
-		}
+	for (var i = 0; i < 16; ++i)
+	{
+		if (!elements[i].val)
+			return true;
+		if (i % 4 < 3 && elements[i].val == elements[i + 1].val)
+			return true;
+		if (i < 12 && elements[i].val == elements[i + 4].val)
+			return true;
+	}
+
 	return false;
 }
 
