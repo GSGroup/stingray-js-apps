@@ -39,6 +39,8 @@ Rectangle{
 		ItemGridView {
 			id: gameView;
 
+			animationTime: animTimer.interval;
+
 			width: game.width;
 			height: game.height;
 		}
@@ -97,7 +99,7 @@ Rectangle{
 					game.updateInfo(engine.removeLines(gameView.model));
 
 					// проверяем нужно ли удалять еще раз
-					if (engine.checkLines() > 0)
+					if ( engine.checkLines() > 0)
 					{
 						engine.updateModelWidth(gameView.model);
 					}
@@ -117,7 +119,7 @@ Rectangle{
 					}
 					else
 					{
-						engine.parkBlock(movingTetraminos.x, movingTetraminos.y, gameView.model)
+						engine.parkBlock(movingTetraminos.x, movingTetraminos.y, gameView.model);
 
 						if( engine.checkLines() > 0 )
 						{

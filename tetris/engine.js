@@ -46,7 +46,7 @@ this.initMovingTetraminos = function(model) {
 this.initNextTetraminos = function(model) {
 	for (var bit = 0x8000; bit > 0; bit = bit >> 1)
 	{
-		model.append({ value: pieces[nextBlockViewIndex][nextRotationIndex] & bit, colorIndex: 0, sizeW: blockSize });
+		model.append({ value: pieces[nextBlockViewIndex][nextRotationIndex] & bit, colorIndex: nextColorIndex, sizeW: blockSize });
 	}
 }
 
@@ -91,7 +91,7 @@ this.updateModelWidth = function(model)
 {
 	for (var idx = deleteInfo.idx; idx > deleteInfo.idx - gameConsts.getGlassWidth() * deleteInfo.linesNumber; --idx)
 	{
-		model.set(idx,{ value: canvasState[idx].value, colorIndex: canvasState[idx].colorIndex, sizeW: blockSize * 0.1 });
+		model.setProperty(idx, "sizeW", 0);
 	}
 }
 
@@ -150,7 +150,11 @@ this.parkBlock = function(x, y, model) {
 		}
 	}
 
-	this.updateCanvasModel(model);
+	for(var idx = 0; idx < gameConsts.getBlockNumber(); ++idx)
+	{
+		model.setProperty(idx, "value", canvasState[idx].value);
+		model.setProperty(idx, "colorIndex", canvasState[idx].colorIndex);
+	}
 }
 
 this.updateCanvasModel = function(model) {
@@ -172,7 +176,6 @@ this.removeLines = function(model) {
 		canvasState[i].value = 0;
 		canvasState[i].colorIndex = 0;
 	}
-
 	this.updateCanvasModel(model);
 	calcScores();
 
@@ -205,12 +208,7 @@ function calcScores() {
 }
 
 this.checkLines = function() {
-
 	var blockCounter = 0;
-
-	deleteInfo.linesNumber = 0;
-	deleteInfo.idx = -1;
-
 	for (var idx = 0; idx < gameConsts.getBlockNumber(); ++idx)
 	{
 		if (canvasState[idx].value > 0)
