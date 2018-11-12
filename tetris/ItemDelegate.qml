@@ -3,7 +3,7 @@ import "tetrisConsts.js" as gameConsts;
 Rectangle {
 	id: rect;
 
-	property int animationDuration: 1000;
+	property int animationInterval: 0;
 
 	width: gameConsts.getBlockSize();
 	height: gameConsts.getBlockSize();
@@ -23,10 +23,20 @@ Rectangle {
 
 		visible: model.value > 0;
 
-		onWidthChanged: {
+		Behavior on width {
+			animation: Animation {
+				id: widthAnimation;
+
+				duration: rect.animationInterval;
+			}
 		}
 
-		Behavior on width { animation: Animation { duration: rect.animationDuration; easingType: Animation.OutCirc;} }
-		Behavior on height { animation: Animation { duration: rect.animationDuration; easingType: Animation.OutCirc;} }
+		Behavior on height {
+			animation: Animation {
+				id: heightAnimation;
+
+				duration: rect.animationInterval;
+			}
+		}
 	}
 }
