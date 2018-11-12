@@ -4,6 +4,7 @@ Rectangle {
 	id: rect;
 
 	property int animationInterval: 0;
+	property bool isAnimated: model.needAnim;
 
 	width: gameConsts.getBlockSize();
 	height: gameConsts.getBlockSize();
@@ -23,20 +24,7 @@ Rectangle {
 
 		visible: model.value > 0;
 
-		Behavior on width {
-			animation: Animation {
-				id: widthAnimation;
-
-				duration: rect.animationInterval;
-			}
-		}
-
-		Behavior on height {
-			animation: Animation {
-				id: heightAnimation;
-
-				duration: rect.animationInterval;
-			}
-		}
+		Behavior on width { animation: Animation { id: widthAnimation; running: rect.isAnimated; duration: rect.animationInterval; easingType: Animation.OutCirc; } }
+		Behavior on height { animation: Animation { id: heightAnimation; running: rect.isAnimated; duration: rect.animationInterval; easingType: Animation.OutCirc; } }
 	}
 }
