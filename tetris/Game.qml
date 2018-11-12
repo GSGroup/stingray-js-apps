@@ -39,7 +39,7 @@ Rectangle{
 		ItemGridView {
 			id: gameView;
 
-			animationTime: animTimer.interval;
+			animationTime: game.dropTime / (gameConsts.getGlassHeight() - 4) / game.currentLevel;
 
 			width: game.width;
 			height: game.height;
@@ -93,12 +93,9 @@ Rectangle{
 			repeat: true;
 
 			onTriggered: {
-				// удаляем ряд если есть флаг
 				if (game.deletingLines)
 				{
 					game.updateInfo(engine.removeLines(gameView.model));
-
-					// проверяем нужно ли удалять еще раз
 					if ( engine.checkLines() > 0)
 					{
 						engine.updateModelWidth(gameView.model);
@@ -109,7 +106,6 @@ Rectangle{
 						game.nextStep();
 					}
 				}
-				// если нет удаления работаем в обычном режиме
 				else
 				{
 					if (!engine.hasColllisions(movingTetraminos.x, movingTetraminos.y + game.stepSize))
@@ -120,11 +116,10 @@ Rectangle{
 					else
 					{
 						engine.parkBlock(movingTetraminos.x, movingTetraminos.y, gameView.model);
-
 						if( engine.checkLines() > 0 )
 						{
-							engine.updateModelWidth(gameView.model);
 							game.deletingLines = true;
+							engine.updateModelWidth(gameView.model);
 						}
 						else
 						{

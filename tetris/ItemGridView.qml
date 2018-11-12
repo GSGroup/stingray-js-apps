@@ -2,7 +2,7 @@ import "ItemDelegate.qml";
 import "tetrisConsts.js" as gameConsts;
 
 GridView {
-	id:grid;
+	id: grid;
 
 	property int animationTime: 0;
 
@@ -17,6 +17,7 @@ GridView {
 		property int value;
 		property int colorIndex;
 		property int sizeW;
+		property bool needAnim;
 	}
 	delegate: ItemDelegate { animationInterval: grid.animationTime; }
 }
