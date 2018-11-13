@@ -76,7 +76,6 @@ Rectangle {
 					return true;
 				}
 
-				engine.tic();
 				switch (key) {
 				case "Up": case "Down": case "Left": case "Right":
 					var res = engine.move(key);
