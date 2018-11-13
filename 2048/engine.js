@@ -2,8 +2,9 @@ var elements = [];
 var swapList = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
 
 this.init = function() {
-	for (var i = 0; i < 16; i ++)
-		elements.push({val: 0, added: false, joined: false});
+	for (var i = 0; i < 16; ++i)
+		elements.push({ val: 0, added: false, joined: false });
+
 	add();
 	add();
 }
@@ -17,11 +18,9 @@ this.changeCells = function(cells, width, height) {
 		}
 		else
 		{
-			if (!elements[i].added)
-				cells[swapList[i]].value = elements[i].val;
-			else
-				cells[swapList[i]].value = 0;
+			cells[swapList[i]].value = elements[i].added ? 0 : elements[i].val;
 		}
+
 		cells[swapList[i]].added = elements[i].added;
 		cells[swapList[i]].x = (i % 4) * width;
 		cells[swapList[i]].y = Math.floor(i / 4) * height;
@@ -97,6 +96,7 @@ this.clear = function () {
 		elements[i] = { val: 0, added: false, joined: false };
 		swapList[i] = i;
 	}
+
 	add();
 	add();
 }
@@ -119,24 +119,24 @@ this.move = function (direction) {
 	for (var i = 0; i < 16; ++i)
 	{
 
-		if (!elements[i].val)	// nothing to move
+		if (!elements[i].val)  // nothing to move
 			continue;
 
-		if (i - 4 < 0)	// end of field
+		if (i - 4 < 0)  // end of field
 			continue;
 
 		for (var nextPosition = i - 4; nextPosition >= 0; nextPosition -= 4)
 		{
-			if (!elements[nextPosition].val)	// empty space - move further
+			if (!elements[nextPosition].val)  // empty space - move further
 			{
 				continue;
 			}
-			else if (elements[nextPosition].val != elements[i].val || elements[nextPosition].joined)	// no space to move - return
+			else if (elements[nextPosition].val != elements[i].val || elements[nextPosition].joined)  // no space to move - return
 			{
 				nextPosition += 4;
 				break;
 			}
-			else	// join
+			else  // join
 			{
 				elements[i].val *= 2;
 				elements[nextPosition].joined = true;
@@ -164,6 +164,7 @@ this.move = function (direction) {
 		rotate(4 - rotations, elements);
 		rotate(4 - rotations, swapList);
 	}
+
 	return { 'sum': sum, 'changed': changed, 'win': win };
 }
 
