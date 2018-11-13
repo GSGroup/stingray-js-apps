@@ -1,6 +1,5 @@
 var elements = [];
 var swapList = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
-var direction = 'Up';
 
 this.init = function() {
 	for (var i = 0; i < 16; i ++)
@@ -51,42 +50,13 @@ this.tic = function () {
 		elements[i] = {added: false, val: elements[i].val, joined: false};
 }
 
-function rotate(i, j) {
-	switch (direction)
-	{
-		case 'Down':
-			return i * 4 + j;
-		case 'Up':
-			return (3 - i) * 4 + j;
-		case 'Right':
-			return j * 4 + i;
-		case 'Left':
-			return j * 4 + 3 - i;
-		default:
-			log("FATAL ERROR: invalid direction!!!");
-			return i * 4 + j;
-	}
-}
-
-function get(i, j) {
-	return elements[rotate(i, j)];
-}
-
-function set(i, j, v) {
-	elements[rotate(i, j)] = { val: v, added: false, joined: false };
-}
-
-function setJoined(i, j, v) {
-	elements[rotate(i, j)] =  { val: v, added: false, joined: true };
-}
-
-function swap(i1, j1, i2, j2) {
-    if (get(i1, j1).val == 0 && get(i2, j2).val == 0)
+function swap(i1, i2) {
+	if (!elements[i1].val && !elements[i2].val)
 		return;
 
-	var x = swapList[rotate(i1, j1)];
-	swapList[rotate(i1, j1)] = swapList[rotate(i2, j2)];
-	swapList[rotate(i2, j2)] = x;
+	var x = swapList[i1];
+	swapList[i1] = swapList[i2];
+	swapList[i2] = x;
 }
 
 function add() {
@@ -122,64 +92,93 @@ this.check = function () {
 }
 
 this.clear = function () {
-	for (var j = 0; j < 4; ++j)
-		for (var i = 0; i < 4; ++i)
-			set(i, j, 0);
+	for (var i = 0; i < 16; ++i)
+	{
+		elements[i] = { val: 0, added: false, joined: false };
+		swapList[i] = i;
+	}
 	add();
 	add();
 }
 
-this.turn = function(key) {
+this.move = function (direction) {
 	var changed = false;
 	var sum = 0;
 	var win = false;
 
-	direction = key;
+	var rotations = direction == "Left" ? 1 :
+					direction == "Down" ? 2 :
+					direction == "Right" ? 3 : 0;
 
-	for (var j = 0; j < 4; ++j)
+	// rotate clockwise then move tiles up then rotate up to 360 degrees
+	rotate(rotations, elements);
+	rotate(rotations, swapList);
+
+	for (var i = 0; i < 16; ++i)
 	{
-		for (var i = 3; i >= 0; --i)
+
+		if (!elements[i].val)	// nothing to move
+			continue;
+
+		if (i - 4 < 0)	// end of field
+			continue;
+
+		for (var nextPosition = i - 4; nextPosition >= 0; nextPosition -= 4)
 		{
-			var t = true;
-			while (get(i, j).val == 0)
+			if (!elements[nextPosition].val)	// empty space - move further
 			{
-				t = false;
-				for (var k = i; k > 0; --k)
-				{
-					if (get(k - 1, j).val != 0)
-					{
-						t = true;
-						changed = true;
-					}
-					set(k, j, get(k - 1, j).val);
-					swap(k - 1, j, k, j);
-				}
-				set(0, j, 0);
-				if (!t)
-					break;
-			}
-			if (!t)
-				break;
-
-			if (i != 3)
-				++i;
-			else
 				continue;
-
-			if (get(i, j).val == get(i - 1, j).val && !get(i, j).joined && !get(i - 1, j).joined)
-			{
-				changed = true;
-				setJoined(i, j, get(i, j).val * 2);
-				if (get(i, j).val == 2048)
-					win = true;
-				swap(i - 1, j, i, j);
-				sum += get(i, j).val;
-				set(i - 1, j, 0);
-				++i;
 			}
-			--i;
+			else if (elements[nextPosition].val != elements[i].val || elements[nextPosition].joined)	// no space to move - return
+			{
+				nextPosition += 4;
+				break;
+			}
+			else	// join
+			{
+				elements[i].val *= 2;
+				elements[nextPosition].joined = true;
+				sum += elements[i].val;
+				break;
+			}
+		}
+
+		if (nextPosition < 0)
+			nextPosition += 4;
+
+		if (nextPosition != i)
+		{
+			changed = true;
+			elements[nextPosition].val = elements[i].val;
+			elements[i].val = 0;
+			swap(i, nextPosition);
+			if (elements[nextPosition].val == 2048)
+				win = true;
 		}
 	}
-	log("CHANGED: " + changed + " win " + win);
+
+	if (rotations)
+	{
+		rotate(4 - rotations, elements);
+		rotate(4 - rotations, swapList);
+	}
 	return { 'sum': sum, 'changed': changed, 'win': win };
 }
+
+function rotate(count, array) {
+	if (!count)
+		return;
+
+	var rotationMatrix = [12, 8, 4, 0, 13, 9, 5, 1, 14, 10, 6, 2, 15, 11, 7, 3];
+
+	while (count--)
+	{
+		var temp = new Array(16);
+
+		for (var i = 0; i < 16; ++i)
+			temp[i] = array[rotationMatrix[i]];
+		for (var i = 0; i < 16; ++i)
+			array[i] = temp[i];
+	}
+}
+

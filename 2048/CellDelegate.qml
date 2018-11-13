@@ -1,7 +1,7 @@
 Rectangle {
 	id: rect;
 
-	property int value: -1;
+	property int value: 0;
 	property int added: false;
 
 	height: parent.cellHeight;
