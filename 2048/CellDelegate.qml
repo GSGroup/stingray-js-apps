@@ -13,7 +13,6 @@ Rectangle {
 	Behavior on x { animation: Animation { duration: rect.value < 2 ? 0 : 450; } }
 	Behavior on y { animation: Animation { duration: rect.value < 2 ? 0 : 450; } }
 
-
 	Rectangle {
 		id: innerRect;
 

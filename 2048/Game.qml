@@ -4,43 +4,53 @@ import "engine.js" as engine;
 
 Rectangle {
 	id: game;
-	anchors.centerIn: parent;
-	height: safeArea.height;
+
 	property int space: 6;
 	property int cellSize:  (safeArea.height - space * 4) / 4;
+
 	width: cellSize * 4 + space * 4;
+	height: safeArea.height;
+
+	anchors.centerIn: parent;
+
 	color: parent.color;
 	focus: true;
 
 	Rectangle {
 		id: gridRect;
-		radius: 10;
+
+		width: parent.width - game.space * 2;
+		height: parent.height;
+
 		anchors.top: parent.top;
 		anchors.bottom: parent.bottom;
 		anchors.left: parent.left;
 		anchors.margins: game.space;
+
+		radius: 10;
 		color: "#bcb0a2";
-		height: parent.height;
-		width: parent.width - game.space * 2;
 		focus: true;
 
 		Item {
 			id: fieldView;
-			CellDelegate{} CellDelegate{} CellDelegate{} CellDelegate{}
-			CellDelegate{} CellDelegate{} CellDelegate{} CellDelegate{}
-			CellDelegate{} CellDelegate{} CellDelegate{} CellDelegate{}
-			CellDelegate{} CellDelegate{} CellDelegate{} CellDelegate{}
 
-			CellDelegate{} CellDelegate{} CellDelegate{} CellDelegate{}
-			CellDelegate{} CellDelegate{} CellDelegate{} CellDelegate{}
-			CellDelegate{} CellDelegate{} CellDelegate{} CellDelegate{}
-			CellDelegate{} CellDelegate{} CellDelegate{} CellDelegate{}
+			property int cellHeight: game.cellSize;
+			property int cellWidth: game.cellSize;
 
 			anchors.fill: parent;
 			anchors.margins: game.space;
+
 			focus: true;
-			property int cellHeight:game.cellSize;
-			property int cellWidth: game.cellSize;
+
+			CellDelegate { } CellDelegate { } CellDelegate { } CellDelegate { }
+			CellDelegate { } CellDelegate { } CellDelegate { } CellDelegate { }
+			CellDelegate { } CellDelegate { } CellDelegate { } CellDelegate { }
+			CellDelegate { } CellDelegate { } CellDelegate { } CellDelegate { }
+
+			CellDelegate { } CellDelegate { } CellDelegate { } CellDelegate { }
+			CellDelegate { } CellDelegate { } CellDelegate { } CellDelegate { }
+			CellDelegate { } CellDelegate { } CellDelegate { } CellDelegate { }
+			CellDelegate { } CellDelegate { } CellDelegate { } CellDelegate { }
 
 			Timer {
 				id: animTimer;
@@ -51,7 +61,8 @@ Rectangle {
 			}
 
 			onCompleted: {
-				for (var i = 16; i < 32; i ++) {
+				for (var i = 16; i < 32; ++i)
+				{
 					this.children[i].value = 0;
 					this.children[i].added = false;
 					this.children[i].x = (i % 4) * this.cellWidth;
@@ -93,7 +104,7 @@ Rectangle {
 				if (scoreText.val > bestText.val)
 				{
 					bestText.val = scoreText.val;
-					save("best2048",scoreText.val);
+					save("best2048", scoreText.val);
 				}
 
 				if (!engine.check())
@@ -120,23 +131,25 @@ Rectangle {
 		}
 	}
 
-	direction: "Up";
-
 	Rectangle {
 		id: bestRect;
+
+		width: Math.min((safeArea.width - parent.width) / 2 - game.space * 2, game.cellSize * 1.5);
+		height: game.cellSize / 1.5;
+
 		anchors.verticalCenter: parent.verticalCenter;
 		anchors.left: parent.right;
 		anchors.bottomMargin: game.cellSize;
 		anchors.leftMargin: game.space;
-		height: game.cellSize / 1.5;
+
 		radius: 10;
-		width: Math.min((safeArea.width - parent.width) / 2 - game.space * 2, game.cellSize * 1.5);
 		color: "#CCC0B2";
 
 		Text {
 			anchors.horizontalCenter: parent.horizontalCenter;
 			anchors.top: parent.top;
 			anchors.topMargin: game.space;
+
 			text: tr("BEST");
 			color: "#EEE4DA";
 			font: bigFont;
@@ -144,55 +157,59 @@ Rectangle {
 
 		Text {
 			id: bestText;
+
+			property int val;
+
 			anchors.horizontalCenter: parent.horizontalCenter;
 			anchors.bottom: parent.bottom;
 			anchors.bottomMargin: game.space;
-			property int val;
+
 			text: val;
 			font: bigFont;
 			color: "#FFFFFF";
 
 			onCompleted: {
-				this.val = function() {
-					var x;
-					if (!(x = load("best2048"))) 
-						return 0; 
-					else 
-						return x;
-				}()
+				if (!(this.val = load("best2048")))
+					this.val = 0;
 			}
 		}
 	}
 
 	Rectangle {
 		id: scoreRect;
+
+		width: Math.min((safeArea.width - parent.width) / 2 - game.space * 2, game.cellSize * 1.5);
+		height: game.cellSize / 1.5;
 		anchors.verticalCenter: parent.verticalCenter;
 		anchors.left: parent.right;
 		anchors.topMargin: game.cellSize;
 		anchors.leftMargin: game.space;
-		height: game.cellSize / 1.5;
+
 		radius: 10;
-		width: Math.min((safeArea.width - parent.width) / 2 - game.space * 2, game.cellSize * 1.5);
-		color: "#CCC0B2";
+		color: "#ccc0b2";
 
 		Text {
 			anchors.horizontalCenter: parent.horizontalCenter;
 			anchors.top: parent.top;
 			anchors.topMargin: game.space;
+
 			text: tr("SCORE");
-			color: "#EEE4DA";
+			color: "#eee4da";
 			font: bigFont;
 		}
 
 		Text {
 			id: scoreText;
+
+			property int val: 0;
+
 			anchors.horizontalCenter: parent.horizontalCenter;
 			anchors.bottom: parent.bottom;
 			anchors.bottomMargin: game.space;
-			property int val: 0;
+
 			text: val;
 			font: bigFont;
-			color: "#FFFFFF";
+			color: "#ffffff";
 		}			
 	}
 
@@ -205,7 +222,7 @@ Rectangle {
 
 		focus: true;
 		radius: 10;
-		color: "#EEE4DAB0";
+		color: "#eee4dab0";
 
 		visible: false;
 
@@ -214,7 +231,7 @@ Rectangle {
 			anchors.bottomMargin: game.cellSize / 2;
 
 			font: bigFont;
-			color: "#734A12";
+			color: "#734a12";
 			text: restartMenu.message;
 		}
 
@@ -224,14 +241,14 @@ Rectangle {
 			anchors.centerIn: parent;
 			anchors.topMargin: game.cellSize / 2;
 
-			color: "#734A12";
+			color: "#734a12";
 			radius: 10;
 
 			Text {
 				anchors.centerIn: parent;
 
 				font: smallFont;
-				color: "#FFFFFF";
+				color: "#ffffff";
 				text: tr("Try again");
 			}
 		}
@@ -248,68 +265,81 @@ Rectangle {
 
 	Rectangle {
 		id: backMenu;
-		visible: false;
-		focus: true;
-		anchors.centerIn: parent;
-		height: parent.height;
-		radius: 10;
-		color: "#EEE4DAB0";
+
 		width: 0;
+		height: parent.height;
+		anchors.centerIn: parent;
+
+		radius: 10;
+		color: "#eee4dab0";
 		clip: true;
+		focus: true;
+
+		visible: false;
+
 		Behavior on width { animation: Animation { duration: 300; } }
 
 		ListView {
 			id: backGrid;
-			focus: true;
-			visible: parent.width > 0;
+
 			property int cellHeight: game.cellSize;
 			property int cellWidth: game.cellSize * 2;
+
+			width: game.cellSize;
+			height: game.cellSize * 4;
 			anchors.horizontalCenter: parent.horizontalCenter;
 			anchors.top: parent.top;
 			anchors.topMargin: game.cellSize / 2;
-			height: game.cellSize * 4;
-			width: game.cellSize;
+
+			focus: true;
+
+			visible: parent.width > 0;
+
 			model: ListModel {
-				ListElement {text: "Continue"}
-				ListElement {text: "New game"}
-				ListElement {text: "Help"}
+				ListElement { text: "Continue" }
+				ListElement { text: "New game" }
+				ListElement { text: "Help" }
 			}
-			delegate: MenuDelegate{}
+			delegate: MenuDelegate { }
 
 			onSelectPressed: {
-				switch (backGrid.currentIndex) {
-				case 0: 
-					backMenu.width = 0;
-					fieldView.setFocus();
-					break;
-				case 1:
-					engine.clear();
-					fieldView.setFocus();
-					fieldView.draw();
-					scoreText.val = 0;
-					backMenu.width = 0;
-					break;
-				case 2:
-					help.visible = true;
-					help.setFocus();
-					backGrid.visible = false;
-					return true;
+				switch (backGrid.currentIndex)
+				{
+					case 0:
+						backMenu.width = 0;
+						fieldView.setFocus();
+						break;
+					case 1:
+						engine.clear();
+						fieldView.setFocus();
+						fieldView.draw();
+						scoreText.val = 0;
+						backMenu.width = 0;
+						break;
+					case 2:
+						help.visible = true;
+						help.setFocus();
+						backGrid.visible = false;
+						return true;
 				}
 			}
 		}
 
 		BigText {
 			id: help;
+
 			anchors.left: parent.left;
 			anchors.right: parent.right;
 			anchors.verticalCenter: parent.verticalCenter;
 			anchors.margins: game.space * 10;
+
 			horizontalAlignment: Text.AlignHCenter;
-			color: "#6D654E";
-			visible: false;
+			color: "#6d654e";
 			focus: true;
 			wrapMode: Text.Wrap;
 			text: tr("Use your arrow keys to move the tiles. When two tiles with the same number touch, they merge into one!");
+
+			visible: false;
 
 			onSelectPressed: {
 				this.visible = false;
@@ -324,10 +354,4 @@ Rectangle {
 			this.setFocus();
 		}
 	}
-	
-//	onBackPressed: {
-//		backMenu.width = backMenu.width == 0 ? game.width : 0;
-//		backGrid.visible = !backGrid.visible;
-//		backGrid.currentIndex = 0;
-//	}
 }
