@@ -64,42 +64,52 @@ Rectangle {
 			}
 
 			onKeyPressed: {
-	
 				if (animTimer.running) 
 					return true;
 
-				if (key == "Select") {
+				if (key == "Select")
+				{
 					backGrid.currentIndex = 0;
 					backGrid.setFocus();
 					backMenu.show();
-					log("INDEX " + backGrid.currentIndex)
 					return true;
 				}
 
-				switch (key) {
-				case "Up": case "Down": case "Left": case "Right":
-					var res = engine.move(key);
-					if (res.changed) engine.add();
-					scoreText.val += res.sum;
-					if (scoreText.val > bestText.val) {
-						bestText.val = scoreText.val;
-						save("best2048",scoreText.val);
-					}
-					if (!engine.check()) {
-						restartMenu.visible = true;
-						restartMenu.message = tr("Game over");
-						restartMenu.setFocus();
-					}
-					fieldView.draw();
-
-					if (res.win)
-					{
-						restartMenu.visible = true;
-						restartMenu.message = tr("You win!");
-						restartMenu.setFocus();
-					}
-
+				if (key == "Up" || key == "Down" || key == "Left" || key == "Right")
+				{
+					fieldView.makeMove(key);
 					return true;
+				}
+			}
+
+			function makeMove(direction) {
+				var res = engine.move(direction);
+
+				if (res.changed)
+					engine.add();
+
+				scoreText.val += res.sum;
+
+				if (scoreText.val > bestText.val)
+				{
+					bestText.val = scoreText.val;
+					save("best2048",scoreText.val);
+				}
+
+				if (!engine.check())
+				{
+					restartMenu.visible = true;
+					restartMenu.message = tr("Game over");
+					restartMenu.setFocus();
+				}
+
+				fieldView.draw();
+
+				if (res.win)
+				{
+					restartMenu.visible = true;
+					restartMenu.message = tr("You win!");
+					restartMenu.setFocus();
 				}
 			}
 
