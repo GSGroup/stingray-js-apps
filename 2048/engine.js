@@ -45,9 +45,9 @@ this.next = function(cells) {
 	}
 }
 
-this.tic = function () {
-	for (var i = 0; i < 16; i ++)
-		elements[i] = {added: false, val: elements[i].val, joined: false};
+function resetElements() {
+	for (var i = 0; i < 16; ++i)
+		elements[i] = { added: false, val: elements[i].val, joined: false };
 }
 
 function swap(i1, i2) {
@@ -105,6 +105,8 @@ this.move = function (direction) {
 	var changed = false;
 	var sum = 0;
 	var win = false;
+
+	resetElements();
 
 	var rotations = direction == "Left" ? 1 :
 					direction == "Down" ? 2 :
