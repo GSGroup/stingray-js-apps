@@ -57,8 +57,10 @@ Rectangle {
 					this.children[i].x = (i % 4) * this.cellWidth;
 					this.children[i].y = Math.floor(i / 4 - 4) * this.cellHeight;
 				}
+
 				engine.init();
 				this.draw();
+				engine.next(fieldView.children);
 			}
 
 			onKeyPressed: {
@@ -67,7 +69,6 @@ Rectangle {
 					return true;
 
 				if (key == "Select") {
-//					backMenu.visible = true;
 					backGrid.currentIndex = 0;
 					backGrid.setFocus();
 					backMenu.show();
@@ -78,7 +79,7 @@ Rectangle {
 				engine.tic();
 				switch (key) {
 				case "Up": case "Down": case "Left": case "Right":
-					var res = engine.turn(key);
+					var res = engine.move(key);
 					if (res.changed) engine.add();
 					scoreText.val += res.sum;
 					if (scoreText.val > bestText.val) {
@@ -230,6 +231,7 @@ Rectangle {
 			restartMenu.visible = false;
 			engine.clear();
 			fieldView.draw();
+			engine.next(fieldView.children);
 			fieldView.setFocus();
 			scoreText.val = 0;
 		}
@@ -239,7 +241,6 @@ Rectangle {
 		id: backMenu;
 		visible: false;
 		focus: true;
-//		anchors.fill: parent;
 		anchors.centerIn: parent;
 		height: parent.height;
 		radius: 10;
@@ -304,7 +305,6 @@ Rectangle {
 			onSelectPressed: {
 				this.visible = false;
 				backGrid.visible = true;
-//				backGrid.setFocus();
 				backMenu.show();
 			}
 		}
