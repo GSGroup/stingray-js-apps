@@ -12,6 +12,7 @@ var numLines;
 var completedRowsNumber = 0;
 var deleteInfo = { idx: -1, linesNumber: 0 };
 var blockSize = gameConsts.getBlockSize() - gameConsts.getSpaceBetweenBlocks() * 2;
+var lastOccupiedBlockIndex = gameConsts.getBlockNumber();
 
 var pieces =[
 	[0x44C0, 0x8E00, 0x6440, 0x0E20],
@@ -29,7 +30,7 @@ var movingBlockState = [];
 this.initCanvas = function(model) {
 	for (var idx = 0; idx < gameConsts.getBlockNumber(); ++idx)
 	{
-		model.append({ value: 0, colorIndex: 0, sizeW: blockSize, needAnim: false });
+		model.append({ value: 0, colorIndex: 0, width: blockSize, needAnim: false });
 		canvasState.push({ value: 0, colorIndex: 0 });
 	}
 }
@@ -38,7 +39,7 @@ this.initMovingTetraminos = function(model) {
 	for (var bit = 0x8000; bit > 0; bit = bit >> 1)
 	{
 		var value = pieces[currentBlockViewIndex][currentRotationIndex] & bit;
-		model.append({ value: value, colorIndex: currentColorIndex, sizeW: blockSize, needAnim: false });
+		model.append({ value: value, colorIndex: currentColorIndex, width: blockSize, needAnim: false });
 		movingBlockState.push({ value: value, colorIndex: currentColorIndex });
 	}
 }
@@ -46,7 +47,7 @@ this.initMovingTetraminos = function(model) {
 this.initNextTetraminos = function(model) {
 	for (var bit = 0x8000; bit > 0; bit = bit >> 1)
 	{
-		model.append({ value: pieces[nextBlockViewIndex][nextRotationIndex] & bit, colorIndex: nextColorIndex, sizeW: blockSize, needAnim: false });
+		model.append({ value: pieces[nextBlockViewIndex][nextRotationIndex] & bit, colorIndex: nextColorIndex, width: blockSize, needAnim: false });
 	}
 }
 
@@ -87,11 +88,11 @@ this.updateMovingTetraminos = function(model) {
 	this.updateBlockModel(model);
 }
 
-this.updateModelWidth = function(model)
+this.zeroizeModelWidth = function(model)
 {
 	for (var idx = deleteInfo.idx; idx > deleteInfo.idx - gameConsts.getGlassWidth() * deleteInfo.linesNumber; --idx)
 	{
-		model.set(idx, { value: canvasState[idx].value, colorIndex: canvasState[idx].colorIndex, needAnim: true, sizeW: 0 });
+		model.set(idx, { value: canvasState[idx].value, colorIndex: canvasState[idx].colorIndex, needAnim: true, width: 0 });
 	}
 }
 
@@ -132,7 +133,7 @@ this.restartGame = function(gameViewModel, blockViewModel, nextBlockViewModel) {
 this.clearCanvas = function(model) {
 	for (var idx = 0; idx < gameConsts.getBlockNumber(); ++idx)
 	{
-		model.set(idx, { value: 0, colorIndex: 0, sizeW: blockSize, needdAnim: false });
+		model.set(idx, { value: 0, colorIndex: 0, width: blockSize, needdAnim: false });
 		canvasState[idx].value = 0;
 		canvasState[idx].colorIndex = 0;
 	}
@@ -145,47 +146,42 @@ this.parkBlock = function(x, y, model) {
 		var blockX = x + (k % 4) * gameConsts.getBlockSize();
 		var blockY = y + Math.floor(k / 4) * gameConsts.getBlockSize();
 
+		var blockIndex = index(blockX, blockY);
+
 		if (movingBlockState[k].value > 0)
 		{
-			canvasState[index(blockX, blockY)].value = movingBlockState[k].value;
-			canvasState[index(blockX, blockY)].colorIndex = movingBlockState[k].colorIndex;
-		}
-	}
+			canvasState[blockIndex].value = movingBlockState[k].value;
+			canvasState[blockIndex].colorIndex = movingBlockState[k].colorIndex;
 
-	for(var idx = 0; idx < gameConsts.getBlockNumber(); ++idx)
-	{
-		model.setProperty(idx, "value", canvasState[idx].value);
-		model.setProperty(idx, "colorIndex", canvasState[idx].colorIndex);
+			model.setProperty(blockIndex, "value", canvasState[blockIndex].value);
+			model.setProperty(blockIndex, "colorIndex", canvasState[blockIndex].colorIndex);
+
+			if(blockIndex < lastOccupiedBlockIndex)
+			{
+				lastOccupiedBlockIndex = blockIndex;
+			}
+		}
 	}
 }
 
-this.updateCanvasModel = function(model) {
-	for(var idx = 0; idx < gameConsts.getBlockNumber(); ++idx)
-	{
-		model.setProperty(idx, "value", canvasState[idx].value);
-		model.setProperty(idx, "colorIndex", canvasState[idx].colorIndex);
-		model.setProperty(idx, "sizeW", blockSize);
-		model.setProperty(idx, "needAnim", false);
-	}
+this.updateCanvasModel = function(index, model) {
+	model.set(index, { value: canvasState[index].value, colorIndex: canvasState[index].colorIndex, width: blockSize, needAnim: false });
 }
 
 this.removeLines = function(model) {
-	for (var i = deleteInfo.idx; i > gameConsts.getGlassWidth() * deleteInfo.linesNumber; --i)
+	for (var i = deleteInfo.idx; i >= lastOccupiedBlockIndex; --i)
 	{
-		canvasState[i].value = canvasState[i - gameConsts.getGlassWidth() * deleteInfo.linesNumber].value;
-		canvasState[i].colorIndex = canvasState[i - gameConsts.getGlassWidth() * deleteInfo.linesNumber].colorIndex;
+		var inGlass = lastOccupiedBlockIndex >= gameConsts.getGlassWidth() * deleteInfo.linesNumber ? true : false;
+		canvasState[i].value = inGlass ? canvasState[i - gameConsts.getGlassWidth() * deleteInfo.linesNumber].value : 0;
+		canvasState[i].colorIndex = inGlass ? canvasState[i - gameConsts.getGlassWidth() * deleteInfo.linesNumber].colorIndex : 0;
+		this.updateCanvasModel(i, model);
 	}
 
-	for ( i = 0; i < gameConsts.getGlassWidth() * deleteInfo.linesNumber; ++i)
-	{
-		canvasState[i].value = 0;
-		canvasState[i].colorIndex = 0;
-	}
-	this.updateCanvasModel(model);
 	calcScores();
 
 	deleteInfo.linesNumber = 0;
 	deleteInfo.idx = -1;
+	lastOccupiedBlockIndex = lastOccupiedBlockIndex - gameConsts.getGlassWidth() * deleteInfo.linesNumber;
 
 	return { score: gameScore, level: currentLevel };
 }
