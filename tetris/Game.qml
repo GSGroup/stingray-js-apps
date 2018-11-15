@@ -39,7 +39,7 @@ Rectangle{
 		ItemGridView {
 			id: gameView;
 
-			animationTime: game.dropTime / (gameConsts.getGlassHeight() - 4) / game.currentLevel;
+			animationDuration: animTimer.interval;
 
 			width: game.width;
 			height: game.height;
@@ -98,7 +98,7 @@ Rectangle{
 					game.updateInfo(engine.removeLines(gameView.model));
 					if ( engine.checkLines() > 0)
 					{
-						engine.updateModelWidth(gameView.model);
+						engine.zeroizeModelWidth(gameView.model);
 					}
 					else
 					{
@@ -119,7 +119,7 @@ Rectangle{
 						if( engine.checkLines() > 0 )
 						{
 							game.deletingLines = true;
-							engine.updateModelWidth(gameView.model);
+							engine.zeroizeModelWidth(gameView.model);
 						}
 						else
 						{
