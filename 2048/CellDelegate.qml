@@ -53,6 +53,11 @@ Rectangle {
 		onTriggered: { innerRect.anchors.margins = 10; }
 	}
 
+	onValueChanged: {
+		if (rect.value && rect.added)
+			this.doscale();
+	}
+
 	function doscale () {
 		innerRect.anchors.margins = 0;
 		scaleTimer.restart();
