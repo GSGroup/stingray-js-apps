@@ -96,9 +96,6 @@ Rectangle {
 			function makeMove(direction) {
 				var res = engine.move(direction);
 
-				if (res.changed)
-					engine.add();
-
 				scoreText.val += res.sum;
 
 				if (scoreText.val > bestText.val)

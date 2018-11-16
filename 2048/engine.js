@@ -74,8 +74,6 @@ function add() {
 	elements[index] = { val: Math.random() > 0.1 ? 2 : 4, added: true, joined: false };
 }
 
-this.add = add;
-
 this.check = function () {
 	for (var i = 0; i < 16; ++i)
 	{
@@ -165,7 +163,10 @@ this.move = function (direction) {
 		rotate(4 - rotations, swapList);
 	}
 
-	return { 'sum': sum, 'changed': changed, 'win': win };
+	if (changed)
+		add();
+
+	return { 'sum': sum, 'win': win };
 }
 
 function rotate(count, array) {
