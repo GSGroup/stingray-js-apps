@@ -216,8 +216,7 @@ Rectangle{
 
 			onExitGame: {
 				exitMenu.visible = false;
-				game.setNewGame();
-				viewsFinder.closeApp();
+				game.exitGame();
 			}
 		}
 
@@ -243,8 +242,7 @@ Rectangle{
 
 			onExitGame: {
 				gameOverMenu.visible = false;
-				game.setNewGame();
-				viewsFinder.closeApp();
+				game.exitGame();
 			}
 		}
 
@@ -257,8 +255,15 @@ Rectangle{
 			anchors.centerIn: game;
 
 			onKeyPressed: {
-				if (key == "Up" || key == "Menu" || key == "Back" || key == "Last")
+				if (key == "Up")
 				{
+					return true;
+				}
+
+				if (key == "Menu" || key == "Last" || key == "Back")
+				{
+					levelMenu.visible = false;
+					game.exitGame();
 					return true;
 				}
 			}
@@ -280,16 +285,23 @@ Rectangle{
 			anchors.centerIn: game;
 
 			onKeyPressed: {
-				if (key == "Menu" || key == "Back" || key == "Last")
+				if (key == "Menu" || key == "Last" || key == "Back")
 				{
+					pauseMenu.visible = false;
+					game.exitGame();
 					return true;
 				}
 			}
 
 			onContinueGame: {
-				pauseRect.visible = false;
+				pauseMenu.visible = false;
 				movingTetraminos.setFocus();
 			}
+		}
+
+		function exitGame() {
+			game.setNewGame();
+			viewsFinder.closeApp();
 		}
 
 		function updateInfo(info) {
