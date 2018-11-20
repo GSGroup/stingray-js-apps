@@ -24,6 +24,7 @@ var pieces =[
 	[0x0C60, 0x4C80, 0xC600, 0x2640]
 ];
 
+var blocks = [];
 var canvasState = [];
 var movingBlockState = [];
 
@@ -52,12 +53,14 @@ this.initNextTetraminos = function(model) {
 }
 
 function init() {
-	currentBlockViewIndex = randomBlockViewIndex();
-	currentRotationIndex = randomRotationIndex();
+	var block = randomBlock();
+	currentBlockViewIndex = block.blockViewIndex;
+	currentRotationIndex = block.rotationIndex;
 	currentColorIndex = gameConsts.randomColorIndex();
 
-	nextRotationIndex = randomRotationIndex();
-	nextBlockViewIndex = randomBlockViewIndex();
+	block = randomBlock();
+	nextBlockViewIndex = block.blockViewIndex;
+	nextRotationIndex = block.rotationIndex;
 	nextColorIndex = gameConsts.randomColorIndex();
 
 	currentLevel = 1;
@@ -311,12 +314,15 @@ function hasCanvasCollisions(x, y) {
 	return false;
 }
 
-function randomBlockViewIndex() {
-	return Math.floor(Math.random() * 7);
-}
+function randomBlock() {
+	if(blocks.length === 0)
+	{
+		blocks = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27];
+	}
 
-function randomRotationIndex() {
-	return Math.floor(Math.random() * 4);
+	var index = blocks.splice(Math.floor(Math.random() * blocks.length), 1)[0];
+
+	return { blockViewIndex: Math.floor(index / 4), rotationIndex: index % 4 }
 }
 
 function index(x, y) {
@@ -328,7 +334,8 @@ function setProperties() {
 	currentRotationIndex = nextRotationIndex;
 	currentColorIndex = nextColorIndex;
 
-	nextBlockViewIndex = randomBlockViewIndex();
-	nextRotationIndex = randomRotationIndex();
+	var nextBlock = randomBlock();
+	nextBlockViewIndex = nextBlock.blockViewIndex;
+	nextRotationIndex = nextBlock.rotationIndex;
 	nextColorIndex = gameConsts.randomColorIndex();
 }
