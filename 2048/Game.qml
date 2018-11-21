@@ -55,9 +55,7 @@ Rectangle {
 			Timer {
 				id: animTimer;
 
-				interval: 700;
-
-				onTriggered: { engine.next(fieldView.children); }
+				interval: 550;
 			}
 
 			onCompleted: {
@@ -70,12 +68,11 @@ Rectangle {
 				}
 
 				engine.init();
-				this.draw();
-				engine.next(fieldView.children);
+				engine.changeCells(this.children, this.cellWidth, this.cellHeight);
 			}
 
 			onKeyPressed: {
-				if (animTimer.running) 
+				if (animTimer.running)
 					return true;
 
 				if (key == "Select")
@@ -104,26 +101,27 @@ Rectangle {
 					save("best2048", scoreText.val);
 				}
 
+				engine.changeCells(this.children, this.cellWidth, this.cellHeight);
+
 				if (!engine.check())
 				{
 					restartMenu.visible = true;
-					restartMenu.message = tr("Game over");
 					restartMenu.setFocus();
+					restartMenu.message = tr("Game over");
+					return;
 				}
-
-				fieldView.draw();
 
 				if (res.win)
 				{
 					restartMenu.visible = true;
-					restartMenu.message = tr("You win!");
 					restartMenu.setFocus();
-				}
-			}
+					restartMenu.message = tr("You win!");
 
-			function draw() {
-				engine.changeCells(this.children, this.cellWidth, this.cellHeight);
-				animTimer.restart();
+				}
+				else
+				{
+					animTimer.restart();
+				}
 			}
 		}
 	}
@@ -177,6 +175,7 @@ Rectangle {
 
 		width: Math.min((safeArea.width - parent.width) / 2 - game.space * 2, game.cellSize * 1.5);
 		height: game.cellSize / 1.5;
+
 		anchors.verticalCenter: parent.verticalCenter;
 		anchors.left: parent.right;
 		anchors.topMargin: game.cellSize;
@@ -253,8 +252,7 @@ Rectangle {
 		onSelectPressed: {
 			restartMenu.visible = false;
 			engine.clear();
-			fieldView.draw();
-			engine.next(fieldView.children);
+			engine.changeCells(fieldView.children, fieldView.cellWidth, fieldView.cellHeight);
 			fieldView.setFocus();
 			scoreText.val = 0;
 		}
@@ -309,7 +307,7 @@ Rectangle {
 					case 1:
 						engine.clear();
 						fieldView.setFocus();
-						fieldView.draw();
+						engine.changeCells(fieldView.children, fieldView.cellWidth, fieldView.cellHeight);
 						scoreText.val = 0;
 						backMenu.width = 0;
 						break;

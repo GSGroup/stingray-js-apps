@@ -12,6 +12,8 @@ this.init = function() {
 this.changeCells = function(cells, width, height) {
 	for (var i = 0; i < 16; ++i)
 	{
+		cells[i + 16].value = 0;
+
 		if (elements[i].joined)
 		{
 			cells[i + 16].value = cells[swapList[i]].value;
@@ -19,28 +21,13 @@ this.changeCells = function(cells, width, height) {
 		else
 		{
 			cells[swapList[i]].value = elements[i].added ? 0 : elements[i].val;
+			cells[swapList[i]].addedValue = elements[i].added ? elements[i].val : 0;
 		}
 
 		cells[swapList[i]].added = elements[i].added;
+		cells[swapList[i]].joined = elements[i].joined;
 		cells[swapList[i]].x = (i % 4) * width;
 		cells[swapList[i]].y = Math.floor(i / 4) * height;
-	}
-}
-
-this.next = function(cells) {
-	for (var i = 16; i < 32; ++i)
-		cells[i].value = 0;
-
-	for (var i = 0; i < 16; ++i)
-	{
-		if (elements[i].added)
-			cells[swapList[i]].value = elements[i].val;
-
-		if (elements[i].joined)
-		{
-			cells[swapList[i]].added = true;
-			cells[swapList[i]].value *= 2;
-		}
 	}
 }
 
