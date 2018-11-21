@@ -2,16 +2,31 @@ Rectangle {
 	id: rect;
 
 	property int value: 0;
-	property int added: false;
+	property int addedValue: 0;
+	property bool added;
+	property bool joined;
 
 	height: parent.cellHeight;
 	width: parent.cellWidth;
 
 	color: "#bcb0a200";
-	z: value ? 1 : 0;
+	z: value;
 
-	Behavior on x { animation: Animation { duration: rect.value < 2 ? 0 : 450; } }
-	Behavior on y { animation: Animation { duration: rect.value < 2 ? 0 : 450; } }
+	Behavior on x {
+		animation: Animation {
+			duration: rect.value < 2 ? 0 : 400;
+
+			onRunningChanged: {
+				if (!running && rect.joined)
+				{
+					rect.value *= 2;
+					rect.joined = false;
+				}
+			}
+		}
+	}
+
+	Behavior on y { animation: Animation { duration: rect.value < 2 ? 0 : 400; } }
 
 	Rectangle {
 		id: innerRect;
@@ -48,14 +63,31 @@ Rectangle {
 	Timer {
 		id: scaleTimer;
 
-		interval: 150;
+		interval: 100;
 
 		onTriggered: { innerRect.anchors.margins = 10; }
+	}
+
+	Timer {
+		id: addTimer;
+
+		interval: 300;
+
+		onTriggered: {
+			rect.value = rect.addedValue;
+			rect.addedValue = 0;
+			rect.added = false;
+		}
 	}
 
 	onValueChanged: {
 		if (rect.value && rect.added)
 			this.doscale();
+	}
+
+	onAddedChanged: {
+		if (added)
+			addTimer.restart();
 	}
 
 	function doscale () {
