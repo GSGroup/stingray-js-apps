@@ -89,7 +89,6 @@ this.clear = function () {
 this.move = function (direction) {
 	var changed = false;
 	var sum = 0;
-	var win = false;
 
 	resetElements();
 
@@ -139,8 +138,6 @@ this.move = function (direction) {
 			elements[nextPosition].val = elements[i].val;
 			elements[i].val = 0;
 			swap(i, nextPosition);
-			if (elements[nextPosition].val == 2048)
-				win = true;
 		}
 	}
 
@@ -153,7 +150,7 @@ this.move = function (direction) {
 	if (changed)
 		add();
 
-	return { 'sum': sum, 'win': win };
+	return sum;
 }
 
 function rotate(count, array) {

@@ -5,6 +5,7 @@ Rectangle {
 	property int addedValue: 0;
 	property bool added;
 	property bool joined;
+	property bool win: rect.value == 2048;
 
 	height: parent.cellHeight;
 	width: parent.cellWidth;
