@@ -150,14 +150,14 @@ this.updateCanvasModel = function(model) {
 	}
 }
 
-function removeLine(idx) {
-	for (var i = idx; i >= gameConsts.getGlassWidth(); --i)
+function removeLines(idx, linesNumber) {
+	for (var i = idx; i >= gameConsts.getGlassWidth() * linesNumber; --i)
 	{
-		canvasState[i].value = canvasState[i - gameConsts.getGlassWidth()].value;
-		canvasState[i].colorIndex = canvasState[i - gameConsts.getGlassWidth()].colorIndex;
+		canvasState[i].value = canvasState[i - gameConsts.getGlassWidth() * linesNumber].value;
+		canvasState[i].colorIndex = canvasState[i - gameConsts.getGlassWidth() * linesNumber].colorIndex;
 	}
 
-	for ( i = 0; i < gameConsts.getGlassWidth(); ++i)
+	for ( i = 0; i < gameConsts.getGlassWidth() * linesNumber; ++i)
 	{
 		canvasState[i].value = 0;
 		canvasState[i].colorIndex = 0;
@@ -192,6 +192,7 @@ function checkLines() {
 	{
 		var checkAgain = false;
 		var blockCounter = 0;
+		var linesCounter = 0;
 		for (var idx = 0; idx < gameConsts.getBlockNumber(); ++idx)
 		{
 			if (canvasState[idx].value > 0)
@@ -203,9 +204,14 @@ function checkLines() {
 			{
 				if (blockCounter === gameConsts.getGlassWidth())
 				{
-					removeLine(idx);
-					checkAgain = true;
 					++completedRowsCounter;
+					++linesCounter;
+				}
+				else if (linesCounter > 0)
+				{
+					removeLines(idx - gameConsts.getGlassWidth(), linesCounter);
+					error("linesToRemove " + linesCounter);
+					checkAgain = true;
 					break;
 				}
 
