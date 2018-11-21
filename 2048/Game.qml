@@ -56,6 +56,17 @@ Rectangle {
 				id: animTimer;
 
 				interval: 550;
+
+				onTriggered: {
+					for (var i = 0; i < 16; ++i)
+					{
+						if (fieldView.children[i].win)
+						{
+							game.win();
+							break;
+						}
+					}
+				}
 			}
 
 			onCompleted: {
@@ -91,9 +102,9 @@ Rectangle {
 			}
 
 			function makeMove(direction) {
-				var res = engine.move(direction);
+				var sum = engine.move(direction);
 
-				scoreText.val += res.sum;
+				scoreText.val += sum;
 
 				if (scoreText.val > bestText.val)
 				{
@@ -111,17 +122,7 @@ Rectangle {
 					return;
 				}
 
-				if (res.win)
-				{
-					restartMenu.visible = true;
-					restartMenu.setFocus();
-					restartMenu.message = tr("You win!");
-
-				}
-				else
-				{
-					animTimer.restart();
-				}
+				animTimer.restart();
 			}
 		}
 	}
@@ -348,5 +349,11 @@ Rectangle {
 			this.width = game.width;
 			this.setFocus();
 		}
+	}
+
+	function win() {
+		restartMenu.visible = true;
+		restartMenu.setFocus();
+		restartMenu.message = tr("You win!");
 	}
 }
