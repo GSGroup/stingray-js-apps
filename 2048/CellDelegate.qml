@@ -1,27 +1,61 @@
 Rectangle {
 	id: rect;
+
+	property int value: 0;
+	property int addedValue: 0;
+	property bool added;
+	property bool joined;
+	property bool win: rect.value == 2048;
+
 	height: parent.cellHeight;
 	width: parent.cellWidth;
-	property int value: -1;
-	property int added: false;
-	Behavior on x { animation: Animation { duration: rect.value < 2 || rect.added ? 0 : 300; } }
-	Behavior on y { animation: Animation { duration: rect.value < 2 || rect.added ? 0 : 300; } }
-	z: value ? 1 : 0;
+
+	color: "#bcb0a200";
+	z: value;
+
+	Behavior on x {
+		animation: Animation {
+			duration: rect.value < 2 ? 0 : 400;
+
+			onRunningChanged: {
+				if (!running && rect.joined)
+				{
+					rect.value *= 2;
+					rect.joined = false;
+				}
+			}
+		}
+	}
+
+	Behavior on y { animation: Animation { duration: rect.value < 2 ? 0 : 400; } }
 
 	Rectangle {
 		id: innerRect;
-		radius: 10;
+
 		anchors.fill: parent;
 		anchors.margins: 10;
-		Behavior on color { animation: Animation { duration: rect.added ? 300 : 0; } }
-		Behavior on x { animation: Animation { duration: rect.added ? 150 : 0; } }
-		Behavior on y { animation: Animation { duration: rect.added ? 150 : 0; } }
-		Behavior on width { animation: Animation { duration: rect.added ? 150 : 0; } }
-		Behavior on height { animation: Animation { duration: rect.added ? 150 : 0; } }
+
+		radius: 10;
+		color: rect.value == 0 ? "#ccc0b2" :
+			rect.value == 2 ? "#eee4da" :
+			rect.value == 4 ? "#ede0c8" :
+			rect.value == 8 ? "#f2b179" :
+			rect.value == 16 ? "#f59563" :
+			rect.value == 32 ? "#f67c5f" :
+			rect.value == 64 ? "#f65e3b" :
+			rect.value == 128 ? "#eedc9d" :
+			rect.value == 256 ? "#c4ce78" :
+			rect.value == 512 ? "#a6bf4d" :
+			rect.value == 1024 ? "#83af1b" :
+			rect.value == 2048 ? "#628316" :
+			"#000000";
+
+		Behavior on color { animation: Animation { duration: 100; } }
 		
 		Text {
-			text: rect.value ? rect.value : "";	
 			anchors.centerIn: parent;
+
+			text: rect.value ? rect.value : "";
 			color: rect.value <= 4 ? "#6D654E" : "#ffffff";
 			font: bigFont;
 		}
@@ -29,34 +63,36 @@ Rectangle {
 
 	Timer {
 		id: scaleTimer;
-		interval: 150;
+
+		interval: 100;
+
+		onTriggered: { innerRect.anchors.margins = 10; }
+	}
+
+	Timer {
+		id: addTimer;
+
+		interval: 300;
+
 		onTriggered: {
-			innerRect.anchors.margins = 10;
+			rect.value = rect.addedValue;
+			rect.addedValue = 0;
+			rect.added = false;
 		}
+	}
+
+	onValueChanged: {
+		if (rect.value && rect.added)
+			this.doscale();
+	}
+
+	onAddedChanged: {
+		if (added)
+			addTimer.restart();
 	}
 
 	function doscale () {
 		innerRect.anchors.margins = 0;
 		scaleTimer.restart();
 	}
-
-	onValueChanged: {
-		if (rect.value && rect.added) this.doscale();
-		switch (rect.value) {
-		case 0: innerRect.color =  "#ccc0b2"; break; 
-		case 2: innerRect.color = "#eee4da"; break;
-		case 4: innerRect.color = "#ECE0CA"; break;
-		case 8: innerRect.color = "#EEB57E"; break;
-		case 16: innerRect.color = "#F39562"; break;
-		case 32: innerRect.color = "#FD7D60"; break;
-		case 64: innerRect.color = "#F55837"; break;
-		case 128: innerRect.color = "#F4CA78"; break;
-		case 256: innerRect.color = "#EDCA6C"; break;
-		case 512: innerRect.color = "#EFCA45"; break;
-		case 1024: innerRect.color = "#F0C63C"; break;
-		case 2048: innerRect.color = "#F0C129"; break;
-		default: innerRect.color = "#000000"; 
-		}
-	}
-	color: "#bcb0a200";
 }
