@@ -53,6 +53,28 @@ Rectangle {
 		delegate: LevelDelegate { }
 
 		onSelectPressed: { levelRect.levelChanged(levelGrid.currentIndex + 1); }
+
+		onRightPressed: {
+			if (levelGrid.currentIndex === levelModel.count - 1)
+			{
+				levelGrid.currentIndex = 0;
+			}
+			else
+			{
+				++levelGrid.currentIndex;
+			}
+		}
+
+		onLeftPressed: {
+			if (levelGrid.currentIndex === 0)
+			{
+				levelGrid.currentIndex = levelModel.count - 1;
+			}
+			else
+			{
+				--levelGrid.currentIndex;
+			}
+		}
 	}
 
 	function show() {
