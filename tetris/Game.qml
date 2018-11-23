@@ -96,7 +96,7 @@ Rectangle{
 				if (game.deletingLines)
 				{
 					game.updateInfo(engine.removeLines(gameView.model));
-					if ( engine.checkLines() > 0)
+					if (engine.checkLines() > 0)
 					{
 						engine.zeroizeModelWidth(gameView.model);
 					}
@@ -116,7 +116,7 @@ Rectangle{
 					else
 					{
 						engine.parkBlock(movingTetraminos.x, movingTetraminos.y, gameView.model);
-						if( engine.checkLines() > 0 )
+						if (engine.checkLines() > 0)
 						{
 							game.deletingLines = true;
 							engine.zeroizeModelWidth(gameView.model);

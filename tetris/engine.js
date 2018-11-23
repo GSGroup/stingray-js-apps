@@ -159,7 +159,7 @@ this.parkBlock = function(x, y, model) {
 			model.setProperty(blockIndex, "value", canvasState[blockIndex].value);
 			model.setProperty(blockIndex, "colorIndex", canvasState[blockIndex].colorIndex);
 
-			if(blockIndex < lastOccupiedBlockIndex)
+			if (blockIndex < lastOccupiedBlockIndex)
 			{
 				lastOccupiedBlockIndex = blockIndex;
 			}
@@ -174,7 +174,7 @@ this.updateCanvasModel = function(index, model) {
 this.removeLines = function(model) {
 	for (var i = deleteInfo.idx; i >= lastOccupiedBlockIndex; --i)
 	{
-		var inGlass = lastOccupiedBlockIndex >= gameConsts.getGlassWidth() * deleteInfo.linesNumber ? true : false;
+		var inGlass = lastOccupiedBlockIndex >= gameConsts.getGlassWidth() * deleteInfo.linesNumber;
 		canvasState[i].value = inGlass ? canvasState[i - gameConsts.getGlassWidth() * deleteInfo.linesNumber].value : 0;
 		canvasState[i].colorIndex = inGlass ? canvasState[i - gameConsts.getGlassWidth() * deleteInfo.linesNumber].colorIndex : 0;
 		this.updateCanvasModel(i, model);
@@ -184,7 +184,7 @@ this.removeLines = function(model) {
 
 	deleteInfo.linesNumber = 0;
 	deleteInfo.idx = -1;
-	lastOccupiedBlockIndex = lastOccupiedBlockIndex - gameConsts.getGlassWidth() * deleteInfo.linesNumber;
+	lastOccupiedBlockIndex -= gameConsts.getGlassWidth() * deleteInfo.linesNumber;
 
 	return { score: gameScore, level: currentLevel };
 }
@@ -315,7 +315,7 @@ function hasCanvasCollisions(x, y) {
 }
 
 function randomBlock() {
-	if(blocks.length === 0)
+	if (blocks.length === 0)
 	{
 		blocks = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27];
 	}

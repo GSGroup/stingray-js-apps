@@ -29,7 +29,7 @@ Rectangle {
 	}
 
 	onIsAnimatedChanged: {
-		if(!rect.isAnimated)
+		if (!rect.isAnimated)
 		{
 			widthAnimation.complete();
 			heightAnimation.complete();
