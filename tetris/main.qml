@@ -4,7 +4,7 @@ Application {
 	id: gTetris;
 
 	name: "tetris";
-	displayname: "tetris";
+	displayname: "Tetris";
 
 	Game { }
 }
