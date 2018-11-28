@@ -7,6 +7,7 @@ var nextRotationIndex;
 var nextColorIndex;
 var currentColorIndex;
 var currentLevel;
+var currentPieceOffset;
 var gameScore;
 var numLines;
 var completedRowsNumber = 0;
@@ -23,6 +24,16 @@ var pieces =[
 	[0x0E40, 0x4C40, 0x4E00, 0x4640],
 	[0x0C60, 0x4C80, 0xC600, 0x2640]
 ];
+
+var piecesOffset = [
+	[0, 0, 0, 1],
+	[0, 1, 0, 0],
+	[0, 0, 0, 0],
+	[1, 0, 2, 0],
+	[1, 0, 0, 0],
+	[1, 0, 0, 0],
+	[1, 0, 0, 0]
+]
 
 var blocks = [];
 var canvasState = [];
@@ -71,6 +82,10 @@ function init() {
 this.setCurrentLevel = function(level) {
 	currentLevel = level;
 	numLines = numLines % 10 + level * 10;
+}
+
+this.getPieceOffset = function() {
+	return piecesOffset[currentBlockViewIndex][currentRotationIndex] * gameConsts.getBlockSize();
 }
 
 this.initGame = function(gameViewModel, blockViewModel, nextBlockViewModel) {

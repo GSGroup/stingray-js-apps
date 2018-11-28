@@ -312,12 +312,12 @@ Rectangle{
 		function setNewGame() {
 			levelMenu.show();
 
-			movingTetraminos.visible = true;
-			movingTetraminos.x = game.startX;
-			movingTetraminos.y = 0;
-
 			var info = engine.restartGame(gameView.model, blockView.model, nextBlockView.model);
 			game.updateInfo(info);
+
+			movingTetraminos.visible = true;
+			movingTetraminos.x = game.startX;
+			movingTetraminos.y = - engine.getPieceOffset();
 		}
 
 		function nextStep (){
@@ -326,7 +326,7 @@ Rectangle{
 			if (!engine.hasColllisions(game.startX, 0))
 			{
 				movingTetraminos.x = game.startX;
-				movingTetraminos.y = 0;
+				movingTetraminos.y = - engine.getPieceOffset();
 			}
 			else
 			{
