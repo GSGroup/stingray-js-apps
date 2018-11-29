@@ -62,7 +62,15 @@ Rectangle{
 				width: gameConsts.getBlockSize() * 4;
 				height: gameConsts.getBlockSize() * 4;
 
-				visible: !game.deletingLines;
+				visible: !(game.deletingLines || levelMenu.visible || gameOverMenu.visible);
+
+				onVisibleChanged: {
+					if(blockView.visible)
+					{
+						engine.nextStep(blockView.model, nextBlockView.model);
+						game.setStartCoordinates();
+					}
+				}
 			}
 
 			onSelectPressed: { engine.tryRotate(movingTetraminos.x, movingTetraminos.y, blockView.model); }
@@ -314,25 +322,26 @@ Rectangle{
 
 			var info = engine.restartGame(gameView.model, blockView.model, nextBlockView.model);
 			game.updateInfo(info);
-
-			movingTetraminos.visible = true;
-			movingTetraminos.x = game.startX + engine.getPieceOffsetX();
-			movingTetraminos.y = engine.getPieceOffsetY();
+			game.setStartCoordinates();
 		}
 
-		function nextStep (){
+		function nextStep() {
 			engine.nextStep(blockView.model, nextBlockView.model);
 
 			if (!engine.hasColllisions(game.startX + engine.getPieceOffsetX(), engine.getPieceOffsetY()))
 			{
-				movingTetraminos.x = game.startX+ engine.getPieceOffsetX();
-				movingTetraminos.y = engine.getPieceOffsetY();
+				game.setStartCoordinates();
 			}
 			else
 			{
-				movingTetraminos.visible = false;
 				gameOverMenu.show();
 			}
+		}
+
+		function setStartCoordinates() {
+			movingTetraminos.x = game.startX + engine.getPieceOffsetX();
+			movingTetraminos.y = engine.getPieceOffsetY();
+			engine.updateProperties(movingTetraminos.x, movingTetraminos.y, blockView.model);
 		}
 
 		onUpPressed: { pauseMenu.show(); }
@@ -346,9 +355,7 @@ Rectangle{
 		onCompleted: {
 			levelMenu.show();
 			engine.initGame(gameView.model, blockView.model, nextBlockView.model);
-
-			movingTetraminos.x += engine.getPieceOffsetX();
-			movingTetraminos.y += engine.getPieceOffsetY();
+			game.setStartCoordinates()
 		}
 	}
 }
