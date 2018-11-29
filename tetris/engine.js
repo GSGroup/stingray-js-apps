@@ -26,13 +26,13 @@ var pieces =[
 ];
 
 var piecesOffsetY = [
-	[ 0,  0, -1, -2],
-	[ 0, -1, -1, -1],
-	[ 0,  0,  0,  0],
-	[-1,  0, -2,  0],
-	[-1,  0, -1, -1],
-	[-1,  0, -1, -1],
-	[-1,  0, -1, -1]
+	[-2, -1, -3, -3],
+	[-2, -2, -3, -2],
+	[-1, -1, -1, -1],
+	[-1, -3, -2, -3],
+	[-2, -2, -2, -3],
+	[-2, -2, -2, -3],
+	[-2, -2, -2, -3]
 ]
 
 var piecesOffsetX = [
@@ -295,20 +295,21 @@ this.hasColllisions = function(x, y) {
 }
 
 this.updateProperties = function(x, y, model) {
-	for (var k = 0; k < 16; ++k)
+	for (var k = 0, bit = 0x8000; k < 16; ++k, bit = bit >> 1)
 	{
 		var blockX = x + (k % 4) * gameConsts.getBlockSize() ;
 		var blockY = y + Math.floor(k / 4) * gameConsts.getBlockSize();
 
-		if (blockX < 0 || blockX >= gameConsts.getGameWidth() || blockY >= gameConsts.getGameHeight())
+		if (blockX < 0 || blockX >= gameConsts.getGameWidth() || blockY >= gameConsts.getGameHeight() || blockY < 0)
 		{
 			movingBlockState[k].value = -1;
 			model.setProperty(k, "value", -1);
 		}
 		else if (movingBlockState[k].value === -1)
 		{
-			movingBlockState[k].value = 0;
-			model.setProperty(k, "value", 0);
+			var value = pieces[currentBlockViewIndex][currentRotationIndex] & bit;
+			movingBlockState[k].value = value;
+			model.setProperty(k, "value", value);
 		}
 	}
 }
@@ -318,6 +319,11 @@ function hasBorderCollisions(x, y) {
 	{
 		var blockX = x + (k % 4) * gameConsts.getBlockSize() ;
 		var blockY = y + Math.floor(k / 4) * gameConsts.getBlockSize();
+
+		if(blockY < 0)
+		{
+			continue;
+		}
 
 		if ((blockX < 0 || blockX >= gameConsts.getGameWidth() || blockY >= gameConsts.getGameHeight()) && movingBlockState[k].value > 0)
 		{
@@ -333,6 +339,11 @@ function hasCanvasCollisions(x, y) {
 	{
 		var blockX = x + (k % 4) * gameConsts.getBlockSize() ;
 		var blockY = y + Math.floor(k / 4) * gameConsts.getBlockSize();
+
+		if(blockY < 0)
+		{
+			continue;
+		}
 
 		if (movingBlockState[k].value > 0 && canvasState[index(blockX, blockY)].value > 0)
 		{
