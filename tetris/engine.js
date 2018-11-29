@@ -16,23 +16,33 @@ var blockSize = gameConsts.getBlockSize() - gameConsts.getSpaceBetweenBlocks() *
 var lastOccupiedBlockIndex = gameConsts.getBlockNumber();
 
 var pieces =[
-	[0x44C0, 0x8E00, 0x6440, 0x0E20],
-	[0x4460, 0x0E80, 0xC440, 0x2E00],
+	[0x44C0, 0x4700, 0x0322, 0x00E2],
+	[0x4460, 0x0740, 0x0622, 0x02E0],
 	[0xCC00, 0xCC00, 0xCC00, 0xCC00],
 	[0x0F00, 0x2222, 0x00F0, 0x4444],
-	[0x06C0, 0x8C40, 0x6C00, 0x4620],
-	[0x0E40, 0x4C40, 0x4E00, 0x4640],
-	[0x0C60, 0x4C80, 0xC600, 0x2640]
+	[0x06C0, 0x4620, 0x0360, 0x0462],
+	[0x0E40, 0x2620, 0x0270, 0x0464],
+	[0x0C60, 0x2640, 0x0630, 0x0264]
 ];
 
-var piecesOffset = [
-	[0, 0, 0, 1],
-	[0, 1, 0, 0],
-	[0, 0, 0, 0],
-	[1, 0, 2, 0],
-	[1, 0, 0, 0],
-	[1, 0, 0, 0],
-	[1, 0, 0, 0]
+var piecesOffsetY = [
+	[ 0,  0, -1, -2],
+	[ 0, -1, -1, -1],
+	[ 0,  0,  0,  0],
+	[-1,  0, -2,  0],
+	[-1,  0, -1, -1],
+	[-1,  0, -1, -1],
+	[-1,  0, -1, -1]
+]
+
+var piecesOffsetX = [
+	[  0, -1, -2,  0],
+	[ -1, -1, -1,  0],
+	[  0,  0,  0,  0],
+	[  0, -2,  0, -1],
+	[  0, -1, -1, -1],
+	[  0, -1, -1, -1],
+	[  0, -1, -1, -1]
 ]
 
 var blocks = [];
@@ -84,8 +94,12 @@ this.setCurrentLevel = function(level) {
 	numLines = numLines % 10 + level * 10;
 }
 
-this.getPieceOffset = function() {
-	return piecesOffset[currentBlockViewIndex][currentRotationIndex] * gameConsts.getBlockSize();
+this.getPieceOffsetY = function() {
+	return piecesOffsetY[currentBlockViewIndex][currentRotationIndex] * gameConsts.getBlockSize();
+}
+
+this.getPieceOffsetX = function() {
+	return piecesOffsetX[currentBlockViewIndex][currentRotationIndex] * gameConsts.getBlockSize();
 }
 
 this.initGame = function(gameViewModel, blockViewModel, nextBlockViewModel) {

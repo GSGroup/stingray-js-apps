@@ -316,17 +316,17 @@ Rectangle{
 			game.updateInfo(info);
 
 			movingTetraminos.visible = true;
-			movingTetraminos.x = game.startX;
-			movingTetraminos.y = - engine.getPieceOffset();
+			movingTetraminos.x = game.startX + engine.getPieceOffsetX();
+			movingTetraminos.y = engine.getPieceOffsetY();
 		}
 
 		function nextStep (){
 			engine.nextStep(blockView.model, nextBlockView.model);
 
-			if (!engine.hasColllisions(game.startX, 0))
+			if (!engine.hasColllisions(game.startX + engine.getPieceOffsetX(), engine.getPieceOffsetY()))
 			{
-				movingTetraminos.x = game.startX;
-				movingTetraminos.y = - engine.getPieceOffset();
+				movingTetraminos.x = game.startX+ engine.getPieceOffsetX();
+				movingTetraminos.y = engine.getPieceOffsetY();
 			}
 			else
 			{
@@ -346,6 +346,9 @@ Rectangle{
 		onCompleted: {
 			levelMenu.show();
 			engine.initGame(gameView.model, blockView.model, nextBlockView.model);
+
+			movingTetraminos.x += engine.getPieceOffsetX();
+			movingTetraminos.y += engine.getPieceOffsetY();
 		}
 	}
 }
