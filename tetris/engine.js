@@ -7,6 +7,7 @@ var nextRotationIndex;
 var nextColorIndex;
 var currentColorIndex;
 var currentLevel;
+var currentPieceOffset;
 var gameScore;
 var numLines;
 var completedRowsNumber = 0;
@@ -15,14 +16,34 @@ var blockSize = gameConsts.getBlockSize() - gameConsts.getSpaceBetweenBlocks() *
 var lastOccupiedBlockIndex = gameConsts.getBlockNumber();
 
 var pieces =[
-	[0x44C0, 0x8E00, 0x6440, 0x0E20],
-	[0x4460, 0x0E80, 0xC440, 0x2E00],
+	[0x44C0, 0x4700, 0x0322, 0x00E2],
+	[0x4460, 0x0740, 0x0622, 0x02E0],
 	[0xCC00, 0xCC00, 0xCC00, 0xCC00],
 	[0x0F00, 0x2222, 0x00F0, 0x4444],
-	[0x06C0, 0x8C40, 0x6C00, 0x4620],
-	[0x0E40, 0x4C40, 0x4E00, 0x4640],
-	[0x0C60, 0x4C80, 0xC600, 0x2640]
+	[0x06C0, 0x4620, 0x0360, 0x0462],
+	[0x0E40, 0x2620, 0x0270, 0x0464],
+	[0x0C60, 0x2640, 0x0630, 0x0264]
 ];
+
+var piecesOffsetY = [
+	[-2, -1, -3, -3],
+	[-2, -2, -3, -2],
+	[-1, -1, -1, -1],
+	[-1, -3, -2, -3],
+	[-2, -2, -2, -3],
+	[-2, -2, -2, -3],
+	[-2, -2, -2, -3]
+]
+
+var piecesOffsetX = [
+	[  0, -1, -2,  0],
+	[ -1, -1, -1,  0],
+	[  0,  0,  0,  0],
+	[  0, -2,  0, -1],
+	[  0, -1, -1, -1],
+	[  0, -1, -1, -1],
+	[  0, -1, -1, -1]
+]
 
 var blocks = [];
 var canvasState = [];
@@ -71,6 +92,14 @@ function init() {
 this.setCurrentLevel = function(level) {
 	currentLevel = level;
 	numLines = numLines % 10 + level * 10;
+}
+
+this.getPieceOffsetY = function() {
+	return piecesOffsetY[currentBlockViewIndex][currentRotationIndex] * gameConsts.getBlockSize();
+}
+
+this.getPieceOffsetX = function() {
+	return piecesOffsetX[currentBlockViewIndex][currentRotationIndex] * gameConsts.getBlockSize();
 }
 
 this.initGame = function(gameViewModel, blockViewModel, nextBlockViewModel) {
@@ -266,20 +295,21 @@ this.hasColllisions = function(x, y) {
 }
 
 this.updateProperties = function(x, y, model) {
-	for (var k = 0; k < 16; ++k)
+	for (var k = 0, bit = 0x8000; k < 16; ++k, bit = bit >> 1)
 	{
 		var blockX = x + (k % 4) * gameConsts.getBlockSize() ;
 		var blockY = y + Math.floor(k / 4) * gameConsts.getBlockSize();
 
-		if (blockX < 0 || blockX >= gameConsts.getGameWidth() || blockY >= gameConsts.getGameHeight())
+		if (blockX < 0 || blockX >= gameConsts.getGameWidth() || blockY >= gameConsts.getGameHeight() || blockY < 0)
 		{
 			movingBlockState[k].value = -1;
 			model.setProperty(k, "value", -1);
 		}
 		else if (movingBlockState[k].value === -1)
 		{
-			movingBlockState[k].value = 0;
-			model.setProperty(k, "value", 0);
+			var value = pieces[currentBlockViewIndex][currentRotationIndex] & bit;
+			movingBlockState[k].value = value;
+			model.setProperty(k, "value", value);
 		}
 	}
 }
@@ -289,6 +319,11 @@ function hasBorderCollisions(x, y) {
 	{
 		var blockX = x + (k % 4) * gameConsts.getBlockSize() ;
 		var blockY = y + Math.floor(k / 4) * gameConsts.getBlockSize();
+
+		if(blockY < 0)
+		{
+			continue;
+		}
 
 		if ((blockX < 0 || blockX >= gameConsts.getGameWidth() || blockY >= gameConsts.getGameHeight()) && movingBlockState[k].value > 0)
 		{
@@ -304,6 +339,11 @@ function hasCanvasCollisions(x, y) {
 	{
 		var blockX = x + (k % 4) * gameConsts.getBlockSize() ;
 		var blockY = y + Math.floor(k / 4) * gameConsts.getBlockSize();
+
+		if(blockY < 0)
+		{
+			continue;
+		}
 
 		if (movingBlockState[k].value > 0 && canvasState[index(blockX, blockY)].value > 0)
 		{
