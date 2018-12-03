@@ -13,7 +13,7 @@ var numLines;
 var completedRowsNumber = 0;
 var deleteInfo = { idx: -1, linesNumber: 0 };
 var blockSize = gameConsts.getBlockSize() - gameConsts.getSpaceBetweenBlocks() * 2;
-var lastOccupiedBlockIndex = gameConsts.getBlockNumber();
+var lastOccupiedBlockIndex;
 
 var pieces =[
 	[0x44C0, 0x4700, 0x0322, 0x00E2],
@@ -87,6 +87,7 @@ function init() {
 	currentLevel = 1;
 	gameScore = 0;
 	numLines = currentLevel * 10;
+	lastOccupiedBlockIndex = gameConsts.getBlockNumber();
 }
 
 this.setCurrentLevel = function(level) {
@@ -201,19 +202,19 @@ this.updateCanvasModel = function(index, model) {
 }
 
 this.removeLines = function(model) {
-	for (var i = deleteInfo.idx; i >= lastOccupiedBlockIndex; --i)
+	for (var index = deleteInfo.idx; index >= lastOccupiedBlockIndex; --index)
 	{
-		var inGlass = lastOccupiedBlockIndex >= gameConsts.getGlassWidth() * deleteInfo.linesNumber;
-		canvasState[i].value = inGlass ? canvasState[i - gameConsts.getGlassWidth() * deleteInfo.linesNumber].value : 0;
-		canvasState[i].colorIndex = inGlass ? canvasState[i - gameConsts.getGlassWidth() * deleteInfo.linesNumber].colorIndex : 0;
-		this.updateCanvasModel(i, model);
+		var inGlass = index >= gameConsts.getGlassWidth() * deleteInfo.linesNumber;
+		canvasState[index].value = inGlass ? canvasState[index - gameConsts.getGlassWidth() * deleteInfo.linesNumber].value : 0;
+		canvasState[index].colorIndex = inGlass ? canvasState[index - gameConsts.getGlassWidth() * deleteInfo.linesNumber].colorIndex : 0;
+		this.updateCanvasModel(index, model);
 	}
 
+	lastOccupiedBlockIndex -= gameConsts.getGlassWidth() * deleteInfo.linesNumber;
 	calcScores();
 
 	deleteInfo.linesNumber = 0;
 	deleteInfo.idx = -1;
-	lastOccupiedBlockIndex -= gameConsts.getGlassWidth() * deleteInfo.linesNumber;
 
 	return { score: gameScore, level: currentLevel };
 }
