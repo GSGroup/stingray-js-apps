@@ -290,7 +290,7 @@ Rectangle{
 		function nextStep() {
 			engine.nextStep(blockView.model, nextBlockView.model);
 
-			if (!engine.hasColllisions(game.startX + engine.getPieceOffsetX(), engine.getPieceOffsetY()))
+			if (!engine.hasColllisions(game.startX, engine.getPieceOffsetY()))
 			{
 				game.setStartCoordinates();
 			}
@@ -301,7 +301,7 @@ Rectangle{
 		}
 
 		function setStartCoordinates() {
-			movingTetraminos.x = game.startX + engine.getPieceOffsetX();
+			movingTetraminos.x = game.startX;
 			movingTetraminos.y = engine.getPieceOffsetY();
 			engine.updateProperties(movingTetraminos.x, movingTetraminos.y, blockView.model);
 		}
