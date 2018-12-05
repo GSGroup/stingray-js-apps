@@ -14,13 +14,11 @@ Rectangle {
 	Column {
 		id: gameExitColumn;
 
-		y: 15;
-
-		height: exitRect.height - 30;
+		height: exitRect.height - 66;
 
 		anchors.centerIn: exitRect;
 
-		spacing: 6;
+		spacing: 18;
 		focus: true;
 
 		MenuItem {

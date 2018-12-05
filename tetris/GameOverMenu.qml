@@ -10,13 +10,14 @@ Rectangle {
 
 	visible: false;
 
-	BodyText {
+	SubheadText {
 		id: menuText;
 
-		width: 240;
-		height: 30;
+		y: 17;
 
-		anchors.topMargin: 6;
+		width: 240;
+		height: 36;
+
 		anchors.horizontalCenter: gameOverRect.horizontalCenter;
 
 		horizontalAlignment: Text.AlignHCenter;
@@ -29,13 +30,13 @@ Rectangle {
 	Column {
 		id: gameOverColumn;
 
-		height: gameOverRect.height;
+		height: gameOverRect.height - 47;
 
-		anchors.horizontalCenter: gameOverRect.horizontalCenter;
 		anchors.top: menuText.bottom;
-		anchors.topMargin: 6;
+		anchors.topMargin: 30;
+		anchors.horizontalCenter: gameOverRect.horizontalCenter;
 
-		spacing: 6;
+		spacing: 21;
 		focus: true;
 
 		MenuItem {
