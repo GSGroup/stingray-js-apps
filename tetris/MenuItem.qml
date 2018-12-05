@@ -3,13 +3,13 @@ Rectangle {
 
 	property alias menuText: textItem.text;
 
-	width: 240;
-	height: 30;
+	width: 244;
+	height: 41;
 
 	color: itemRect.activeFocus ? colorTheme.activeFocusTop : colorTheme.nonFocusablePanelColor;
 	focus: true;
 
-	BodyText {
+	SmallText {
 		id: textItem;
 
 		anchors.centerIn: itemRect;

@@ -2,6 +2,7 @@ import "LevelMenu.qml";
 import "ExitMenu.qml";
 import "GameOverMenu.qml";
 import "PauseRect.qml";
+import "InfoRect.qml";
 import "ItemGridView.qml";
 
 import "engine.js" as engine;
@@ -138,56 +139,17 @@ Rectangle{
 			}
 		}
 
-		Rectangle {
+		InfoRect {
 			id: infoItem;
 
 			width: game.width;
 			height: game.height;
 
 			anchors.left: game.right;
-			anchors.leftMargin: gameConsts.getBlockSize() * 3;
+			anchors.leftMargin: 100;
 
-			color: colorTheme.globalBackgroundColor;
-
-			Item {
-				id: nextTetraminos;
-
-				width: gameConsts.getBlockSize() * 6;
-				height: gameConsts.getBlockSize() * 6;
-
-				color: colorTheme.globalBackgroundColor;
-
-				ItemGridView {
-					id: nextBlockView;
-
-					x: gameConsts.getBlockSize();
-					y: gameConsts.getBlockSize();
-
-					width: gameConsts.getBlockSize() * 4;
-					height: gameConsts.getBlockSize() * 4;
-				}
-			}
-
-			SmallCaptionText {
-				id: levelRect;
-
-				anchors.top: nextTetraminos.bottom;
-				anchors.leftMargin: gameConsts.getBlockSize();
-
-				text: tr("Уровень ") + game.currentLevel;
-				color: colorTheme.highlightPanelColor;
-			}
-
-			SmallCaptionText {
-				id: scoreRect;
-
-				anchors.top: levelRect.bottom;
-				anchors.topMargin: gameConsts.getBlockSize();
-				anchors.leftMargin: gameConsts.getBlockSize();
-
-				text: tr("Счет    ") + game.gameScore;
-				color: colorTheme.highlightPanelColor;
-			}
+			gameScore: game.gameScore;
+			currentLevel: game.currentLevel;
 		}
 
 		Rectangle{
@@ -206,7 +168,7 @@ Rectangle{
 			id: exitMenu;
 
 			width: game.width;
-			height: 132;
+			height: 225;
 
 			anchors.centerIn: game;
 
@@ -232,7 +194,7 @@ Rectangle{
 			id: gameOverMenu;
 
 			width: game.width;
-			height: gameConsts.getBlockSize() * 4;
+			height: 225;
 
 			anchors.centerIn: game;
 
@@ -258,7 +220,7 @@ Rectangle{
 			id: levelMenu;
 
 			width: game.width;
-			height: gameConsts.getBlockSize() * 3;
+			height: 118;
 
 			anchors.centerIn: game;
 
@@ -288,7 +250,7 @@ Rectangle{
 			id: pauseMenu;
 
 			width: game.width;
-			height: gameConsts.getBlockSize() * 2;
+			height: 73;
 
 			anchors.centerIn: game;
 
