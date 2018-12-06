@@ -11,7 +11,7 @@ Rectangle {
 
 	visible: false;
 
-	SmallCaptionText {
+	SubheadText {
 		y: 9;
 
 		anchors.horizontalCenter: parent.horizontalCenter;
@@ -24,7 +24,7 @@ Rectangle {
 		id: levelGrid;
 
 		property int cellWidth: gameConsts.getGameWidth() / levelModel.count;
-		property int cellHeight: gameConsts.getBlockSize() * 1.5;
+		property int cellHeight: 47;
 
 		width: this.contentWidth;
 		height: this.contentHeight;

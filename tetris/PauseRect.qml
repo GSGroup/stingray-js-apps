@@ -8,7 +8,7 @@ Rectangle {
 
 	visible: false;
 
-	BodyText {
+	SubheadText {
 		anchors.centerIn: parent;
 
 		text: tr("Пауза...");
