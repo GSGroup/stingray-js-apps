@@ -159,113 +159,6 @@ Rectangle{
 			visible: (exitMenu.visible || levelMenu.visible || pauseMenu.visible || gameOverMenu.visible);
 		}
 
-		ExitMenu {
-			id: exitMenu;
-
-			width: game.width;
-			height: 225;
-
-			anchors.centerIn: game;
-
-			onUpPressed: { }
-
-			onBackToGame: {
-				exitMenu.visible = false;
-				movingTetraminos.setFocus();
-			}
-
-			onSetNewGame: {
-				exitMenu.visible = false;
-				game.setNewGame();
-			}
-
-			onExitGame: {
-				exitMenu.visible = false;
-				game.exitGame();
-			}
-		}
-
-		GameOverMenu {
-			id: gameOverMenu;
-
-			width: game.width;
-			height: 225;
-
-			anchors.centerIn: game;
-
-			onKeyPressed: {
-				if (key == "Up" || key == "Menu" || key == "Back" || key == "Last")
-				{
-					return true;
-				}
-			}
-
-			onSetNewGame: {
-				gameOverMenu.visible = false;
-				game.setNewGame();
-			}
-
-			onExitGame: {
-				gameOverMenu.visible = false;
-				game.exitGame();
-			}
-		}
-
-		LevelMenu {
-			id: levelMenu;
-
-			width: game.width;
-			height: 118;
-
-			anchors.centerIn: game;
-
-			onKeyPressed: {
-				if (key == "Up")
-				{
-					return true;
-				}
-
-				if (key == "Menu" || key == "Last" || key == "Back")
-				{
-					levelMenu.visible = false;
-					game.exitGame();
-					return true;
-				}
-			}
-
-			onLevelChanged: {
-				levelMenu.visible = false;
-				game.currentLevel = level;
-				engine.setCurrentLevel(game.currentLevel);
-				movingTetraminos.setFocus();
-
-				game.nextStep();
-			}
-		}
-
-		PauseRect {
-			id: pauseMenu;
-
-			width: game.width;
-			height: 73;
-
-			anchors.centerIn: game;
-
-			onKeyPressed: {
-				if (key == "Menu" || key == "Last" || key == "Back")
-				{
-					pauseMenu.visible = false;
-					game.exitGame();
-					return true;
-				}
-			}
-
-			onContinueGame: {
-				pauseMenu.visible = false;
-				movingTetraminos.setFocus();
-			}
-		}
-
 		function exitGame() {
 			game.setNewGame();
 			viewsFinder.closeApp();
@@ -277,6 +170,10 @@ Rectangle{
 		}
 
 		function setNewGame() {
+			exitMenu.visible = false;
+			gameOverMenu.visible = false;
+			pauseMenu.visible = false;
+
 			levelMenu.show();
 
 			var info = engine.restartGame(gameView.model, blockView.model, nextBlockView.model);
@@ -323,11 +220,103 @@ Rectangle{
 				return false;
 			}
 		}
+	}
 
-		onCompleted: {
-			levelMenu.show();
-			engine.initGame(gameView.model, blockView.model, nextBlockView.model);
-			game.setStartCoordinates();
+	Item {
+		ExitMenu {
+			id: exitMenu;
+
+			width: game.width;
+			height: 225;
+
+			anchors.centerIn: game;
+
+			onUpPressed: { }
+
+			onBackToGame: {
+				exitMenu.visible = false;
+				movingTetraminos.setFocus();
+			}
+
+			onSetNewGame: {
+				exitMenu.visible = false;
+				game.setNewGame();
+			}
+
+			onExitGame: {
+				exitMenu.visible = false;
+				game.exitGame();
+			}
+		}
+
+		GameOverMenu {
+			id: gameOverMenu;
+
+			width: game.width;
+			height: 225;
+
+			anchors.centerIn: game;
+
+			onSetNewGame: {
+				gameOverMenu.visible = false;
+				game.setNewGame();
+			}
+
+			onExitGame: {
+				gameOverMenu.visible = false;
+				game.exitGame();
+			}
+		}
+
+		LevelMenu {
+			id: levelMenu;
+
+			width: game.width;
+			height: 118;
+
+			anchors.centerIn: game;
+
+			onLevelChanged: {
+				levelMenu.visible = false;
+				game.currentLevel = level;
+				engine.setCurrentLevel(game.currentLevel);
+				movingTetraminos.setFocus();
+
+				game.nextStep();
+			}
+		}
+
+		PauseRect {
+			id: pauseMenu;
+
+			width: game.width;
+			height: 73;
+
+			anchors.centerIn: game;
+
+			onContinueGame: {
+				pauseMenu.visible = false;
+				movingTetraminos.setFocus();
+			}
+		}
+
+		onUpPressed: { }
+
+		onKeyPressed: {
+			if (key == "Menu" || key == "Back" || key == "Last")
+			{
+				game.setNewGame();
+
+				return false;
+			}
 		}
 	}
+
+	onCompleted: {
+		levelMenu.show();
+		engine.initGame(gameView.model, blockView.model, nextBlockView.model);
+		game.setStartCoordinates()
+	}
+
+
 }
