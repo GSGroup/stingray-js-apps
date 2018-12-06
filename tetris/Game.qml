@@ -64,14 +64,6 @@ Rectangle{
 				height: gameConsts.getBlockSize() * 4;
 
 				visible: !(game.deletingLines || levelMenu.visible || gameOverMenu.visible);
-
-				onVisibleChanged: {
-					if(blockView.visible)
-					{
-						engine.nextStep(blockView.model, nextBlockView.model);
-						game.setStartCoordinates();
-					}
-				}
 			}
 
 			onSelectPressed: { engine.tryRotate(movingTetraminos.x, movingTetraminos.y, blockView.model); }
@@ -243,6 +235,8 @@ Rectangle{
 				game.currentLevel = level;
 				engine.setCurrentLevel(game.currentLevel);
 				movingTetraminos.setFocus();
+
+				game.nextStep();
 			}
 		}
 
