@@ -66,7 +66,10 @@ Rectangle{
 				visible: !(game.deletingLines || levelMenu.visible || gameOverMenu.visible);
 			}
 
-			onSelectPressed: { engine.tryRotate(movingTetraminos.x, movingTetraminos.y, blockView.model); }
+			onSelectPressed: {
+				engine.tryRotate(movingTetraminos.x, movingTetraminos.y, blockView.model);
+				engine.updateProperties(movingTetraminos.x, movingTetraminos.y, blockView.model);
+			}
 
 			onRightPressed: { this.move(1, 0); }
 
