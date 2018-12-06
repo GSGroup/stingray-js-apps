@@ -118,7 +118,7 @@ this.zeroizeModelWidth = function(model)
 function updateBlockState() {
 	for (var bit = 0x8000, indexBlock = 0; bit > 0; bit = bit >> 1, ++indexBlock)
 	{
-		movingBlockState[indexBlock].value =  pieces[currentBlockViewIndex][currentRotationIndex] & bit;
+		movingBlockState[indexBlock].value = pieces[currentBlockViewIndex][currentRotationIndex] & bit;
 		movingBlockState[indexBlock].colorIndex = currentColorIndex;
 	}
 }
