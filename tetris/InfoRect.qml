@@ -32,7 +32,8 @@ Rectangle {
 
 		anchors.left: levelRect.right;
 		anchors.leftMargin: 20;
-		anchors.bottom: levelRect.bottom;
+		anchors.top: nextBlockView.bottom;
+		anchors.topMargin: 67;
 
 		text: infoRect.currentLevel;
 		color: colorTheme.highlightPanelColor;
@@ -42,7 +43,7 @@ Rectangle {
 		id: scoreRect;
 
 		anchors.top: levelText.bottom;
-		anchors.topMargin: 20;
+		anchors.topMargin: 40;
 
 		text: tr("Счет    ");
 		color: colorTheme.highlightPanelColor;
@@ -53,7 +54,8 @@ Rectangle {
 
 		anchors.left: levelRect.right;
 		anchors.leftMargin: 20;
-		anchors.bottom: scoreRect.bottom;
+		anchors.top: levelText.bottom;
+		anchors.topMargin: 27;
 
 		text: infoRect.gameScore;
 		color: colorTheme.highlightPanelColor;
