@@ -154,7 +154,7 @@ Rectangle{
 			height: safeArea.height;
 
 			color: colorTheme.globalBackgroundColor;
-			opacity: 0.5;
+			opacity: 0.7;
 
 			visible: (exitMenu.visible || levelMenu.visible || pauseMenu.visible || gameOverMenu.visible);
 		}
