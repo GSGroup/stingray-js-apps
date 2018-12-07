@@ -159,6 +159,14 @@ Rectangle{
 			visible: (exitMenu.visible || levelMenu.visible || pauseMenu.visible || gameOverMenu.visible);
 		}
 
+		onUpPressed: { pauseMenu.show(); }
+
+		onMenuPressed: { exitMenu.show(); }
+
+		onBackPressed: { exitMenu.show(); }
+
+		onLastPressed: { exitMenu.show(); }
+
 		function exitGame() {
 			game.setNewGame();
 			viewsFinder.closeApp();
@@ -198,27 +206,6 @@ Rectangle{
 			movingTetraminos.x = game.startX;
 			movingTetraminos.y = engine.getPieceOffsetY();
 			engine.updateProperties(movingTetraminos.x, movingTetraminos.y, blockView.model);
-		}
-
-		onUpPressed: { pauseMenu.show(); }
-
-		onMenuPressed: { exitMenu.show(); }
-
-		onBackPressed: { exitMenu.show(); }
-
-		onLastPressed: { exitMenu.show(); }
-
-		onKeyPressed: {
-			if (key == "Power Off")
-			{
-				exitMenu.visible = false;
-				gameOverMenu.visible = false;
-				pauseMenu.visible = false;
-
-				game.setNewGame();
-
-				return false;
-			}
 		}
 	}
 
@@ -309,6 +296,15 @@ Rectangle{
 
 				return false;
 			}
+		}
+	}
+
+	onKeyPressed: {
+		if (key == "Power Off")
+		{
+			game.setNewGame();
+
+			return false;
 		}
 	}
 
