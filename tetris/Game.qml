@@ -311,10 +311,23 @@ Rectangle{
 
 		onLastPressed: { exitMenu.show(); }
 
+		onKeyPressed: {
+			if (key == "Power Off")
+			{
+				exitMenu.visible = false;
+				gameOverMenu.visible = false;
+				pauseMenu.visible = false;
+
+				game.setNewGame();
+
+				return false;
+			}
+		}
+
 		onCompleted: {
 			levelMenu.show();
 			engine.initGame(gameView.model, blockView.model, nextBlockView.model);
-			game.setStartCoordinates()
+			game.setStartCoordinates();
 		}
 	}
 }
