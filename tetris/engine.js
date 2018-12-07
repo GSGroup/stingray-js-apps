@@ -196,7 +196,7 @@ this.removeLines = function(model) {
 		this.updateCanvasModel(index, model);
 	}
 
-	lastOccupiedBlockIndex -= gameConsts.getGlassWidth() * deleteInfo.linesNumber;
+	lastOccupiedBlockIndex += gameConsts.getGlassWidth() * deleteInfo.linesNumber;
 	calcScores();
 
 	deleteInfo.linesNumber = 0;
