@@ -302,17 +302,18 @@ this.updateProperties = function(x, y, model) {
 }
 
 function hasBorderCollisions(x, y) {
-	for (var k = 0; k < 16; ++k)
+	for (var k = 0, bit = 0x8000; k < 16; ++k, bit = bit >> 1)
 	{
 		var blockX = x + (k % 4) * gameConsts.getBlockSize() ;
 		var blockY = y + Math.floor(k / 4) * gameConsts.getBlockSize();
+		var value = pieces[currentBlockViewIndex][currentRotationIndex] & bit;
 
-		if(blockY < 0)
+		if(blockY < 0 && value == 0)
 		{
 			continue;
 		}
 
-		if ((blockX < 0 || blockX >= gameConsts.getGameWidth() || blockY >= gameConsts.getGameHeight()) && movingBlockState[k].value > 0)
+		if ((blockX < 0 || blockX >= gameConsts.getGameWidth() || blockY >= gameConsts.getGameHeight()) && value > 0)
 		{
 			return true;
 		}
