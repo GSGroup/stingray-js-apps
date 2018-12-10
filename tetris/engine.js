@@ -14,6 +14,7 @@ var completedRowsNumber = 0;
 var deleteInfo = { idx: -1, linesNumber: 0 };
 var blockSize = gameConsts.getBlockSize() - gameConsts.getSpaceBetweenBlocks() * 2;
 var lastOccupiedBlockIndex;
+var borderCollisionType = { LEFT: 1, RIGHT: 2, BOTTOM: 3, NONE: 0 };
 
 var pieces =[
 	[0x2260, 0x0470, 0x0644, 0x0E20],
@@ -260,16 +261,42 @@ this.tryRotate = function(x, y, model) {
 	var rotationIndex = currentRotationIndex;
 	currentRotationIndex = (currentRotationIndex === 3 ? 0 : currentRotationIndex + 1);
 	updateBlockState();
-	if (!this.hasColllisions(x,y))
+	var tryAgain = true;
+
+	do
 	{
-		this.updateBlockModel(model);
-		this.updateProperties(x, y, model)
-	}
-	else
-	{
-		currentRotationIndex = rotationIndex;
-		updateBlockState();
-	}
+		var borderCollision = hasBorderCollisions(x,y);
+		var canvasCollisions = hasCanvasCollisions(x,y);
+
+		if (!canvasCollisions && borderCollision === borderCollisionType.NONE)
+		{
+			this.updateBlockModel(model);
+			this.updateProperties(x, y, model);
+			tryAgain = false;
+		}
+		else
+		{
+			if(borderCollision === borderCollisionType.LEFT)
+			{
+				x += gameConsts.getBlockSize();
+			}
+
+			if(borderCollision === borderCollisionType.RIGHT)
+			{
+				x -= gameConsts.getBlockSize();
+			}
+
+			if(borderCollision === borderCollisionType.BOTTOM || canvasCollisions)
+			{
+				currentRotationIndex = rotationIndex;
+				updateBlockState();
+				tryAgain = false;
+			}
+		}
+
+	}while(tryAgain)
+
+	return x;
 }
 
 this.hasColllisions = function(x, y) {
@@ -313,13 +340,26 @@ function hasBorderCollisions(x, y) {
 			continue;
 		}
 
-		if ((blockX < 0 || blockX >= gameConsts.getGameWidth() || blockY >= gameConsts.getGameHeight()) && value > 0)
+		if (movingBlockState[k].value > 0)
 		{
-			return true;
+			if (blockX < 0)
+			{
+				return borderCollisionType.LEFT;
+			}
+
+			if (blockX >= gameConsts.getGameWidth())
+			{
+				return borderCollisionType.RIGHT;
+			}
+
+			if ( blockY >= gameConsts.getGameHeight())
+			{
+				return borderCollisionType.BOTTOM;
+			}
 		}
 	}
 
-	return false;
+	return borderCollisionType.NONE;
 }
 
 function hasCanvasCollisions(x, y) {
