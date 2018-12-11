@@ -341,7 +341,7 @@ function hasBorderCollisions(x, y) {
 			continue;
 		}
 
-		if (movingBlockState[k].value > 0)
+		if (value > 0)
 		{
 			if (blockX < 0)
 			{
