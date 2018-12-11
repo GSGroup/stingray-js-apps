@@ -218,9 +218,7 @@ Rectangle{
 
 			anchors.centerIn: game;
 
-			onBackPressed: {
-				backToGame();
-			}
+			onBackPressed: { backToGame(); }
 
 			onBackToGame: {
 				exitMenu.visible = false;
@@ -246,9 +244,7 @@ Rectangle{
 
 			anchors.centerIn: game;
 
-			onBackPressed: {
-				setNewGame();
-			}
+			onBackPressed: { setNewGame(); }
 
 			onSetNewGame: {
 				gameOverMenu.visible = false;
@@ -269,9 +265,7 @@ Rectangle{
 
 			anchors.centerIn: game;
 
-			onBackPressed: {
-				levelChanged(1);
-			}
+			onBackPressed: { levelChanged(1); }
 
 			onLevelChanged: {
 				levelMenu.visible = false;
@@ -291,9 +285,7 @@ Rectangle{
 
 			anchors.centerIn: game;
 
-			onBackPressed: {
-				continueGame();
-			}
+			onBackPressed: { continueGame(); }
 
 			onContinueGame: {
 				pauseMenu.visible = false;
