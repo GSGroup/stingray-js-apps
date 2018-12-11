@@ -58,6 +58,6 @@ Rectangle {
 
 	function show() {
 		gameOverRect.visible = true;
-		exitGameItem.setFocus();
+		newGameItem.setFocus();
 	}
 }
