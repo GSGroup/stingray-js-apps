@@ -67,7 +67,7 @@ Rectangle{
 			}
 
 			onSelectPressed: {
-				engine.tryRotate(movingTetraminos.x, movingTetraminos.y, blockView.model);
+				movingTetraminos.x = engine.tryRotate(movingTetraminos.x, movingTetraminos.y, blockView.model);
 				engine.updateProperties(movingTetraminos.x, movingTetraminos.y, blockView.model);
 			}
 

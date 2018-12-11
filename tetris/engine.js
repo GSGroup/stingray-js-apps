@@ -14,25 +14,26 @@ var completedRowsNumber = 0;
 var deleteInfo = { idx: -1, linesNumber: 0 };
 var blockSize = gameConsts.getBlockSize() - gameConsts.getSpaceBetweenBlocks() * 2;
 var lastOccupiedBlockIndex;
+var BORDER_COLLISION_TYPE = { LEFT: 1, RIGHT: 2, BOTTOM: 3, NONE: 0 };
 
 var pieces =[
-	[0x2260, 0x0470, 0x0644, 0x0E20],
-	[0x4460, 0x0740, 0x0622, 0x02E0],
+	[0x2640, 0x0630, 0x0264, 0x0630],
+	[0x4620, 0x0360, 0x0462, 0x0360],
 	[0x0660, 0x0660, 0x0660, 0x0660],
-	[0x0F00, 0x2222, 0x00F0, 0x4444],
-	[0x06C0, 0x4620, 0x0360, 0x0462],
-	[0x0E40, 0x2620, 0x0270, 0x0464],
-	[0x0C60, 0x2640, 0x0630, 0x0264]
+	[0x0F00, 0x2222, 0x0F00, 0x2222],
+	[0x2620, 0x0270, 0x4640, 0x0720],
+	[0x4460, 0x0740, 0x6220, 0x0170],
+	[0x2260, 0x0470, 0x6440, 0x0710]
 ];
 
 var piecesOffsetY = [
 	[-2, -2, -3, -2],
 	[-2, -2, -3, -2],
 	[-2, -2, -2, -2],
-	[-1, -3, -2, -3],
-	[-2, -2, -2, -3],
-	[-2, -2, -2, -3],
-	[-2, -2, -2, -3]
+	[-1, -3, -1, -3],
+	[-2, -2, -2, -2],
+	[-2, -2, -2, -2],
+	[-2, -2, -2, -2]
 ]
 
 var blocks = [];
@@ -260,25 +261,42 @@ this.tryRotate = function(x, y, model) {
 	var rotationIndex = currentRotationIndex;
 	currentRotationIndex = (currentRotationIndex === 3 ? 0 : currentRotationIndex + 1);
 	updateBlockState();
-	if (!this.hasColllisions(x,y))
+
+	do
 	{
-		this.updateBlockModel(model);
-		this.updateProperties(x, y, model)
-	}
-	else
-	{
-		currentRotationIndex = rotationIndex;
-		updateBlockState();
-	}
+		var borderCollision = hasBorderCollisions(x,y);
+		var canvasCollisions = hasCanvasCollisions(x,y);
+
+		if (!canvasCollisions && borderCollision === BORDER_COLLISION_TYPE.NONE)
+		{
+			this.updateBlockModel(model);
+			this.updateProperties(x, y, model);
+			break;
+		}
+		else
+		{
+			if (borderCollision === BORDER_COLLISION_TYPE.LEFT)
+			{
+				x += gameConsts.getBlockSize();
+			}
+			else if (borderCollision === BORDER_COLLISION_TYPE.RIGHT)
+			{
+				x -= gameConsts.getBlockSize();
+			}
+			else if (borderCollision === BORDER_COLLISION_TYPE.BOTTOM || canvasCollisions)
+			{
+				currentRotationIndex = rotationIndex;
+				updateBlockState();
+				break;
+			}
+		}
+	} while(true)
+
+	return x;
 }
 
 this.hasColllisions = function(x, y) {
-	if (hasBorderCollisions(x, y) || hasCanvasCollisions(x, y))
-	{
-		return true;
-	}
-
-	return false;
+	return hasBorderCollisions(x, y) != BORDER_COLLISION_TYPE.NONE || hasCanvasCollisions(x, y);
 }
 
 this.updateProperties = function(x, y, model) {
@@ -313,13 +331,26 @@ function hasBorderCollisions(x, y) {
 			continue;
 		}
 
-		if ((blockX < 0 || blockX >= gameConsts.getGameWidth() || blockY >= gameConsts.getGameHeight()) && value > 0)
+		if (value > 0)
 		{
-			return true;
+			if (blockX < 0)
+			{
+				return BORDER_COLLISION_TYPE.LEFT;
+			}
+
+			if (blockX >= gameConsts.getGameWidth())
+			{
+				return BORDER_COLLISION_TYPE.RIGHT;
+			}
+
+			if ( blockY >= gameConsts.getGameHeight())
+			{
+				return BORDER_COLLISION_TYPE.BOTTOM;
+			}
 		}
 	}
 
-	return false;
+	return BORDER_COLLISION_TYPE.NONE;
 }
 
 function hasCanvasCollisions(x, y) {
