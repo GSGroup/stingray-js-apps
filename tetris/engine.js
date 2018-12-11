@@ -14,7 +14,7 @@ var completedRowsNumber = 0;
 var deleteInfo = { idx: -1, linesNumber: 0 };
 var blockSize = gameConsts.getBlockSize() - gameConsts.getSpaceBetweenBlocks() * 2;
 var lastOccupiedBlockIndex;
-var borderCollisionType = { LEFT: 1, RIGHT: 2, BOTTOM: 3, NONE: 0 };
+var BORDER_COLLISION_TYPE = { LEFT: 1, RIGHT: 2, BOTTOM: 3, NONE: 0 };
 
 var pieces =[
 	[0x2640, 0x0630, 0x0264, 0x0630],
@@ -35,7 +35,6 @@ var piecesOffsetY = [
 	[-2, -2, -2, -2],
 	[-2, -2, -2, -2]
 ]
-
 
 var blocks = [];
 var canvasState = [];
@@ -262,51 +261,42 @@ this.tryRotate = function(x, y, model) {
 	var rotationIndex = currentRotationIndex;
 	currentRotationIndex = (currentRotationIndex === 3 ? 0 : currentRotationIndex + 1);
 	updateBlockState();
-	var tryAgain = true;
 
 	do
 	{
 		var borderCollision = hasBorderCollisions(x,y);
 		var canvasCollisions = hasCanvasCollisions(x,y);
 
-		if (!canvasCollisions && borderCollision === borderCollisionType.NONE)
+		if (!canvasCollisions && borderCollision === BORDER_COLLISION_TYPE.NONE)
 		{
 			this.updateBlockModel(model);
 			this.updateProperties(x, y, model);
-			tryAgain = false;
+			break;
 		}
 		else
 		{
-			if(borderCollision === borderCollisionType.LEFT)
+			if (borderCollision === BORDER_COLLISION_TYPE.LEFT)
 			{
 				x += gameConsts.getBlockSize();
 			}
-
-			if(borderCollision === borderCollisionType.RIGHT)
+			else if (borderCollision === BORDER_COLLISION_TYPE.RIGHT)
 			{
 				x -= gameConsts.getBlockSize();
 			}
-
-			if(borderCollision === borderCollisionType.BOTTOM || canvasCollisions)
+			else if (borderCollision === BORDER_COLLISION_TYPE.BOTTOM || canvasCollisions)
 			{
 				currentRotationIndex = rotationIndex;
 				updateBlockState();
-				tryAgain = false;
+				break;
 			}
 		}
-
-	}while(tryAgain)
+	} while(true)
 
 	return x;
 }
 
 this.hasColllisions = function(x, y) {
-	if (hasBorderCollisions(x, y) || hasCanvasCollisions(x, y))
-	{
-		return true;
-	}
-
-	return false;
+	return hasBorderCollisions(x, y) != BORDER_COLLISION_TYPE.NONE || hasCanvasCollisions(x, y);
 }
 
 this.updateProperties = function(x, y, model) {
@@ -345,22 +335,22 @@ function hasBorderCollisions(x, y) {
 		{
 			if (blockX < 0)
 			{
-				return borderCollisionType.LEFT;
+				return BORDER_COLLISION_TYPE.LEFT;
 			}
 
 			if (blockX >= gameConsts.getGameWidth())
 			{
-				return borderCollisionType.RIGHT;
+				return BORDER_COLLISION_TYPE.RIGHT;
 			}
 
 			if ( blockY >= gameConsts.getGameHeight())
 			{
-				return borderCollisionType.BOTTOM;
+				return BORDER_COLLISION_TYPE.BOTTOM;
 			}
 		}
 	}
 
-	return borderCollisionType.NONE;
+	return BORDER_COLLISION_TYPE.NONE;
 }
 
 function hasCanvasCollisions(x, y) {
