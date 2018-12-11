@@ -218,7 +218,9 @@ Rectangle{
 
 			anchors.centerIn: game;
 
-			onUpPressed: { }
+			onBackPressed: {
+				backToGame();
+			}
 
 			onBackToGame: {
 				exitMenu.visible = false;
@@ -244,6 +246,10 @@ Rectangle{
 
 			anchors.centerIn: game;
 
+			onBackPressed: {
+				setNewGame();
+			}
+
 			onSetNewGame: {
 				gameOverMenu.visible = false;
 				game.setNewGame();
@@ -263,6 +269,10 @@ Rectangle{
 
 			anchors.centerIn: game;
 
+			onBackPressed: {
+				levelChanged(1);
+			}
+
 			onLevelChanged: {
 				levelMenu.visible = false;
 				game.currentLevel = level;
@@ -281,6 +291,10 @@ Rectangle{
 
 			anchors.centerIn: game;
 
+			onBackPressed: {
+				continueGame();
+			}
+
 			onContinueGame: {
 				pauseMenu.visible = false;
 				movingTetraminos.setFocus();
@@ -290,11 +304,9 @@ Rectangle{
 		onUpPressed: { }
 
 		onKeyPressed: {
-			if (key == "Menu" || key == "Back" || key == "Last")
+			if (key == "Menu" || key == "Last")
 			{
-				game.setNewGame();
-
-				return false;
+				return true;
 			}
 		}
 	}
