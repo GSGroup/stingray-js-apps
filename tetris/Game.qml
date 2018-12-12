@@ -11,6 +11,8 @@ import "tetrisConsts.js" as gameConsts;
 Rectangle{
 	id: mainScreen;
 
+	property string appName;
+
 	width: safeArea.width;
 	height: safeArea.height;
 
@@ -298,13 +300,13 @@ Rectangle{
 		onKeyPressed: {
 			if (key == "Menu" || key == "Last")
 			{
-				return true;
+				return viewsFinder.currentAppName == mainScreen.appName;
 			}
 		}
 	}
 
 	onKeyPressed: {
-		if (key == "Power Off")
+		if (key == "Power Off" && viewsFinder.currentAppName == mainScreen.appName)
 		{
 			game.setNewGame();
 
@@ -317,6 +319,4 @@ Rectangle{
 		engine.initGame(gameView.model, blockView.model, nextBlockView.model);
 		game.setStartCoordinates()
 	}
-
-
 }
