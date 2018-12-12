@@ -4,6 +4,8 @@ Rectangle {
 	width: parent.cellWidth;
 	height: parent.cellHeight;
 
+	focus: true;
+
 	color: itemLevel.activeFocus ? colorTheme.activeFocusTop : colorTheme.nonFocusablePanelColor;
 
 	SmallText {

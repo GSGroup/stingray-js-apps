@@ -4,6 +4,8 @@ Item {
 
 	anchors.horizontalCenter: parent.horizontalCenter;
 
+	focus: true;
+
 	Rectangle {
 		width: parent.width;
 		height: parent.height / 2;
