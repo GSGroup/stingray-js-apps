@@ -1,6 +1,8 @@
 Item {
 	height: 90;
 
+	focus: true;
+
 	Rectangle {
 		width: parent.width;
 		height: parent.height - 25;

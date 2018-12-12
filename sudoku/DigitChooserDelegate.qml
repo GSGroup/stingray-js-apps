@@ -2,6 +2,8 @@ Rectangle {
 	width: parent.width;
 	height: parent.width;
 
+	focus: true;
+
 	color: activeFocus ? colorTheme.activeBorderColor : colorTheme.backgroundColor;
 	borderColor: activeFocus ? colorTheme.activeBorderColor : colorTheme.borderColor;
 	borderWidth: 2;

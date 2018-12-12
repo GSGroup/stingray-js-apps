@@ -1,6 +1,9 @@
 Rectangle { 
 	width: 70;
 	height: 70;
+
+	focus: true;
+
 	color: activeFocus ? colorTheme.activeFocusColor : colorTheme.activePanelColor;
 
 	Image {
