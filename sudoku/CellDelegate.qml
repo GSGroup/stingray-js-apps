@@ -4,6 +4,8 @@ Item {
 	width: Math.floor(parent.width/9);
 	height: Math.floor(parent.width/9);
 
+	focus: true;
+
 	Rectangle {
 		anchors.fill:parent;
 

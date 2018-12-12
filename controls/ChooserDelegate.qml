@@ -1,7 +1,10 @@
 Item {
 	id: delegateItem;
+
 	width: 20 + chooserDelegateText.width * chooserDelegateText.visible + chooserIcon.width * chooserIcon.visible + (chooserIcon.visible && chooserDelegateText.visible) * 10;
 	height: parent.height;
+
+	focus: true;
 	
 	Image {
 		id: chooserIcon;

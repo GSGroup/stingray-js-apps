@@ -26,6 +26,8 @@ Item {
 		delegate: Item {
 			width: 100;
 			height: parent.height;
+
+			focus: true;
 		}
 
 		onSelectPressed: {
