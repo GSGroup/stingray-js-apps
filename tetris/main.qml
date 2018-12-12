@@ -6,5 +6,5 @@ Application {
 	name: "tetris";
 	displayname: "Tetris";
 
-	Game { }
+	Game { appName: gTetris.name; }
 }
