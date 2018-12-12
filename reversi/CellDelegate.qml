@@ -5,6 +5,8 @@ Rectangle {
 	width: parent.cellHeight;
 	height: parent.cellWidth;
 
+	focus: true;
+
 	color: "#151";
 	borderColor: "#432100";
 	borderWidth: 1;
