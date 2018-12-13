@@ -9,6 +9,8 @@ Rectangle {
 	width: gameConsts.getBlockSize();
 	height: gameConsts.getBlockSize();
 
+	focus: true;
+
 	color: model.value === -1 ? colorTheme.globalBackgroundColor : colorTheme.backgroundColor;
 	opacity: model.value === 0 ? 0.0 : 1.0;
 
