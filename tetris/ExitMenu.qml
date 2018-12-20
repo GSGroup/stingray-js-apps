@@ -24,7 +24,7 @@ Rectangle {
 		MenuItem {
 			id: exitItem;
 
-			menuText: "Выйти из Тетриса";
+			menuText: "Выйти";
 
 			onSelectPressed: { exitRect.exitGame(); }
 		}
