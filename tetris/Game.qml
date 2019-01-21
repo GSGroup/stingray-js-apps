@@ -169,10 +169,7 @@ Rectangle{
 
 		onLastPressed: { exitMenu.show(); }
 
-		function exitGame() {
-			game.setNewGame();
-			viewsFinder.closeApp();
-		}
+		function exitGame() { viewsFinder.closeApp(); }
 
 		function updateInfo(info) {
 			game.gameScore = info.score;
@@ -313,6 +310,8 @@ Rectangle{
 			return false;
 		}
 	}
+
+	function resetGame() { game.setNewGame(); }
 
 	onCompleted: {
 		levelMenu.show();
