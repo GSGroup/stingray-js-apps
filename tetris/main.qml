@@ -6,5 +6,10 @@ Application {
 	name: "tetris";
 	displayname: "Tetris";
 
-	Game { appName: gTetris.name; }
+	Game {
+		id: tetris;
+		appName: gTetris.name;
+	}
+
+	onStopped: { tetris.resetGame(); }
 }
