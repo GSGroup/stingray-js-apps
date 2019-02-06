@@ -6,7 +6,7 @@ var gameWidth = blockSize * glassWidth;
 var gameHeight = blockSize * glassHeight;
 var blockNumber = glassHeight * glassWidth;
 
-var colorCollection = [ "#FF6331", "#D151BD", "#FFD200", "#919C11", "#366DD9" ];
+var colorCollection = [ "#FF6331", "#D151BD", "#FFD200", "#93AD00", "#0090FF" ];
 
 this.randomColorIndex = function() {
 	return Math.floor(Math.random() * colorCollection.length);
