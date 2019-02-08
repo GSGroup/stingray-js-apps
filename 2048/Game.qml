@@ -148,7 +148,7 @@ Rectangle {
 
 			text: tr("BEST");
 			color: "#EEE4DA";
-			font: bigFont;
+			font: titleFont;
 		}
 
 		Text {
@@ -161,7 +161,7 @@ Rectangle {
 			anchors.bottomMargin: game.space;
 
 			text: val;
-			font: bigFont;
+			font: titleFont;
 			color: "#FFFFFF";
 
 			onCompleted: {
@@ -192,7 +192,7 @@ Rectangle {
 
 			text: tr("SCORE");
 			color: "#eee4da";
-			font: bigFont;
+			font: titleFont;
 		}
 
 		Text {
@@ -205,7 +205,7 @@ Rectangle {
 			anchors.bottomMargin: game.space;
 
 			text: val;
-			font: bigFont;
+			font: titleFont;
 			color: "#ffffff";
 		}			
 	}
@@ -227,7 +227,7 @@ Rectangle {
 			anchors.centerIn: parent;
 			anchors.bottomMargin: game.cellSize / 2;
 
-			font: bigFont;
+			font: titleFont;
 			color: "#734a12";
 			text: restartMenu.message;
 		}
@@ -321,7 +321,7 @@ Rectangle {
 			}
 		}
 
-		BigText {
+		TitleText {
 			id: help;
 
 			anchors.left: parent.left;

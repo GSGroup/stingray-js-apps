@@ -14,7 +14,7 @@ Application {
 		anchors.verticalCenter: safeArea.verticalCenter;		
 
 
-		 BigText {
+		 TitleText {
 			id: titleText;
 			anchors.horizontalCenter: parent.horizontalCenter;
 			anchors.top: parent.top;

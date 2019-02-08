@@ -19,7 +19,7 @@ Item {
 		source: "apps/sudoku/img/ground_final.png";
 	}
  
-	BigText {
+	TitleText {
 		id: resText;
 		anchors.horizontalCenter: parent.horizontalCenter;
 		anchors.bottom: finalTheme.bottom;	
@@ -29,7 +29,7 @@ Item {
 	}
 
 
-	BigText {
+	TitleText {
 		id: difficulty;
 		anchors.horizontalCenter: parent.horizontalCenter;
 		anchors.top: finalTheme.top;	
@@ -38,7 +38,7 @@ Item {
 		text:"";
 	}
 
-	BigText {
+	TitleText {
 		id: player;
 		anchors.horizontalCenter: parent.horizontalCenter;
 		anchors.top: finalTheme.top;	
@@ -47,7 +47,7 @@ Item {
 		text:"";
 	}
 	
-	BigText {
+	TitleText {
 		id: time;
 		anchors.horizontalCenter: parent.horizontalCenter;
 		anchors.bottom: finalTheme.bottom;	

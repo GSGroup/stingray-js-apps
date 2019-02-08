@@ -155,7 +155,7 @@ Application {
 		anchors.fill: mainWindow;
 		color: "#333c";
 
-		BigText {
+		TitleText {
 			anchors.centerIn: parent;
 			text: parent.text;
 		}
@@ -171,7 +171,7 @@ Application {
 		anchors.fill: mainWindow;
 		color: "#333c";
 
-		BigText {
+		TitleText {
 			id: winText;
 			anchors.centerIn: parent;
 			text: parent.text;

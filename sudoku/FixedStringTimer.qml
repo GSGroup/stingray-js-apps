@@ -1,4 +1,4 @@
-BigText {
+TitleText {
 	property int seconds;
 
 	color:"#813722";

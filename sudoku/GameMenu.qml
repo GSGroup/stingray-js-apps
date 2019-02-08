@@ -104,7 +104,7 @@ Item {
 //			anchors.bottomMargin: 10;
 			width: 250;
 			height: 50;
-			font: bigFont;
+			font: titleFont;
 
 			radius: 0;
 
@@ -190,7 +190,7 @@ Item {
 			height: 50;
 			anchors.topMargin: 5;
 
-			font: bigFont;
+			font: titleFont;
 			text: "Help";
 			color: "#00000000";
 			

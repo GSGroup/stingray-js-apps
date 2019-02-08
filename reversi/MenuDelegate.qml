@@ -13,7 +13,7 @@ Item {
 
 		radius: 10;
 
-		BigText {
+		TitleText {
 			anchors.centerIn: parent;
 
 			text: tr(model.text);

@@ -24,7 +24,7 @@ Rectangle {
 		focus: true;
 		color: "#eee4dab0";
 
-		BigText {
+		TitleText {
 			id: titleText;
 
 			anchors.top: parent.top;
@@ -125,7 +125,7 @@ Rectangle {
 		text: game.playerWhite ? tr("White is moving") : tr("Black is moving");
 	}
 
-	BigText {
+	TitleText {
 		id: gameOver;
 
 		anchors.centerIn: boardRect;
