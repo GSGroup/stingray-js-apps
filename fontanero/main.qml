@@ -103,7 +103,7 @@ Application {
 		height: parent.height / 4;
 		anchors.centerIn: parent;
 
-		MainText {
+		SubheadText {
 			anchors.topMargin: -10;
 			anchors.centerIn: parent;
 			text: "YOU'RE DEAD! Continue?";

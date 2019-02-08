@@ -12,7 +12,7 @@ Item {
 
 	anchors.fill: parent;
 
-	MainText {
+	SubheadText {
 		anchors.top: finalPageProto.top;
 		anchors.topMargin: 50;
 		anchors.horizontalCenter: finalPageProto.horizontalCenter;

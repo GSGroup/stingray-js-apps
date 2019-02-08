@@ -25,7 +25,7 @@ Item {
 			anchors.verticalCenter: parent.verticalCenter;
 			color: floatingTextItem.color;
 			text: floatingTextItem.text; //TODO onTextChanged doesn't called for non-dynamic instances like Checkbox
-			font: mainFont;
+			font: subheadFont;
 			x: 0;
 
 			Timer {

@@ -53,7 +53,7 @@ Item {
 		}
 	}
 
-	MainText {
+	SubheadText {
 		anchors.bottom: borderRect.bottom;
 		anchors.horizontalCenter: borderRect.horizontalCenter;
 		opacity: 1;
@@ -69,7 +69,7 @@ Item {
 		}
 	}
 
-	MainText {
+	SubheadText {
 		id: editText;
 		anchors.fill: parent;
 		verticalAlignment: Text.AlignVCenter;

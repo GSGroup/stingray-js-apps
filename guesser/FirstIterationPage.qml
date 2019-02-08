@@ -40,7 +40,7 @@ Item {
 		}
 	}
 
-	MainText {
+	SubheadText {
 		anchors.bottom: cardsFirst.top;
 		anchors.bottomMargin: 15;
 		anchors.horizontalCenter: cardsFirst.horizontalCenter;

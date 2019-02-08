@@ -42,7 +42,7 @@ Item {
 		height: 60;
 		color: colorTheme.activePanelColor;
 
-		MainText {
+		SubheadText {
 			anchors.verticalCenter: parent.verticalCenter;
 			anchors.left: parent.left;
 			anchors.leftMargin: 10;
@@ -50,7 +50,7 @@ Item {
 			visible: playbackProgressItem.duration > 0;
 		}
 
-		MainText {
+		SubheadText {
 			anchors.verticalCenter: parent.verticalCenter;
 			anchors.right: parent.right;
 			anchors.rightMargin: 10;
