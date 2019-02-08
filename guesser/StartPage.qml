@@ -8,7 +8,7 @@ Item {
 
 	anchors.fill: parent;
 
-	MainText {
+	SubheadText {
 		anchors.bottom: cards.top;
 		anchors.bottomMargin: 15;
 		anchors.horizontalCenter: cards.horizontalCenter;

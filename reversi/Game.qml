@@ -79,7 +79,7 @@ Rectangle {
 
 		visible: !mainMenu.visible;
 
-		MainText {
+		SubheadText {
 			text: tr("White") + " " + game.whiteCounter;
 		}
 	}
@@ -92,7 +92,7 @@ Rectangle {
 
 		visible: !mainMenu.visible;
 
-		MainText {
+		SubheadText {
 			text: tr("Black") + " " + game.blackCounter;
 		}
 	}
@@ -106,16 +106,16 @@ Rectangle {
 
 		visible: !game.multiplayer && !mainMenu.visible;
 
-		MainText {
+		SubheadText {
 			text: game.playerWhite ? tr("You're playing with white") : tr("You're playing with black");
 		}
 
-		MainText {
+		SubheadText {
 			text: game.easy ? tr("Low difficulty") : tr("High difficulty");
 		}
 	}
 
-	MainText {
+	SubheadText {
 		anchors.verticalCenter: parent.verticalCenter;
 		anchors.right: boardRect.left;
 		anchors.rightMargin: 20;

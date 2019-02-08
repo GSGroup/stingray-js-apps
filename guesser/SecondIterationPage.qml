@@ -33,7 +33,7 @@ Item {
 		onSelectPressed: { secondPageProto.cardSelected(cardsSecond.children[this.currentIndex]); }
 	}
 
-	MainText {
+	SubheadText {
 		anchors.bottom: cardsSecond.top;
 		anchors.bottomMargin: 15;
 		anchors.horizontalCenter: cardsFirst.horizontalCenter;
