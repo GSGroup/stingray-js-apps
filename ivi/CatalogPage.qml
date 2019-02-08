@@ -40,7 +40,7 @@ Item {
         fillMode: PreserveAspectFit;
     }
 
-    MainCaptionText {
+    SubheadText {
         id: titleText;
 
         anchors.top: catalogPage.top;
