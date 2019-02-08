@@ -220,7 +220,7 @@ Item {
 			color: "#fff";
 		}
 
-		SmallText {
+		BodyText {
 			id: seekText;
 			anchors.centerIn: bgRect;
 			color: "#000";

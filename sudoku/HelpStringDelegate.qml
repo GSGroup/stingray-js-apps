@@ -2,7 +2,7 @@ Item {
 				  height: 20;
 				  width: 400;
 				  anchors.horizontalCenter: parent.horizontalCenter;
-				  SmallText {
+				  BodyText {
 				  anchors.horizontalCenter: parent.horizontalCenter;
 				  text: model.text;
 				  }

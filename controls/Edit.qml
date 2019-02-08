@@ -60,7 +60,7 @@ Item {
 		color: colorTheme.textColor; 
 		opacity: editText.text == "" ? 0.8 : 0;
 		text: editItem.hint;
-		font: smallFont;
+		font: bodyFont;
 
 		Behavior on opacity {
 			animation: Animation {
@@ -75,7 +75,7 @@ Item {
 		verticalAlignment: Text.AlignVCenter;
 		horizontalAlignment: Text.AlignHCenter;
 		color: editItem.textColor;
-		font: smallFont;
+		font: bodyFont;
 
 		Behavior on opacity {
 			animation: Animation {

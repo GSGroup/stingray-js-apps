@@ -17,7 +17,7 @@ Rectangle {
 		height: gameConsts.getBlockSize() * 4;
 	}
 
-	SmallText {
+	BodyText {
 		id: levelRect;
 
 		anchors.top: nextBlockView.bottom;
@@ -39,7 +39,7 @@ Rectangle {
 		color: colorTheme.highlightPanelColor;
 	}
 
-	SmallText {
+	BodyText {
 		id: scoreRect;
 
 		anchors.top: levelText.bottom;

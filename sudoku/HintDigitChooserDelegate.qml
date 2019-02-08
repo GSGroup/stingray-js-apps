@@ -12,7 +12,7 @@ Rectangle {
 		anchors.horizontalCenter: parent.horizontalCenter;
 		anchors.verticalCenter: parent.verticalCenter;
 
-		font: smallFont;
+		font: bodyFont;
 		color: parent.activeFocus ? colorTheme.activeTextColor : colorTheme.textColor;
 		text: model.digit;
 	}

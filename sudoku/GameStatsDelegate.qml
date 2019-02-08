@@ -12,7 +12,7 @@ Item {
 					 source: "apps/sudoku/img/ico_level_"+(model.isBetter?"up":"down")+".png";
 				}
 
-                SmallText {
+                BodyText {
                     id: player;
                     anchors.top: parent.top;
 					anchors.left: progress.right;
@@ -21,7 +21,7 @@ Item {
                     text: model.player;
                 }
 
-                SmallText {
+                BodyText {
                     id:time;
                     anchors.top: parent.top;
                     anchors.right: parent.right;

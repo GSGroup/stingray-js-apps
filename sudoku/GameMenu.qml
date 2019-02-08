@@ -22,7 +22,7 @@ Item {
 
 		}
 		
-		SmallText {
+		BodyText {
 			id: playerLabel;
 
 			anchors.top: mainMenuTheme.top;
@@ -59,7 +59,7 @@ Item {
 				}
 		}
 
-		SmallText {
+		BodyText {
 			id:levelLabel;
 
 			anchors.horizontalCenter: playerLabel.horizontalCenter;
@@ -115,7 +115,7 @@ Item {
  				source: "apps/sudoku/img/btn_main_"+(parent.enabled?(parent.activeFocus? "focus":"regular"):"disabled")+".png";
 			}
 
-			SmallText {
+			BodyText {
 				id: txt;
 				anchors.verticalCenter: parent.verticalCenter;
 				anchors.horizontalCenter: parent.horizontalCenter;
@@ -157,7 +157,7 @@ Item {
  				source: "apps/sudoku/img/btn_main_"+(parent.enabled?(parent.activeFocus? "focus":"regular"):"disabled")+".png";
 			}
 
-			SmallText {
+			BodyText {
 				id: txt;
 				anchors.verticalCenter: parent.verticalCenter;
 				anchors.horizontalCenter: parent.horizontalCenter;
@@ -203,7 +203,7 @@ Item {
 			}
 
 
-			SmallText {
+			BodyText {
 				id: txt;
 				anchors.verticalCenter: parent.verticalCenter;
 				anchors.horizontalCenter: parent.horizontalCenter;

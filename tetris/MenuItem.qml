@@ -9,7 +9,7 @@ Rectangle {
 	color: itemRect.activeFocus ? colorTheme.activeFocusTop : colorTheme.nonFocusablePanelColor;
 	focus: true;
 
-	SmallText {
+	BodyText {
 		id: textItem;
 
 		anchors.centerIn: itemRect;

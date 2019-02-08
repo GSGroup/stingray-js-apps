@@ -8,7 +8,7 @@ Rectangle {
 
 	color: itemLevel.activeFocus ? colorTheme.activeFocusTop : colorTheme.nonFocusablePanelColor;
 
-	SmallText {
+	BodyText {
 		anchors.centerIn: itemLevel;
 
 		color: itemLevel.activeFocus ? colorTheme.globalBackgroundColor : colorTheme.highlightPanelColor;
