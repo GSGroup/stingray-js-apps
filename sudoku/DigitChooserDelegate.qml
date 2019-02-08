@@ -11,7 +11,7 @@ Rectangle {
 	Text {
 		anchors.centerIn: parent;
 
-		font: bigFont;
+		font: titleFont;
 		color: "#FFFFFF";
 		text: model.digit;
 	}

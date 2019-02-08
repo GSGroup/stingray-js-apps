@@ -23,7 +23,7 @@ Rectangle {
 	}
 
 
-    BigText {
+    TitleText {
             id: difficultyIndicator;
             anchors.top: parent.top;
 			anchors.topMargin: 68;
@@ -32,7 +32,7 @@ Rectangle {
             text: parent.difficulty;
     }
 
-	BigText {
+	TitleText {
 			id:difficultyHeader;
 			anchors.bottom: difficultyIndicator.top;
 			anchors.bottomMargin: 18;
@@ -59,7 +59,7 @@ Rectangle {
 			}
 	}
 //1
-	BigText {
+	TitleText {
 			anchors.bottom: timeIndicator.top;
 			anchors.bottomMargin: 15;
 			anchors.horizontalCenter: difficultyIndicator.horizontalCenter;

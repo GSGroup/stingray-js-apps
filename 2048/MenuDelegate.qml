@@ -18,7 +18,7 @@ Item {
 		Text {
 			anchors.centerIn: parent;
 
-			font: bigFont;
+			font: titleFont;
 			color: "#ffffff";
 			text: model.text;
 		}

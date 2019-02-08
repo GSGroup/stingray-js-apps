@@ -24,7 +24,7 @@ Item {
 		}
 	}
 
-	BigText {
+	TitleText {
 		id: innerText;
 		anchors.top: parent.top;
 		anchors.horizontalCenter: parent.horizontalCenter;

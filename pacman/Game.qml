@@ -143,7 +143,7 @@ Rectangle {
 		}
 	}
 
-	BigText {
+	TitleText {
 		text: "SCORE\n" + pacmanGame.score;
 		horizontalAlignment: Text.AlignHCenter;
 

@@ -12,7 +12,7 @@ Item {
 			 source: "apps/sudoku/img/ground_pause.png";
 		}
 
-		BigText {
+		TitleText {
 			id: playerInfoText;
 			anchors.top: subMenuTheme.top;
 			anchors.topMargin: 140;
@@ -20,7 +20,7 @@ Item {
 			text: "";
 		}
 
-		BigText {
+		TitleText {
 			id: gameInfoText;
 			anchors.top: playerInfoText.bottom;
 			anchors.topMargin: 20;

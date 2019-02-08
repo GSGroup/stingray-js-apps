@@ -57,7 +57,7 @@ Rectangle {
 
 			text: rect.value ? rect.value : "";
 			color: rect.value <= 4 ? "#6D654E" : "#ffffff";
-			font: bigFont;
+			font: titleFont;
 		}
 	} 
 

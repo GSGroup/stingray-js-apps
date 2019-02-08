@@ -18,7 +18,7 @@ Item {
 		id: minigameModel;
 	}
 
-	BigText {
+	TitleText {
 		id: bonusText;
 		anchors.horizontalCenter: parent.horizontalCenter;
 		anchors.bottom: minigameView;
