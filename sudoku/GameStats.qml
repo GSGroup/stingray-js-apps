@@ -22,13 +22,13 @@ Item {
 				anchors.topMargin: 5;
 				anchors.horizontalCenter: parent.horizontalCenter;
 
-				SmallText {
+				BodyText {
 					id: player;
 					text: listView.model.get(0).player;
 					anchors.horizontalCenter: parent.horizontalCenter;
 				}
 
-				SmallText {
+				BodyText {
 					id: time;
 					anchors.bottom: parent.top;
 					anchors.bottomMargin: 100;
@@ -44,12 +44,12 @@ Item {
 				anchors.topMargin: 65;
 				anchors.left: parent.left;
 
-				SmallText {
+				BodyText {
 					id: player;
 					text: listView.model.get(1).player;
 					anchors.left: parent.left;
 				}
-				SmallText {
+				BodyText {
 					id: time;
 					anchors.bottom: parent.top;
 					anchors.bottomMargin: 90;
@@ -65,13 +65,13 @@ Item {
 				anchors.topMargin: 65;
 				anchors.right: parent.right;
 
-				SmallText {
+				BodyText {
 					id: player;
 					anchors.horizontalCenter: parent.horizontalCenter;
 					text: listView.model.get(2).player;
 				}
 
-				SmallText {
+				BodyText {
 					id: time;
 					anchors.bottom: parent.top;
 					anchors.bottomMargin: 90;

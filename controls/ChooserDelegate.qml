@@ -20,7 +20,7 @@ Item {
 		Behavior on opacity { animation: Animation { duration: 300; } }
 	}
 	
-	SmallText {
+	BodyText {
 		id: chooserDelegateText;
 		text: model.text;
 		anchors.verticalCenter: parent.verticalCenter;

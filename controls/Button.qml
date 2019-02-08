@@ -9,13 +9,13 @@ ActivePanel {
 	width: Math.max(140, buttonText.width + 30);
 	radius: 3;
 
-	SmallText {
+	BodyText {
 		id: buttonText;
 		anchors.verticalCenter: parent.verticalCenter;
 		x: simpleButton.textInCenter ? (parent.width - paintedWidth) / 2 : simpleButton.textRightOffset;
 		opacity: simpleButton.enabled ? 1 : 0.4;
 		color: parent.activeFocus ? colorTheme.focusedTextColor : colorTheme.activeTextColor;
-		font: smallFont;
+		font: bodyFont;
 		text: simpleButton.text;
 		focus: true;
 

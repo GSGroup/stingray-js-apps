@@ -290,7 +290,7 @@ Rectangle {
 
 			anchors.left: parent.left;
 
-			SmallText {
+			BodyText {
 				anchors.centerIn: parent;
 				anchors.bottomMargin: 10;
 
@@ -317,7 +317,7 @@ Rectangle {
 
 			anchors.left: red.right;
 
-			SmallText {
+			BodyText {
 				anchors.centerIn: parent;
 				anchors.bottomMargin: 10;
 
@@ -344,7 +344,7 @@ Rectangle {
 
 			anchors.left: green.right;
 
-			SmallText {
+			BodyText {
 				anchors.centerIn: parent;
 				anchors.bottomMargin: 10;
 
@@ -371,7 +371,7 @@ Rectangle {
 
 			anchors.left: yellow.right;
 
-			SmallText {
+			BodyText {
 				id: difftext;
 
 				anchors.centerIn: parent;

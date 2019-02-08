@@ -1,6 +1,6 @@
 import "js/constants.js" as constants;
 
-SmallText {
+BodyText {
     id: categoryText;
 
     text: model.title;

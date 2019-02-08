@@ -244,7 +244,7 @@ Rectangle {
 			Text {
 				anchors.centerIn: parent;
 
-				font: smallFont;
+				font: bodyFont;
 				color: "#ffffff";
 				text: tr("Try again");
 			}

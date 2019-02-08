@@ -11,7 +11,7 @@ ActivePanel {
 	property int chooserWidth: 520; 
 	width: textItem.width + chooserItem.width + 40;
 
-	SmallText {
+	BodyText {
 		id: textItem;
 		text: parent.text;
 		anchors.left: parent.left;

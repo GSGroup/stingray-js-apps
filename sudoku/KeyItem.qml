@@ -14,7 +14,7 @@ Rectangle {
 	borderWidth: 1;
 	borderColor: activeFocus ? colorTheme.activeBorderColor : colorTheme.borderColor;
 	
-	SmallText {
+	BodyText {
 		id: buttonText;
 
 		anchors.centerIn: parent;

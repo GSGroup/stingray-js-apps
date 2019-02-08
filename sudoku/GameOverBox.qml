@@ -72,7 +72,7 @@ Item {
 			source: "apps/sudoku/img/btn_main_"+(parent.activeFocus? "focus":"regular")+".png";
 		}
 
-		SmallText {
+		BodyText {
 			id: txt;
 			anchors.verticalCenter: parent.verticalCenter;
 			anchors.horizontalCenter: parent.horizontalCenter;
@@ -112,7 +112,7 @@ Item {
  			source: "apps/sudoku/img/btn_main_"+(parent.activeFocus? "focus":"regular")+".png";
 		}
 
-		SmallText {
+		BodyText {
 			id: txt;
 			anchors.verticalCenter: parent.verticalCenter;
 			anchors.horizontalCenter: parent.horizontalCenter;

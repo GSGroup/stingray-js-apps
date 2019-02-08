@@ -12,7 +12,7 @@ Item {
 		source: "apps/sudoku/img/btn_set_"+(parent.activeFocus? "focus": (parent.focused?"selected":"regular"))+".png";
 	}
 
-	SmallText {
+	BodyText {
 		id: delegateText;
 		x: 10;
 //		anchors.left: parent.left;

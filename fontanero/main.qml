@@ -55,14 +55,14 @@ Application {
 		}
 	}
 
-	SmallText {
+	BodyText {
 		id: logText;
 		anchors.left: parent.left;
 		anchors.right: parent.right;
 		anchors.bottom: parent.bottom;
 	}
 
-	SmallText {
+	BodyText {
 		id: overlayPanel;
 		anchors.left: parent.left;
 		anchors.right: parent.right;
@@ -70,7 +70,7 @@ Application {
 		height: 100;
 	}
 
-	SmallText {
+	BodyText {
 		id: menuPanel;
 		anchors.right: parent.right;
 		anchors.verticalCenter: parent.verticalCenter;

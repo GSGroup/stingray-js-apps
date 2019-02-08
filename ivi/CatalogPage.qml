@@ -53,7 +53,7 @@ Item {
         wrapMode: Text.Wrap;
     }
 
-    SmallText {
+    BodyText {
         id: yearText;
 
         anchors.top: titleText.bottom;
@@ -63,7 +63,7 @@ Item {
         color: "#FFFFFF";
     }
 
-    SmallText {
+    BodyText {
         id: restrictText;
 
         anchors.top: titleText.bottom;
@@ -75,7 +75,7 @@ Item {
         color: constants.colors["inactive"];
     }
 
-    SmallText {
+    BodyText {
         id: durationText;
 
         anchors.top: titleText.bottom;

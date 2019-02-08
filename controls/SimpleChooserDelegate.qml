@@ -8,7 +8,7 @@ Rectangle {
 	anchors.verticalCenter: parent.verticalCenter;
 	focus: true;
 	
-	SmallText {
+	BodyText {
 		id: delegateText;
 		x: 10;
 		anchors.verticalCenter: parent.verticalCenter;
