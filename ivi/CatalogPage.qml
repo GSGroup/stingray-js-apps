@@ -98,7 +98,7 @@ Item {
 
         height: iviRatingText.height;
 
-        TinyText {
+        SecondaryText {
             id: iviRatingText;
 
             anchors.left: parent.left;
@@ -108,7 +108,7 @@ Item {
             color: constants.colors["inactive"];
         }
 
-        TinyText {
+        SecondaryText {
             id: kpRatingText;
 
             anchors.left: iviRatingText.right;
@@ -119,7 +119,7 @@ Item {
             color: constants.colors["inactive"];
         }
 
-        TinyText {
+        SecondaryText {
             id: imdbRatingText;
 
             anchors.left: kpRatingText.right;
@@ -169,7 +169,7 @@ Item {
 
         color: "#FFFFFF";
 
-        font: tinyFont;
+        font: secondaryFont;
 
         onUpPressed: {
             watchButton.setFocus();
