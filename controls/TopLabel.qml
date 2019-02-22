@@ -28,7 +28,7 @@ Item {
 		id: innerText;
 		anchors.top: parent.top;
 		anchors.horizontalCenter: parent.horizontalCenter;
-		horizontalAlignment: Text.AlignHCenter;
+		horizontalAlignment: ui.Text.AlignHCenter;
 		text: topLabelProto.text;
 		color: "#fff";
 	}

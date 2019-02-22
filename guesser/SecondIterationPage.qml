@@ -13,7 +13,7 @@ Item {
 		anchors.leftMargin: -8;
 		anchors.topMargin: -8;
 
-		orientation: ListView.Horizontal;
+		orientation: ui.ListView.Horizontal;
 		spacing: 40;
 
 		model: ListModel {

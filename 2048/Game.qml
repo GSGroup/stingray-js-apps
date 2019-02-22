@@ -329,10 +329,10 @@ Rectangle {
 			anchors.verticalCenter: parent.verticalCenter;
 			anchors.margins: game.space * 10;
 
-			horizontalAlignment: Text.AlignHCenter;
+			horizontalAlignment: ui.Text.AlignHCenter;
 			color: "#6d654e";
 			focus: true;
-			wrapMode: Text.Wrap;
+			wrapMode: ui.Text.Wrap;
 			text: tr("Use your arrow keys to move the tiles. When two tiles with the same number touch, they merge into one!");
 
 			visible: false;

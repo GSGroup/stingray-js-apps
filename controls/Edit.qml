@@ -72,8 +72,8 @@ Item {
 	SubheadText {
 		id: editText;
 		anchors.fill: parent;
-		verticalAlignment: Text.AlignVCenter;
-		horizontalAlignment: Text.AlignHCenter;
+		verticalAlignment: ui.Text.AlignVCenter;
+		horizontalAlignment: ui.Text.AlignHCenter;
 		color: editItem.textColor;
 		font: bodyFont;
 
