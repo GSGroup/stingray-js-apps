@@ -206,7 +206,7 @@ Item {
 			anchors.horizontalCenter: parent.horizontalCenter;
 			anchors.bottom: parent.top;
 			source: "res/apps/player/triangle.png";
-			fillMode: Image.PreserveAspectFit;
+			fillMode: ui.Image.PreserveAspectFit;
 			height: 15;
 			width: height * 2;
 		}

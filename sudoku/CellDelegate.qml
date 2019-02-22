@@ -37,8 +37,8 @@ Item {
 		anchors.verticalCenter: parent.verticalCenter;
 		anchors.margins: 5;
 
-		horizontalAlignment: Text.AlignHCenter;
-		verticalAlignment: Text.AlignVCenter;
+		horizontalAlignment: ui.Text.AlignHCenter;
+		verticalAlignment: ui.Text.AlignVCenter;
 
 		color: model.isBase? "#581B18":( cellItemDelegate.focused?"#FFFFFF":"#447F12");
  		font: Font {

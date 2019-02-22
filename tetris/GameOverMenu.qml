@@ -20,8 +20,8 @@ Rectangle {
 
 		anchors.horizontalCenter: gameOverRect.horizontalCenter;
 
-		horizontalAlignment: Text.AlignHCenter;
-		verticalAlignment: Text.AlignVCenter;
+		horizontalAlignment: ui.Text.AlignHCenter;
+		verticalAlignment: ui.Text.AlignVCenter;
 
 		text: tr("Игра окончена");
 		color: colorTheme.highlightPanelColor;

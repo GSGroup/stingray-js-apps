@@ -26,8 +26,8 @@ Rectangle {
 
 		visible: model.value > 0;
 
-		Behavior on width { animation: Animation { id: widthAnimation; duration: rect.animationDuration; easingType: Animation.OutCirc; } }
-		Behavior on height { animation: Animation { id: heightAnimation; duration: rect.animationDuration; easingType: Animation.OutCirc; } }
+		Behavior on width { animation: Animation { id: widthAnimation; duration: rect.animationDuration; easingType: ui.Animation.OutCirc; } }
+		Behavior on height { animation: Animation { id: heightAnimation; duration: rect.animationDuration; easingType: ui.Animation.OutCirc; } }
 	}
 
 	onIsAnimatedChanged: {

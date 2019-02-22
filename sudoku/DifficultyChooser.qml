@@ -14,7 +14,7 @@ Item {
 		anchors.fill: parent;
 		anchors.leftMargin: (dChooserItem.showAtCenter ? Math.max((dChooserItem.width - 60 - contentWidth) / 2, 0) : 0) + 30;
 		anchors.rightMargin: 30;
-		orientation: ListView.Horizontal;
+		orientation: ui.ListView.Horizontal;
 		keyNavigationWraps: true;
 		clip: true;
 		delegate: DifficultyChooserDelegate { }

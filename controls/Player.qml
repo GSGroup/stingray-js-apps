@@ -74,7 +74,7 @@ Item {
 		id: pauseImage;
 		anchors.centerIn: parent;
 		visible: parent.paused;
-		fillMode: Image.PreserveAspectFit;
+		fillMode: ui.Image.PreserveAspectFit;
 		source: "apps/controls/res/preview/icoPause.png";
 	}
 

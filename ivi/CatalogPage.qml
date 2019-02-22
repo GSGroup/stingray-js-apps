@@ -24,7 +24,7 @@ Item {
         anchors.top: catalogPage.top;
         anchors.left: catalogPage.left;
 
-        visible: posterImage.status !== Image.Ready;
+        visible: posterImage.status !== ui.Image.Ready;
 
         source: constants.defaultPoster;
 
@@ -50,7 +50,7 @@ Item {
 
         color: "#FFFFFF";
 
-        wrapMode: Text.Wrap;
+        wrapMode: ui.Text.Wrap;
     }
 
     BodyText {

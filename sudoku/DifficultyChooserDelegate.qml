@@ -23,6 +23,6 @@ Item {
 		Behavior on color { animation: Animation { duration: 200; } }
 	}
 
-	Behavior on x { animation: Animation { duration: 400; easingType: Animation.OutCirc; } }
+	Behavior on x { animation: Animation { duration: 400; easingType: ui.Animation.OutCirc; } }
 }
 

@@ -19,7 +19,7 @@ Rectangle {
 
         anchors.centerIn: parent;
 
-        visible: posterImage.status !== Image.Ready;
+        visible: posterImage.status !== ui.Image.Ready;
 
         source: constants.defaultPoster;
 

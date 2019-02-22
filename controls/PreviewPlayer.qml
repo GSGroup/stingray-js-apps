@@ -85,7 +85,7 @@ Item {
 			anchors.bottom: parent.bottom;
 			width: (70 + 10) * count;
 			spacing: 10;
-			orientation: ListView.Horizontal;
+			orientation: ui.ListView.Horizontal;
 			delegate: PreviewPlayerButton { }
 			model: ListModel {
 				ListElement { source: "apps/controls/res/preview/fullscreen.png"; }
