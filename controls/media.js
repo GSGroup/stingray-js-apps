@@ -12,7 +12,7 @@ Player.prototype = {
 		if (this.session)
 			this.stop();
 
-		this.session = app.MediaPlayer().PlayMedia(url);
+		this.session = app.MediaPlayer().PlayUrl(url);
 
 		this.connections.push(this.session.OnFinished().connect(this._onFinished.bind(this)));
 		this.connections.push(this.session.OnStarted().connect(this._onStarted.bind(this)));
