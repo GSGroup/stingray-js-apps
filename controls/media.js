@@ -70,10 +70,6 @@ Player.prototype = {
 		return 0;
 	},
 
-	getMediaInfo: function() {
-		return this.session? this.session.GetMediaInfo(): null;
-	},
-
 	getDuration: function () {
 		var mi = this.session ? this.session.GetMediaInfo(): null;
 		if (!mi)
