@@ -71,10 +71,10 @@ Player.prototype = {
 	},
 
 	getDuration: function () {
-		var mi = this.session ? this.session.GetMediaInfo(): null;
-		if (!mi)
+		var d = this.session ? this.session.GetDuration(): null;
+		if (!d || !d.is_initialized())
 			return null;
-		return mi.GetDuration().GetMilliseconds();
+		return d.GetMilliseconds();
 	},
 
 	_onStarted: function() {
