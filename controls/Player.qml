@@ -203,7 +203,7 @@ Item {
 		this.isStopped = true;
 	}
 
-	function doPlayUrl(url, stream) {
+	function playUrl(url) {
 		if (this.paused && url == this.currentUrl) {
 			this.togglePlay();
 			return;
@@ -231,15 +231,7 @@ Item {
 			self.finished();
 		};
 
-		this.player.playUrl(url, stream);
-	}
-
-	function playUrl(url) {
-		this.doPlayUrl(url, null);
-	}
-
-	function playUrl(url, stream) {
-		this.doPlayUrl(url, stream);
+		this.player.playUrl(url);
 	}
 
 	onCompleted: {
