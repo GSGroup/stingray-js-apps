@@ -8,14 +8,11 @@ Player.prototype = {
 	finished: function () { },
 	started: function () { },
 
-	playUrl: function(url, stream) {
+	playUrl: function(url) {
 		if (this.session)
 			this.stop();
 
-		if (stream)
-			this.session = app.MediaPlayer().PlayMedia(url, stream.programPid, stream.pmtPid, stream.pcrPid, stream.pmt);
-		else
-			this.session = app.MediaPlayer().PlayMedia(url);
+		this.session = app.MediaPlayer().PlayMedia(url);
 
 		this.connections.push(this.session.OnFinished().connect(this._onFinished.bind(this)));
 		this.connections.push(this.session.OnStarted().connect(this._onStarted.bind(this)));
