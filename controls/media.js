@@ -64,10 +64,10 @@ Player.prototype = {
 	},
 
 	getProgress: function() {
-		if (this.session)
-			return this.session.GetProgress();
-
-		return 0;
+		var p = this.session ? this.session.GetProgress(): null;
+		if (!p || !p.is_initialized())
+			return null;
+		return p.GetMilliseconds();
 	},
 
 	getDuration: function () {
