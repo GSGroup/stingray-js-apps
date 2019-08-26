@@ -15,13 +15,7 @@ Rectangle {
 
 		y: 17;
 
-		width: 240;
-		height: 36;
-
 		anchors.horizontalCenter: gameOverRect.horizontalCenter;
-
-		horizontalAlignment: ui.Text.AlignHCenter;
-		verticalAlignment: ui.Text.AlignVCenter;
 
 		text: tr("Игра окончена");
 		color: colorTheme.highlightPanelColor;
