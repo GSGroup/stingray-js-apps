@@ -1,3 +1,4 @@
+var dropTime =16000;
 var spaceBetweenBlocks = 1;
 var glassWidth = 10;
 var glassHeight = 17;
@@ -11,6 +12,10 @@ var colorCollection = [ COLORS.GREEN, COLORS.BLUE, COLORS.ORANGE, COLORS.YELLOW,
 
 this.randomColorIndex = function() {
 	return Math.floor(Math.random() * colorCollection.length);
+}
+
+this.getDropTime = function() {
+	return dropTime;
 }
 
 this.getBlockNumber = function(colorIndex) {

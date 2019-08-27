@@ -153,7 +153,7 @@ this.restartGame = function(gameViewModel, blockViewModel, nextBlockViewModel) {
 this.clearCanvas = function(model) {
 	for (var idx = 0; idx < gameConsts.getBlockNumber(); ++idx)
 	{
-		model.set(idx, { value: 0, colorIndex: 0, width: blockSize, needdAnim: false });
+		model.set(idx, { value: 0, colorIndex: 0, width: blockSize, needAnim: false });
 		canvasState[idx].value = 0;
 		canvasState[idx].colorIndex = 0;
 	}
