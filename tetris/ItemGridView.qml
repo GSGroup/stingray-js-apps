@@ -21,5 +21,5 @@ GridView {
 		property int width;
 		property bool needAnim;
 	}
-	delegate: ItemDelegate { animationDuration: grid.animationDuration; }
+	delegate: ItemDelegate { animationDuration: model.needAnim ? grid.animationDuration : 0; }
 }
