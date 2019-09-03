@@ -22,12 +22,10 @@ Rectangle{
 	Rectangle {
 		id: game;
 
-		property int space: 6;
 		property int stepSize: gameConsts.getBlockSize();
 		property int startX: gameConsts.getGameWidth() / 2 - gameConsts.getBlockSize() * 2;
 		property int currentLevel: 1;
 		property int gameScore: 0;
-		property int dropTime: 16000;
 		property bool deletingLines: false;
 
 		width: gameConsts.getGameWidth();
@@ -94,7 +92,7 @@ Rectangle{
 		Timer {
 			id: animTimer;
 
-			interval: game.dropTime / (gameConsts.getGlassHeight() - 4) / game.currentLevel;
+			interval: gameConsts.getDropTime() / (gameConsts.getGlassHeight() - 4) / game.currentLevel;
 			running: !(exitMenu.visible || levelMenu.visible || pauseMenu.visible || gameOverMenu.visible);
 			repeat: true;
 
