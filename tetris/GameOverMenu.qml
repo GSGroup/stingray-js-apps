@@ -60,5 +60,6 @@ Rectangle {
 	function show() {
 		gameOverRect.visible = true;
 		newGameItem.setFocus();
+		eventDispatcher.ReportEvent("GameOver", "tetris");
 	}
 }
