@@ -7,11 +7,31 @@
 
 import "js/constants.js" as constants;
 
-BodyText {
-    id: categoryText;
+Item {
+    id: categoryDelegate;
+    property bool isActive: (categoryList.currentIndex + 1) === model.id;
 
-    text: model.title;
+    width: categoryText.width;
+    height: 20;
+    focus: true;
 
-    color: focused ? constants.colors["active"] : "#FFFFFF";
+    BodyText {
+        id: categoryText;
+        text: model.title;
+        opacity: 1.0;
+        color: categoryDelegate.isActive ? constants.colors["active"] : "#FFFFFF";
+    }
+
+    Rectangle {
+        id: activeHighlight;
+        anchors.bottom: categoryText.bottom;
+
+        height: 2;
+        width: categoryText.width;
+
+        color: constants.colors["active"];
+        opacity: categoryDelegate.activeFocus ? 1.0 : constants.inactiveOpacity;
+        visible: categoryDelegate.isActive;
+    }
 }
 

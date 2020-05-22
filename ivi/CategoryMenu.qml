@@ -21,7 +21,7 @@ ListView {
 
     onCompleted: {
         constants.categories.forEach(function (category) {
-            model.append( { title: category.title, url: category.url });
+            model.append(category);
         });
     }
 }

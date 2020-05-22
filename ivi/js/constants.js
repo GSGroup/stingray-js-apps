@@ -5,17 +5,42 @@
 // IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
 // WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-this.categories = [{ title: "Комедии", url: "https://api.ivi.ru/mobileapi/videos/v5/?genre=95" },
-                   { title: "Фантастика", url: "https://api.ivi.ru/mobileapi/videos/v5/?genre=166" },
-                   { title: "Ужасы", url: "https://api.ivi.ru/mobileapi/videos/v5/?genre=99" },
-                   { title: "Боевики", url: "https://api.ivi.ru/mobileapi/videos/v5/?genre=94" },
-                   { title: "Мелодрамы", url: "https://api.ivi.ru/mobileapi/videos/v5/?genre=107" }];
+this.categories = [{
+        id: 1,
+        title: "Комедии",
+        url: "https://api.ivi.ru/mobileapi/videos/v5/?genre=95"
+    },
+    {
+        id: 2,
+        title: "Фантастика",
+        url: "https://api.ivi.ru/mobileapi/videos/v5/?genre=166"
+    },
+    {
+        id: 3,
+        title: "Ужасы",
+        url: "https://api.ivi.ru/mobileapi/videos/v5/?genre=99"
+    },
+    {
+        id: 4,
+        title: "Боевики",
+        url: "https://api.ivi.ru/mobileapi/videos/v5/?genre=94"
+    },
+    {
+        id: 5,
+        title: "Мелодрамы",
+        url: "https://api.ivi.ru/mobileapi/videos/v5/?genre=107"
+    }
+];
 
-this.colors = {"active" : "#EC174F",
-               "inactive" : "#91949C"};
+this.colors = {
+    "active": "#EC174F",
+    "inactive": "#91949C"
+};
 
-this.poster = {"width"  : 172,
-               "height" : 264};
+this.poster = {
+    "width": 172,
+    "height": 264
+};
 
 this.menuWidth = 256;
 
