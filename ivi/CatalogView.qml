@@ -7,8 +7,6 @@
 
 import "CatalogDelegate.qml";
 
-import "js/constants.js" as constants;
-
 GridView {
     id: catalogView;
 

@@ -7,8 +7,6 @@
 
 import "CategoryDelegate.qml";
 
-import "js/constants.js" as constants;
-
 ListView {
     id: categoryList;
 

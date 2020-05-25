@@ -10,6 +10,8 @@ import "CatalogView.qml";
 import "CategoryMenu.qml";
 import "IviPlayer.qml";
 
+import controls.Player;
+import controls.Button;
 import controls.Spinner;
 
 import "js/constants.js" as constants;
