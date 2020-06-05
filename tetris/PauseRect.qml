@@ -11,7 +11,7 @@ Rectangle {
 	signal continueGame();
 
 	focus: true;
-	color: colorTheme.backgroundColor;
+	color: colorTheme.activePanelColor;
 
 	visible: false;
 
@@ -19,7 +19,6 @@ Rectangle {
 		anchors.centerIn: parent;
 
 		text: tr("Пауза...");
-		color: colorTheme.highlightPanelColor;
 	}
 
 	onUpPressed: { pauseRect.continueGame(); }

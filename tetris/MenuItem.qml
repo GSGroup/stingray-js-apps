@@ -13,7 +13,7 @@ Rectangle {
 	width: 244;
 	height: 41;
 
-	color: itemRect.activeFocus ? colorTheme.activeFocusTop : colorTheme.nonFocusablePanelColor;
+	color: itemRect.activeFocus ? colorTheme.activeFocusColor : colorTheme.buttonColor;
 	focus: true;
 
 	BodyText {
@@ -21,6 +21,6 @@ Rectangle {
 
 		anchors.centerIn: itemRect;
 
-		color: itemRect.activeFocus ? colorTheme.globalBackgroundColor : colorTheme.highlightPanelColor;
+		color: itemRect.activeFocus ? colorTheme.focusedTextColor : colorTheme.activeTextColor;
 	}
 }

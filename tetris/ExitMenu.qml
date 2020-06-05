@@ -14,7 +14,7 @@ Rectangle {
 	signal backToGame();
 	signal exitGame();
 
-	color: colorTheme.backgroundColor;
+	color: colorTheme.activePanelColor;
 
 	visible: false;
 

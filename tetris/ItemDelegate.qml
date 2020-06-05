@@ -17,7 +17,7 @@ Rectangle {
 
 	focus: true;
 
-	color: model.value === -1 ? colorTheme.globalBackgroundColor : colorTheme.backgroundColor;
+	color: "#0000";
 	opacity: model.value === 0 ? 0.0 : 1.0;
 
 	Rectangle {
