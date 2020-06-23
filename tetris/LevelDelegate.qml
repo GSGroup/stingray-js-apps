@@ -13,12 +13,12 @@ Rectangle {
 
 	focus: true;
 
-	color: itemLevel.activeFocus ? colorTheme.activeFocusTop : colorTheme.nonFocusablePanelColor;
+	color: itemLevel.activeFocus ? colorTheme.activeFocusColor : colorTheme.buttonColor;
 
 	BodyText {
 		anchors.centerIn: itemLevel;
 
-		color: itemLevel.activeFocus ? colorTheme.globalBackgroundColor : colorTheme.highlightPanelColor;
+		color: itemLevel.activeFocus ? colorTheme.focusedTextColor : colorTheme.activeTextColor;
 
 		text: model.text;
 	}

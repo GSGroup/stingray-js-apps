@@ -14,7 +14,7 @@ Rectangle {
 	signal backToGame();
 	signal levelChanged(level);
 
-	color: colorTheme.backgroundColor;
+	color: colorTheme.activePanelColor;
 
 	visible: false;
 
@@ -24,7 +24,6 @@ Rectangle {
 		anchors.horizontalCenter: parent.horizontalCenter;
 
 		text: tr("Выберите уровень");
-		color: colorTheme.highlightPanelColor;
 	}
 
 	ListView {

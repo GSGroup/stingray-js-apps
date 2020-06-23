@@ -13,7 +13,7 @@ Rectangle {
 	signal setNewGame();
 	signal exitGame();
 
-	color: colorTheme.backgroundColor;
+	color: colorTheme.activePanelColor;
 
 	visible: false;
 
@@ -25,7 +25,6 @@ Rectangle {
 		anchors.horizontalCenter: gameOverRect.horizontalCenter;
 
 		text: tr("Игра окончена");
-		color: colorTheme.highlightPanelColor;
 	}
 
 	Column {

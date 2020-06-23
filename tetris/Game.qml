@@ -40,7 +40,7 @@ Rectangle{
 
 		anchors.centerIn: mainScreen;
 
-		color: colorTheme.backgroundColor;
+		color: colorTheme.focusablePanelColor;
 		focus: true;
 		radius: 5;
 
