@@ -265,7 +265,7 @@ Item {
 		if (key != "Back") {
 			hideTimer.restart();
 		} else {
-			self.visible = false;
+			this.visible = false;
 			return true;
 		}
 		return false;
