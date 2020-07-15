@@ -170,6 +170,13 @@ Rectangle{
 
 		onMenuPressed: { exitMenu.show(); }
 
+		onBluePressed: {
+			if (event.keySource == "kids")
+			{
+				exitMenu.show();
+			}
+		}
+
 		onBackPressed: { exitMenu.show(); }
 
 		onLastPressed: { exitMenu.show(); }
@@ -300,7 +307,7 @@ Rectangle{
 		onUpPressed: { }
 
 		onKeyPressed: {
-			if (key == "Menu" || key == "Last")
+			if (key == "Menu" || key == "Last" || (key == "Blue" && event.keySource == "kids"))
 			{
 				return viewsFinder.currentAppName == mainScreen.appName;
 			}
