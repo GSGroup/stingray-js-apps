@@ -68,14 +68,14 @@ Player.prototype = {
 
 	getProgress: function() {
 		var p = this.session ? this.session.GetProgress(): null;
-		if (!p || !p.is_initialized())
+		if (!p)
 			return null;
 		return p.GetMilliseconds();
 	},
 
 	getDuration: function () {
 		var d = this.session ? this.session.GetDuration(): null;
-		if (!d || !d.is_initialized())
+		if (!d)
 			return null;
 		return d.GetMilliseconds();
 	},
