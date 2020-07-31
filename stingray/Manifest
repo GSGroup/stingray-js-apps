@@ -1,0 +1,15 @@
+{
+	"id": "stingray",
+	"display": { "name": "Stingray library" },
+	"scope": "system",
+	"library": {
+		"imports": [
+			["Cas",						"cas.js"],
+			["ChannelRepository",		"channelRepository.js"],
+			["Drm",						"drm.js"],
+			["Misc",					"misc.js"],
+			["TimeManager",				"timeManager.js"],
+			["TricolorAccount",			"tricolorAccount.js"]
+		]
+	}
+}
