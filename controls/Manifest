@@ -1,7 +1,7 @@
 {
 	"id": "controls",
 	"display": { "name": "Controls library" },
-	"system": true,
+	"scope": "system",
 	"library": {
 		"imports": [
 			["Button",				"Button.qml"],
