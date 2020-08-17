@@ -53,6 +53,10 @@ var afterRotationBlockState = [];
 
 var map = new Map();
 
+this.leftDirection = 0;
+this.downDirection = 1;
+this.rightDirection = 2;
+
 this.registrationInMap = function(id, object) {
 	map.set(id, object);
 }
@@ -125,6 +129,52 @@ this.initGame = function(nextBlockViewModel) {
 this.setStartCoordinates = function() {
 	currentPositionX = startPositionX;
 	currentPositionY = getPieceOffsetY();
+}
+
+function repaintRectangle(y, x, color) {
+	return map.get(y + "/" + x).colorIndex = color;
+}
+
+function recolorCurrentBlockPosition(color) {
+	for (var y = 0; y < 4; y++)
+	{
+		for (var x = 0; x < 4; x++)
+		{
+			if ((movingBlockState[y * 4 + x].occupied) && ((currentPositionY + y) >= 0))
+			{
+				canvasState[index(currentPositionY + y, currentPositionX + x)].colorIndex = color;
+				repaintRectangle(currentPositionY + y, currentPositionX + x, color);
+			}
+		}
+	}
+}
+
+this.tryStep = function(direction) {
+	var positionX = currentPositionX + direction - 1;
+	var positionY = currentPositionY + (direction % 2);
+
+	for (var y = 0; y < 4; y++)
+	{
+		for (var x = 0; x < 4; x++)
+		{
+			if (movingBlockState[y * 4 + x].occupied &&
+				(((y + positionY) >= gameConsts.getGlassHeight()) ||
+					((x + positionX) < 0) ||
+					((x + positionX) >= gameConsts.getGlassWidth()) ||
+					(((y + positionY) >= 0) && canvasState[index(y + positionY, x + positionX)].occupied)))
+			{
+				return false;
+			}
+		}
+	}
+	return true;
+}
+
+this.doStep = function(direction) {
+	recolorCurrentBlockPosition(gameConsts.getGlassColorIndex());
+	currentPositionX += direction - 1;
+	currentPositionY += direction % 2;
+	recolorCurrentBlockPosition(currentColorIndex);
 }
 
 this.nextStep = function(blockViewModel, nextBlockViewModel) {
@@ -381,8 +431,8 @@ function randomBlock() {
 	return { blockViewIndex: Math.floor(index / 4), rotationIndex: index % 4 }
 }
 
-function index(x, y) {
-	return Math.floor(y / gameConsts.getBlockSize()) * gameConsts.getGlassWidth() + Math.floor(x / gameConsts.getBlockSize());
+function index(y, x) {
+	return (y * gameConsts.getGlassWidth() + x);
 }
 
 function setProperties() {

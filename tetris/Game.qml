@@ -54,16 +54,11 @@ Rectangle{
 			repeat: true;
 
 			onTriggered: {
-				if (game.deletingLines)
+				if (!game.deletingLines)
 				{
-					game.updateInfo(engine.removeLines());
-					if (engine.checkLines() > 0)
+					if (engine.tryStep(engine.downDirection))
 					{
-					}
-					else
-					{
-						game.deletingLines = false;
-						game.nextStep();
+						engine.doStep(engine.downDirection);
 					}
 				}
 				else
@@ -71,10 +66,6 @@ Rectangle{
 					if (engine.checkLines() > 0)
 					{
 						game.deletingLines = true;
-					}
-					else
-					{
-						game.nextStep();
 					}
 				}
 			}
@@ -136,18 +127,6 @@ Rectangle{
 
 			var info = engine.restartGame(nextBlockView.model);
 			game.updateInfo(info);
-		}
-
-		function nextStep() {
-			engine.nextStep(nextBlockView.model);
-
-			if (!engine.hasColllisions(game.startX, engine.getPieceOffsetY()))
-			{
-			}
-			else
-			{
-				gameOverMenu.show();
-			}
 		}
 	}
 
