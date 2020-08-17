@@ -60,6 +60,13 @@ Rectangle{
 					{
 						engine.doStep(engine.downDirection);
 					}
+					else
+					{
+						if (!engine.writeToCanvas())
+						{
+							gameOverMenu.show();
+						}
+					}
 				}
 				else
 				{

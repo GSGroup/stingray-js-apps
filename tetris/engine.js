@@ -177,6 +177,24 @@ this.doStep = function(direction) {
 	recolorCurrentBlockPosition(currentColorIndex);
 }
 
+this.writeToCanvas = function() {
+	for (var y = 0; y < 4; y++)
+	{
+		for (var x = 0; x < 4; x++)
+		{
+			if (movingBlockState[y * 4 + x].occupied)
+			{
+				if ((y + currentPositionY) < 0)
+				{
+					return false;
+				}
+				canvasState[index(y + currentPositionY, x + currentPositionX)].occupied = true;
+			}
+		}
+	}
+	return true;
+}
+
 this.nextStep = function(blockViewModel, nextBlockViewModel) {
 	setProperties();
 	this.updateMovingTetraminos(blockViewModel);
