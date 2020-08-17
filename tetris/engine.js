@@ -115,14 +115,6 @@ this.updateMovingTetraminos = function(model) {
 	this.updateBlockModel(model);
 }
 
-this.zeroizeModelWidth = function(model)
-{
-	for (var idx = deleteInfo.idx; idx > deleteInfo.idx - gameConsts.getGlassWidth() * deleteInfo.linesNumber; --idx)
-	{
-		model.set(idx, { value: canvasState[idx].value, colorIndex: canvasState[idx].colorIndex, needAnim: true, width: 0 });
-	}
-}
-
 function updateBlockState() {
 	for (var bit = 0x8000, indexBlock = 0; bit > 0; bit = bit >> 1, ++indexBlock)
 	{
@@ -163,31 +155,6 @@ this.clearCanvas = function(model) {
 		model.set(idx, { value: 0, colorIndex: 0, width: blockSize, needAnim: false });
 		canvasState[idx].value = 0;
 		canvasState[idx].colorIndex = 0;
-	}
-}
-
-this.parkBlock = function(x, y, model) {
-	completedRowsNumber = 0;
-	for (var k = 0; k < 16; ++k)
-	{
-		var blockX = x + (k % 4) * gameConsts.getBlockSize();
-		var blockY = y + Math.floor(k / 4) * gameConsts.getBlockSize();
-
-		var blockIndex = index(blockX, blockY);
-
-		if (movingBlockState[k].value > 0)
-		{
-			canvasState[blockIndex].value = movingBlockState[k].value;
-			canvasState[blockIndex].colorIndex = movingBlockState[k].colorIndex;
-
-			model.setProperty(blockIndex, "value", canvasState[blockIndex].value);
-			model.setProperty(blockIndex, "colorIndex", canvasState[blockIndex].colorIndex);
-
-			if (blockIndex < lastOccupiedBlockIndex)
-			{
-				lastOccupiedBlockIndex = blockIndex;
-			}
-		}
 	}
 }
 

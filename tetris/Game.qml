@@ -56,7 +56,6 @@ Rectangle{
 					game.updateInfo(engine.removeLines());
 					if (engine.checkLines() > 0)
 					{
-						engine.zeroizeModelWidth();
 					}
 					else
 					{
@@ -69,7 +68,6 @@ Rectangle{
 					if (engine.checkLines() > 0)
 					{
 						game.deletingLines = true;
-						engine.zeroizeModelWidth();
 					}
 					else
 					{
