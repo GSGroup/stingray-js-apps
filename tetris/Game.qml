@@ -29,7 +29,6 @@ Rectangle{
 	Rectangle {
 		id: game;
 
-		property int stepSize: gameConsts.getBlockSize();
 		property int startX: gameConsts.getGameWidth() / 2 - gameConsts.getBlockSize() * 2;
 		property int currentLevel: 1;
 		property int gameScore: 0;
@@ -44,58 +43,6 @@ Rectangle{
 		focus: true;
 		radius: 5;
 
-		ItemGridView {
-			id: gameView;
-
-			animationDuration: animTimer.interval;
-
-			width: game.width;
-			height: game.height;
-		}
-
-		Item {
-			id: movingTetraminos;
-
-			x: game.startX;
-			y: 0;
-
-			width: gameConsts.getBlockSize() * 4;
-			height: gameConsts.getBlockSize() * 4;
-
-			focus: true;
-
-			ItemGridView {
-				id: blockView;
-
-				width: gameConsts.getBlockSize() * 4;
-				height: gameConsts.getBlockSize() * 4;
-
-				visible: !(game.deletingLines || levelMenu.visible || gameOverMenu.visible);
-			}
-
-			onSelectPressed: {
-				movingTetraminos.x = engine.tryRotate(movingTetraminos.x, movingTetraminos.y, blockView.model);
-				engine.updateProperties(movingTetraminos.x, movingTetraminos.y, blockView.model);
-			}
-
-			onRightPressed: { this.move(1, 0); }
-
-			onLeftPressed: { this.move(-1, 0); }
-
-			onDownPressed: { this.move(0, 1); }
-
-			function move(directionX, directionY) {
-				var stepX = directionX * game.stepSize;
-				var stepY = directionY * game.stepSize;
-				if (!engine.hasColllisions(movingTetraminos.x + stepX, movingTetraminos.y + stepY))
-				{
-					movingTetraminos.x += stepX;
-					movingTetraminos.y += stepY;
-					engine.updateProperties(movingTetraminos.x, movingTetraminos.y, blockView.model);
-				}
-			}
-		}
-
 		Timer {
 			id: animTimer;
 
@@ -106,10 +53,10 @@ Rectangle{
 			onTriggered: {
 				if (game.deletingLines)
 				{
-					game.updateInfo(engine.removeLines(gameView.model));
+					game.updateInfo(engine.removeLines());
 					if (engine.checkLines() > 0)
 					{
-						engine.zeroizeModelWidth(gameView.model);
+						engine.zeroizeModelWidth();
 					}
 					else
 					{
@@ -119,23 +66,14 @@ Rectangle{
 				}
 				else
 				{
-					if (!engine.hasColllisions(movingTetraminos.x, movingTetraminos.y + game.stepSize))
+					if (engine.checkLines() > 0)
 					{
-						movingTetraminos.y += game.stepSize;
-						engine.updateProperties(movingTetraminos.x, movingTetraminos.y, blockView.model);
+						game.deletingLines = true;
+						engine.zeroizeModelWidth();
 					}
 					else
 					{
-						engine.parkBlock(movingTetraminos.x, movingTetraminos.y, gameView.model);
-						if (engine.checkLines() > 0)
-						{
-							game.deletingLines = true;
-							engine.zeroizeModelWidth(gameView.model);
-						}
-						else
-						{
-							game.nextStep();
-						}
+						game.nextStep();
 					}
 				}
 			}
@@ -195,13 +133,13 @@ Rectangle{
 
 			levelMenu.show();
 
-			var info = engine.restartGame(gameView.model, blockView.model, nextBlockView.model);
+			var info = engine.restartGame(nextBlockView.model);
 			game.updateInfo(info);
 			game.setStartCoordinates();
 		}
 
 		function nextStep() {
-			engine.nextStep(blockView.model, nextBlockView.model);
+			engine.nextStep(nextBlockView.model);
 
 			if (!engine.hasColllisions(game.startX, engine.getPieceOffsetY()))
 			{
@@ -214,9 +152,6 @@ Rectangle{
 		}
 
 		function setStartCoordinates() {
-			movingTetraminos.x = game.startX;
-			movingTetraminos.y = engine.getPieceOffsetY();
-			engine.updateProperties(movingTetraminos.x, movingTetraminos.y, blockView.model);
 		}
 	}
 
@@ -233,7 +168,7 @@ Rectangle{
 
 			onBackToGame: {
 				exitMenu.visible = false;
-				movingTetraminos.setFocus();
+				game.setFocus();
 			}
 
 			onSetNewGame: {
@@ -282,7 +217,7 @@ Rectangle{
 				levelMenu.visible = false;
 				game.currentLevel = level;
 				engine.setCurrentLevel(game.currentLevel);
-				movingTetraminos.setFocus();
+				game.setFocus();
 
 				game.nextStep();
 			}
@@ -300,7 +235,7 @@ Rectangle{
 
 			onContinueGame: {
 				pauseMenu.visible = false;
-				movingTetraminos.setFocus();
+				game.setFocus();
 			}
 		}
 
@@ -327,7 +262,7 @@ Rectangle{
 
 	onCompleted: {
 		levelMenu.show();
-		engine.initGame(gameView.model, blockView.model, nextBlockView.model);
+		engine.initGame(nextBlockView.model);
 		game.setStartCoordinates()
 	}
 }
