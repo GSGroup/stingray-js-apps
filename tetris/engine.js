@@ -18,6 +18,7 @@ var currentPieceOffset;
 var currentPositionX;
 var currentPositionY;
 var startPositionX = 3;
+var afterRotationPositionX;
 var gameScore;
 var numLines;
 var completedRowsNumber = 0;
@@ -175,6 +176,62 @@ this.doStep = function(direction) {
 	recolorCurrentBlockPosition(gameConsts.getGlassColorIndex());
 	currentPositionX += direction - 1;
 	currentPositionY += direction % 2;
+	recolorCurrentBlockPosition(currentColorIndex);
+}
+
+function updateAfterRotationBlockState()
+{
+	for (var bit = 0x8000, indexBlock = 0; bit > 0; bit = bit >> 1, ++indexBlock)
+	{
+		afterRotationBlockState[indexBlock].occupied = !!(pieces[currentBlockViewIndex][currentRotationIndex === 3 ? 0 : currentRotationIndex + 1] & bit);
+	}
+}
+
+this.tryRotation = function() {
+	updateAfterRotationBlockState();
+	afterRotationPositionX = currentPositionX;
+
+	var satisfactoryPositionX;
+	do
+	{
+		satisfactoryPositionX = true;
+		for (var y = 0; y < 4; y++)
+		{
+			for (var x = 0; x < 4; x++)
+			{
+				if (afterRotationBlockState[y * 4 + x].occupied)
+				{
+					if (((y + currentPositionY) >= gameConsts.getGlassHeight()) ||
+						(((y + currentPositionY) >= 0) && canvasState[index(y + currentPositionY, x + afterRotationPositionX)].occupied))
+					{
+						return false;
+					}
+
+					if ((x + afterRotationPositionX) >= gameConsts.getGlassWidth())
+					{
+						afterRotationPositionX--;
+						satisfactoryPositionX = false;
+					}
+					else if ((x + afterRotationPositionX) < 0)
+					{
+						afterRotationPositionX++;
+						satisfactoryPositionX = false;
+					}
+				}
+			}
+		}
+	} while (!satisfactoryPositionX)
+	return true;
+}
+
+this.doRotation = function() {
+	recolorCurrentBlockPosition(gameConsts.getGlassColorIndex());
+	currentRotationIndex = currentRotationIndex === 3 ? 0 : currentRotationIndex + 1;
+	for (var bit = 0x8000, indexBlock = 0; bit > 0; bit = bit >> 1, ++indexBlock)
+	{
+		movingBlockState[indexBlock].occupied = !!(pieces[currentBlockViewIndex][currentRotationIndex] & bit);
+	}
+	currentPositionX = afterRotationPositionX;
 	recolorCurrentBlockPosition(currentColorIndex);
 }
 

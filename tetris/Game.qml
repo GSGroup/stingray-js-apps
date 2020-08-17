@@ -123,7 +123,14 @@ Rectangle{
 
 		onLeftPressed: { this.move(engine.leftDirection); }
 
-		onDownPressed: { this.move(engine.downDirection); }		
+		onDownPressed: { this.move(engine.downDirection); }
+
+		onSelectPressed: {
+			if (engine.tryRotation())
+			{
+				engine.doRotation();
+			}
+		}
 
 		onMenuPressed: { exitMenu.show(); }
 
