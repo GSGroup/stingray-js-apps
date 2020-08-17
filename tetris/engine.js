@@ -22,10 +22,8 @@ var afterRotationPositionX;
 var gameScore;
 var numLines;
 var completedRowsNumber = 0;
-var deleteInfo = { idx: -1, linesNumber: 0 };
 var blockSize = gameConsts.getBlockSize() - gameConsts.getSpaceBetweenBlocks() * 2;
 var lastOccupiedBlockIndex;
-var BORDER_COLLISION_TYPE = { LEFT: 1, RIGHT: 2, BOTTOM: 3, NONE: 0 };
 
 var pieces =[
 	[0x2640, 0x0630, 0x0264, 0x0630],
@@ -297,31 +295,11 @@ this.resetRemoveLinesAnimation = function() {
 	}
 }
 
-
-this.nextStep = function(blockViewModel, nextBlockViewModel) {
-	setProperties();
-	this.updateMovingTetraminos(blockViewModel);
-	this.updateNextTetraminos(nextBlockViewModel);
-}
-
-this.updateMovingTetraminos = function(model) {
-	updateBlockState()
-	this.updateBlockModel(model);
-}
-
 function updateBlockState() {
 	for (var bit = 0x8000, indexBlock = 0; bit > 0; bit = bit >> 1, ++indexBlock)
 	{
 		movingBlockState[indexBlock].occupied = !!(pieces[currentBlockViewIndex][currentRotationIndex] & bit);
 		movingBlockState[indexBlock].colorIndex = currentColorIndex;
-	}
-}
-
-this.updateBlockModel = function(model) {
-	for (var idx = 0; idx < 16; ++idx)
-	{
-		model.setProperty(idx, "value", movingBlockState[idx].value);
-		model.setProperty(idx, "colorIndex", movingBlockState[idx].colorIndex);
 	}
 }
 
@@ -354,10 +332,6 @@ function clearCanvas() {
 			repaintRectangle(y, x, gameConsts.getGlassColorIndex());
 		}
 	}
-}
-
-this.updateCanvasModel = function(index, model) {
-	model.set(index, { value: canvasState[index].value, colorIndex: canvasState[index].colorIndex, width: blockSize, needAnim: false });
 }
 
 this.removeLines = function() {
@@ -413,151 +387,6 @@ function calcScores() {
 
 	numLines += completedRowsNumber;
 	currentLevel = Math.floor(numLines / 10);
-}
-
-this.checkLines = function() {
-	var blockCounter = 0;
-	for (var idx = 0; idx < gameConsts.getBlockNumber(); ++idx)
-	{
-		if (canvasState[idx].value > 0)
-		{
-			++blockCounter;
-		}
-
-		if ((idx + 1) % gameConsts.getGlassWidth() == 0)
-		{
-			if (blockCounter === gameConsts.getGlassWidth())
-			{
-				++completedRowsNumber;
-				++deleteInfo.linesNumber;
-				deleteInfo.idx = idx;
-			}
-			else if (deleteInfo.linesNumber > 0)
-			{
-				break;
-			}
-
-			blockCounter = 0;
-		}
-	}
-
-	return deleteInfo.linesNumber;
-}
-
-this.tryRotate = function(x, y, model) {
-	var rotationIndex = currentRotationIndex;
-	currentRotationIndex = (currentRotationIndex === 3 ? 0 : currentRotationIndex + 1);
-	updateBlockState();
-
-	do
-	{
-		var borderCollision = hasBorderCollisions(x,y);
-		var canvasCollisions = hasCanvasCollisions(x,y);
-
-		if (!canvasCollisions && borderCollision === BORDER_COLLISION_TYPE.NONE)
-		{
-			this.updateBlockModel(model);
-			this.updateProperties(x, y, model);
-			break;
-		}
-		else
-		{
-			if (borderCollision === BORDER_COLLISION_TYPE.LEFT)
-			{
-				x += gameConsts.getBlockSize();
-			}
-			else if (borderCollision === BORDER_COLLISION_TYPE.RIGHT)
-			{
-				x -= gameConsts.getBlockSize();
-			}
-			else if (borderCollision === BORDER_COLLISION_TYPE.BOTTOM || canvasCollisions)
-			{
-				currentRotationIndex = rotationIndex;
-				updateBlockState();
-				break;
-			}
-		}
-	} while(true)
-
-	return x;
-}
-
-this.hasColllisions = function(x, y) {
-	return hasBorderCollisions(x, y) != BORDER_COLLISION_TYPE.NONE || hasCanvasCollisions(x, y);
-}
-
-this.updateProperties = function(x, y, model) {
-	for (var k = 0, bit = 0x8000; k < 16; ++k, bit = bit >> 1)
-	{
-		var blockX = x + (k % 4) * gameConsts.getBlockSize() ;
-		var blockY = y + Math.floor(k / 4) * gameConsts.getBlockSize();
-
-		if (blockX < 0 || blockX >= gameConsts.getGameWidth() || blockY >= gameConsts.getGameHeight() || blockY < 0)
-		{
-			movingBlockState[k].value = -1;
-			model.setProperty(k, "value", -1);
-		}
-		else if (movingBlockState[k].value === -1)
-		{
-			var value = pieces[currentBlockViewIndex][currentRotationIndex] & bit;
-			movingBlockState[k].value = value;
-			model.setProperty(k, "value", value);
-		}
-	}
-}
-
-function hasBorderCollisions(x, y) {
-	for (var k = 0, bit = 0x8000; k < 16; ++k, bit = bit >> 1)
-	{
-		var blockX = x + (k % 4) * gameConsts.getBlockSize() ;
-		var blockY = y + Math.floor(k / 4) * gameConsts.getBlockSize();
-		var value = pieces[currentBlockViewIndex][currentRotationIndex] & bit;
-
-		if(blockY < 0 && value == 0)
-		{
-			continue;
-		}
-
-		if (value > 0)
-		{
-			if (blockX < 0)
-			{
-				return BORDER_COLLISION_TYPE.LEFT;
-			}
-
-			if (blockX >= gameConsts.getGameWidth())
-			{
-				return BORDER_COLLISION_TYPE.RIGHT;
-			}
-
-			if ( blockY >= gameConsts.getGameHeight())
-			{
-				return BORDER_COLLISION_TYPE.BOTTOM;
-			}
-		}
-	}
-
-	return BORDER_COLLISION_TYPE.NONE;
-}
-
-function hasCanvasCollisions(x, y) {
-	for (var k = 0; k < 16; ++k)
-	{
-		var blockX = x + (k % 4) * gameConsts.getBlockSize() ;
-		var blockY = y + Math.floor(k / 4) * gameConsts.getBlockSize();
-
-		if(blockY < 0)
-		{
-			continue;
-		}
-
-		if (movingBlockState[k].value > 0 && canvasState[index(blockX, blockY)].value > 0)
-		{
-			return true;
-		}
-	}
-
-	return false;
 }
 
 function randomBlock() {

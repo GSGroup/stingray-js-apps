@@ -30,7 +30,6 @@ Rectangle{
 	Rectangle {
 		id: game;
 
-		property int startX: gameConsts.getGameWidth() / 2 - gameConsts.getBlockSize() * 2;
 		property int currentLevel: 1;
 		property int gameScore: 0;
 		property bool deletingLines: false;
