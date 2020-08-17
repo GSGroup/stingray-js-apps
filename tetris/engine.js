@@ -103,7 +103,6 @@ function init() {
 	currentLevel = 1;
 	gameScore = 0;
 	numLines = currentLevel * 10;
-	lastOccupiedBlockIndex = gameConsts.getBlockNumber();
 }
 
 this.setCurrentLevel = function(level) {
@@ -334,22 +333,26 @@ function updateNextTetraminos(model) {
 	}
 }
 
-this.restartGame = function(gameViewModel, blockViewModel, nextBlockViewModel) {
-	this.clearCanvas(gameViewModel);
-	init();
+this.restartGame = function(nextBlockViewModel) {
+	clearCanvas();
 
-	this.updateMovingTetraminos(blockViewModel);
-	this.updateNextTetraminos(nextBlockViewModel);
+	init();
+	initCanvas();
+
+	updateBlockState();
+	updateNextTetraminos(nextBlockViewModel);
 
 	return { score: gameScore, level: currentLevel };
 }
 
-this.clearCanvas = function(model) {
-	for (var idx = 0; idx < gameConsts.getBlockNumber(); ++idx)
+function clearCanvas() {
+	canvasState = [];
+	for (var y = 0; y < gameConsts.getGlassHeight(); y++)
 	{
-		model.set(idx, { value: 0, colorIndex: 0, width: blockSize, needAnim: false });
-		canvasState[idx].value = 0;
-		canvasState[idx].colorIndex = 0;
+		for (var x = 0; x < gameConsts.getGlassWidth(); x++)
+		{
+			repaintRectangle(y, x, gameConsts.getGlassColorIndex());
+		}
 	}
 }
 

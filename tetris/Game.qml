@@ -168,6 +168,7 @@ Rectangle{
 
 			var info = engine.restartGame(nextBlockView.model);
 			game.updateInfo(info);
+			engine.setStartCoordinates();
 		}
 	}
 
