@@ -50,6 +50,7 @@ var blocks = [];
 var canvasState = [];
 var movingBlockState = [];
 var afterRotationBlockState = [];
+var deletedLines = [];
 
 var map = new Map();
 
@@ -195,6 +196,52 @@ this.writeToCanvas = function() {
 	return true;
 }
 
+this.checkFullLines = function() {
+	var isFullLine = true;
+	for (var y = 0; y < gameConsts.getGlassHeight(); y++)
+	{
+		for (var x = 0; x < gameConsts.getGlassWidth(); x++)
+		{
+			if (!canvasState[index(y, x)].occupied)
+			{
+				isFullLine = false;
+			}
+		}
+		if (isFullLine)
+		{
+			deletedLines.push(y);
+		}
+		isFullLine = true;
+	}
+	return !!deletedLines.length;
+}
+
+function changeAnimationProperties(y, x, borderWidth, duration) {
+	map.get(y + "/" + x).borderWidthAnimation.duration = duration;
+	map.get(y + "/" + x).borderWidth = borderWidth;
+}
+
+this.setRemoveLinesAnimation = function() {
+	for (var y = 0; y < deletedLines.length; y++)
+	{
+		for (var x = 0; x < gameConsts.getGlassWidth(); x++)
+		{
+			changeAnimationProperties(deletedLines[y], x, Math.ceil(gameConsts.getBlockSize() / 2), 300);
+		}
+	}
+}
+
+this.resetRemoveLinesAnimation = function() {
+	for (var y = 0; y < deletedLines.length; y++)
+	{
+		for (var x = 0; x < gameConsts.getGlassWidth(); x++)
+		{
+			changeAnimationProperties(deletedLines[y], x, gameConsts.getBorderSize(), 0);
+		}
+	}
+}
+
+
 this.nextStep = function(blockViewModel, nextBlockViewModel) {
 	setProperties();
 	this.updateMovingTetraminos(blockViewModel);
@@ -253,20 +300,35 @@ this.updateCanvasModel = function(index, model) {
 	model.set(index, { value: canvasState[index].value, colorIndex: canvasState[index].colorIndex, width: blockSize, needAnim: false });
 }
 
-this.removeLines = function(model) {
-	for (var index = deleteInfo.idx; index >= lastOccupiedBlockIndex; --index)
+this.removeLines = function() {
+	for (var lines = deletedLines.length - 1; lines >= 0; lines--)
 	{
-		var inGlass = index >= gameConsts.getGlassWidth() * deleteInfo.linesNumber;
-		canvasState[index].value = inGlass ? canvasState[index - gameConsts.getGlassWidth() * deleteInfo.linesNumber].value : 0;
-		canvasState[index].colorIndex = inGlass ? canvasState[index - gameConsts.getGlassWidth() * deleteInfo.linesNumber].colorIndex : 0;
-		this.updateCanvasModel(index, model);
+		for (var y = deletedLines[lines]; y > 0; y--)
+		{
+			for (var x = 0; x < gameConsts.getGlassWidth(); x++)
+			{
+				canvasState[index(y, x)].colorIndex = canvasState[index(y - 1, x)].colorIndex;
+				canvasState[index(y, x)].occupied = canvasState[index(y - 1, x)].occupied;
+				repaintRectangle(y, x, canvasState[index(y, x)].colorIndex);
+			}
+		}
+		for (var i = 0; i < deletedLines.length; i++)
+		{
+			deletedLines[i]++;
+		}
 	}
+	deletedLines = [];
+	for (x = 0; x < gameConsts.getGlassWidth(); x++)
+	{
+		canvasState[index(0, x)].colorIndex = gameConsts.getGlassColorIndex();
+		canvasState[index(0, x)].occupied = false;
+		repaintRectangle(0, x, gameConsts.getGlassColorIndex());
+	}
+}
 
-	lastOccupiedBlockIndex += gameConsts.getGlassWidth() * deleteInfo.linesNumber;
+this.getInfo = function() {
+	completedRowsNumber = deletedLines.length;
 	calcScores();
-
-	deleteInfo.linesNumber = 0;
-	deleteInfo.idx = -1;
 
 	return { score: gameScore, level: currentLevel };
 }

@@ -66,14 +66,28 @@ Rectangle{
 						{
 							gameOverMenu.show();
 						}
+						else if (engine.checkFullLines())
+						{
+							engine.setRemoveLinesAnimation();
+							game.deletingLines = true;
+						}
+						else
+						{
+							engine.setNewBlock(nextBlockView.model);
+						}
 					}
 				}
 				else
 				{
-					if (engine.checkLines() > 0)
-					{
-						game.deletingLines = true;
-					}
+					game.updateInfo(engine.getInfo());
+
+					engine.resetRemoveLinesAnimation();
+					engine.removeLines();
+
+					engine.setNewBlock(nextBlockView.model);
+					engine.setStartCoordinates();
+
+					game.deletingLines = false;
 				}
 			}
 		}
