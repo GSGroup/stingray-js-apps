@@ -119,6 +119,12 @@ Rectangle{
 
 		onUpPressed: { pauseMenu.show(); }
 
+		onRightPressed: { this.move(engine.rightDirection); }
+
+		onLeftPressed: { this.move(engine.leftDirection); }
+
+		onDownPressed: { this.move(engine.downDirection); }		
+
 		onMenuPressed: { exitMenu.show(); }
 
 		onBluePressed: {
@@ -133,6 +139,13 @@ Rectangle{
 		onLastPressed: { exitMenu.show(); }
 
 		function exitGame() { viewsFinder.closeApp(); }
+
+		function move(direction) {
+			if (engine.tryStep(direction))
+			{
+				engine.doStep(direction);
+			}
+		}
 
 		function updateInfo(info) {
 			game.gameScore = info.score;
