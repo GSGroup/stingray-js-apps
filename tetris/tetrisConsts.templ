@@ -10,6 +10,7 @@ var spaceBetweenBlocks = 1;
 var glassWidth = $glassWidth;
 var glassHeight = $glassHeight;
 var blockSize = 35;
+var borderSize = 1;
 var gameWidth = blockSize * glassWidth;
 var gameHeight = blockSize * glassHeight;
 var blockNumber = glassHeight * glassWidth;
@@ -74,4 +75,8 @@ this.getSpaceBetweenBlocks = function() {
 
 this.getGlassColorIndex = function() {
 	return glassColorIndex;
+}
+
+this.getBorderSize = function() {
+	return borderSize;
 }
