@@ -15,6 +15,9 @@ var nextColorIndex;
 var currentColorIndex;
 var currentLevel;
 var currentPieceOffset;
+var currentPositionX;
+var currentPositionY;
+var startPositionX = 3;
 var gameScore;
 var numLines;
 var completedRowsNumber = 0;
@@ -46,6 +49,7 @@ var piecesOffsetY = [
 var blocks = [];
 var canvasState = [];
 var movingBlockState = [];
+var afterRotationBlockState = [];
 
 var map = new Map();
 
@@ -53,24 +57,26 @@ this.registrationInMap = function(id, object) {
 	map.set(id, object);
 }
 
-this.initCanvas = function(model) {
-	for (var idx = 0; idx < gameConsts.getBlockNumber(); ++idx)
+function initCanvas() {
+	for (var y = 0; y < gameConsts.getGlassWidth(); y++)
 	{
-		model.append({ value: 0, colorIndex: 0, width: blockSize, needAnim: false });
-		canvasState.push({ value: 0, colorIndex: 0 });
+		for (var x = 0; x < gameConsts.getGlassHeight(); x++)
+		{
+			canvasState.push({ occupied: false, colorIndex: gameConsts.getGlassColorIndex() });
+		}
 	}
 }
 
-this.initMovingTetraminos = function(model) {
+function initMovingTetraminos() {
 	for (var bit = 0x8000; bit > 0; bit = bit >> 1)
 	{
 		var value = pieces[currentBlockViewIndex][currentRotationIndex] & bit;
-		model.append({ value: value, colorIndex: currentColorIndex, width: blockSize, needAnim: false });
-		movingBlockState.push({ value: value, colorIndex: currentColorIndex });
+		movingBlockState.push({ occupied: !!value, colorIndex: currentColorIndex });
+		afterRotationBlockState.push({ occupied: false });
 	}
 }
 
-this.initNextTetraminos = function(model) {
+function initNextTetraminos(model) {
 	for (var bit = 0x8000; bit > 0; bit = bit >> 1)
 	{
 		model.append({ value: pieces[nextBlockViewIndex][nextRotationIndex] & bit, colorIndex: nextColorIndex, width: blockSize, needAnim: false });
@@ -99,15 +105,20 @@ this.setCurrentLevel = function(level) {
 	numLines = numLines % 10 + level * 10;
 }
 
-this.getPieceOffsetY = function() {
-	return piecesOffsetY[currentBlockViewIndex][currentRotationIndex] * gameConsts.getBlockSize();
+function getPieceOffsetY() {
+	return piecesOffsetY[currentBlockViewIndex][currentRotationIndex];
 }
 
-this.initGame = function(gameViewModel, blockViewModel, nextBlockViewModel) {
+this.initGame = function(nextBlockViewModel) {
 	init();
-	this.initCanvas(gameViewModel);
-	this.initMovingTetraminos(blockViewModel);
-	this.initNextTetraminos(nextBlockViewModel);
+	initCanvas();
+	initMovingTetraminos();
+	initNextTetraminos(nextBlockViewModel);
+}
+
+this.setStartCoordinates = function() {
+	currentPositionX = startPositionX;
+	currentPositionY = getPieceOffsetY();
 }
 
 this.nextStep = function(blockViewModel, nextBlockViewModel) {

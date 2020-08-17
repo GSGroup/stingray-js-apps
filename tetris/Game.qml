@@ -136,7 +136,6 @@ Rectangle{
 
 			var info = engine.restartGame(nextBlockView.model);
 			game.updateInfo(info);
-			game.setStartCoordinates();
 		}
 
 		function nextStep() {
@@ -144,15 +143,11 @@ Rectangle{
 
 			if (!engine.hasColllisions(game.startX, engine.getPieceOffsetY()))
 			{
-				game.setStartCoordinates();
 			}
 			else
 			{
 				gameOverMenu.show();
 			}
-		}
-
-		function setStartCoordinates() {
 		}
 	}
 
@@ -264,6 +259,6 @@ Rectangle{
 	onCompleted: {
 		levelMenu.show();
 		engine.initGame(nextBlockView.model);
-		game.setStartCoordinates()
+		engine.setStartCoordinates();
 	}
 }
