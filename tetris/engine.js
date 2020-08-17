@@ -47,6 +47,12 @@ var blocks = [];
 var canvasState = [];
 var movingBlockState = [];
 
+var map = new Map();
+
+this.registrationInMap = function(id, object) {
+	map.set(id, object);
+}
+
 this.initCanvas = function(model) {
 	for (var idx = 0; idx < gameConsts.getBlockNumber(); ++idx)
 	{

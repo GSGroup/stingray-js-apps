@@ -11,6 +11,7 @@ import "GameOverMenu.qml";
 import "PauseRect.qml";
 import "InfoRect.qml";
 import "ItemGridView.qml";
+import "generatedfiles/RectArray.qml";
 
 import "engine.js" as engine;
 import "generatedfiles/tetrisConsts.js" as gameConsts;
@@ -42,6 +43,8 @@ Rectangle{
 		color: colorTheme.focusablePanelColor;
 		focus: true;
 		radius: 5;
+
+		RectArray { }
 
 		Timer {
 			id: animTimer;
