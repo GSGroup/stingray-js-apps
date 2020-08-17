@@ -105,6 +105,12 @@ this.setCurrentLevel = function(level) {
 	numLines = numLines % 10 + level * 10;
 }
 
+this.setNewBlock = function(nextBlockViewModel) {
+	setProperties();
+	this.setStartCoordinates();
+	updateNextTetraminos(nextBlockViewModel);
+}
+
 function getPieceOffsetY() {
 	return piecesOffsetY[currentBlockViewIndex][currentRotationIndex];
 }
@@ -135,7 +141,7 @@ this.updateMovingTetraminos = function(model) {
 function updateBlockState() {
 	for (var bit = 0x8000, indexBlock = 0; bit > 0; bit = bit >> 1, ++indexBlock)
 	{
-		movingBlockState[indexBlock].value = pieces[currentBlockViewIndex][currentRotationIndex] & bit;
+		movingBlockState[indexBlock].occupied = !!(pieces[currentBlockViewIndex][currentRotationIndex] & bit);
 		movingBlockState[indexBlock].colorIndex = currentColorIndex;
 	}
 }
@@ -148,7 +154,7 @@ this.updateBlockModel = function(model) {
 	}
 }
 
-this.updateNextTetraminos = function(model) {
+function updateNextTetraminos(model) {
 	for (var bit = 0x8000, indexBlock = 0; bit > 0; bit = bit >> 1, ++indexBlock)
 	{
 		model.setProperty(indexBlock, "value", pieces[nextBlockViewIndex][nextRotationIndex] & bit);
@@ -388,4 +394,5 @@ function setProperties() {
 	nextBlockViewIndex = nextBlock.blockViewIndex;
 	nextRotationIndex = nextBlock.rotationIndex;
 	nextColorIndex = gameConsts.randomColorIndex();
+	updateBlockState();
 }

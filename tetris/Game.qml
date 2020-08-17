@@ -213,9 +213,8 @@ Rectangle{
 				levelMenu.visible = false;
 				game.currentLevel = level;
 				engine.setCurrentLevel(game.currentLevel);
+				engine.setNewBlock(nextBlockView.model);
 				game.setFocus();
-
-				game.nextStep();
 			}
 		}
 
