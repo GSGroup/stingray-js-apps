@@ -13,7 +13,7 @@ import "InfoRect.qml";
 import "ItemGridView.qml";
 
 import "engine.js" as engine;
-import "tetrisConsts.js" as gameConsts;
+import "generatedfiles/tetrisConsts.js" as gameConsts;
 
 Rectangle{
 	id: mainScreen;
