@@ -1,0 +1,20 @@
+	Rectangle {
+		id: gameRect$y$x;
+
+		y: $y * gameConsts.getBlockSize();
+		x: $x * gameConsts.getBlockSize();
+
+		property int colorIndex: 5;
+
+		width: gameConsts.getBlockSize();
+		height: gameConsts.getBlockSize();
+
+		radius: this.colorIndex == 5 ? 5 : 0;
+		color: gameConsts.getColor(gameRect$y$x.colorIndex);
+		borderColor: colorTheme.focusablePanelColor;
+		borderWidth: gameConsts.getBorderSize();
+
+		Behavior on borderWidth { animation: Animation { id: borderWidthAnimation; } }
+
+		onCompleted: { engine.registrationInMap("$y/$x", gameRect$y$x); }
+	}

@@ -11,9 +11,10 @@ import "GameOverMenu.qml";
 import "PauseRect.qml";
 import "InfoRect.qml";
 import "ItemGridView.qml";
+import "generatedfiles/RectArray.qml";
 
 import "engine.js" as engine;
-import "tetrisConsts.js" as gameConsts;
+import "generatedfiles/tetrisConsts.js" as gameConsts;
 
 Rectangle{
 	id: mainScreen;
@@ -29,8 +30,6 @@ Rectangle{
 	Rectangle {
 		id: game;
 
-		property int stepSize: gameConsts.getBlockSize();
-		property int startX: gameConsts.getGameWidth() / 2 - gameConsts.getBlockSize() * 2;
 		property int currentLevel: 1;
 		property int gameScore: 0;
 		property bool deletingLines: false;
@@ -44,57 +43,7 @@ Rectangle{
 		focus: true;
 		radius: 5;
 
-		ItemGridView {
-			id: gameView;
-
-			animationDuration: animTimer.interval;
-
-			width: game.width;
-			height: game.height;
-		}
-
-		Item {
-			id: movingTetraminos;
-
-			x: game.startX;
-			y: 0;
-
-			width: gameConsts.getBlockSize() * 4;
-			height: gameConsts.getBlockSize() * 4;
-
-			focus: true;
-
-			ItemGridView {
-				id: blockView;
-
-				width: gameConsts.getBlockSize() * 4;
-				height: gameConsts.getBlockSize() * 4;
-
-				visible: !(game.deletingLines || levelMenu.visible || gameOverMenu.visible);
-			}
-
-			onSelectPressed: {
-				movingTetraminos.x = engine.tryRotate(movingTetraminos.x, movingTetraminos.y, blockView.model);
-				engine.updateProperties(movingTetraminos.x, movingTetraminos.y, blockView.model);
-			}
-
-			onRightPressed: { this.move(1, 0); }
-
-			onLeftPressed: { this.move(-1, 0); }
-
-			onDownPressed: { this.move(0, 1); }
-
-			function move(directionX, directionY) {
-				var stepX = directionX * game.stepSize;
-				var stepY = directionY * game.stepSize;
-				if (!engine.hasColllisions(movingTetraminos.x + stepX, movingTetraminos.y + stepY))
-				{
-					movingTetraminos.x += stepX;
-					movingTetraminos.y += stepY;
-					engine.updateProperties(movingTetraminos.x, movingTetraminos.y, blockView.model);
-				}
-			}
-		}
+		RectArray { }
 
 		Timer {
 			id: animTimer;
@@ -104,39 +53,40 @@ Rectangle{
 			repeat: true;
 
 			onTriggered: {
-				if (game.deletingLines)
+				if (!game.deletingLines)
 				{
-					game.updateInfo(engine.removeLines(gameView.model));
-					if (engine.checkLines() > 0)
+					if (engine.tryStep(engine.downDirection))
 					{
-						engine.zeroizeModelWidth(gameView.model);
+						engine.doStep(engine.downDirection);
 					}
 					else
 					{
-						game.deletingLines = false;
-						game.nextStep();
+						if (!engine.writeToCanvas())
+						{
+							gameOverMenu.show();
+						}
+						else if (engine.checkFullLines())
+						{
+							engine.setRemoveLinesAnimation();
+							game.deletingLines = true;
+						}
+						else
+						{
+							engine.setNewBlock(nextBlockView.model);
+						}
 					}
 				}
 				else
 				{
-					if (!engine.hasColllisions(movingTetraminos.x, movingTetraminos.y + game.stepSize))
-					{
-						movingTetraminos.y += game.stepSize;
-						engine.updateProperties(movingTetraminos.x, movingTetraminos.y, blockView.model);
-					}
-					else
-					{
-						engine.parkBlock(movingTetraminos.x, movingTetraminos.y, gameView.model);
-						if (engine.checkLines() > 0)
-						{
-							game.deletingLines = true;
-							engine.zeroizeModelWidth(gameView.model);
-						}
-						else
-						{
-							game.nextStep();
-						}
-					}
+					game.updateInfo(engine.getInfo());
+
+					engine.resetRemoveLinesAnimation();
+					engine.removeLines();
+
+					engine.setNewBlock(nextBlockView.model);
+					engine.setStartCoordinates();
+
+					game.deletingLines = false;
 				}
 			}
 		}
@@ -168,6 +118,19 @@ Rectangle{
 
 		onUpPressed: { pauseMenu.show(); }
 
+		onRightPressed: { this.move(engine.rightDirection); }
+
+		onLeftPressed: { this.move(engine.leftDirection); }
+
+		onDownPressed: { this.move(engine.downDirection); }
+
+		onSelectPressed: {
+			if (engine.tryRotation())
+			{
+				engine.doRotation();
+			}
+		}
+
 		onMenuPressed: { exitMenu.show(); }
 
 		onBluePressed: {
@@ -183,6 +146,13 @@ Rectangle{
 
 		function exitGame() { viewsFinder.closeApp(); }
 
+		function move(direction) {
+			if (engine.tryStep(direction))
+			{
+				engine.doStep(direction);
+			}
+		}
+
 		function updateInfo(info) {
 			game.gameScore = info.score;
 			game.currentLevel = info.level;
@@ -195,28 +165,9 @@ Rectangle{
 
 			levelMenu.show();
 
-			var info = engine.restartGame(gameView.model, blockView.model, nextBlockView.model);
+			var info = engine.restartGame(nextBlockView.model);
 			game.updateInfo(info);
-			game.setStartCoordinates();
-		}
-
-		function nextStep() {
-			engine.nextStep(blockView.model, nextBlockView.model);
-
-			if (!engine.hasColllisions(game.startX, engine.getPieceOffsetY()))
-			{
-				game.setStartCoordinates();
-			}
-			else
-			{
-				gameOverMenu.show();
-			}
-		}
-
-		function setStartCoordinates() {
-			movingTetraminos.x = game.startX;
-			movingTetraminos.y = engine.getPieceOffsetY();
-			engine.updateProperties(movingTetraminos.x, movingTetraminos.y, blockView.model);
+			engine.setStartCoordinates();
 		}
 	}
 
@@ -233,7 +184,7 @@ Rectangle{
 
 			onBackToGame: {
 				exitMenu.visible = false;
-				movingTetraminos.setFocus();
+				game.setFocus();
 			}
 
 			onSetNewGame: {
@@ -282,9 +233,8 @@ Rectangle{
 				levelMenu.visible = false;
 				game.currentLevel = level;
 				engine.setCurrentLevel(game.currentLevel);
-				movingTetraminos.setFocus();
-
-				game.nextStep();
+				engine.setNewBlock(nextBlockView.model);
+				game.setFocus();
 			}
 		}
 
@@ -300,7 +250,7 @@ Rectangle{
 
 			onContinueGame: {
 				pauseMenu.visible = false;
-				movingTetraminos.setFocus();
+				game.setFocus();
 			}
 		}
 
@@ -327,7 +277,7 @@ Rectangle{
 
 	onCompleted: {
 		levelMenu.show();
-		engine.initGame(gameView.model, blockView.model, nextBlockView.model);
-		game.setStartCoordinates()
+		engine.initGame(nextBlockView.model);
+		engine.setStartCoordinates();
 	}
 }

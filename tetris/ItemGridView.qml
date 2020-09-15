@@ -6,7 +6,7 @@
 // WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 import "ItemDelegate.qml";
-import "tetrisConsts.js" as gameConsts;
+import "generatedfiles/tetrisConsts.js" as gameConsts;
 
 GridView {
 	id: grid;

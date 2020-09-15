@@ -5,20 +5,36 @@
 // IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
 // WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-var dropTime =16000;
+var dropTime = 16000;
 var spaceBetweenBlocks = 1;
-var glassWidth = 10;
-var glassHeight = 17;
+var glassWidth = $glassWidth;
+var glassHeight = $glassHeight;
 var blockSize = 35;
+var borderSize = 1;
 var gameWidth = blockSize * glassWidth;
 var gameHeight = blockSize * glassHeight;
 var blockNumber = glassHeight * glassWidth;
-var COLORS = { GREEN: "#93AD00", BLUE: "#0090FF", ORANGE: "#FF6331", YELLOW: "#FFD200",	VELVET: "#D151BD" };
+var glassColorIndex = 5;
+var COLORS = {
+	GREEN: "#93AD00",
+	BLUE: "#0090FF",
+	ORANGE: "#FF6331",
+	YELLOW: "#FFD200",
+	VELVET: "#D151BD",
+	GLASS: colorTheme.focusablePanelColor
+};
 
-var colorCollection = [ COLORS.GREEN, COLORS.BLUE, COLORS.ORANGE, COLORS.YELLOW, COLORS.VELVET ];
+var colorCollection = [
+	COLORS.GREEN,
+	COLORS.BLUE,
+	COLORS.ORANGE,
+	COLORS.YELLOW,
+	COLORS.VELVET,
+	COLORS.GLASS
+];
 
 this.randomColorIndex = function() {
-	return Math.floor(Math.random() * colorCollection.length);
+	return Math.floor(Math.random() * (colorCollection.length - 1));
 }
 
 this.getDropTime = function() {
@@ -55,4 +71,12 @@ this.getBlockSize = function() {
 
 this.getSpaceBetweenBlocks = function() {
 	return spaceBetweenBlocks;
+}
+
+this.getGlassColorIndex = function() {
+	return glassColorIndex;
+}
+
+this.getBorderSize = function() {
+	return borderSize;
 }
