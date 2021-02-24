@@ -4,27 +4,27 @@
 // THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS.
 // IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
 // WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+import "BaseEdit.qml";
 
-Item {
+BaseEdit {
 	id: editItem;
 
-	signal maxLenReached;
-	signal invalidKeyEntered(std::string key);
-
-	property bool showBackground: true;
-	property string text;
-	property int maxLen;
-	property bool clearAfterMaxlenReached: true;
-	property string ignoreChars: "#*";
-	property string mask: "*";
 	property string hint;
-	property bool alwaysShowCursor: false;
-	property bool handleDelete: true;
-	property bool passwordMode: false;
+	property variant font: bodyFont;
+
 	property Color textColor: colorTheme.activeTextColor;
 	property Color borderColor: activeFocus ? colorTheme.activeBorderColor : colorTheme.borderColor;
+	property Color color: activeFocus ? colorTheme.activeFocusColor : editItem.backgroundColor;
+
+	property int lineAnimationDuration: 300;
+
+	property string mask: "*";
+	property bool showBackground: true;
+	property bool alwaysShowCursor;
+	property bool passwordMode: false;
 	property int borderWidth: 2;
 	property int radius: colorTheme.rounded ? 8 : 0;
+	property bool showUnderLining;
 
 	width: 100;
 	height: 40;
@@ -47,17 +47,18 @@ Item {
 		Behavior on borderColor { animation: Animation { duration: 200; } }
 	}
 
-	SubheadText {
-		anchors.bottom: borderRect.bottom;
-		anchors.horizontalCenter: borderRect.horizontalCenter;
+	Rectangle {
+		height: 3;
 
-		color: colorTheme.textColor;
-		text: editItem.hint;
-		font: bodyFont;
+		anchors.bottom: parent.bottom;
+		anchors.left: parent.left;
+		anchors.right: parent.right;
 
-		opacity: editText.text == "" ? 0.8 : 0;
+		color: colorTheme.activeTextColor;
 
-		Behavior on opacity { animation: Animation { duration: 500; } }
+		opacity: editItem.showUnderLining && parent.activeFocus ? 1 : 0;
+
+		Behavior on opacity { animation: Animation { duration: editItem.lineAnimationDuration; } }
 	}
 
 	SubheadText {
@@ -68,23 +69,25 @@ Item {
 		verticalAlignment: ui.Text.AlignVCenter;
 		horizontalAlignment: ui.Text.AlignHCenter;
 
-		font: bodyFont;
+		font: editItem.font;
 		color: editItem.textColor;
 
 		Behavior on opacity { animation: Animation { duration: 300; } }
+	}
 
-		function updateText() {
-			log("text changed " + editItem.text);
+	SubheadText {
+		id: hintText;
 
-			var line = editItem.text;
-			if (editItem.maxLen > 0)
-				line = line.substr(0, editItem.maxLen);
+		anchors.bottom: borderRect.bottom;
+		anchors.horizontalCenter: borderRect.horizontalCenter;
 
-			if (!editItem.passwordMode)
-				editText.text = line;
-			else
-				editText.text = new Array(line.length + 1).join(mask);
-		}
+		color: colorTheme.textColor;
+		text: editItem.hint;
+		font: editItem.font;
+
+		opacity: editText.text == "" ? 0.6 : 0;
+
+		Behavior on opacity { animation: Animation { duration: 300; } }
 	}
 
 	Rectangle {
@@ -102,6 +105,8 @@ Item {
 
 		visible: false;
 		opacity: borderRect.opacity;
+
+		Behavior on color { animation: Animation { duration: 200; } }
 	}
 
 	Timer {
@@ -109,76 +114,27 @@ Item {
 
 		interval: 500;
 		repeat: true;
-		
+		running: cursorRect.visible;
+
 		onTriggered: { cursorRect.visible = !cursorRect.visible; }
 	}
 
-	onKeyPressed: {
-		if (!recursiveVisible)
-			return false;
+	onTextChanged: { editItem.updateText(); }
 
-		var keyUsed = false;
+	onActiveFocusChanged: { cursorRect.visible = activeFocus || alwaysShowCursor;}
 
-		if ((key == "Backspace" || key == "Left") && editItem.handleDelete)
-		{
-			removeChar();
-			keyUsed = true;
-		}
-		else if (key == "Space")
-		{
-			editItem.text += " ";
-			keyUsed = true;
-		}
-		else if (key.length == 1)
-		{
-			if (editItem.ignoreChars.indexOf(key) != -1)
-				return true;
+	function updateText() {
+		log("text changed updateText " + editItem.text);
 
-			key = key.toLowerCase();
-			var futureValue;
+		var line = editItem.text;
+		if (editItem.maxLen > 0)
+			line = line.substr(0, editItem.maxLen);
 
-			if (editItem.maxLen == 0 || editItem.text.length < editItem.maxLen)
-				futureValue = editItem.text + key;
-			else if (editItem.clearAfterMaxlenReached)
-				futureValue = key;
-			else
-				futureValue = editItem.text.substr(1) + key;
-
-			editItem.text = futureValue;
-
-			keyUsed = true;
-		}
-		return keyUsed;
-	}
-
-	onTextChanged: { editText.updateText(); }
-
-	onActiveFocusChanged: {
-		cursorRect.visible = activeFocus || alwaysShowCursor;
-
-		if (cursorRect.visible)
-			cursorBlinkTimer.restart();
+		if (!editItem.passwordMode)
+			editText.text = line;
 		else
-			cursorBlinkTimer.stop();
+			editText.text = new Array(line.length + 1).join(mask);
 	}
 
-	function removeChar() {
-		if (editItem.text.length == 0)
-			return;
-
-		var text = editItem.text;
-		var i = text.length - 1;
-
-		while (i > 0 && (text[i] & 0xc0) == 0x80)
-			i--;
-
-		editItem.text = text.substr(0, i);
-	}
-
-	function clear() {
-		editItem.text = "";
-		editText.width = 0;
-	}
-
-	onCompleted: { editText.updateText(); }
+	onCompleted: { editItem.updateText(); }
 }
