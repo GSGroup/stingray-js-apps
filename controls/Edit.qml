@@ -7,88 +7,71 @@
 
 Item {
 	id: editItem;
-	focus: true;
-	width: 100;
-	height: 40;
-	clip: true;
-	focus: true;
 
-	//property Font font;
+	signal maxLenReached;
+	signal invalidKeyEntered(std::string key);
+
 	property bool showBackground: true;
 	property string text;
 	property int maxLen;
 	property bool clearAfterMaxlenReached: true;
-	//property Validator validator;
 	property string ignoreChars: "#*";
 	property string mask: "*";
 	property string hint;
 	property bool alwaysShowCursor: false;
 	property bool handleDelete: true;
 	property bool passwordMode: false;
-	property Color textColor;
-	textColor: colorTheme.activeTextColor;
-
+	property Color textColor: colorTheme.activeTextColor;
 	property Color borderColor: activeFocus ? colorTheme.activeBorderColor : colorTheme.borderColor;
 	property int borderWidth: 2;
 	property int radius: colorTheme.rounded ? 8 : 0;
 
-	signal maxLenReached;
-	signal invalidKeyEntered(std::string key);
+	width: 100;
+	height: 40;
 
-	onActiveFocusChanged: {
-		cursorRect.visible = activeFocus || alwaysShowCursor;
-
-		if (cursorRect.visible)
-			cursorBlinkTimer.restart();
-		else
-			cursorBlinkTimer.stop();
-	}
+	clip: true;
+	focus: true;
 
 	Rectangle {
 		id: borderRect;
+
 		anchors.fill: parent;
+
 		borderWidth: parent.borderWidth;
 		radius: parent.radius;
 		color: colorTheme.globalBackgroundColor;
-		visible: editItem.showBackground;
 		borderColor: parent.borderColor;
 
-		Behavior on borderColor {
-			animation: Animation {
-				duration: 200;
-			}
-		}
+		visible: editItem.showBackground;
+
+		Behavior on borderColor { animation: Animation { duration: 200; } }
 	}
 
 	SubheadText {
 		anchors.bottom: borderRect.bottom;
 		anchors.horizontalCenter: borderRect.horizontalCenter;
-		opacity: 1;
-		color: colorTheme.textColor; 
-		opacity: editText.text == "" ? 0.8 : 0;
+
+		color: colorTheme.textColor;
 		text: editItem.hint;
 		font: bodyFont;
 
-		Behavior on opacity {
-			animation: Animation {
-				duration: 500;
-			}
-		}
+		opacity: editText.text == "" ? 0.8 : 0;
+
+		Behavior on opacity { animation: Animation { duration: 500; } }
 	}
 
 	SubheadText {
 		id: editText;
+
 		anchors.fill: parent;
+
 		verticalAlignment: ui.Text.AlignVCenter;
 		horizontalAlignment: ui.Text.AlignHCenter;
-		color: editItem.textColor;
-		font: bodyFont;
 
-		Behavior on opacity {
-			animation: Animation {
-				duration: 300;
-			}
-		}
+		font: bodyFont;
+		color: editItem.textColor;
+
+		Behavior on opacity { animation: Animation { duration: 300; } }
 
 		function updateText() {
 			log("text changed " + editItem.text);
@@ -104,31 +87,30 @@ Item {
 		}
 	}
 
-	onTextChanged: {
-		editText.updateText();
-	}
-
 	Rectangle {
 		id: cursorRect;
+
+		width: 2;
+
 		anchors.top: parent.top;
 		anchors.bottom: parent.bottom;
 		anchors.left: editText.right;
 		anchors.margins: 7;
 		anchors.leftMargin: 2;
-		opacity: borderRect.opacity;
-		width: 2;
+
 		color: editText.color;
+
 		visible: false;
+		opacity: borderRect.opacity;
 	}
 
 	Timer {
 		id: cursorBlinkTimer;
+
 		interval: 500;
 		repeat: true;
 		
-		onTriggered: {
-			cursorRect.visible = !cursorRect.visible;
-		}
+		onTriggered: { cursorRect.visible = !cursorRect.visible; }
 	}
 
 	onKeyPressed: {
@@ -137,13 +119,18 @@ Item {
 
 		var keyUsed = false;
 
-		if ((key == "Backspace" || key == "Left") && editItem.handleDelete) {
+		if ((key == "Backspace" || key == "Left") && editItem.handleDelete)
+		{
 			removeChar();
 			keyUsed = true;
-		} else if (key == "Space") {
+		}
+		else if (key == "Space")
+		{
 			editItem.text += " ";
 			keyUsed = true;
-		} else if (key.length == 1) {
+		}
+		else if (key.length == 1)
+		{
 			if (editItem.ignoreChars.indexOf(key) != -1)
 				return true;
 
@@ -159,12 +146,20 @@ Item {
 
 			editItem.text = futureValue;
 
-			//if (text.length == editItem.maxLen)
-				//editItem.maxLenReached();
-
 			keyUsed = true;
 		}
 		return keyUsed;
+	}
+
+	onTextChanged: { editText.updateText(); }
+
+	onActiveFocusChanged: {
+		cursorRect.visible = activeFocus || alwaysShowCursor;
+
+		if (cursorRect.visible)
+			cursorBlinkTimer.restart();
+		else
+			cursorBlinkTimer.stop();
 	}
 
 	function removeChar() {
@@ -185,7 +180,5 @@ Item {
 		editText.width = 0;
 	}
 
-	onCompleted: {
-		editText.updateText();
-	}
+	onCompleted: { editText.updateText(); }
 }
