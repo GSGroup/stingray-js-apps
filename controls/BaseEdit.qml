@@ -2,10 +2,11 @@ Item {
 	id: baseEditItem;
 
 	signal maxLenReached;
-	signal invalidKeyEntered(std::string key);
+	signal invalidKeyEntered(key);
 
 	property string text;
 	property string ignoreChars: "#*";
+	property variant validator;
 
 	property int maxLen;
 
@@ -44,7 +45,15 @@ Item {
 			else
 				futureValue = baseEditItem.text.substr(1) + key;
 
-			baseEditItem.text = futureValue;
+			if (baseEditItem.validator == null || baseEditItem.validator.validate(futureValue))
+			{
+				baseEditItem.text = futureValue;
+
+				if (baseEditItem.text.length == baseEditItem.maxLen)
+					maxLenReached();
+			}
+			else
+				invalidKeyEntered(key);
 
 			keyUsed = true;
 		}
