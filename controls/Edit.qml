@@ -10,7 +10,7 @@ BaseEdit {
 	id: editItem;
 
 	property string hint;
-	property variant font: bodyFont;
+	property variant font: subheadFont;
 
 	property Color textColor: colorTheme.activeTextColor;
 	property Color borderColor: activeFocus ? colorTheme.activeBorderColor : colorTheme.borderColor;
@@ -21,10 +21,10 @@ BaseEdit {
 	property string mask: "*";
 	property bool showBackground: true;
 	property bool alwaysShowCursor;
-	property bool passwordMode: false;
+	property bool passwordMode;
 	property int borderWidth: 2;
 	property int radius: colorTheme.rounded ? 8 : 0;
-	property bool showUnderLining;
+	property bool showUnderLining: !showBackground;
 
 	width: 100;
 	height: 40;
@@ -124,8 +124,6 @@ BaseEdit {
 	onActiveFocusChanged: { cursorRect.visible = activeFocus || alwaysShowCursor;}
 
 	function updateText() {
-		log("text changed updateText " + editItem.text);
-
 		var line = editItem.text;
 		if (editItem.maxLen > 0)
 			line = line.substr(0, editItem.maxLen);
