@@ -35,7 +35,6 @@ Item {
 			if (baseEditItem.ignoreChars.indexOf(key) != -1)
 				return true;
 
-			key = key.toLowerCase();
 			var futureValue;
 
 			if (baseEditItem.maxLen == 0 || baseEditItem.text.length < baseEditItem.maxLen)
