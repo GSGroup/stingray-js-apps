@@ -201,7 +201,6 @@ Rectangle{
 			id: gameOverMenu;
 
 			width: game.width;
-			height: 225;
 
 			anchors.centerIn: game;
 

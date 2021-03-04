@@ -15,12 +15,14 @@ Rectangle {
 
 	color: colorTheme.activePanelColor;
 
+	height: menuText.height + gameOverColumn.height + 70;
+
 	visible: false;
 
 	SubheadText {
 		id: menuText;
 
-		y: 17;
+		y: 20;
 
 		anchors.horizontalCenter: gameOverRect.horizontalCenter;
 
@@ -30,17 +32,23 @@ Rectangle {
 	Column {
 		id: gameOverColumn;
 
-		height: gameOverRect.height - 47;
-
 		anchors.top: menuText.bottom;
+		anchors.left: gameOverRect.left;
+		anchors.right: gameOverRect.right;
+
 		anchors.topMargin: 30;
+		anchors.leftMargin: 30;
+		anchors.rightMargin: 30;
+
 		anchors.horizontalCenter: gameOverRect.horizontalCenter;
 
-		spacing: 21;
+		spacing: 16;
 		focus: true;
 
 		MenuItem {
 			id: newGameItem;
+
+			width: gameOverColumn.width;
 
 			menuText: "Поиграть еще";
 
@@ -49,6 +57,8 @@ Rectangle {
 
 		MenuItem {
 			id: exitGameItem;
+
+			width: gameOverColumn.width;
 
 			menuText: "Выйти";
 
