@@ -176,7 +176,6 @@ Rectangle{
 			id: exitMenu;
 
 			width: game.width;
-			height: 225;
 
 			anchors.centerIn: game;
 
