@@ -10,8 +10,7 @@ Rectangle {
 
 	property alias menuText: textItem.text;
 
-	width: 244;
-	height: 41;
+	height: 53;
 
 	color: itemRect.activeFocus ? colorTheme.activeFocusColor : colorTheme.buttonColor;
 	focus: true;
@@ -22,5 +21,13 @@ Rectangle {
 		anchors.centerIn: itemRect;
 
 		color: itemRect.activeFocus ? colorTheme.focusedTextColor : colorTheme.activeTextColor;
+	}
+
+	BorderShadow3D {
+		anchors.fill: itemRect;
+
+		opacity: itemRect.activeFocus;
+
+		Behavior on opacity { animation: Animation { duration: 300; } }
 	}
 }

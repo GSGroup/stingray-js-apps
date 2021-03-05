@@ -16,10 +16,14 @@ Rectangle {
 
 	color: colorTheme.activePanelColor;
 
+	height: titleText.height + levelGrid.cellHeight + 60;
+
 	visible: false;
 
 	SubheadText {
-		y: 9;
+		id: titleText;
+
+		y: 20;
 
 		anchors.horizontalCenter: parent.horizontalCenter;
 
@@ -35,7 +39,8 @@ Rectangle {
 		width: this.contentWidth;
 		height: this.contentHeight;
 
-		anchors.bottom: parent.bottom;
+		anchors.bottom: levelRect.bottom;
+		anchors.bottomMargin: 20;
 
 		focus: true;
 		orientation: Horizontal;

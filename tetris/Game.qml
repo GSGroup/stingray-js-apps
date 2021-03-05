@@ -176,7 +176,6 @@ Rectangle{
 			id: exitMenu;
 
 			width: game.width;
-			height: 225;
 
 			anchors.centerIn: game;
 
@@ -202,7 +201,6 @@ Rectangle{
 			id: gameOverMenu;
 
 			width: game.width;
-			height: 225;
 
 			anchors.centerIn: game;
 
@@ -223,7 +221,6 @@ Rectangle{
 			id: levelMenu;
 
 			width: game.width;
-			height: 118;
 
 			anchors.centerIn: game;
 

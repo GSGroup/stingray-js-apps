@@ -14,6 +14,8 @@ Rectangle {
 	signal backToGame();
 	signal exitGame();
 
+	height: gameExitColumn.height + 50;
+
 	color: colorTheme.activePanelColor;
 
 	visible: false;
@@ -21,15 +23,21 @@ Rectangle {
 	Column {
 		id: gameExitColumn;
 
-		height: exitRect.height - 66;
+		anchors.top: exitRect.top;
+		anchors.left: exitRect.left;
+		anchors.right: exitRect.right;
 
-		anchors.centerIn: exitRect;
+		anchors.topMargin: 30;
+		anchors.leftMargin: 30;
+		anchors.rightMargin: 30;
 
-		spacing: 18;
+		spacing: 16;
 		focus: true;
 
 		MenuItem {
 			id: exitItem;
+
+			width: parent.width;
 
 			menuText: "Выйти";
 
@@ -39,6 +47,8 @@ Rectangle {
 		MenuItem {
 			id: continueItem;
 
+			width: parent.width;
+
 			menuText: "Продолжить игру";
 
 			onSelectPressed: { exitRect.backToGame(); }
@@ -46,6 +56,8 @@ Rectangle {
 
 		MenuItem {
 			id: newItem;
+
+			width: parent.width;
 
 			menuText: "Новая игра";
 
