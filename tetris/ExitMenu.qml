@@ -14,7 +14,7 @@ Rectangle {
 	signal backToGame();
 	signal exitGame();
 
-	height: gameExitColumn.height + 50;
+	height: gameExitColumn.height + 40;
 
 	color: colorTheme.activePanelColor;
 
@@ -27,7 +27,7 @@ Rectangle {
 		anchors.left: exitRect.left;
 		anchors.right: exitRect.right;
 
-		anchors.topMargin: 30;
+		anchors.topMargin: 20;
 		anchors.leftMargin: 30;
 		anchors.rightMargin: 30;
 
