@@ -62,7 +62,7 @@ Item {
 			duration: playerObj.duration;
 			curTimeStr: playerObj.curTimeStr;
 			fullTimeStr: playerObj.fullTimeStr;
-			visible: playerObj.visible;
+			visible: playerObj.visible && !playerObj.disableControls;
 
 			onPlayPressed: {
 				if (playerObj.currentMediaData)
@@ -79,7 +79,7 @@ Item {
 	Image {
 		id: pauseImage;
 		anchors.centerIn: parent;
-		visible: parent.paused;
+		visible: parent.paused && !playerObj.disableControls;
 		fillMode: ui.Image.PreserveAspectFit;
 		source: "apps/controls/res/preview/icoPause.png";
 	}
