@@ -23,6 +23,8 @@
 			["Player",				"Player.qml"],
 			["PreviewPlayer",		"PreviewPlayer.qml"],
 
+			["RtspPlayer",			"RtspPlayer.qml"],
+
 			["Spinner",				"Spinner.qml"],
 
 			["Media",				"media.js"],
