@@ -80,8 +80,7 @@ Item {
 			anchors.right: highlight.left;
 			anchors.top: highlight.top;
 			anchors.bottom: highlight.bottom;
-			source: "res/common/shadow_left.png";
-			color: colorTheme.globalBackgroundColor;
+			source: "res/common/shadow_left_" + colorTheme.shadowFilename + ".png";
 			fillMode: TileVertically;
 		}
 
@@ -89,8 +88,7 @@ Item {
 			anchors.left: highlight.right;
 			anchors.top: highlight.top;
 			anchors.bottom: highlight.bottom;
-			source: "res/common/shadow_right.png";
-			color: colorTheme.globalBackgroundColor;
+			source: "res/common/shadow_right_" + colorTheme.shadowFilename + ".png";
 			fillMode: TileVertically;
 		}
 		
