@@ -103,7 +103,7 @@ Item {
 			playerObj.progress = p;
 			playerObj.duration = d;
 
-			if (p && loadSpinner.show && d)
+			if (!playerObj.isStopped && loadSpinner.show)
 				loadSpinner.show = false;
 
 			if (p && d >= 0) {
