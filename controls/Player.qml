@@ -28,7 +28,6 @@ Item {
 	property int prevProgress;
 	property string curTimeStr: "";
 	property string fullTimeStr: "";
-	property string currentUrl: "";
 	property string title;
 	clip: true;
 
@@ -66,8 +65,8 @@ Item {
 			visible: playerObj.visible;
 
 			onPlayPressed: {
-				if (playerObj.currentUrl)
-					playerObj.playUrl(playerObj.currentUrl);
+				if (playerObj.currentMediaData)
+					playerObj.playUrl(playerObj.currentMediaData);
 			}
 
 			onPausePressed:	{ playerObj.pause(); }
@@ -210,16 +209,17 @@ Item {
 		this.isStopped = true;
 	}
 
-	function playUrl(url) {
-		if (this.paused && url == this.currentUrl) {
+	function playMedia(mediaData)
+	{
+		if (this.paused && Object.entries(mediaData.info).toString() === Object.entries(this.currentMediaData.info).toString()) {
 			this.togglePlay();
 			return;
 		}
-		log("Player: start playing " + url);
+		log("Player: start playing " + Object.entries(mediaData.info).toString());
 		loadSpinner.show = false;
 		loadSpinner.show = true;
 		spinnerTimer.restart();
-		this.currentUrl = url;
+		this.currentMediaData = mediaData;
 		this.visible = true;
 		this.player.stop();
 
@@ -238,11 +238,26 @@ Item {
 			self.finished();
 		};
 
-		this.player.playUrl(url);
+		this.currentMediaData.play();
+	}
+
+	function playUrl(url) {
+		this.playMedia({
+			info: { url: url },
+			play: () => this.player.playUrl(url)
+		});
+	}
+
+	function playRtsp(url, protocol, login, password) {
+		this.playMedia({
+			info: { url: url, protocol: protocol, credentialsHash: md5Hash(md5Hash(login) + md5Hash(password)) },
+			play: () => this.player.playRtsp(url, protocol, login, password)
+		});
 	}
 
 	onCompleted: {
 		this.player = new Media.Player();
+		this.currentMediaData = null;
 		this.paused = false;
 		this.isStopped = true;
 	}

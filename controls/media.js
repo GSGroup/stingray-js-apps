@@ -5,6 +5,12 @@
 // IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
 // WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+const RtspLowerLevelProtocol = {
+	UDP: 0,
+	TCP: 1,
+};
+this.RtspLowerLevelProtocol = RtspLowerLevelProtocol;
+
 function Player() {
 	this.connections = [];
 }
@@ -15,14 +21,22 @@ Player.prototype = {
 	finished: function () { },
 	started: function () { },
 
-	playUrl: function(url) {
+	playMedia: function (mediaData) {
 		if (this.session)
 			this.stop();
 
-		this.session = app.MediaPlayer().PlayUrl(url);
+		this.session = mediaData.play();
 
 		this.connections.push(this.session.OnFinished().connect(this._onFinished.bind(this)));
 		this.connections.push(this.session.OnStarted().connect(this._onStarted.bind(this)));
+	},
+
+	playUrl: function(url) {
+		this.playMedia({ play: () => app.MediaPlayer().PlayUrl(url) });
+	},
+
+	playRtsp: function(url, protocol, login, password) {
+		this.playMedia({ play: () => app.MediaPlayer().PlayRtsp(url, protocol, login, password) });
 	},
 
 	pause: function(pause) {
