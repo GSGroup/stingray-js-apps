@@ -8,6 +8,7 @@
 			["ChannelRepository",		"channelRepository.js"],
 			["Drm",						"drm.js"],
 			["Misc",					"misc.js"],
+			["StandByMode",				"standByMode.js"],
 			["TimeManager",				"timeManager.js"],
 			["TricolorAccount",			"tricolorAccount.js"]
 		]
