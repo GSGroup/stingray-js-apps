@@ -10,10 +10,12 @@ Rectangle {
 
 	property int opacityAnimationDuration;
 
-	opacity: 0;
 	width: radius * 2;
 	height: width;
-	color: colorTheme.activeFocusTop; 
+
+	color: colorTheme.activeFocusTop;
+
+	opacity: 0;
 
 	Behavior on opacity { animation: Animation { duration: spinnerRectangleItem.opacityAnimationDuration; } }
 

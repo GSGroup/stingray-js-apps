@@ -9,8 +9,6 @@ import "SpinnerRectangle.qml";
 
 Row {
 	id: spinner;
-	width: radius * 2;
-	height: width;
 
 	property int activeSpinner: 0;
 	property int radius: 45;
@@ -19,9 +17,8 @@ Row {
 	property int interval: 100;
 	property int delayedTicks: 1;
 
-	SpinnerRectangle{}
-	SpinnerRectangle{}
-	SpinnerRectangle{}
+	width: radius * 2;
+	height: width;
 
 	Timer {
 		id: spinnerUpdateTimer;
@@ -38,4 +35,8 @@ Row {
 				spinner.children[this.activeCircle].fadeIn();
 		}
 	}
+
+	SpinnerRectangle{}
+	SpinnerRectangle{}
+	SpinnerRectangle{}
 }
