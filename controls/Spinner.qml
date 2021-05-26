@@ -7,7 +7,7 @@
 
 import "SpinnerRectangle.qml";
 
-Item {
+Row {
 	id: spinner;
 	width: radius * 2;
 	height: width;
@@ -39,15 +39,6 @@ Item {
 		onTriggered: {
 			spinner.activeSpinner = (spinner.activeSpinner + 1) % (spinner.circlesCount);
 			spinner.UpdateRectangle();
-		}
-	}
-
-	onCompleted: {
-		for (var i = 0; i < this.circlesCount; i ++) {
-			this.children[i].radius = this.circlesRadius;
-			this.children[i].x = Math.cos(Math.PI * i / this.circlesCount * 2) * (this.radius - this.circlesRadius) - this.circlesRadius + this.radius;
-			this.children[i].y = Math.sin(Math.PI * i / this.circlesCount * 2) * (this.radius - this.circlesRadius) - this.circlesRadius + this.radius;
-			this.children[i].active = 0;
 		}
 	}
 }
