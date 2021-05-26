@@ -10,10 +10,6 @@ import "SpinnerRectangle.qml";
 Row {
 	id: spinner;
 
-	property int activeSpinner: 0;
-	property int radius: 45;
-	property int circlesRadius: 12;
-	property int circlesCount: 3;
 	property int interval: 300;
 	property int delayedTicks: 1;
 	property Color color: colorTheme.activeFocusColor;
@@ -25,8 +21,6 @@ Row {
 	collapseEmptyItems: false;
 
 	Timer {
-		id: spinnerUpdateTimer;
-
 		property int activeCircle;
 
 		interval: spinner.interval;
