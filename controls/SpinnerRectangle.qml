@@ -6,17 +6,21 @@
 // WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 Rectangle {
-	opacity: active;
+	id: spinnerRectangleItem;
+
+	property int opacityAnimationDuration;
+
+	opacity: 0;
 	width: radius * 2;
 	height: width;
 	color: colorTheme.activeFocusTop; 
 
-	property float active;
+	Behavior on opacity { animation: Animation { duration: spinnerRectangleItem.opacityAnimationDuration; } }
 
-	Behavior on opacity {
-		animation: Animation {
-			id: opacityAnimation;
-			duration: 100;
-		}
+	function fadeIn() {
+		this.opacityAnimationDuration = 0;
+		this.opacity = 1;
+		this.opacityAnimationDuration = 750;
+		this.opacity = 0;
 	}
 }
