@@ -15,21 +15,12 @@ Item {
 	property int activeSpinner: 0;
 	property int radius: 45;
 	property int circlesRadius: 12;
-	property int circlesCount: 8;
+	property int circlesCount: 3;
 	property int interval: 100;
 
-	SpinnerRectangle{}	SpinnerRectangle{}
-	SpinnerRectangle{}	SpinnerRectangle{}
-	SpinnerRectangle{}	SpinnerRectangle{}
-	SpinnerRectangle{}	SpinnerRectangle{}
-	SpinnerRectangle{}	SpinnerRectangle{}
-	SpinnerRectangle{}	SpinnerRectangle{}
-	SpinnerRectangle{}	SpinnerRectangle{}
-	SpinnerRectangle{}	SpinnerRectangle{}
-	SpinnerRectangle{}	SpinnerRectangle{}
-	SpinnerRectangle{}	SpinnerRectangle{}
-	SpinnerRectangle{}	SpinnerRectangle{}
-	SpinnerRectangle{}	SpinnerRectangle{}
+	SpinnerRectangle{}
+	SpinnerRectangle{}
+	SpinnerRectangle{}
 
 	function UpdateRectangle() {
 		var o = 1;
