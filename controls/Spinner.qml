@@ -33,19 +33,12 @@ Item {
 		id: spinnerUpdateTimer;
 
 		interval: spinner.interval;
+		running: spinner.visible;
 		repeat: true;
 
 		onTriggered: {
 			spinner.activeSpinner = (spinner.activeSpinner + 1) % (spinner.circlesCount);
 			spinner.UpdateRectangle();
-		}
-	}
-
-	onVisibleChanged: {
-		if (this.visible) {
-			spinnerUpdateTimer.restart();
-		} else {
-			spinnerUpdateTimer.stop();
 		}
 	}
 
