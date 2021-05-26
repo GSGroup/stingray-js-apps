@@ -10,10 +10,8 @@ Rectangle {
 
 	property int opacityAnimationDuration;
 
-	width: radius * 2;
-	height: width;
-
-	color: colorTheme.activeFocusTop;
+	width: height;
+	radius: height / 2;
 
 	opacity: 0;
 

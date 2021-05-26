@@ -14,11 +14,15 @@ Row {
 	property int radius: 45;
 	property int circlesRadius: 12;
 	property int circlesCount: 3;
-	property int interval: 100;
+	property int interval: 300;
 	property int delayedTicks: 1;
+	property Color color: colorTheme.activeFocusColor;
 
-	width: radius * 2;
-	height: width;
+	height: 24;
+	width: (height * 3) + spacing * 2;
+
+	spacing: 6;
+	collapseEmptyItems: false;
 
 	Timer {
 		id: spinnerUpdateTimer;
@@ -36,7 +40,18 @@ Row {
 		}
 	}
 
-	SpinnerRectangle{}
-	SpinnerRectangle{}
-	SpinnerRectangle{}
+	SpinnerRectangle {
+		height: spinner.height;
+		color: spinner.color;
+	}
+
+	SpinnerRectangle {
+		height: spinner.height;
+		color: spinner.color;
+	}
+
+	SpinnerRectangle {
+		height: spinner.height;
+		color: spinner.color;
+	}
 }
