@@ -6,14 +6,11 @@
 // WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 Rectangle {
-	borderWidth: 2;
 	opacity: active;
-	visible: true;
 	width: radius * 2;
 	height: width;
 	color: colorTheme.activeFocusTop; 
-	borderColor: color; 
-	
+
 	property float active;
 
 	Behavior on opacity {
