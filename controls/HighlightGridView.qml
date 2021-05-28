@@ -9,7 +9,7 @@ GridView {
 	id: highlightGridView;
 	property Color highlightColor: highlightGridView.activeFocus ? colorTheme.activeFocusColor : colorTheme.focusablePanelColor;
 
-	BorderShadow3D {
+	BorderShadow {
 		anchors.fill: highlight;
 		opacity: highlightGridView.activeFocus ? 1 : 0;
 		visible: highlightGridView.count;
