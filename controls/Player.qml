@@ -16,7 +16,7 @@ Item {
 	signal finished();
 	signal stopped();
 	property bool paused: false;
-	property bool isStopped: false;
+	property bool isStopped: true;
 	property bool isFullscreen: false;
 	property bool seeking: false;
 	property bool hideSpinner: false;
@@ -258,7 +258,5 @@ Item {
 	onCompleted: {
 		this.player = new Media.Player();
 		this.currentMediaData = null;
-		this.paused = false;
-		this.isStopped = true;
 	}
 }
