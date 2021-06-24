@@ -12,8 +12,8 @@ import "PlaybackProgress.qml";
 
 Item {
 	id: playerObj;
-	signal started();
-	signal finished();
+	signal started(started);
+	signal finished(finished);
 	signal stopped();
 	property bool paused: false;
 	property bool isStopped: true;
@@ -227,15 +227,19 @@ Item {
 
 		var self = playerObj;
 
-		this.player.started = function () {
-			log("Player: play is started");
-			self.isStopped = false;
-			self.started()
+		this.player.started = function (started) {
+			if (started)
+				log("Player: play is started");
+
+			self.isStopped = !started;
+			self.started(started)
 		};
 
-		this.player.finished = function () {
-			self.stop();
-			self.finished();
+		this.player.finished = function (finished) {
+			if (finished)
+				self.stop();
+
+			self.finished(finished);
 		};
 
 		this.currentMediaData.play();

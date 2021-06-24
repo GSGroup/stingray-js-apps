@@ -177,7 +177,8 @@ Application {
         }
 
         onFinished: {
-            ivi.hidePlayer();
+            if (finished)
+                ivi.hidePlayer();
         }
     }
 

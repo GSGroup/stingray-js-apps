@@ -18,8 +18,8 @@ function Player() {
 Player.prototype = {
 	constructor: Player,
 
-	finished: function () { },
-	started: function () { },
+	finished: function (finished) { },
+	started: function (started) { },
 
 	playMedia: function (mediaData) {
 		if (this.session)
@@ -94,12 +94,12 @@ Player.prototype = {
 		return d.GetMilliseconds();
 	},
 
-	_onStarted: function() {
-		this.started();
+	_onStarted: function(started) {
+		this.started(started);
 	},
 
-	_onFinished: function() {
-		this.finished();
+	_onFinished: function(finished) {
+		this.finished(finished);
 	}
 }
 
