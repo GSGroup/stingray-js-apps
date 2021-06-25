@@ -166,11 +166,19 @@ Item {
 			return true;
 		}
 
-		if (key == "Back" || key == "Stop" || key == "Last") {
-			if (playbackProgress.visible && key != "Stop")
+		if (key == "Last") {
+			playerObj.abort();
+			return false;
+		}
+
+		if (key == "Back") {
+			if (playbackProgress.visible)
 				playbackProgress.hide();
 			else
 				playerObj.abort();
+		}
+		else if (key == "Stop") {
+			playerObj.abort();
 		} else if (key == "Volume Mute" || key == "V" || key == "v") {
 			mainWindow.muteToggle();
 		} else if (!this.disableControls) {
