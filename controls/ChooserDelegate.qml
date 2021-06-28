@@ -15,13 +15,16 @@ Item {
 	
 	Image {
 		id: chooserIcon;
-		source: model.icon;
-		anchors.verticalCenter: parent.verticalCenter;
+
 		anchors.left: parent.left;
 		anchors.leftMargin: 10;
-		opacity: parent.focused ? 1 : 0.65;
-		visible: model.icon != undefined ? source != "" : false;
+		anchors.verticalCenter: parent.verticalCenter;
+
+		source: model.icon;
 		color: parent.parent.activeFocus ? colorTheme.focusedTextColor : parent.focused ? colorTheme.activeTextColor : colorTheme.textColor;
+
+		visible: model.icon != undefined ? source != "" : false;
+		opacity: parent.focused ? 1 : 0.65;
 		
 		Behavior on color { animation: Animation { duration: 300; } }
 		Behavior on opacity { animation: Animation { duration: 300; } }
@@ -29,13 +32,16 @@ Item {
 	
 	BodyText {
 		id: chooserDelegateText;
-		text: model.text;
-		anchors.verticalCenter: parent.verticalCenter;
+
 		anchors.right: parent.right;
 		anchors.rightMargin: 10;
+		anchors.verticalCenter: parent.verticalCenter;
+
+		text: model.text;
 		color: parent.parent.activeFocus ? colorTheme.focusedTextColor : parent.focused ? colorTheme.activeTextColor : colorTheme.textColor;
-		opacity: parent.focused ? 1 : 0.65;
+
 		visible: model.text != undefined ? text != "" : false;
+		opacity: parent.focused ? 1 : 0.65;
 		
 		Behavior on color { animation: Animation { duration: 300; } }
 		Behavior on opacity { animation: Animation { duration: 300; } }
