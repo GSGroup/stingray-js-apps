@@ -19,7 +19,6 @@ Item {
 	property alias backgroundVisible: chooserBackground.visible;
 
 	property bool showArrows: true;
-	property bool arrowsInPanel: true;
 	property bool keyNavigationWraps;
 
 	property int chooserWidth: 520;
@@ -28,7 +27,7 @@ Item {
 	property Color backgroundNonFocusColor: colorTheme.buttonColor;
 
 	height: chooserBackground.height;
-	width: Math.min(chooserWidth, listView.contentWidth + 30 + (20 + rightImage.width + leftImage.width) * (showArrows && arrowsInPanel));
+	width: Math.min(chooserWidth, listView.contentWidth + listView.anchors.leftMargin + listView.anchors.rightMargin);
 
 	focusedChild: listView;
 	
@@ -48,13 +47,13 @@ Item {
 
 		anchors.verticalCenter: listView.verticalCenter;
 		anchors.right: listView.left;
-		anchors.rightMargin: 10;
+		anchors.rightMargin: (30 - leftImage.width) / 2;
 
 		forcedLoading: true;
 		source: colorTheme.pathToStyleFolder + "/left.png";
 		color: colorTheme.highlightPanelColor;
 
-		visible : chooserItem.showArrows;
+		visible : chooserItem.showArrows && listView.count > 1;
 		opacity: parent.activeFocus ? 1 : 0;
 		
 		Behavior on opacity { animation: Animation { duration: 300; } }
@@ -65,13 +64,13 @@ Item {
 
 		anchors.verticalCenter: listView.verticalCenter;
 		anchors.left: listView.right;
-		anchors.leftMargin: 10;
+		anchors.leftMargin: (30 - rightImage.width) / 2;
 
 		forcedLoading: true;
 		source: colorTheme.pathToStyleFolder + "/right.png";
 		color: colorTheme.highlightPanelColor;
 
-		visible: chooserItem.showArrows;
+		visible: chooserItem.showArrows && listView.count > 1;
 		opacity: parent.activeFocus ? 1 : 0;
 
 		Behavior on opacity { animation: Animation { duration: 300; } }
@@ -84,12 +83,9 @@ Item {
 
 		anchors.right: chooserItem.right;
 		anchors.left: chooserItem.left;
-		anchors.rightMargin: 10 + (rightImage.width + 10) * (chooserItem.showArrows && chooserItem.arrowsInPanel);
-		anchors.leftMargin: 10 + (leftImage.width + 10) * (chooserItem.showArrows && chooserItem.arrowsInPanel);
+		anchors.rightMargin: 30;
+		anchors.leftMargin: 30;
 		anchors.verticalCenter: parent.verticalCenter;
-
-		leftFocusMargin: 5;
-		rightFocusMargin: 5;
 
 		highlightFollowsCurrentItem: false;
 		keyNavigationWraps: chooserItem.keyNavigationWraps;
@@ -144,7 +140,7 @@ Item {
 	}
 	
 	Item {
-		width: 64;
+		width: 60;
 
 		anchors.top: listView.top;
 		anchors.left: listView.left;
@@ -179,7 +175,7 @@ Item {
 	}
 
 	Item {
-		width: 64;
+		width: 60;
 
 		anchors.top: listView.top;
 		anchors.right: listView.right;

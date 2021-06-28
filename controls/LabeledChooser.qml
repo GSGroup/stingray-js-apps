@@ -17,7 +17,7 @@ ActivePanel {
 
 	property bool keyNavigationWraps: true;
 	property string text;
-	property int chooserWidth: 520; 
+	property int chooserWidth: Math.min(width * 2 / 3, width - textItem.width - textItem.anchors.leftMargin - 30);
 
 	width: textItem.width + chooserItem.width + 40;
 
@@ -29,7 +29,7 @@ ActivePanel {
 		text: parent.text;
 
 		anchors.left: parent.left;
-		anchors.leftMargin: 20;
+		anchors.leftMargin: 30;
 		anchors.verticalCenter: parent.verticalCenter;
 
 		color: parent.activeFocus ? colorTheme.focusedTextColor : colorTheme.activeTextColor;
@@ -40,8 +40,9 @@ ActivePanel {
 	Chooser {
 		id: chooserItem;
 
+		height: parent.height;
+
 		anchors.right: parent.right;
-		anchors.rightMargin: 10;
 
 		backgroundVisible: false;
 		keyNavigationWraps: parent.keyNavigationWraps;
