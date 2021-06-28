@@ -24,6 +24,9 @@ Item {
 
 	property int chooserWidth: 520;
 
+	property Color gradientNonFocusColor: chooserBackground.nonFocusColor;
+	property Color backgroundNonFocusColor: colorTheme.buttonColor;
+
 	height: chooserBackground.height;
 	width: Math.min(chooserWidth, listView.contentWidth + 30 + (20 + rightImage.width + leftImage.width) * (showArrows && arrowsInPanel));
 
@@ -34,7 +37,8 @@ Item {
 
 		anchors.fill: parent;
 
-		color: parent.activeFocus ? colorTheme.activeFocusColor : colorTheme.focusablePanelColor;
+		nonFocusColor: chooserItem.backgroundNonFocusColor;
+		color: chooserItem.activeFocus ? focusColor : nonFocusColor;
 
 		focus: false;
 	}
@@ -48,6 +52,7 @@ Item {
 
 		forcedLoading: true;
 		source: colorTheme.pathToStyleFolder + "/left.png";
+		color: colorTheme.highlightPanelColor;
 
 		visible : chooserItem.showArrows;
 		opacity: parent.activeFocus ? 1 : 0;
@@ -64,6 +69,7 @@ Item {
 
 		forcedLoading: true;
 		source: colorTheme.pathToStyleFolder + "/right.png";
+		color: colorTheme.highlightPanelColor;
 
 		visible: chooserItem.showArrows;
 		opacity: parent.activeFocus ? 1 : 0;
@@ -93,7 +99,7 @@ Item {
 		highlightColor: chooserItem.activeFocus ? colorTheme.highlightPanelColor : colorTheme.passiveHighlightPanel;
 		positionMode: Center;
 
-		delegate: ChooserDelegate { }
+		delegate: ChooserDelegate { chooserFocused: listView.activeFocus; }
 		
 		Image {
 			anchors.right: highlight.left;
@@ -156,14 +162,14 @@ Item {
 
 			GradientStop {
 				position: 0;
-				color: chooserItem.activeFocus ? colorTheme.activeFocusColor : colorTheme.focusablePanelColor;
+				color: chooserItem.activeFocus ? colorTheme.activeFocusColor : chooserItem.gradientNonFocusColor;
 
 				Behavior on color { animation: Animation { duration: 300;} }
 			}
 
 			GradientStop {
 				position: 1;
-				color: Utils.setAlpha((chooserItem.activeFocus ? colorTheme.activeFocusColor : colorTheme.focusablePanelColor), 0);
+				color: Utils.setAlpha((chooserItem.activeFocus ? colorTheme.activeFocusColor : chooserItem.gradientNonFocusColor), 0);
 
 				Behavior on color { animation: Animation { duration: 300;} }
 			}
@@ -191,14 +197,14 @@ Item {
 
 		GradientStop {
 				position: 0;
-				color: Utils.setAlpha((chooserItem.activeFocus ? colorTheme.activeFocusColor : colorTheme.focusablePanelColor), 0);
+				color: Utils.setAlpha((chooserItem.activeFocus ? colorTheme.activeFocusColor : chooserItem.gradientNonFocusColor), 0);
 
 				Behavior on color { animation: Animation { duration: 300;} }
 			}
 
 		GradientStop {
 				position: 1;
-				color: chooserItem.activeFocus ? colorTheme.activeFocusColor : colorTheme.focusablePanelColor;
+				color: chooserItem.activeFocus ? colorTheme.activeFocusColor : chooserItem.gradientNonFocusColor;
 
 				Behavior on color { animation: Animation { duration: 300;} }
 			}

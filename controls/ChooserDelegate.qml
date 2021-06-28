@@ -8,6 +8,8 @@
 Item {
 	id: delegateItem;
 
+	property bool chooserFocused;
+
 	width: 20 + chooserDelegateText.width * chooserDelegateText.visible + chooserIcon.width * chooserIcon.visible + (chooserIcon.visible && chooserDelegateText.visible) * 10;
 	height: parent.height;
 
@@ -21,10 +23,11 @@ Item {
 		anchors.verticalCenter: parent.verticalCenter;
 
 		source: model.icon;
-		color: parent.parent.activeFocus ? colorTheme.focusedTextColor : parent.focused ? colorTheme.activeTextColor : colorTheme.textColor;
+		color: delegateItem.activeFocus ? colorTheme.globalBackgroundColor :
+			delegateItem.chooserFocused ? colorTheme.focusedTextColor : colorTheme.activeTextColor;
 
 		visible: model.icon != undefined ? source != "" : false;
-		opacity: parent.focused ? 1 : 0.65;
+		opacity: parent.focused || delegateItem.chooserFocused ? 1 : 0.6;
 		
 		Behavior on color { animation: Animation { duration: 300; } }
 		Behavior on opacity { animation: Animation { duration: 300; } }
@@ -38,10 +41,11 @@ Item {
 		anchors.verticalCenter: parent.verticalCenter;
 
 		text: model.text;
-		color: parent.parent.activeFocus ? colorTheme.focusedTextColor : parent.focused ? colorTheme.activeTextColor : colorTheme.textColor;
+		color: delegateItem.activeFocus ? colorTheme.globalBackgroundColor :
+			delegateItem.chooserFocused ? colorTheme.focusedTextColor : colorTheme.activeTextColor;
 
 		visible: model.text != undefined ? text != "" : false;
-		opacity: parent.focused ? 1 : 0.65;
+		opacity: parent.focused || delegateItem.chooserFocused ? 1 : 0.6;
 		
 		Behavior on color { animation: Animation { duration: 300; } }
 		Behavior on opacity { animation: Animation { duration: 300; } }

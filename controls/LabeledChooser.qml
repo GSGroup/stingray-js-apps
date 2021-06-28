@@ -21,6 +21,8 @@ ActivePanel {
 
 	width: textItem.width + chooserItem.width + 40;
 
+	nonFocusColor: colorTheme.buttonColor;
+
 	BodyText {
 		id: textItem;
 
@@ -30,7 +32,7 @@ ActivePanel {
 		anchors.leftMargin: 20;
 		anchors.verticalCenter: parent.verticalCenter;
 
-		color: parent.activeFocus ? colorTheme.focusedTextColor : colorTheme.textColor;
+		color: parent.activeFocus ? colorTheme.focusedTextColor : colorTheme.activeTextColor;
 
 		Behavior on color { animation: Animation { duration: 300; } }
 	}
@@ -44,5 +46,6 @@ ActivePanel {
 		backgroundVisible: false;
 		keyNavigationWraps: parent.keyNavigationWraps;
 		chooserWidth: parent.chooserWidth;
+		gradientNonFocusColor: labeledChooserItem.nonFocusColor;
 	}
 }
