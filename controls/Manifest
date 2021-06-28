@@ -6,6 +6,7 @@
 		"imports": [
 			["Button",				"Button.qml"],
 			["Edit",				"Edit.qml"],
+			["EllipsisText",		"EllipsisText.qml"],
 			["PasswordEdit",		"PasswordEdit.qml"],
 			["Chooser",				"Chooser.qml"],
 			["LabeledChooser",		"LabeledChooser.qml"],
