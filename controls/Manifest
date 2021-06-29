@@ -5,6 +5,7 @@
 	"library": {
 		"imports": [
 			["Button",				"Button.qml"],
+			["ButtonWithShadow",	"ButtonWithShadow.qml"],
 			["Edit",				"Edit.qml"],
 			["EllipsisText",		"EllipsisText.qml"],
 			["PasswordEdit",		"PasswordEdit.qml"],
