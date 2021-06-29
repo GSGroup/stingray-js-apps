@@ -11,75 +11,97 @@ import "ChooserDelegate.qml";
 
 Item {
 	id: chooserItem;
+
 	property alias currentIndex: listView.currentIndex;
 	property alias count: listView.count;
 	property alias contentWidth: listView.contentWidth;
 	property alias model: listView.model;
 	property alias backgroundVisible: chooserBackground.visible;
+
 	property bool showArrows: true;
-	property bool arrowsInPanel: true;
 	property bool keyNavigationWraps;
+
 	property int chooserWidth: 520;
+
+	property Color gradientNonFocusColor: chooserBackground.nonFocusColor;
+	property Color backgroundNonFocusColor: colorTheme.buttonColor;
+
 	height: chooserBackground.height;
-	width: Math.min(chooserWidth, listView.contentWidth + 30 + (20 + rightImage.width + leftImage.width) * (showArrows && arrowsInPanel));
+	width: Math.min(chooserWidth, listView.contentWidth + listView.anchors.leftMargin + listView.anchors.rightMargin);
+
 	focusedChild: listView;
 	
 	ActivePanel {
 		id: chooserBackground;
-		color: parent.activeFocus ? colorTheme.activeFocusColor : colorTheme.focusablePanelColor;
-		focus: false;
+
 		anchors.fill: parent;
+
+		nonFocusColor: chooserItem.backgroundNonFocusColor;
+		color: chooserItem.activeFocus ? focusColor : nonFocusColor;
+
+		focus: false;
 	}
 	
 	Image {
 		id: leftImage;
+
 		anchors.verticalCenter: listView.verticalCenter;
 		anchors.right: listView.left;
-		anchors.rightMargin: 10;
+		anchors.rightMargin: (30 - leftImage.width) / 2;
+
 		forcedLoading: true;
 		source: colorTheme.pathToStyleFolder + "/left.png";
+		color: colorTheme.highlightPanelColor;
+
+		visible : chooserItem.showArrows && listView.count > 1;
 		opacity: parent.activeFocus ? 1 : 0;
-		visible : chooserItem.showArrows;
 		
 		Behavior on opacity { animation: Animation { duration: 300; } }
 	}
 	
 	Image {
 		id: rightImage;
+
 		anchors.verticalCenter: listView.verticalCenter;
 		anchors.left: listView.right;
-		anchors.leftMargin: 10;
+		anchors.leftMargin: (30 - rightImage.width) / 2;
+
 		forcedLoading: true;
 		source: colorTheme.pathToStyleFolder + "/right.png";
+		color: colorTheme.highlightPanelColor;
+
+		visible: chooserItem.showArrows && listView.count > 1;
 		opacity: parent.activeFocus ? 1 : 0;
-		visible: chooserItem.showArrows;
 
 		Behavior on opacity { animation: Animation { duration: 300; } }
 	}
 	
 	HighlightListView {
 		id: listView;
+
+		height: parent.height;
+
 		anchors.right: chooserItem.right;
 		anchors.left: chooserItem.left;
-		anchors.rightMargin: 10 + (rightImage.width + 10) * (chooserItem.showArrows && chooserItem.arrowsInPanel);
-		anchors.leftMargin: 10 + (leftImage.width + 10) * (chooserItem.showArrows && chooserItem.arrowsInPanel);
+		anchors.rightMargin: 30;
+		anchors.leftMargin: 30;
 		anchors.verticalCenter: parent.verticalCenter;
-		height: parent.height;
-		leftFocusMargin: 5;
-        rightFocusMargin: 5;
-        highlightFollowsCurrentItem: false;
-        keyNavigationWraps: chooserItem.keyNavigationWraps;
+
+		highlightFollowsCurrentItem: false;
+		keyNavigationWraps: chooserItem.keyNavigationWraps;
 		handleNavigationKeys: false;
 		orientation: Horizontal;
-		delegate: ChooserDelegate { }
 		clip: true;
 		highlightColor: chooserItem.activeFocus ? colorTheme.highlightPanelColor : colorTheme.passiveHighlightPanel;
 		positionMode: Center;
+
+		delegate: ChooserDelegate { chooserFocused: listView.activeFocus; }
 		
 		Image {
 			anchors.right: highlight.left;
 			anchors.top: highlight.top;
 			anchors.bottom: highlight.bottom;
+
 			source: "res/common/shadow_left_" + colorTheme.shadowFilename + ".png";
 			fillMode: TileVertically;
 		}
@@ -88,6 +110,7 @@ Item {
 			anchors.left: highlight.right;
 			anchors.top: highlight.top;
 			anchors.bottom: highlight.bottom;
+
 			source: "res/common/shadow_right_" + colorTheme.shadowFilename + ".png";
 			fillMode: TileVertically;
 		}
@@ -117,11 +140,13 @@ Item {
 	}
 	
 	Item {
+		width: 60;
+
 		anchors.top: listView.top;
 		anchors.left: listView.left;
 		anchors.bottom: listView.bottom;
+
 		opacity: (listView.contentWidth > listView.width) && (listView.currentIndex != 0) ? 1 : 0;
-		width: 64;
 
 		Gradient {
 			anchors.left: parent.left;
@@ -130,26 +155,33 @@ Item {
 			anchors.bottom: parent.bottom;
 
 			orientation: Horizontal;
+
 			GradientStop {
 				position: 0;
-				color: chooserItem.activeFocus ? colorTheme.activeFocusColor : colorTheme.focusablePanelColor;
+				color: chooserItem.activeFocus ? colorTheme.activeFocusColor : chooserItem.gradientNonFocusColor;
+
 				Behavior on color { animation: Animation { duration: 300;} }
 			}
+
 			GradientStop {
 				position: 1;
-				color: Utils.setAlpha((chooserItem.activeFocus ? colorTheme.activeFocusColor : colorTheme.focusablePanelColor), 0);
+				color: Utils.setAlpha((chooserItem.activeFocus ? colorTheme.activeFocusColor : chooserItem.gradientNonFocusColor), 0);
+
 				Behavior on color { animation: Animation { duration: 300;} }
 			}
 		}
+
 		Behavior on opacity { animation: Animation { duration: 300;} }
 	}
 
 	Item {
+		width: 60;
+
 		anchors.top: listView.top;
 		anchors.right: listView.right;
 		anchors.bottom: listView.bottom;
+
 		opacity: (listView.contentWidth > listView.width) && (listView.currentIndex != (listView.count - 1)) ? 1 : 0;
-		width: 64;
 
 		Gradient {
 			anchors.left: parent.left;
@@ -158,17 +190,22 @@ Item {
 			anchors.bottom: parent.bottom;
 
 			orientation: Horizontal;
-			GradientStop {
+
+		GradientStop {
 				position: 0;
-				color: Utils.setAlpha((chooserItem.activeFocus ? colorTheme.activeFocusColor : colorTheme.focusablePanelColor), 0);
+				color: Utils.setAlpha((chooserItem.activeFocus ? colorTheme.activeFocusColor : chooserItem.gradientNonFocusColor), 0);
+
 				Behavior on color { animation: Animation { duration: 300;} }
 			}
-			GradientStop {
+
+		GradientStop {
 				position: 1;
-				color: chooserItem.activeFocus ? colorTheme.activeFocusColor : colorTheme.focusablePanelColor;
+				color: chooserItem.activeFocus ? colorTheme.activeFocusColor : chooserItem.gradientNonFocusColor;
+
 				Behavior on color { animation: Animation { duration: 300;} }
 			}
 		}
+
 		Behavior on opacity { animation: Animation { duration: 300;} }
 	}
 }

@@ -9,32 +9,44 @@ import Chooser;
 
 ActivePanel {
 	id: labeledChooserItem;
+
 	property alias currentIndex: chooserItem.listView.currentIndex;
 	property alias count: chooserItem.listView.count;
 	property alias contentWidth: chooserItem.listView.contentWidth;
 	property alias model: chooserItem.listView.model;
+
 	property bool keyNavigationWraps: true;
 	property string text;
-	property int chooserWidth: 520; 
+	property int chooserWidth: Math.min(width * 2 / 3, width - textItem.width - textItem.anchors.leftMargin - 30);
+
 	width: textItem.width + chooserItem.width + 40;
+
+	nonFocusColor: colorTheme.buttonColor;
 
 	BodyText {
 		id: textItem;
+
 		text: parent.text;
+
 		anchors.left: parent.left;
-		anchors.leftMargin: 20;
+		anchors.leftMargin: 30;
 		anchors.verticalCenter: parent.verticalCenter;
-		color: parent.activeFocus ? colorTheme.focusedTextColor : colorTheme.textColor;
+
+		color: parent.activeFocus ? colorTheme.focusedTextColor : colorTheme.activeTextColor;
 
 		Behavior on color { animation: Animation { duration: 300; } }
 	}
 	
 	Chooser {
 		id: chooserItem;
+
+		height: parent.height;
+
 		anchors.right: parent.right;
-		anchors.rightMargin: 10;
+
 		backgroundVisible: false;
 		keyNavigationWraps: parent.keyNavigationWraps;
 		chooserWidth: parent.chooserWidth;
+		gradientNonFocusColor: labeledChooserItem.nonFocusColor;
 	}
 }
