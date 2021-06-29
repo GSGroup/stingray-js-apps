@@ -8,32 +8,51 @@
 ActivePanel {
 	id: simpleButton;
 
-	property alias textColor: buttonText.color;
 	property alias font: buttonText.font;
+	property alias icon: buttonIcon.source;
+	property alias text: buttonText.text;
 
-	property string text;
-	property int textRightOffset: textInCenter ? 0 : 20;
+	property Color textColor: activeFocus ? colorTheme.focusedTextColor : colorTheme.activeTextColor;
+	property int contentMargin: 12;
 	property bool textInCenter: true;
 
-	width: Math.max(140, buttonText.width + 30);
-	height: buttonText.paintedHeight + 30;
+	width: Math.max(176, iconTextItem.width + contentMargin * 2);
+	height: 53;
 
-	radius: 3;
+	nonFocusColor: colorTheme.buttonColor;
 
-	BodyText {
-		id: buttonText;
+	Row {
+		id: iconTextItem;
 
-		x: simpleButton.textInCenter ? (parent.width - paintedWidth) / 2 : simpleButton.textRightOffset;
-
-		anchors.verticalCenter: parent.verticalCenter;
-
-		color: parent.activeFocus ? colorTheme.focusedTextColor : colorTheme.activeTextColor;
-		text: simpleButton.text;
+		x: simpleButton.textInCenter ? (parent.width - width) / 2 : simpleButton.contentMargin;
 
 		focus: true;
+		spacing: 12;
 
-		Behavior on color { animation: Animation { duration: 300; } }
+		Image {
+			id: buttonIcon;
+
+			width: 34;
+			height: 34;
+
+			anchors.verticalCenter: simpleButton.verticalCenter;
+
+			color: simpleButton.textColor;
+
+			visible: source != "";
+		}
+
+		BodyText {
+			id: buttonText;
+
+			anchors.verticalCenter: simpleButton.verticalCenter;
+
+			color: simpleButton.textColor;
+		}
 	}
 
-	Behavior on color { animation: Animation { duration: 400; easingType: Linear; } }
+	onActiveFocusChanged: {
+		if (!activeFocus)
+			simpleButton.color.ResetAnimation();
+	}
 }
