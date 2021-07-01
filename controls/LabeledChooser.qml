@@ -19,8 +19,6 @@ ActivePanel {
 	property string text;
 	property int chooserWidth: Math.min(width * 2 / 3, width - textItem.width - textItem.anchors.leftMargin - 30);
 
-	width: textItem.width + chooserItem.width + 40;
-
 	nonFocusColor: colorTheme.buttonColor;
 
 	BodyText {
