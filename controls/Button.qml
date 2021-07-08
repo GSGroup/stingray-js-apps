@@ -50,9 +50,4 @@ ActivePanel {
 			color: simpleButton.textColor;
 		}
 	}
-
-	onActiveFocusChanged: {
-		if (!activeFocus)
-			simpleButton.color.ResetAnimation();
-	}
 }
