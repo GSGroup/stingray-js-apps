@@ -9,6 +9,7 @@
 			["Drm",						"drm.js"],
 			["Misc",					"misc.js"],
 			["StandByMode",				"standByMode.js"],
+			["Statistics",				"statistics.js"],
 			["TimeManager",				"timeManager.js"],
 			["TricolorAccount",			"tricolorAccount.js"]
 		]
