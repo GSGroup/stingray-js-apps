@@ -1,5 +1,5 @@
 {
 	"id": "tetris",
-	"display": { "name": { "rus": "Тетрис", "eng": "Tetris" } , "icon": "tetris.png", "kidsIcon": "tetris_kids.png" },
+	"display": { "name": { "rus": "Тетрис", "eng": "Tetris" } , "icon": "tetris.png", "kidsIcon": "tetris_kids.png", "bigIcon": "tetris_big.png" },
 	"application": { }
 }
