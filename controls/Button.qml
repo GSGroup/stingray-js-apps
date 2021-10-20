@@ -9,8 +9,8 @@ ActivePanel {
 	id: simpleButton;
 
 	property alias font: buttonText.font;
-	property alias icon: buttonIcon.source;
-	property alias text: buttonText.text;
+	property string icon;
+	property string text;
 
 	property Color textColor: activeFocus ? colorTheme.focusedTextColor : colorTheme.activeTextColor;
 	property int contentMargin: 12;
@@ -37,6 +37,8 @@ ActivePanel {
 
 			anchors.verticalCenter: simpleButton.verticalCenter;
 
+			source: simpleButton.icon;
+
 			color: simpleButton.textColor;
 
 			visible: source != "";
@@ -46,6 +48,8 @@ ActivePanel {
 			id: buttonText;
 
 			anchors.verticalCenter: simpleButton.verticalCenter;
+
+			text: simpleButton.text;
 
 			color: simpleButton.textColor;
 		}
