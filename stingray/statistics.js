@@ -18,7 +18,7 @@ const Statistics = {
 	 * - attributes: json stringify'able object
 	 * return type: void
 	 */
-	reportEvent: function (name, group, attributes) {
+	reportEvent: function (name, group, attributes = {}) {
 		reportStatisticEvent(name, group, JSON.stringify(attributes));
 	}
 };
