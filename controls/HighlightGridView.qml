@@ -15,6 +15,7 @@ GridView {
 
 	property bool showBackground: true;
 	property Color backgroundColor: highlightGridView.activeFocus ? colorTheme.activePanelColor : colorTheme.focusablePanelColor;
+	property real backgroundOpacity: 1;
 
 	Rectangle {
 		id: innerBackground;
@@ -25,6 +26,7 @@ GridView {
 		color: highlightGridView.backgroundColor;
 
 		visible: highlightGridView.showBackground;
+		opacity: highlightGridView.backgroundOpacity;
 
 		Behavior on color { animation: Animation { duration: 300; } }
 	}
