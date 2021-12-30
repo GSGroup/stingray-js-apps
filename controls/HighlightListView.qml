@@ -20,8 +20,8 @@ ListView {
 
 		visible: highlightListView.count;
 
-		doHighlight: {
-			if (!highlightListView || !highlightListView.model || !highlightListView.count)
+		updateHighlight: {
+			if (!highlightListView.visible || highlightListView.count <= 0)
 				return;
 
 			highlightListView.setContentPositionAtIndex(highlightListView.currentIndex, highlightListView.positionMode);
@@ -55,11 +55,6 @@ ListView {
 				this.y = itemRect.Top;
 				this.height = highlightListView.orientation == 0 ? highlightListView.height : itemRect.Height();
 			}
-		}
-
-		updateHighlight: {
-			if (highlightListView.visible)
-				this.doHighlight();
 		}
 
 		Behavior on color { animation: Animation { duration: 300; } }
