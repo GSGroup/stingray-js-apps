@@ -45,9 +45,7 @@ GridView {
 		visible: highlightGridView.count;
 		opacity: highlightGridView.activeFocus || highlightGridView.showActiveFocus ? 1 : 0;
 
-		updateHighlight: { this.doHighlight(); }
-
-		doHighlight: {
+		updateHighlight: {
 			if (!highlightGridView.model || !highlightGridView.model.count)
 				return;
 
