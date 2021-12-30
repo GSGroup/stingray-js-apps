@@ -8,8 +8,8 @@
 ListView {
 	id: highlightListView;
 
-	property int hlWidth;
-	property int hlHeigh;
+	property int highlightWidth;
+	property int highlightHeight;
 
 	property Color highlightColor: highlightListView.activeFocus ? colorTheme.activeFocusColor : colorTheme.focusablePanelColor;
 
@@ -34,9 +34,9 @@ ListView {
 
 			itemRect.Move(-futurePos.X, -futurePos.Y);
 
-			if (highlightListView.hlHeight)
+			if (highlightListView.highlightHeight)
 			{
-				this.height = highlightListView.hlHeight;
+				this.height = highlightListView.highlightHeight;
 				this.y = itemRect.Top;
 			}
 			else
@@ -45,9 +45,9 @@ ListView {
 				this.height = highlightListView.orientation == 0 ? highlightListView.height : itemRect.Height();
 			}
 
-			if (highlightListView.hlWidth)
+			if (highlightListView.highlightWidth)
 			{
-				this.width = highlightListView.hlWidth;
+				this.width = highlightListView.highlightWidth;
 				this.x = itemRect.Left;
 			}
 			else
