@@ -106,6 +106,8 @@ GridView {
 		}
 	}
 
+	onVisibleChanged: { highlight.updateHighlight(); }
+
 	onContentHeightChanged:	{ highlight.updateHighlight(); }
 	onContentWidthChanged:	{ highlight.updateHighlight(); }
 
