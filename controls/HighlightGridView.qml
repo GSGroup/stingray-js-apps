@@ -8,7 +8,7 @@
 GridView {
 	id: highlightGridView;
 
-	property Color highlightColor: highlightGridView.activeFocus ? colorTheme.activeFocusColor : colorTheme.focusablePanelColor;
+	property Color highlightColor: colorTheme.activeFocusColor;
 
 	property bool showBackground: true;
 	property Color backgroundColor: highlightGridView.activeFocus ? colorTheme.activePanelColor : colorTheme.focusablePanelColor;
