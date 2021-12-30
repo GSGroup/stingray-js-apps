@@ -8,6 +8,9 @@
 GridView {
 	id: highlightGridView;
 
+	property bool showActiveFocus;
+	property bool showShadow: true;
+
 	property Color highlightColor: colorTheme.activeFocusColor;
 
 	property bool showBackground: true;
@@ -29,9 +32,9 @@ GridView {
 	BorderShadow {
 		anchors.fill: highlight;
 
-		visible: highlightGridView.count;
-
-		opacity: highlightGridView.activeFocus ? 1 : 0;
+		visible: highlightGridView.count && highlightGridView.showShadow;
+		opacity: highlightGridView.activeFocus || highlightGridView.showActiveFocus ? 1 : 0;
+		z: 10;
 	}
 
 	Rectangle {
@@ -39,7 +42,8 @@ GridView {
 
 		color: highlightGridView.highlightColor;
 
-		opacity: parent.activeFocus && highlightGridView.count ? 1 : 0;
+		visible: highlightGridView.count;
+		opacity: highlightGridView.activeFocus || highlightGridView.showActiveFocus ? 1 : 0;
 
 		updateHighlight: {
 			this.doHighlight();
