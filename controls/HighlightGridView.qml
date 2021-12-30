@@ -46,7 +46,7 @@ GridView {
 		opacity: highlightGridView.activeFocus || highlightGridView.showActiveFocus ? 1 : 0;
 
 		updateHighlight: {
-			if (!highlightGridView.model || !highlightGridView.model.count)
+			if (!highlightGridView.visible || !highlightGridView.count <= 0)
 				return;
 
 			highlightGridView.setContentPositionAtIndex(highlightGridView.currentIndex, highlightGridView.positionMode);
