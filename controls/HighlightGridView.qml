@@ -92,11 +92,23 @@ GridView {
 			animation: Animation { duration: 250; }
 		}
 
-		Behavior on width { animation: Animation { duration: 250; } }
+		Behavior on width {
+			id: highlightWidthAnim;
 
-		Behavior on height { animation: Animation { duration: 250; } }
+			animation: Animation { duration: 250; }
+		}
 
-		Behavior on opacity { animation: Animation { duration: 300; } }
+		Behavior on height {
+			id: highlightHeightAnim;
+
+			animation: Animation { duration: 250; }
+		}
+
+		Behavior on opacity {
+			id: highlightOpacityAnim;
+
+			animation: Animation { duration: 300; }
+		}
 	}
 
 	Timer {	//TODO: Remove this when GetDelegateRect will work correctly.
@@ -115,4 +127,14 @@ GridView {
 
 	onCurrentIndexChanged:	{ highlight.updateHighlight(); }
 	onCountChanged:			{ highlight.updateHighlight(); }
+
+	completeHighlightAnimation: {
+		highlightXAnim.complete();
+		highlightYAnim.complete();
+
+		highlightWidthAnim.complete();
+		highlightHeightAnim.complete();
+
+		highlightOpacityAnim.complete();
+	}
 }
