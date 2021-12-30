@@ -52,7 +52,9 @@ ListView {
 			}
 		}
 
-		Behavior on height { animation: Animation { duration: 200; } }
+		Behavior on width { animation: Animation { duration: 200; easingType: EasingType.InOutQuad; } }
+
+		Behavior on height { animation: Animation { duration: 200; easingType: EasingType.InOutQuad; } }
 	}
 
 	BorderShadow {
