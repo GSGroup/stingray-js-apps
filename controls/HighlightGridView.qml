@@ -10,6 +10,22 @@ GridView {
 
 	property Color highlightColor: highlightGridView.activeFocus ? colorTheme.activeFocusColor : colorTheme.focusablePanelColor;
 
+	property bool showBackground: true;
+	property Color backgroundColor: highlightGridView.activeFocus ? colorTheme.activePanelColor : colorTheme.focusablePanelColor;
+
+	Rectangle {
+		id: innerBackground;
+
+		width: Math.min(highlightGridView.width - 2, highlightGridView.contentWidth - 2);
+		height: Math.min(highlightGridView.height, highlightGridView.contentHeight);
+
+		color: highlightGridView.backgroundColor;
+
+		visible: highlightGridView.showBackground;
+
+		Behavior on color { animation: Animation { duration: 300; } }
+	}
+
 	BorderShadow {
 		anchors.fill: highlight;
 
