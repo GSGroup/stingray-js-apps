@@ -50,13 +50,19 @@ GridView {
 		Behavior on y {
 			id: highlightYAnim;
 
-			animation: Animation { duration: 250; }
+			animation: Animation {
+				duration: highlightGridView.contentXAnimationDuration;
+				easingType: highlightGridView.contentXAnimationType;
+			}
 		}
 
 		Behavior on x {
 			id: highlightXAnim;
 
-			animation: Animation { duration: 250; }
+			animation: Animation {
+				duration: highlightGridView.contentYAnimationDuration;
+				easingType: highlightGridView.contentYAnimationType;
+			}
 		}
 
 		Behavior on width {
