@@ -30,7 +30,7 @@ Item {
 			ListElement { }
 		}
 
-		delegate: Item {
+		delegate: Delegate {
 			width: 100;
 			height: parent.height;
 
