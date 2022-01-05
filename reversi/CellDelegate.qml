@@ -8,40 +8,45 @@
 import "Cursor.qml";
 import "ReversiDisc.qml";
 
-Rectangle {
+Delegate {
+	id: cellDelegate;
+
 	width: parent.cellHeight;
 	height: parent.cellWidth;
 
 	focus: true;
 
-	color: "#151";
-	borderColor: "#432100";
-	borderWidth: 1;
-	
-	ReversiDisc {
-		id: white;
+	Rectangle {
+		anchors.fill: parent;
 
-		width: model.disc == "White" ? 50 : 0;
+		color: "#151";
+		borderColor: "#432100";
+		borderWidth: 1;
 
-		anchors.centerIn: parent;
+		ReversiDisc {
+			id: white;
 
-		color: "#fff";
-		borderColor: "#000";
-	}
+			width: model.disc == "White" ? 50 : 0;
 
-	ReversiDisc {
-		id: black;
+			anchors.centerIn: parent;
 
-		width: model.disc == "Black" ? 50 : 0;
+			color: "#fff";
+			borderColor: "#000";
+		}
 
-		anchors.centerIn: parent;
+		ReversiDisc {
+			id: black;
 
-		color: "#000";
-		borderColor: "#fff";
-	}
+			width: model.disc == "Black" ? 50 : 0;
 
-	Cursor {
-		visible: parent.activeFocus;
+			anchors.centerIn: parent;
+
+			color: "#000";
+			borderColor: "#fff";
+		}
+
+		Cursor {
+			visible: cellDelegate.activeFocus;
+		}
 	}
 }
-

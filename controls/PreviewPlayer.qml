@@ -5,7 +5,7 @@
 // IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
 // WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-import "PreviewPlayerButton.qml";
+import "PreviewPlayerButtonDelegate.qml";
 
 Item {
 	id: previewItem;
@@ -93,7 +93,7 @@ Item {
 			width: (70 + 10) * count;
 			spacing: 10;
 			orientation: ui.ListView.Horizontal;
-			delegate: PreviewPlayerButton { }
+			delegate: PreviewPlayerButtonDelegate { }
 			model: ListModel {
 				ListElement { source: "apps/controls/res/preview/fullscreen.png"; }
 				ListElement { source: "apps/controls/res/preview/arrowPrev.png"; }

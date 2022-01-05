@@ -5,17 +5,23 @@
 // IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
 // WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-Rectangle { 
+Delegate {
+	id: previewPlayerButtonDelegate;
+
 	width: 70;
 	height: 70;
 
 	focus: true;
 
-	color: activeFocus ? colorTheme.activeFocusColor : colorTheme.activePanelColor;
+	Rectangle {
+		anchors.fill: parent;
 
-	Image {
-		source: model.source;
-		anchors.centerIn: parent;
-		color: parent.activeFocus ? colorTheme.focusedTextColor : colorTheme.activeTextColor;
+		color: previewPlayerButtonDelegate.activeFocus ? colorTheme.activeFocusColor : colorTheme.activePanelColor;
+
+		Image {
+			source: model.source;
+			anchors.centerIn: parent;
+			color: previewPlayerButtonDelegate.activeFocus ? colorTheme.focusedTextColor : colorTheme.activeTextColor;
+		}
 	}
 }

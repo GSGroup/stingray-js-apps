@@ -5,25 +5,30 @@
 // IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
 // WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-Rectangle {
+Delegate {
+	id: hintDigitChooserDelegate;
+
 	width: parent.width;
 	height: parent.width;
 
 	focus: true;
 
-	color: activeFocus ? colorTheme.activeBorderColor : colorTheme.backgroundColor;
-	borderColor: activeFocus ? colorTheme.activeBorderColor : colorTheme.borderColor;
-	borderWidth: 2;
+	Rectangle {
+		anchors.fill: parent;
 
-	Text {
-		anchors.horizontalCenter: parent.horizontalCenter;
-		anchors.verticalCenter: parent.verticalCenter;
+		color: hintDigitChooserDelegate.activeFocus ? colorTheme.activeBorderColor : colorTheme.backgroundColor;
+		borderColor: hintDigitChooserDelegate.activeFocus ? colorTheme.activeBorderColor : colorTheme.borderColor;
+		borderWidth: 2;
 
-		font: bodyFont;
-		color: parent.activeFocus ? colorTheme.activeTextColor : colorTheme.textColor;
-		text: model.digit;
+		Text {
+			anchors.horizontalCenter: parent.horizontalCenter;
+			anchors.verticalCenter: parent.verticalCenter;
+
+			font: bodyFont;
+			color: hintDigitChooserDelegate.activeFocus ? colorTheme.activeTextColor : colorTheme.textColor;
+			text: model.digit;
+		}
+
+		Behavior on color { animation: Animation { duration: 300; }}
 	}
-
-	Behavior on color { animation: Animation { duration: 300; }}
 }
-

@@ -5,27 +5,36 @@
 // IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
 // WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-Rectangle {
-	color: activeFocus ? colorTheme.activeBorderColor : colorTheme.backgroundColor;
-	borderColor: activeFocus ? colorTheme.activeBorderColor : colorTheme.borderColor;
+Delegate {
+	id: simpleChooserDelegate;
+
 	width: delegateText.width + 20;
 	height: 28;
-	borderWidth: 2;
-	radius: colorTheme.rounded ? 10 : 0;
+
 	anchors.verticalCenter: parent.verticalCenter;
+
 	focus: true;
-	
-	BodyText {
-		id: delegateText;
-		x: 10;
-		anchors.verticalCenter: parent.verticalCenter;
-		color: parent.activeFocus ? colorTheme.activeTextColor : parent.parent.focused ? colorTheme.textColor : colorTheme.disabledTextColor;
-		text: model.text;
-		
+
+	Rectangle {
+		anchors.fill: parent;
+		color: simpleChooserDelegate.activeFocus ? colorTheme.activeBorderColor : colorTheme.backgroundColor;
+		borderColor: simpleChooserDelegate.activeFocus ? colorTheme.activeBorderColor : colorTheme.borderColor;
+		borderWidth: 2;
+		radius: colorTheme.rounded ? 10 : 0;
+
+		BodyText {
+			id: delegateText;
+			x: 10;
+			anchors.verticalCenter: parent.verticalCenter;
+			color: simpleChooserDelegate.activeFocus ? colorTheme.activeTextColor : simpleChooserDelegate.parent.focused ? colorTheme.textColor : colorTheme.disabledTextColor;
+			text: model.text;
+
+			Behavior on color { animation: Animation { duration: 200; } }
+		}
+
 		Behavior on color { animation: Animation { duration: 200; } }
+		Behavior on borderColor { animation: Animation { duration: 200; } }
 	}
 
-	Behavior on color { animation: Animation { duration: 200; } }
-	Behavior on borderColor { animation: Animation { duration: 200; } }
 	Behavior on x { animation: Animation { duration: 400; easingType: ui.Animation.OutCirc; } }
 }

@@ -7,8 +7,8 @@
 
 import "generatedfiles/tetrisConsts.js" as gameConsts;
 
-Rectangle {
-	id: rect;
+Delegate {
+	id: itemDelegate;
 
 	property int animationDuration: 0;
 
@@ -17,22 +17,25 @@ Rectangle {
 
 	focus: true;
 
-	color: "#0000";
 	opacity: model.value === 0 ? 0.0 : 1.0;
 
 	Rectangle {
-		id: innerRect;
+		anchors.fill: parent;
 
-		anchors.centerIn: parent;
+		color: "#0000";
 
-		width: model.width;
-		height: model.width;
+		Rectangle {
+			anchors.centerIn: parent;
 
-		color: gameConsts.getColor(model.colorIndex);
+			width: model.width;
+			height: model.width;
 
-		visible: model.value > 0;
+			color: gameConsts.getColor(model.colorIndex);
 
-		Behavior on width { animation: Animation { id: widthAnimation; duration: rect.animationDuration; easingType: ui.Animation.OutCirc; } }
-		Behavior on height { animation: Animation { id: heightAnimation; duration: rect.animationDuration; easingType: ui.Animation.OutCirc; } }
+			visible: model.value > 0;
+
+			Behavior on width { animation: Animation { id: widthAnimation; duration: itemDelegate.animationDuration; easingType: ui.Animation.OutCirc; } }
+			Behavior on height { animation: Animation { id: heightAnimation; duration: itemDelegate.animationDuration; easingType: ui.Animation.OutCirc; } }
+		}
 	}
 }

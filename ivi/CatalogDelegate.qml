@@ -7,51 +7,53 @@
 
 import "js/constants.js" as constants;
 
+Delegate {
+	id: catalogDelegate;
 
-Rectangle {
-    id: catalogDelegate;
+	width: constants.poster["width"]  + (constants.margin / 3);
+	height: constants.poster["height"] + (constants.margin / 3);
 
-    width: constants.poster["width"]  + (constants.margin / 3);
-    height: constants.poster["height"] + (constants.margin / 3);
+	opacity: activeFocus ? 1.0 : constants.inactiveOpacity;
 
-    opacity: activeFocus ? 1.0 : constants.inactiveOpacity;
+	focus: true;
 
-    focus: true;
+	Rectangle {
+		anchors.fill: parent;
 
-    Image {
-        id: posterDefaultImage;
+		Image {
+			id: posterDefaultImage;
 
-		width:  catalogDelegate.activeFocus ? constants.poster["width"]  + (constants.margin / 3)  : constants.poster["width"];
-		height: catalogDelegate.activeFocus ? constants.poster["height"] + (constants.margin / 3)  : constants.poster["height"];
+			width:  catalogDelegate.activeFocus ? constants.poster["width"]  + (constants.margin / 3)  : constants.poster["width"];
+			height: catalogDelegate.activeFocus ? constants.poster["height"] + (constants.margin / 3)  : constants.poster["height"];
 
-        anchors.centerIn: parent;
+			anchors.centerIn: parent;
 
-        visible: posterImage.status !== ui.Image.Ready;
+			visible: posterImage.status !== ui.Image.Ready;
 
-        source: constants.defaultPoster;
+			source: constants.defaultPoster;
 
-        fillMode: PreserveAspectFit;
+			fillMode: PreserveAspectFit;
 
-        Behavior on width  { animation: Animation { duration: constants.animationDuration; } }
-        Behavior on height { animation: Animation { duration: constants.animationDuration; } }
-    }
+			Behavior on width  { animation: Animation { duration: constants.animationDuration; } }
+			Behavior on height { animation: Animation { duration: constants.animationDuration; } }
+		}
 
-    Image {
-        id: posterImage;
+		Image {
+			id: posterImage;
 
-		width:  catalogDelegate.activeFocus ? constants.poster["width"]  + (constants.margin / 3)  : constants.poster["width"];
-		height: catalogDelegate.activeFocus ? constants.poster["height"] + (constants.margin / 3)  : constants.poster["height"];
+			width:  catalogDelegate.activeFocus ? constants.poster["width"]  + (constants.margin / 3)  : constants.poster["width"];
+			height: catalogDelegate.activeFocus ? constants.poster["height"] + (constants.margin / 3)  : constants.poster["height"];
 
-        anchors.centerIn: parent;
+			anchors.centerIn: parent;
 
-        registerInCacheSystem: false;
+			registerInCacheSystem: false;
 
-        source: model.poster;
+			source: model.poster;
 
-        fillMode: PreserveAspectFit;
+			fillMode: PreserveAspectFit;
 
-        Behavior on width  { animation: Animation { duration: constants.animationDuration; } }
-        Behavior on height { animation: Animation { duration: constants.animationDuration; } }
-    }
+			Behavior on width  { animation: Animation { duration: constants.animationDuration; } }
+			Behavior on height { animation: Animation { duration: constants.animationDuration; } }
+		}
+	}
 }
-
