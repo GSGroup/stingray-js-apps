@@ -7,11 +7,17 @@
 
 import "js/constants.js" as constants;
 
-BodyText {
-    id: categoryText;
+Delegate {
+	id: categoryDelegate;
 
-    text: model.title;
+	width: categoryText.width;
+	height: categoryText.height;
 
-    color: focused ? constants.colors["active"] : "#FFFFFF";
+	BodyText {
+		id: categoryText;
+
+		text: model.title;
+
+		color: categoryDelegate.focused ? constants.colors["active"] : "#FFFFFF";
+	}
 }
-
