@@ -1,10 +1,14 @@
-Image {
+Delegate {
 	width: 32;
 	height: 32;
 
 	focus: true;
 
-	source: model.tile >= 0? "apps/fontanero/t/" + model.tile + ".png": "";
+	Image {
+		anchors.fill: parent;
 
-	visible: model.tile >= 0;
+		source: model.tile >= 0? "apps/fontanero/t/" + model.tile + ".png": "";
+
+		visible: model.tile >= 0;
+	}
 }
