@@ -8,6 +8,7 @@
 import controls.Edit;
 import "KeyboardModel.qml";
 import "KeyItem.qml";
+import "KeyItemDelegate.qml";
 
 /***
 from lastmusic search panel
@@ -99,10 +100,7 @@ Item {
 		clip: true;
 		wrapNavigation: true;
 		model: ListModel { }
-		delegate: KeyItem {
-			text: model.text;
-			focus: false;
-		}
+		delegate: KeyItemDelegate { }
 
 		onSelectPressed: {
 			edit.text += keyView.model.get(keyView.currentIndex).text;
