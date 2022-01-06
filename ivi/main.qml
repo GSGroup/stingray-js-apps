@@ -121,8 +121,6 @@ Application {
 
         opacity: activeFocus ? 1.0 : constants.inactiveOpacity;
 
-        keyNavigationWraps: false;
-
         onSelectPressed: {
             this.visible = false;
 
