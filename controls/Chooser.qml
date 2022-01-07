@@ -114,28 +114,8 @@ Item {
 			fillMode: TileVertically;
 		}
 		
-		onKeyPressed: {
-			if(key == "Left")
-				if (!chooserItem.wrapNavigation && this.currentIndex == 0)
-					return false
-				else
-				{
-					this.decrementCurrentIndex();
-					return true;
-				}
-			
-			if (key == "Right")
-				if (!chooserItem.wrapNavigation && this.currentIndex == this.count - 1)
-					return false
-				else
-				{
-					this.incrementCurrentIndex();
-					return true;
-				}
-		}
-
-		//onLeftPressed:	{ this.decrementCurrentIndex(); }
-		//onRightPressed:	{ this.incrementCurrentIndex(); }
+		onLeftPressed: { this.decrementCurrentIndex(); }
+		onRightPressed: { this.incrementCurrentIndex(); }
 	}
 	
 	Item {
