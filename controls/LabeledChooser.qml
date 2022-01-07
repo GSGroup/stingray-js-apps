@@ -15,7 +15,7 @@ ActivePanel {
 	property alias contentWidth: chooserItem.listView.contentWidth;
 	property alias model: chooserItem.listView.model;
 
-	property bool keyNavigationWraps: true;
+	property bool wrapNavigation: true;
 	property string text;
 	property int chooserWidth: Math.min(width * 2 / 3, width - textItem.width - textItem.anchors.leftMargin - 30);
 
@@ -43,7 +43,7 @@ ActivePanel {
 		anchors.right: parent.right;
 
 		backgroundVisible: false;
-		keyNavigationWraps: parent.keyNavigationWraps;
+		wrapNavigation: parent.wrapNavigation;
 		chooserWidth: parent.chooserWidth;
 		gradientNonFocusColor: labeledChooserItem.nonFocusColor;
 	}

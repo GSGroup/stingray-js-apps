@@ -97,7 +97,7 @@ Item {
 		cellWidth: width / 12;
 		cellHeight: cellWidth;
 		clip: true;
-		keyNavigationWraps: true;
+		wrapNavigation: true;
 		model: ListModel { }
 		delegate: KeyItem {
 			text: model.text;

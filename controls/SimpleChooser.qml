@@ -39,7 +39,7 @@ Item {
 		anchors.leftMargin: (chooserItem.showAtCenter ? Math.max((chooserItem.width - 60 - contentWidth) / 2, 0) : 0) + 30;
 		anchors.rightMargin: 30;
 		orientation: ui.ListView.Horizontal;
-		keyNavigationWraps: true;
+		wrapNavigation: true;
 		clip: true;
 		delegate: SimpleChooserDelegate { }
 		model: ListModel { }

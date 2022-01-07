@@ -22,7 +22,7 @@ Item {
 		anchors.leftMargin: (dChooserItem.showAtCenter ? Math.max((dChooserItem.width - 60 - contentWidth) / 2, 0) : 0) + 30;
 		anchors.rightMargin: 30;
 		orientation: ui.ListView.Horizontal;
-		keyNavigationWraps: true;
+		wrapNavigation: true;
 		clip: true;
 		delegate: DifficultyChooserDelegate { }
 		model: ListModel { }

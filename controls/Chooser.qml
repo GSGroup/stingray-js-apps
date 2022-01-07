@@ -19,7 +19,7 @@ Item {
 	property alias backgroundVisible: chooserBackground.visible;
 
 	property bool showArrows: true;
-	property bool keyNavigationWraps;
+	property bool wrapNavigation;
 
 	property int chooserWidth: 520;
 
@@ -87,7 +87,7 @@ Item {
 		anchors.leftMargin: 30;
 		anchors.verticalCenter: parent.verticalCenter;
 
-		keyNavigationWraps: chooserItem.keyNavigationWraps;
+		wrapNavigation: chooserItem.wrapNavigation;
 		handleNavigationKeys: false;
 		orientation: Horizontal;
 		clip: true;
@@ -116,7 +116,7 @@ Item {
 		
 		onKeyPressed: {
 			if(key == "Left")
-				if (!chooserItem.keyNavigationWraps && this.currentIndex == 0)
+				if (!chooserItem.wrapNavigation && this.currentIndex == 0)
 					return false
 				else
 				{
@@ -125,7 +125,7 @@ Item {
 				}
 			
 			if (key == "Right")
-				if (!chooserItem.keyNavigationWraps && this.currentIndex == this.count - 1)
+				if (!chooserItem.wrapNavigation && this.currentIndex == this.count - 1)
 					return false
 				else
 				{
