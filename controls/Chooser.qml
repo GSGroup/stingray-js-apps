@@ -114,8 +114,8 @@ Item {
 			fillMode: TileVertically;
 		}
 		
-		onLeftPressed: { this.decrementCurrentIndex(); }
-		onRightPressed: { this.incrementCurrentIndex(); }
+		onLeftPressed: { this.moveCurrentIndexBackward(); }
+		onRightPressed: { this.moveCurrentIndexForward(); }
 	}
 	
 	Item {
