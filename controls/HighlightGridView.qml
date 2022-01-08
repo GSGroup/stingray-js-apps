@@ -29,7 +29,12 @@ GridView {
 			if (!highlightGridView.model || !highlightGridView.model.count)
 				return;
 
-			var futurePos = highlightGridView.getPositionViewAtIndex(highlightGridView.currentIndex, highlightGridView.positionMode);
+			highlightGridView.positionViewAtIndex(highlightGridView.currentIndex, highlightGridView.positionMode);
+
+			var futurePos = {};
+			futurePos.X = highlightGridView.getEndValue("contentX");
+			futurePos.Y = highlightGridView.getEndValue("contentY");
+
 			var itemRect = highlightGridView.getItemRect(highlightGridView.currentIndex);
 			itemRect.Move(-futurePos.X, -futurePos.Y);
 

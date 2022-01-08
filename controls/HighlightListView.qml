@@ -20,7 +20,12 @@ ListView {
 			if (!highlightListView || !highlightListView.model || !highlightListView.count)
 				return;
 
-			var futurePos = highlightListView.getPositionViewAtIndex(highlightListView.currentIndex, highlightListView.positionMode);
+			highlightListView.positionViewAtIndex(highlightListView.currentIndex, highlightListView.positionMode);
+
+			var futurePos = {};
+			futurePos.X = highlightGridView.getEndValue("contentX");
+			futurePos.Y = highlightGridView.getEndValue("contentY");
+
 			var itemRect = highlightListView.getItemRect(highlightListView.currentIndex);
 
 			itemRect.Move(-futurePos.X, -futurePos.Y);
