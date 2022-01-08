@@ -140,7 +140,8 @@ Application {
         }
 
         onLeftPressed: {
-            categoryMenu.setFocus();
+            if (!this.moveCurrentIndexLeft())
+                categoryMenu.setFocus();
         }
 
         onKeyPressed: {
