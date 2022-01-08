@@ -26,7 +26,7 @@ ListView {
 			futurePos.X = highlightGridView.getEndValue("contentX");
 			futurePos.Y = highlightGridView.getEndValue("contentY");
 
-			var itemRect = highlightListView.getItemRect(highlightListView.currentIndex);
+			var itemRect = highlightListView.getDelegateRect(highlightListView.currentIndex);
 
 			itemRect.Move(-futurePos.X, -futurePos.Y);
 
@@ -73,7 +73,7 @@ ListView {
 		Behavior on height { animation: Animation { duration: 200; } }
 	}
 
-	Timer {	//TODO: Remove this when GetItemRect will work correctly.
+	Timer {	//TODO: Remove this when GetDelegateRect will work correctly.
 		id: crunchTimer;
 		interval: 200;
 		repeat: false;

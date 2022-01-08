@@ -35,7 +35,7 @@ GridView {
 			futurePos.X = highlightGridView.getEndValue("contentX");
 			futurePos.Y = highlightGridView.getEndValue("contentY");
 
-			var itemRect = highlightGridView.getItemRect(highlightGridView.currentIndex);
+			var itemRect = highlightGridView.getDelegateRect(highlightGridView.currentIndex);
 			itemRect.Move(-futurePos.X, -futurePos.Y);
 
 			highlightXAnim.complete();
@@ -79,7 +79,7 @@ GridView {
 		Behavior on opacity { animation: Animation { duration: 300; } }
 	}
 
-	Timer {	//TODO: Remove this when GetItemRect will work correctly.
+	Timer {	//TODO: Remove this when GetDelegateRect will work correctly.
 		id: crunchTimer;
 		interval: 200;
 		repeat: false;
