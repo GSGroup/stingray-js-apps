@@ -29,7 +29,7 @@ GridView {
 			if (!highlightGridView.model || !highlightGridView.model.count)
 				return;
 
-			highlightGridView.positionViewAtIndex(highlightGridView.currentIndex, highlightGridView.positionMode);
+			highlightGridView.setContentPositionAtIndex(highlightGridView.currentIndex, highlightGridView.positionMode);
 
 			var futurePos = {};
 			futurePos.X = highlightGridView.getEndValue("contentX");
