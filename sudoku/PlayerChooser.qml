@@ -29,19 +29,6 @@ Item {
 		delegate: PlayerChooserDelegate { }
 		model: ListModel { }
 		spacing: pChooserItem.spacing;
-
-		onCurrentIndexChanged: {
-			postPositioningTimer.restart();
-		}
-	}
-
-	Timer {
-		id: postPositioningTimer; // delegate's widths calculate correctly after next tick
-		interval: 100;
-
-		onTriggered: {
-			//listView->PositionViewAtIndex(listView->currentIndex);
-		}
 	}
 
 	function append(obj) {

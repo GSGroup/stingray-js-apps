@@ -44,10 +44,6 @@ Item {
 		delegate: SimpleChooserDelegate { }
 		model: ListModel { }
 		spacing: chooserItem.spacing;
-
-		onCurrentIndexChanged: {
-			postPositioningTimer.restart();
-		}
 	}
 	
 	Image {
@@ -63,15 +59,6 @@ Item {
 			animation: Animation {
 				duration: 300;
 			}
-		}
-	}
-
-	Timer {
-		id: postPositioningTimer; // delegate's widths calculate correctly after next tick
-		interval: 100;
-
-		onTriggered: {
-			//listView->PositionViewAtIndex(listView->currentIndex);
 		}
 	}
 

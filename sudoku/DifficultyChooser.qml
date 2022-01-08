@@ -27,19 +27,6 @@ Item {
 		delegate: DifficultyChooserDelegate { }
 		model: ListModel { }
 		spacing: 1 ;
-
-		onCurrentIndexChanged: {
-			postPositioningTimer.restart();
-		}
-	}
-
-	Timer {
-		id: postPositioningTimer; // delegate's widths calculate correctly after next tick
-		interval: 100;
-
-		onTriggered: {
-			//listView->PositionViewAtIndex(listView->currentIndex);
-		}
 	}
 
 	function append(obj) {
