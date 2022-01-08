@@ -87,7 +87,6 @@ Item {
 		anchors.leftMargin: 30;
 		anchors.verticalCenter: parent.verticalCenter;
 
-		highlightFollowsCurrentItem: false;
 		keyNavigationWraps: chooserItem.keyNavigationWraps;
 		handleNavigationKeys: false;
 		orientation: Horizontal;
