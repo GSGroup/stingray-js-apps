@@ -45,10 +45,7 @@ GridView {
 		visible: highlightGridView.count;
 		opacity: highlightGridView.activeFocus || highlightGridView.showActiveFocus ? 1 : 0;
 
-		updateHighlight: {
-			this.doHighlight();
-			crunchTimer.restart();
-		}
+		updateHighlight: { this.doHighlight(); }
 
 		doHighlight: {
 			if (!highlightGridView.model || !highlightGridView.model.count)
@@ -108,17 +105,6 @@ GridView {
 			id: highlightOpacityAnim;
 
 			animation: Animation { duration: 300; }
-		}
-	}
-
-	Timer {	//TODO: Remove this when GetDelegateRect will work correctly.
-		id: crunchTimer;
-
-		interval: 200;
-
-		onTriggered: {
-			highlight.doHighlight();
-			this.stop();
 		}
 	}
 
