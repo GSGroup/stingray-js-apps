@@ -45,36 +45,6 @@ GridView {
 		visible: highlightGridView.count;
 		opacity: highlightGridView.activeFocus || highlightGridView.showActiveFocus ? 1 : 0;
 
-		updateHighlight: {
-			if (!highlightGridView.visible || !highlightGridView.count <= 0)
-				return;
-
-			highlightGridView.setContentPositionAtIndex(highlightGridView.currentIndex, highlightGridView.positionMode);
-
-			var futurePos = {};
-			futurePos.X = highlightGridView.getEndValue("contentX");
-			futurePos.Y = highlightGridView.getEndValue("contentY");
-
-			var itemRect = highlightGridView.getDelegateRect(highlightGridView.currentIndex);
-
-			itemRect.Move(-futurePos.X, -futurePos.Y);
-
-			highlightXAnim.complete();
-			highlightYAnim.complete();
-
-			this.y = itemRect.Top;
-			this.x = itemRect.Left;
-
-			this.height = itemRect.Height();
-			this.width =  itemRect.Width();
-
-			if (this.y != itemRect.Top && this.x != itemRect.Left)
-			{
-				highlightXAnim.complete();
-				highlightYAnim.complete();
-			}
-		}
-
 		Behavior on y {
 			id: highlightYAnim;
 
@@ -106,13 +76,13 @@ GridView {
 		}
 	}
 
-	onVisibleChanged: { highlight.updateHighlight(); }
+	onVisibleChanged: { this.updateHighlight(); }
 
-	onContentHeightChanged:	{ highlight.updateHighlight(); }
-	onContentWidthChanged:	{ highlight.updateHighlight(); }
+	onContentHeightChanged:	{ this.updateHighlight(); }
+	onContentWidthChanged:	{ this.updateHighlight(); }
 
-	onCurrentIndexChanged:	{ highlight.updateHighlight(); }
-	onCountChanged:			{ highlight.updateHighlight(); }
+	onCurrentIndexChanged:	{ this.updateHighlight(); }
+	onCountChanged:			{ this.updateHighlight(); }
 
 	completeHighlightAnimation: {
 		highlightXAnim.complete();
@@ -122,5 +92,34 @@ GridView {
 		highlightHeightAnim.complete();
 
 		highlightOpacityAnim.complete();
+	}
+
+	updateHighlight: {
+		if (!this.visible || !this.count <= 0)
+			return;
+
+		this.setContentPositionAtIndex(this.currentIndex, this.positionMode);
+
+		var futurePos = {};
+		futurePos.X = this.getEndValue("contentX");
+		futurePos.Y = this.getEndValue("contentY");
+
+		var itemRect = this.getDelegateRect(this.currentIndex);
+		itemRect.Move(-futurePos.X, -futurePos.Y);
+
+		highlightXAnim.complete();
+		highlightYAnim.complete();
+
+		highlight.y = itemRect.Top;
+		highlight.x = itemRect.Left;
+
+		highlight.height = itemRect.Height();
+		highlight.width = itemRect.Width();
+
+		if (highlight.y != itemRect.Top && highlight.x != itemRect.Left)
+		{
+			highlightXAnim.complete();
+			highlightYAnim.complete();
+		}
 	}
 }
