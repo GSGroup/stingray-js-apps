@@ -7,18 +7,23 @@
 
 GridView {
 	id: highlightGridView;
+
 	property Color highlightColor: highlightGridView.activeFocus ? colorTheme.activeFocusColor : colorTheme.focusablePanelColor;
 
 	BorderShadow {
 		anchors.fill: highlight;
-		opacity: highlightGridView.activeFocus ? 1 : 0;
+
 		visible: highlightGridView.count;
+
+		opacity: highlightGridView.activeFocus ? 1 : 0;
 	}
 
 	Rectangle {
 		id: highlight;
-		opacity: parent.activeFocus && highlightGridView.count ? 1 : 0;
+
 		color: highlightGridView.highlightColor;
+
+		opacity: parent.activeFocus && highlightGridView.count ? 1 : 0;
 
 		updateHighlight: {
 			this.doHighlight();
@@ -36,15 +41,20 @@ GridView {
 			futurePos.Y = highlightGridView.getEndValue("contentY");
 
 			var itemRect = highlightGridView.getDelegateRect(highlightGridView.currentIndex);
+
 			itemRect.Move(-futurePos.X, -futurePos.Y);
 
 			highlightXAnim.complete();
 			highlightYAnim.complete();
+
 			this.y = itemRect.Top;
 			this.x = itemRect.Left;
+
 			this.height = itemRect.Height();
 			this.width =  itemRect.Width();
-			if (this.y != itemRect.Top && this.x != itemRect.Left) {
+
+			if (this.y != itemRect.Top && this.x != itemRect.Left)
+			{
 				highlightXAnim.complete();
 				highlightYAnim.complete();
 			}
@@ -52,38 +62,27 @@ GridView {
 
 		Behavior on y {
 			id: highlightYAnim;
-			animation: Animation {
-				duration: 250;
-			}
+
+			animation: Animation { duration: 250; }
 		}
 
 		Behavior on x {
 			id: highlightXAnim;
-			animation: Animation {
-				duration: 250;
-			}
+
+			animation: Animation { duration: 250; }
 		}
 
-		Behavior on width {
-			animation: Animation {
-				duration: 250;
-			}
-		}
+		Behavior on width { animation: Animation { duration: 250; } }
 
-		Behavior on height {
-			animation: Animation {
-				duration: 250;
-			}
-		}
+		Behavior on height { animation: Animation { duration: 250; } }
 
 		Behavior on opacity { animation: Animation { duration: 300; } }
 	}
 
 	Timer {	//TODO: Remove this when GetDelegateRect will work correctly.
 		id: crunchTimer;
+
 		interval: 200;
-		repeat: false;
-		running: false;
 
 		onTriggered: {
 			highlight.doHighlight();
@@ -93,6 +92,7 @@ GridView {
 
 	onContentHeightChanged:	{ highlight.updateHighlight(); }
 	onContentWidthChanged:	{ highlight.updateHighlight(); }
+
 	onCurrentIndexChanged:	{ highlight.updateHighlight(); }
 	onCountChanged:			{ highlight.updateHighlight(); }
 }
