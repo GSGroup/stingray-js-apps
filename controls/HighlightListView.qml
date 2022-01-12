@@ -59,10 +59,7 @@ ListView {
 
 		updateHighlight: {
 			if (highlightListView.visible)
-			{
 				this.doHighlight();
-				crunchTimer.restart();
-			}
 		}
 
 		Behavior on color { animation: Animation { duration: 300; } }
@@ -84,17 +81,6 @@ ListView {
 		}
 
 		Behavior on height { animation: Animation { duration: 200; } }
-	}
-
-	Timer {	//TODO: Remove this when GetDelegateRect will work correctly.
-		id: crunchTimer;
-
-		interval: 200;
-
-		onTriggered: {
-			highlight.doHighlight();
-			this.stop();
-		}
 	}
 
 	onWidthChanged: 		{ highlight.updateHighlight(); }
