@@ -9,12 +9,15 @@ ListView {
 	id: highlightListView;
 
 	property bool showActiveFocus;
+	property bool showPassiveFocus;
+	property Color passiveFocusColor: colorTheme.activePanelColor;
 	property bool showShadow;
 
 	property int highlightWidth;
 	property int highlightHeight;
 
-	property Color highlightColor: highlightListView.activeFocus || highlightListView.showActiveFocus ? colorTheme.activeFocusColor : colorTheme.focusablePanelColor;
+	property Color highlightColor: highlightListView.activeFocus || highlightListView.showActiveFocus ? colorTheme.activeFocusColor :
+		highlightListView.showPassiveFocus ? highlightListView.passiveFocusColor : colorTheme.focusablePanelColor;
 
 	Rectangle {
 		id: highlight;
