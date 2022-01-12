@@ -34,17 +34,6 @@ ListView {
 
 			itemRect.Move(-futurePos.X, -futurePos.Y);
 
-			if (highlightListView.highlightHeight)
-			{
-				this.height = highlightListView.highlightHeight;
-				this.y = itemRect.Top;
-			}
-			else
-			{
-				this.y = itemRect.Top;
-				this.height = highlightListView.orientation == 0 ? highlightListView.height : itemRect.Height();
-			}
-
 			if (highlightListView.highlightWidth)
 			{
 				this.width = highlightListView.highlightWidth;
@@ -54,6 +43,17 @@ ListView {
 			{
 				this.x = itemRect.Left;
 				this.width = highlightListView.orientation == 0 ? itemRect.Width() : highlightListView.width;
+			}
+
+			if (highlightListView.highlightHeight)
+			{
+				this.height = highlightListView.highlightHeight;
+				this.y = itemRect.Top;
+			}
+			else
+			{
+				this.y = itemRect.Top;
+				this.height = highlightListView.orientation == 0 ? highlightListView.height : itemRect.Height();
 			}
 		}
 
@@ -67,16 +67,16 @@ ListView {
 
 		Behavior on color { animation: Animation { duration: 300; } }
 
-		Behavior on y {
-			id: highlightYAnim;
+		Behavior on x {
+			id: highlightXAnim;
 
 			animation: Animation {
 				duration: 200;
 			}
 		}
 
-		Behavior on x {
-			id: highlightXAnim;
+		Behavior on y {
+			id: highlightYAnim;
 
 			animation: Animation {
 				duration: 200;
