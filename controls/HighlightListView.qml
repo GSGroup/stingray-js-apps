@@ -18,11 +18,16 @@ ListView {
 
 	property Color highlightColor: highlightListView.activeFocus || highlightListView.showActiveFocus ? colorTheme.activeFocusColor :
 		highlightListView.showPassiveFocus ? highlightListView.passiveFocusColor : colorTheme.focusablePanelColor;
+	property int highlightBorderWidth;
+	property Color highlightBorderColor;
 
 	Rectangle {
 		id: highlight;
 
 		color: highlightListView.highlightColor;
+
+		borderWidth: highlightListView.highlightBorderWidth;
+		borderColor: highlightListView.highlightBorderColor;
 
 		visible: highlightListView.count;
 
