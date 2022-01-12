@@ -34,8 +34,6 @@ ListView {
 		opacity: highlightListView.activeFocus || highlightListView.showActiveFocus || highlightListView.showPassiveFocus ? 1 : 0;
 		z: highlightListView.highlightOverDelegates ? 100 : 0;
 
-		Behavior on color { animation: Animation { duration: 300; } }
-
 		Behavior on x {
 			id: highlightXAnim;
 
@@ -52,9 +50,31 @@ ListView {
 			}
 		}
 
-		Behavior on width { animation: Animation { duration: 200; easingType: EasingType.InOutQuad; } }
+		Behavior on width {
+			id: highlightWidthAnim;
 
-		Behavior on height { animation: Animation { duration: 200; easingType: EasingType.InOutQuad; } }
+			animation: Animation {
+				duration: 200;
+				easingType: EasingType.InOutQuad;
+			}
+		}
+
+		Behavior on height {
+			id: highlightHeightAnim;
+
+			animation: Animation {
+				duration: 200;
+				easingType: EasingType.InOutQuad;
+			}
+		}
+
+		Behavior on color {
+			id: highlightColorAnim;
+
+			animation: Animation {
+				duration: 300;
+			}
+		}
 	}
 
 	BorderShadow {
@@ -98,14 +118,17 @@ ListView {
 
 	onVisibleChanged: {
 		if (visible)
-			this.resetHighlight();
+			this.completeHighlightAnimation();
 	}
 
-	resetHighlight: {
-		highlight.x = 0;
+	completeHighlightAnimation: {
 		highlightXAnim.complete();
-		highlight.y = 0;
 		highlightYAnim.complete();
+
+		highlightWidthAnim.complete();
+		highlightHeightAnim.complete();
+
+		highlightColorAnim.complete();
 	}
 
 	updateHighlight: {
