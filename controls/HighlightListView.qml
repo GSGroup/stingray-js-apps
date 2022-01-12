@@ -31,6 +31,7 @@ ListView {
 		borderColor: highlightListView.highlightBorderColor;
 
 		visible: highlightListView.count;
+		opacity: highlightListView.activeFocus || highlightListView.showActiveFocus || highlightListView.showPassiveFocus ? 1 : 0;
 		z: highlightListView.highlightOverDelegates ? 100 : 0;
 
 		Behavior on color { animation: Animation { duration: 300; } }
