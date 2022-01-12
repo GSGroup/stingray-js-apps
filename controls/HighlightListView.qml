@@ -38,7 +38,8 @@ ListView {
 			id: highlightXAnim;
 
 			animation: Animation {
-				duration: 200;
+				duration: highlightListView.contentXAnimationDuration;
+				easingType: highlightListView.contentXAnimationType;
 			}
 		}
 
@@ -46,7 +47,8 @@ ListView {
 			id: highlightYAnim;
 
 			animation: Animation {
-				duration: 200;
+				duration: highlightListView.contentYAnimationDuration;
+				easingType: highlightListView.contentYAnimationType;
 			}
 		}
 
