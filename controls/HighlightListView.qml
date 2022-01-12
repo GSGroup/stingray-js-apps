@@ -103,10 +103,7 @@ ListView {
 	onWidthChanged: { this.updateHighlight(); }
 	onHeightChanged: { this.updateHighlight(); }
 
-	onActiveFocusChanged: {
-		if (activeFocus)
-			this.updateHighlight();
-	}
+	onVisibleChanged: { this.updateHighlight(); }
 
 	onContentWidthChanged: { this.updateHighlight(); }
 	onContentHeightChanged: { this.updateHighlight(); }
@@ -115,11 +112,6 @@ ListView {
 	onHighlightHeightChanged: { this.updateHighlight(); }
 
 	onCurrentIndexChanged:	{ this.updateHighlight(); }
-
-	onVisibleChanged: {
-		if (visible)
-			this.completeHighlightAnimation();
-	}
 
 	completeHighlightAnimation: {
 		highlightXAnim.complete();
