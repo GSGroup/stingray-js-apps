@@ -20,43 +20,6 @@ ListView {
 
 		visible: highlightListView.count;
 
-		updateHighlight: {
-			if (!highlightListView.visible || highlightListView.count <= 0)
-				return;
-
-			highlightListView.setContentPositionAtIndex(highlightListView.currentIndex, highlightListView.positionMode);
-
-			var futurePos = {};
-			futurePos.X = highlightGridView.getEndValue("contentX");
-			futurePos.Y = highlightGridView.getEndValue("contentY");
-
-			var itemRect = highlightListView.getDelegateRect(highlightListView.currentIndex);
-
-			itemRect.Move(-futurePos.X, -futurePos.Y);
-
-			if (highlightListView.highlightWidth)
-			{
-				this.width = highlightListView.highlightWidth;
-				this.x = itemRect.Left;
-			}
-			else
-			{
-				this.x = itemRect.Left;
-				this.width = highlightListView.orientation == 0 ? itemRect.Width() : highlightListView.width;
-			}
-
-			if (highlightListView.highlightHeight)
-			{
-				this.height = highlightListView.highlightHeight;
-				this.y = itemRect.Top;
-			}
-			else
-			{
-				this.y = itemRect.Top;
-				this.height = highlightListView.orientation == 0 ? highlightListView.height : itemRect.Height();
-			}
-		}
-
 		Behavior on color { animation: Animation { duration: 300; } }
 
 		Behavior on x {
@@ -78,20 +41,20 @@ ListView {
 		Behavior on height { animation: Animation { duration: 200; } }
 	}
 
-	onWidthChanged: 		{ highlight.updateHighlight(); }
-	onHeightChanged: 		{ highlight.updateHighlight(); }
+	onWidthChanged: { this.updateHighlight(); }
+	onHeightChanged: { this.updateHighlight(); }
 
 	onActiveFocusChanged: {
 		if (activeFocus)
-			highlight.updateHighlight();
+			this.updateHighlight();
 	}
 
 	onCountChanged: {						// Call on first element added.
 		if (count == 1)
-			highlight.updateHighlight();
+			this.updateHighlight();
 	}
 
-	onCurrentIndexChanged:	{ highlight.updateHighlight(); }
+	onCurrentIndexChanged:	{ this.updateHighlight(); }
 
 	onVisibleChanged: {
 		if (visible)
@@ -103,5 +66,42 @@ ListView {
 		highlightXAnim.complete();
 		highlight.y = 0;
 		highlightYAnim.complete();
+	}
+
+	updateHighlight: {
+		if (!this.visible || this.count <= 0)
+			return;
+
+		this.setContentPositionAtIndex(this.currentIndex, this.positionMode);
+
+		var futurePos = {};
+		futurePos.X = this.getEndValue("contentX");
+		futurePos.Y = this.getEndValue("contentY");
+
+		var itemRect = this.getDelegateRect(this.currentIndex);
+
+		itemRect.Move(-futurePos.X, -futurePos.Y);
+
+		if (this.highlightWidth)
+		{
+			highlight.width = this.highlightWidth;
+			highlight.x = itemRect.Left;
+		}
+		else
+		{
+			highlight.x = itemRect.Left;
+			highlight.width = this.orientation == 0 ? itemRect.Width() : this.width;
+		}
+
+		if (this.highlightHeight)
+		{
+			highlight.height = this.highlightHeight;
+			highlight.y = itemRect.Top;
+		}
+		else
+		{
+			highlight.y = itemRect.Top;
+			highlight.height = this.orientation == 0 ? this.height : itemRect.Height();
+		}
 	}
 }
