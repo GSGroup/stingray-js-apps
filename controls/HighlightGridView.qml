@@ -121,13 +121,13 @@ GridView {
 		futurePos.X = this.getEndValue("contentX");
 		futurePos.Y = this.getEndValue("contentY");
 
-		var itemRect = this.getDelegateRect(this.currentIndex);
+		var delegateRect = this.getDelegateRect(this.currentIndex);
 		itemRect.Move(-futurePos.X, -futurePos.Y);
 
-		highlight.x = itemRect.Left;
-		highlight.y = itemRect.Top;
+		highlight.x = delegateRect.Left;
+		highlight.y = delegateRect.Top;
 
-		highlight.width =  itemRect.Width();
-		highlight.height = itemRect.Height();
+		highlight.width =  delegateRect.Width();
+		highlight.height = delegateRect.Height();
 	}
 }
