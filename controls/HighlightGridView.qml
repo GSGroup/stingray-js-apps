@@ -48,6 +48,8 @@ GridView {
 		property int delegateX;
 		property int delegateY;
 
+		property bool disableContentAnimation;
+
 		x: delegateX - highlightGridView.contentX;
 		y: delegateY - highlightGridView.contentY;
 
@@ -60,7 +62,7 @@ GridView {
 			id: highlightXAnim;
 
 			animation: Animation {
-				duration: highlightGridView.contentXAnimationDuration;
+				duration: highlight.disableContentAnimation ? 0 : highlightGridView.contentXAnimationDuration;
 				easingType: highlightGridView.contentXAnimationType;
 			}
 		}
@@ -69,7 +71,7 @@ GridView {
 			id: highlightYAnim;
 
 			animation: Animation {
-				duration: highlightGridView.contentYAnimationDuration;
+				duration: highlight.disableContentAnimation ? 0 : highlightGridView.contentYAnimationDuration;
 				easingType: highlightGridView.contentYAnimationType;
 			}
 		}
@@ -78,7 +80,7 @@ GridView {
 			id: highlightWidthAnim;
 
 			animation: Animation {
-				duration: highlightGridView.highlightWidthAnimationDuration;
+				duration: highlight.disableContentAnimation ? 0 : highlightGridView.highlightWidthAnimationDuration;
 				easingType: highlightGridView.contentXAnimationType;
 			}
 		}
@@ -87,7 +89,7 @@ GridView {
 			id: highlightHeightAnim;
 
 			animation: Animation {
-				duration: highlightGridView.highlightHeightAnimationDuration;
+				duration: highlight.disableContentAnimation ? 0 : highlightGridView.highlightHeightAnimationDuration;
 				easingType: highlightGridView.contentYAnimationType;
 			}
 		}
@@ -97,6 +99,10 @@ GridView {
 
 			animation: Animation { duration: 300; }
 		}
+	}
+
+	function onEnableContentAnimations(enable) {
+		highlight.disableContentAnimation = !enable;
 	}
 
 	onVisibleChanged: { this.updateHighlight(); }
