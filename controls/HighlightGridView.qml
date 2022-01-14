@@ -45,13 +45,19 @@ GridView {
 	Rectangle {
 		id: highlight;
 
+		property int delegateX;
+		property int delegateY;
+
+		x: delegateX - highlightGridView.contentX;
+		y: delegateY - highlightGridView.contentY;
+
 		color: highlightGridView.highlightColor;
 
 		visible: highlightGridView.count;
 		opacity: highlightGridView.activeFocus || highlightGridView.showActiveFocus ? 1 : 0;
 
-		Behavior on y {
-			id: highlightYAnim;
+		Behavior on delegateX {
+			id: highlightXAnim;
 
 			animation: Animation {
 				duration: highlightGridView.contentXAnimationDuration;
@@ -59,8 +65,8 @@ GridView {
 			}
 		}
 
-		Behavior on x {
-			id: highlightXAnim;
+		Behavior on delegateY {
+			id: highlightYAnim;
 
 			animation: Animation {
 				duration: highlightGridView.contentYAnimationDuration;
@@ -115,17 +121,10 @@ GridView {
 		if (!this.visible || !this.count <= 0)
 			return;
 
-		this.setContentPositionAtIndex(this.currentIndex, this.positionMode);
-
-		var futurePos = {};
-		futurePos.X = this.getEndValue("contentX");
-		futurePos.Y = this.getEndValue("contentY");
-
 		var delegateRect = this.getDelegateRect(this.currentIndex);
-		itemRect.Move(-futurePos.X, -futurePos.Y);
 
-		highlight.x = delegateRect.Left;
-		highlight.y = delegateRect.Top;
+		highlight.delegateX = delegateRect.Left;
+		highlight.delegateY = delegateRect.Top;
 
 		highlight.width =  delegateRect.Width();
 		highlight.height = delegateRect.Height();
