@@ -115,19 +115,10 @@ GridView {
 		var itemRect = this.getDelegateRect(this.currentIndex);
 		itemRect.Move(-futurePos.X, -futurePos.Y);
 
-		highlightXAnim.complete();
-		highlightYAnim.complete();
-
 		highlight.y = itemRect.Top;
 		highlight.x = itemRect.Left;
 
 		highlight.height = itemRect.Height();
-		highlight.width = itemRect.Width();
-
-		if (highlight.y != itemRect.Top && highlight.x != itemRect.Left)
-		{
-			highlightXAnim.complete();
-			highlightYAnim.complete();
-		}
+		highlight.width =  itemRect.Width();
 	}
 }
