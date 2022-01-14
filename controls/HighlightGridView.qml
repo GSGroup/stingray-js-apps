@@ -17,6 +17,9 @@ GridView {
 	property Color backgroundColor: highlightGridView.activeFocus ? colorTheme.activePanelColor : colorTheme.focusablePanelColor;
 	property real backgroundOpacity: 1;
 
+	property int highlightWidthAnimationDuration: contentXAnimationDuration;
+	property int highlightHeightAnimationDuration: contentYAnimationDuration;
+
 	Rectangle {
 		id: innerBackground;
 
@@ -68,13 +71,19 @@ GridView {
 		Behavior on width {
 			id: highlightWidthAnim;
 
-			animation: Animation { duration: 250; }
+			animation: Animation {
+				duration: highlightGridView.highlightWidthAnimationDuration;
+				easingType: highlightGridView.contentXAnimationType;
+			}
 		}
 
 		Behavior on height {
 			id: highlightHeightAnim;
 
-			animation: Animation { duration: 250; }
+			animation: Animation {
+				duration: highlightGridView.highlightHeightAnimationDuration;
+				easingType: highlightGridView.contentYAnimationType;
+			}
 		}
 
 		Behavior on opacity {
