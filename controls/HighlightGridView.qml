@@ -124,7 +124,7 @@ GridView {
 	}
 
 	updateHighlight: {
-		if (!this.visible || !this.count <= 0)
+		if (!this.visible || this.count <= 0)
 			return;
 
 		var delegateRect = this.getDelegateRect(this.currentIndex);
