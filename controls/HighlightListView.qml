@@ -138,30 +138,30 @@ ListView {
 		futurePos.X = this.getEndValue("contentX");
 		futurePos.Y = this.getEndValue("contentY");
 
-		var itemRect = this.getDelegateRect(this.currentIndex);
+		var delegateRect = this.getDelegateRect(this.currentIndex);
 
-		itemRect.Move(-futurePos.X, -futurePos.Y);
+		delegateRect.Move(-futurePos.X, -futurePos.Y);
 
 		if (this.highlightWidth)
 		{
 			highlight.width = this.highlightWidth;
-			highlight.x = itemRect.Left;
+			highlight.x = delegateRect.Left;
 		}
 		else
 		{
-			highlight.x = itemRect.Left;
-			highlight.width = this.orientation == 0 ? itemRect.Width() : this.width;
+			highlight.x = delegateRect.Left;
+			highlight.width = this.orientation == 0 ? delegateRect.Width() : this.width;
 		}
 
 		if (this.highlightHeight)
 		{
 			highlight.height = this.highlightHeight;
-			highlight.y = itemRect.Top;
+			highlight.y = delegateRect.Top;
 		}
 		else
 		{
-			highlight.y = itemRect.Top;
-			highlight.height = this.orientation == 0 ? this.height : itemRect.Height();
+			highlight.y = delegateRect.Top;
+			highlight.height = this.orientation == 0 ? this.height : delegateRect.Height();
 		}
 	}
 }
