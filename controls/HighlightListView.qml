@@ -28,6 +28,12 @@ ListView {
 	Rectangle {
 		id: highlight;
 
+		property int delegateX;
+		property int delegateY;
+
+		x: delegateX - highlightListView.contentX;
+		y: delegateY - highlightListView.contentY;
+
 		color: highlightListView.highlightColor;
 
 		borderWidth: highlightListView.highlightBorderWidth;
@@ -37,7 +43,7 @@ ListView {
 		opacity: highlightListView.activeFocus || highlightListView.showActiveFocus || highlightListView.showPassiveFocus ? 1 : 0;
 		z: highlightListView.highlightOverDelegates ? 100 : 0;
 
-		Behavior on x {
+		Behavior on delegateX {
 			id: highlightXAnim;
 
 			animation: Animation {
@@ -46,7 +52,7 @@ ListView {
 			}
 		}
 
-		Behavior on y {
+		Behavior on delegateY {
 			id: highlightYAnim;
 
 			animation: Animation {
@@ -132,35 +138,27 @@ ListView {
 		if (!this.visible || this.count <= 0)
 			return;
 
-		this.setContentPositionAtIndex(this.currentIndex, this.positionMode);
-
-		var futurePos = {};
-		futurePos.X = this.getEndValue("contentX");
-		futurePos.Y = this.getEndValue("contentY");
-
 		var delegateRect = this.getDelegateRect(this.currentIndex);
-
-		delegateRect.Move(-futurePos.X, -futurePos.Y);
 
 		if (this.highlightWidth)
 		{
 			highlight.width = this.highlightWidth;
-			highlight.x = delegateRect.Left;
+			highlight.delegateX = delegateRect.Left;
 		}
 		else
 		{
-			highlight.x = delegateRect.Left;
+			highlight.delegateX = delegateRect.Left;
 			highlight.width = this.orientation == 0 ? delegateRect.Width() : this.width;
 		}
 
 		if (this.highlightHeight)
 		{
 			highlight.height = this.highlightHeight;
-			highlight.y = delegateRect.Top;
+			highlight.delegateY = delegateRect.Top;
 		}
 		else
 		{
-			highlight.y = delegateRect.Top;
+			highlight.delegateY = delegateRect.Top;
 			highlight.height = this.orientation == 0 ? this.height : delegateRect.Height();
 		}
 	}
