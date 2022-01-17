@@ -76,6 +76,12 @@ ListView {
 			this.updateHighlight();
 	}
 
+	onContentWidthChanged: { this.updateHighlight(); }
+	onContentHeightChanged: { this.updateHighlight(); }
+
+	onHighlightWidthChanged: { this.updateHighlight(); }
+	onHighlightHeightChanged: { this.updateHighlight(); }
+
 	onCurrentIndexChanged:	{ this.updateHighlight(); }
 
 	onVisibleChanged: {
