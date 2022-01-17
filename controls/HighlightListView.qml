@@ -65,16 +65,26 @@ ListView {
 		z: 1;
 	}
 
+	function onRowsInserted(begin, end) {
+		if (this.currentIndex >= begin)
+			this.updateHighlight();
+	}
+
+	function onRowsChanged(begin, end) {
+		if (this.currentIndex >= begin)
+			this.updateHighlight();
+	}
+
+	function onRowsRemoved(begin, end) {
+		if (this.currentIndex >= begin)
+			this.updateHighlight();
+	}
+
 	onWidthChanged: { this.updateHighlight(); }
 	onHeightChanged: { this.updateHighlight(); }
 
 	onActiveFocusChanged: {
 		if (activeFocus)
-			this.updateHighlight();
-	}
-
-	onCountChanged: {						// Call on first element added.
-		if (count == 1)
 			this.updateHighlight();
 	}
 
