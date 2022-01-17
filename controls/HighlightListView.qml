@@ -22,6 +22,9 @@ ListView {
 	property Color highlightBorderColor;
 	property bool highlightOverDelegates;
 
+	property int highlightWidthAnimationDuration: contentXAnimationDuration;
+	property int highlightHeightAnimationDuration: contentYAnimationDuration;
+
 	Rectangle {
 		id: highlight;
 
@@ -56,8 +59,8 @@ ListView {
 			id: highlightWidthAnim;
 
 			animation: Animation {
-				duration: 200;
-				easingType: EasingType.InOutQuad;
+				duration: highlightListView.highlightWidthAnimationDuration;
+				easingType: highlightListView.contentXAnimationType;
 			}
 		}
 
@@ -65,8 +68,8 @@ ListView {
 			id: highlightHeightAnim;
 
 			animation: Animation {
-				duration: 200;
-				easingType: EasingType.InOutQuad;
+				duration: highlightListView.highlightHeightAnimationDuration;
+				easingType: highlightListView.contentYAnimationType;
 			}
 		}
 
