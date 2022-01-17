@@ -31,6 +31,8 @@ ListView {
 		property int delegateX;
 		property int delegateY;
 
+		property bool disableContentAnimation;
+
 		x: delegateX - highlightListView.contentX;
 		y: delegateY - highlightListView.contentY;
 
@@ -47,7 +49,7 @@ ListView {
 			id: highlightXAnim;
 
 			animation: Animation {
-				duration: highlightListView.contentXAnimationDuration;
+				duration: highlight.disableContentAnimation ? 0 : highlightListView.contentXAnimationDuration;
 				easingType: highlightListView.contentXAnimationType;
 			}
 		}
@@ -56,7 +58,7 @@ ListView {
 			id: highlightYAnim;
 
 			animation: Animation {
-				duration: highlightListView.contentYAnimationDuration;
+				duration: highlight.disableContentAnimation ? 0 : highlightListView.contentYAnimationDuration;
 				easingType: highlightListView.contentYAnimationType;
 			}
 		}
@@ -65,7 +67,7 @@ ListView {
 			id: highlightWidthAnim;
 
 			animation: Animation {
-				duration: highlightListView.highlightWidthAnimationDuration;
+				duration: highlight.disableContentAnimation ? 0 : highlightListView.highlightWidthAnimationDuration;
 				easingType: highlightListView.contentXAnimationType;
 			}
 		}
@@ -74,7 +76,7 @@ ListView {
 			id: highlightHeightAnim;
 
 			animation: Animation {
-				duration: highlightListView.highlightHeightAnimationDuration;
+				duration: highlight.disableContentAnimation ? 0 : highlightListView.highlightHeightAnimationDuration;
 				easingType: highlightListView.contentYAnimationType;
 			}
 		}
@@ -109,6 +111,10 @@ ListView {
 	function onRowsRemoved(begin, end) {
 		if (this.currentIndex >= begin)
 			this.updateHighlight();
+	}
+
+	function onEnableContentAnimations(enable) {
+		highlight.disableContentAnimation = !enable;
 	}
 
 	onWidthChanged: { this.updateHighlight(); }
