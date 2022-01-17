@@ -8,10 +8,13 @@
 ListView {
 	id: highlightListView;
 
+	property bool showActiveFocus;
+	property bool showShadow;
+
 	property int highlightWidth;
 	property int highlightHeight;
 
-	property Color highlightColor: highlightListView.activeFocus ? colorTheme.activeFocusColor : colorTheme.focusablePanelColor;
+	property Color highlightColor: highlightListView.activeFocus || highlightListView.showActiveFocus ? colorTheme.activeFocusColor : colorTheme.focusablePanelColor;
 
 	Rectangle {
 		id: highlight;
@@ -39,6 +42,14 @@ ListView {
 		}
 
 		Behavior on height { animation: Animation { duration: 200; } }
+	}
+
+	BorderShadow {
+		anchors.fill: highlight;
+
+		visible: highlightListView.count && highlightListView.showShadow;
+		opacity: highlightListView.activeFocus || highlightListView.showActiveFocus ? 1 : 0;
+		z: 1;
 	}
 
 	onWidthChanged: { this.updateHighlight(); }
