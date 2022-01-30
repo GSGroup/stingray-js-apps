@@ -52,6 +52,8 @@ Rectangle {
 
 			focus: true;
 
+			uniformDelegateSize: true;
+
 			model: ListModel {
 				ListElement { text: "Start playing alone"; }
 				ListElement { text: "Start playing together"; }

@@ -44,6 +44,7 @@ Rectangle {
 
 		focus: true;
 		orientation: Horizontal;
+		uniformDelegateSize: true;
 
 		visible: true;
 

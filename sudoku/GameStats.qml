@@ -110,6 +110,7 @@ Item {
 			anchors.horizontalCenter: headerItem.horizontalCenter;
 			width: 200;
 			height: 250;
+			uniformDelegateSize: true;
 			model: ListModel { }
 			delegate: GameStatsDelegate {}
 		}

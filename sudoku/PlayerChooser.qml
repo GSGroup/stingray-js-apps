@@ -26,6 +26,7 @@ Item {
 		orientation: ui.ListView.Horizontal;
 		wrapNavigation: true;
 		clip: true;
+		uniformDelegateSize: true;
 		delegate: PlayerChooserDelegate { }
 		model: ListModel { }
 		spacing: pChooserItem.spacing;

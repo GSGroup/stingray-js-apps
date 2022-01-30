@@ -31,6 +31,7 @@ BaseEdit {
 
 		spacing: 12;
 		orientation: Horizontal;
+		uniformDelegateSize: true;
 
 		model: ListModel { id: listModel; }
 		delegate: PasswordEditDelegate {

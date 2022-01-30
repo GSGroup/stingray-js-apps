@@ -36,6 +36,7 @@ Item {
 		height: 300;
 		width: 200;
 		spacing: 10;
+		uniformDelegateSize: true;
 		model: ListModel {
 			   ListElement {text: "textline textline textline textline textline "}
 			   ListElement {text: "textline aextline textline textline textline "}

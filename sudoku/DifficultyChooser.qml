@@ -24,6 +24,7 @@ Item {
 		orientation: ui.ListView.Horizontal;
 		wrapNavigation: true;
 		clip: true;
+		uniformDelegateSize: true;
 		delegate: DifficultyChooserDelegate { }
 		model: ListModel { }
 		spacing: 1 ;
