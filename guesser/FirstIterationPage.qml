@@ -22,6 +22,7 @@ Item {
 
 		orientation: ui.ListView.Horizontal;
 		spacing: 40;
+		uniformDelegateSize: true;
 
 		model: ListModel {
 			ListElement { }
