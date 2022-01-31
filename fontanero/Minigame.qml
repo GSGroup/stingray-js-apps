@@ -33,8 +33,6 @@ Item {
 		height: cellHeight * parent.size;
 		anchors.centerIn: parent;
 
-		focus: true;
-
 		model: minigameModel;
 		delegate: MinigameDelegate {}
 	}

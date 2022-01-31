@@ -19,7 +19,6 @@ GridView {
 
     visible: !loading;
 
-    focus: true;
     clip: true;
 
     delegate: CatalogDelegate {}

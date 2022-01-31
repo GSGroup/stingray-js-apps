@@ -17,7 +17,6 @@ GridView {
 	cellWidth: gameConsts.getBlockSize();
 	cellHeight: gameConsts.getBlockSize();
 
-	focus: false;
 	handleNavigationKeys: false;
 
 	lazyDelegateCreation: false;

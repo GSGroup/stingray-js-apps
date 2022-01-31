@@ -257,7 +257,6 @@ Rectangle {
 		anchors.horizontalCenter: mainGameTheme.horizontalCenter;
 		anchors.bottom: mainGameTheme.bottom;
 		anchors.bottomMargin: 21;
-		focus: true;
 		height: mainGameTheme.height-142;
 		width: mainGameTheme.height-142;
 		cellWidth: width/9;
