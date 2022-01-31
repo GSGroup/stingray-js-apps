@@ -42,7 +42,6 @@ Rectangle {
 		anchors.bottom: levelRect.bottom;
 		anchors.bottomMargin: 20;
 
-		focus: true;
 		orientation: Horizontal;
 		uniformDelegateSize: true;
 

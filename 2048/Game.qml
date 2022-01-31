@@ -294,8 +294,6 @@ Rectangle {
 			anchors.top: parent.top;
 			anchors.topMargin: game.cellSize / 2;
 
-			focus: true;
-
 			visible: parent.width > 0;
 
 			model: ListModel {

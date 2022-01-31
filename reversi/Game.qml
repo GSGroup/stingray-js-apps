@@ -50,8 +50,6 @@ Rectangle {
 
 			anchors.centerIn: parent;
 
-			focus: true;
-
 			uniformDelegateSize: true;
 
 			model: ListModel {
