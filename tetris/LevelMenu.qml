@@ -90,6 +90,7 @@ Rectangle {
 
 	function show() {
 		levelRect.visible = true;
+		levelGrid.attachModel();
 		levelGrid.currentIndex = 0;
 		levelGrid.setFocus();
 	}
