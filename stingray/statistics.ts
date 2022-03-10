@@ -5,32 +5,11 @@
 // IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
 // WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-const utils = require("stingray", "details/timeManagerUtils.js");
+class Statistics {
 
+	public reportEvent(name: string, group: string, attributes: any = {}) {
+		reportStatisticEvent(name, group, JSON.stringify(attributes));
+	}
+}
 
-/**
- * Static class representing a time manager module that provides
- * the ability to manage STB system time and related information.
- */
-const TimeManager = {
-	/**
-	 * Function that provides access to STB system time zone that represented by hours from UTC
-	 *
-	 * arguments types: none
-	 * return type: int
-	 */
-	getTimeZone: function () { },
-
-	/**
-	 * Signal that provides access to STB system time zone that represented by hours from UTC
-	 *
-	 * arguments types:
-	 *   - slot: void function (int: timeZone)
-	 * return type: misc.SignalConnection
-	 * populator: true
-	 */
-	onTimeZoneChanged: function (slot) { }
-};
-utils.Factory.create(TimeManager);
-
-this.Feature = TimeManager;
+export const Feature = new Statistics();

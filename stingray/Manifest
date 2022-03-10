@@ -7,11 +7,11 @@
 			["Cas",						"cas.js"],
 			["ChannelRepository",		"channelRepository.js"],
 			["Drm",						"drm.js"],
-			["Misc",					"misc.js"],
 			["StandByMode",				"standByMode.js"],
 			["Statistics",				"statistics.js"],
 			["TimeManager",				"timeManager.js"],
-			["TricolorAccount",			"tricolorAccount.js"]
+			["TricolorAccount",			"tricolorAccount.js"],
+			["Utils",					"utils.js"]
 		]
 	}
 }
