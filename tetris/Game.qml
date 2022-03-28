@@ -144,7 +144,7 @@ Rectangle{
 
 		onLastPressed: { exitMenu.show(); }
 
-		function exitGame() { viewsFinder.closeApp(); }
+		function exitGame() { appManager.closeApp(); }
 
 		function move(direction) {
 			if (engine.tryStep(direction))
@@ -256,13 +256,13 @@ Rectangle{
 		onKeyPressed: {
 			if (key == "Menu" || key == "Last" || (key == "Blue" && event.keySource == "kids"))
 			{
-				return viewsFinder.currentAppName == mainScreen.appName;
+				return appManager.currentAppName == mainScreen.appName;
 			}
 		}
 	}
 
 	onKeyPressed: {
-		if (key == "Power Off" && viewsFinder.currentAppName == mainScreen.appName)
+		if (key == "Power Off" && appManager.currentAppName == mainScreen.appName)
 		{
 			game.setNewGame();
 

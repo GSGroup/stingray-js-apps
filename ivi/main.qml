@@ -182,7 +182,7 @@ Application {
     }
 
     onBackPressed: {
-        viewsFinder.closeApp();
+        appManager.closeApp();
     }
 
     onCompleted: {
@@ -190,7 +190,7 @@ Application {
     }
 
     onVisibleChanged: {
-        viewsFinder.ignoreScreenSaverForApp("ivi", this.visible);
+        appManager.ignoreScreenSaverForApp("ivi", this.visible);
         iviPlayer.abort();
 
         if(iviPlayer.visible) {
