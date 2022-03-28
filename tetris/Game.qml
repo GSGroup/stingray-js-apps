@@ -144,7 +144,7 @@ Rectangle{
 
 		onLastPressed: { exitMenu.show(); }
 
-		function exitGame() { appManager.closeApp(); }
+		function exitGame() { appManager.closeCurrentApp(); }
 
 		function move(direction) {
 			if (engine.tryStep(direction))

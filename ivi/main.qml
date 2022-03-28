@@ -182,7 +182,7 @@ Application {
     }
 
     onBackPressed: {
-        appManager.closeApp();
+		appManager.closeCurrentApp();
     }
 
     onCompleted: {

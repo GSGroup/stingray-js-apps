@@ -401,7 +401,7 @@ Rectangle {
 
 	onBackPressed: {
 		if (mainMenu.visible)
-			appManager.closeApp();
+			appManager.closeCurrentApp();
 		else
 			mainMenu.visible = true;
 	}
