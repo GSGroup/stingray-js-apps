@@ -21,6 +21,8 @@ Application {
 
     color: "#000000";
 
+    disableScreenSaver: true;
+
     property alias background: backgroundImage.source;
 
     Image {
