@@ -192,7 +192,6 @@ Application {
     }
 
     onVisibleChanged: {
-        appManager.ignoreScreenSaverForApp("ivi", this.visible);
         iviPlayer.abort();
 
         if(iviPlayer.visible) {
