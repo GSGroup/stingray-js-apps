@@ -6,6 +6,8 @@
 // WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 Delegate {
+	id: passwordEditDelegateItem;
+
 	property bool filled;
 
 	width: 12;
@@ -16,6 +18,6 @@ Delegate {
 
 		radius: height / 2;
 
-		opacity: filled ? 1.0 : 0.2;
+		opacity: passwordEditDelegateItem.filled ? 1.0 : 0.2;
 	}
 }
