@@ -416,6 +416,9 @@ Rectangle {
 		game.whiteCounter = game.blackCounter = 2;
 		mainMenu.visible = false;
 		game.over = false;
+
+		if (!game.multiplayer && game.playerWhite)
+			aiMoveTimer.start();
 	}
 
 	function finishGame() {
