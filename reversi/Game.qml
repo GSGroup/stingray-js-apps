@@ -419,6 +419,8 @@ Rectangle {
 
 		if (!game.multiplayer && game.playerWhite)
 			aiMoveTimer.start();
+		else if (game.multiplayer)
+			game.playerWhite = false;
 	}
 
 	function finishGame() {
