@@ -11,10 +11,10 @@ import "GameOverMenu.qml";
 import "PauseRect.qml";
 import "InfoRect.qml";
 import "ItemGridView.qml";
-import "generatedfiles/RectArray.qml";
+import "generated_files/RectArray.qml";
 
 import "engine.js" as engine;
-import "generatedfiles/tetrisConsts.js" as gameConsts;
+import "generated_files/tetrisConsts.js" as gameConsts;
 
 Rectangle{
 	id: mainScreen;

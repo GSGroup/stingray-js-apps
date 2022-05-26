@@ -16,16 +16,16 @@ def main():
     file_const_template = open(args.target_dir + "/tetrisConsts.templ", "r")
 	
     try:
-        if os.path.exists(args.target_dir + "/generatedfiles"):
-            shutil.rmtree(args.target_dir + "/generatedfiles")
-        os.mkdir(args.target_dir + "/generatedfiles")
+        if os.path.exists(args.target_dir + "/generated_files"):
+            shutil.rmtree(args.target_dir + "/generated_files")
+        os.mkdir(args.target_dir + "/generated_files")
 
     except OSError as error:
         print("Tetris bootstrap error: " + str(error))
         sys.exit(1)
 
-    file_const_result = open(args.target_dir + "/generatedfiles/tetrisConsts.js", "w")
-    file_result = open(args.target_dir + "/generatedfiles/RectArray.qml", "w")
+    file_const_result = open(args.target_dir + "/generated_files/tetrisConsts.js", "w")
+    file_result = open(args.target_dir + "/generated_files/RectArray.qml", "w")
 
     for line in file_glass_size:
         if line.find("glassWidth") != -1:
