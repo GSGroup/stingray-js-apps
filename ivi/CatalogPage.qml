@@ -28,6 +28,9 @@ Item {
     Image {
         id: posterDefaultImage;
 
+        width: constants.poster["width"];
+        height: constants.poster["height"];
+
         anchors.top: catalogPage.top;
         anchors.left: catalogPage.left;
 
@@ -40,6 +43,9 @@ Item {
 
     Image {
         id: posterImage;
+
+        width: constants.poster["width"];
+        height: constants.poster["height"];
 
         anchors.top: catalogPage.top;
         anchors.left: catalogPage.left;
