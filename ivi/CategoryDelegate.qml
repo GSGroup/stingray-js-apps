@@ -13,11 +13,14 @@ Delegate {
 	width: categoryText.width;
 	height: categoryText.height;
 
+	focus: true;
+
 	BodyText {
 		id: categoryText;
 
 		text: model.title;
 
-		color: categoryDelegate.focused ? constants.colors["active"] : "#FFFFFF";
+		color: categoryDelegate.activeFocus ? constants.colors["active"] :
+				categoryDelegate.focused ? "#FFFFFF" : constants.colors["inactive"];
 	}
 }
