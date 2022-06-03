@@ -1,0 +1,11 @@
+{
+	"compilerOptions": {
+		"module": "CommonJS",
+		"target": "es6",
+		"sourceMap": false,
+		"removeComments": true,
+	},
+	"files": [
+		"recipesDb.ts"
+	]
+}

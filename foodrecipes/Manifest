@@ -1,0 +1,11 @@
+{
+	"id": "foodrecipes",
+	"display": {
+		"icon": "foodrecipes.png",
+		"name": {
+			"rus": "Рецепты еды",
+			"eng": "Food Recipes"
+		}
+	},
+	"application": { }
+}
