@@ -5,7 +5,7 @@
 // IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
 // WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-import controls.Button;
+import "RecipeDelegate.qml";
 
 import "recipesDb.js" as recipesDb;
 
@@ -20,36 +20,32 @@ Application {
 		Item {
 			anchors.fill: parent;
 
-			Column {
+			Text {
+				id: titleText;
+
 				anchors.centerIn: parent;
+
+				font: titleFont;
+				text: "Выберите рецепт";
+				color: colorTheme.activeTextColor;
+			}
+
+			ListView {
+				id: recipesListView;
+
+				anchors.top: titleText.bottom;
+				anchors.topMargin: 5;
+				anchors.left: titleText.left;
+				anchors.bottom: safeArea.bottom;
 
 				spacing: 5;
 
-				Text {
-					font: titleFont;
-					text: "Выберите рецепт";
-					color: colorTheme.activeTextColor;
-				}
+				model: ListModel { id: recipesModel; }
+				delegate: RecipeDelegate { }
 
-				Button {
-					id: recipe1Button;
+				onSelectPressed: { foodRecipesApp.showRecipe(currentIndex); }
 
-					text: "Кекс в кружке";
-
-					onSelectPressed: { foodRecipesApp.showRecipe(0); }
-				}
-
-				Button {
-					text: "Салат с креветками и апельсином";
-
-					onSelectPressed: { foodRecipesApp.showRecipe(1); }
-				}
-
-				Button {
-					text: "Мандариновый татен";
-
-					onSelectPressed: { foodRecipesApp.showRecipe(2); }
-				}
+				onCompleted: { recipesDb.recipes.forEach(recipe => recipesModel.append({ text: recipe.title })); }
 			}
 		}
 
@@ -91,7 +87,10 @@ Application {
 	}
 
 	function showRecipe(recipeIndex) {
-		const recipe = recipesDb.getRecipeByIndex(recipeIndex);
+		if (recipeIndex >= recipesDb.recipes.length)
+			throw new RangeError("Recipe index " + index + " out of range " + recipesDb.recipes.length);
+
+		const recipe = recipesDb.recipes[recipeIndex];
 
 		recipeTitleText.text = recipe.title;
 		recipeImage.source = recipe.image;
@@ -102,6 +101,6 @@ Application {
 
 	onStarted: {
 		appPageStack.currentIndex = 0;
-		recipe1Button.setFocus();
+		recipesListView.setFocus();
 	}
 }
