@@ -1,0 +1,5 @@
+{
+	"id": "wasmSample",
+	"display": { "name": "Wasm Sample" },
+	"application": { }
+}
