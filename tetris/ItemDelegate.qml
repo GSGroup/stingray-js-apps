@@ -34,8 +34,8 @@ Delegate {
 
 			visible: model.value > 0;
 
-			Behavior on width { animation: Animation { id: widthAnimation; duration: itemDelegate.animationDuration; easingType: ui.Animation.OutCirc; } }
-			Behavior on height { animation: Animation { id: heightAnimation; duration: itemDelegate.animationDuration; easingType: ui.Animation.OutCirc; } }
+			Behavior on width { animation: Animation { id: widthAnimation; duration: itemDelegate.animationDuration; easingType: OutCirc; } }
+			Behavior on height { animation: Animation { id: heightAnimation; duration: itemDelegate.animationDuration; easingType: OutCirc; } }
 		}
 	}
 }

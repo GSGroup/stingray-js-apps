@@ -28,7 +28,7 @@ Delegate {
 
 			anchors.centerIn: parent;
 
-			visible: posterImage.status !== ui.Image.Ready;
+			visible: posterImage.status !== Ready;
 
 			source: constants.defaultPoster;
 

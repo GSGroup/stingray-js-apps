@@ -20,7 +20,7 @@ Item {
 		anchors.leftMargin: -8;
 		anchors.topMargin: -8;
 
-		orientation: ui.ListView.Horizontal;
+		orientation: Horizontal;
 		spacing: 40;
 		uniformDelegateSize: true;
 

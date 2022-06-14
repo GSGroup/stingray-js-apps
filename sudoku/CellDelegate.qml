@@ -44,8 +44,8 @@ Delegate {
 		anchors.verticalCenter: parent.verticalCenter;
 		anchors.margins: 5;
 
-		horizontalAlignment: ui.Text.AlignHCenter;
-		verticalAlignment: ui.Text.AlignVCenter;
+		horizontalAlignment: AlignHCenter;
+		verticalAlignment: AlignVCenter;
 
 		color: model.isBase? "#581B18":( cellItemDelegate.focused?"#FFFFFF":"#447F12");
  		font: Font {

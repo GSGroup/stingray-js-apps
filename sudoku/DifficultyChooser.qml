@@ -21,7 +21,7 @@ Item {
 		anchors.fill: parent;
 		anchors.leftMargin: (dChooserItem.showAtCenter ? Math.max((dChooserItem.width - 60 - contentWidth) / 2, 0) : 0) + 30;
 		anchors.rightMargin: 30;
-		orientation: ui.ListView.Horizontal;
+		orientation: Horizontal;
 		wrapNavigation: true;
 		clip: true;
 		uniformDelegateSize: true;

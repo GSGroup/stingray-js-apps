@@ -152,7 +152,7 @@ Rectangle {
 
 	TitleText {
 		text: "SCORE\n" + pacmanGame.score;
-		horizontalAlignment: ui.Text.AlignHCenter;
+		horizontalAlignment: AlignHCenter;
 
 		anchors.right: parent.left;
 		anchors.rightMargin: 10;

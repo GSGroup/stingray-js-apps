@@ -43,7 +43,7 @@ Item {
 		anchors.horizontalCenter: parent.horizontalCenter;
 
 		source: show ? cardProto.resPath + cardProto.cardNumber + ".png" : cardProto.shirt;
-		fillMode: ui.Image.Stretch;
+		fillMode: Stretch;
 
 		onShowChanged: { this.width = 80; }
 

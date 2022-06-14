@@ -102,9 +102,9 @@ Item {
 	reset: {
 		var val = 0;
 		switch (this.horizontalAlignment) {
-		case ui.Text.AlignLeft: val = 0; break;
-		case ui.Text.AlignRight: val = this.floatingNeeded ? 0 : (this.width - innerText.width); break;
-		case ui.Text.AlignHCenter: val = this.floatingNeeded ? 0 : ((this.width - innerText.width) / 2); break;
+		case this.AlignLeft: val = 0; break;
+		case this.AlignRight: val = this.floatingNeeded ? 0 : (this.width - innerText.width); break;
+		case this.AlignHCenter: val = this.floatingNeeded ? 0 : ((this.width - innerText.width) / 2); break;
 		}
 		innerText.x = val;
 		xAnamation.complete();

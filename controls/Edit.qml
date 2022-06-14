@@ -67,8 +67,8 @@ BaseEdit {
 
 		anchors.fill: parent;
 
-		verticalAlignment: ui.Text.AlignVCenter;
-		horizontalAlignment: ui.Text.AlignHCenter;
+		verticalAlignment: AlignVCenter;
+		horizontalAlignment: AlignHCenter;
 
 		font: editItem.font;
 		color: editItem.textColor;

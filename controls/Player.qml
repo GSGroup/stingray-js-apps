@@ -80,7 +80,7 @@ Item {
 		id: pauseImage;
 		anchors.centerIn: parent;
 		visible: parent.paused && !playerObj.disableControls;
-		fillMode: ui.Image.PreserveAspectFit;
+		fillMode: PreserveAspectFit;
 		source: "apps/controls/res/preview/icoPause.png";
 	}
 

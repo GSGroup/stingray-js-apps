@@ -23,7 +23,7 @@ Item {
 		anchors.fill: parent;
 		anchors.leftMargin: (pChooserItem.showAtCenter ? Math.max((pChooserItem.width - 60 - contentWidth) / 2, 0) : 0) + 30;
 		anchors.rightMargin: 30;
-		orientation: ui.ListView.Horizontal;
+		orientation: Horizontal;
 		wrapNavigation: true;
 		clip: true;
 		uniformDelegateSize: true;
