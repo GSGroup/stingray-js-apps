@@ -158,13 +158,17 @@ Item {
 
         text: "Начать просмотр";
 
-        onDownPressed: {
-            descriptionText.setFocus();
-        }
-
         onSelectPressed: {
             log("watch button pressed");
             catalogPage.watch();
+        }
+
+        onUpPressed: {
+            descriptionText.scrollUp(false);
+        }
+
+        onDownPressed: {
+            descriptionText.scrollDown(false);
         }
     }
 
@@ -178,15 +182,11 @@ Item {
         anchors.right: catalogPage.right;
         anchors.bottom: catalogPage.bottom;
 
-        opacity: activeFocus ? 1.0 : constants.inactiveOpacity;
+        focus: false;
 
         color: "#FFFFFF";
 
         font: secondaryFont;
-
-        onUpPressed: {
-            watchButton.setFocus();
-        }
     }
 
     onVisibleChanged: {
