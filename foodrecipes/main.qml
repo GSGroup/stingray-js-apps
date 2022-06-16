@@ -7,7 +7,7 @@
 
 import "RecipeDelegate.qml";
 
-import "recipesDb.js" as recipesDb;
+import "recipesDb.json" as recipesDb;
 
 Application {
 	id: foodRecipesApp;
