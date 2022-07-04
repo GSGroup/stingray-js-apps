@@ -13,7 +13,7 @@ export class Cas {
 	private readonly feature: CasFeatureHolder;
 	private readonly signalConnection: SignalConnection;
 
-	private id: string;
+	private id: string = null;
 
 	public get dreId(): string {
 		return this.id;
@@ -21,7 +21,12 @@ export class Cas {
 
 	public constructor() {
 		this.feature = new CasFeatureHolder(app.Cas());
-		this.signalConnection = new SignalConnection(this.feature.get().GetDreCasInfo().OnUserIdentityChanged().connect(
+
+		const dreCasInfo = this.feature.get().GetDreCasInfo();
+		if (!dreCasInfo)
+			return;
+
+		this.signalConnection = new SignalConnection(dreCasInfo.OnUserIdentityChanged().connect(
 			userIdentity => this.id = userIdentity ? userIdentity.GetId() : null
 		));
 	}
