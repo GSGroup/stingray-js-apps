@@ -27,7 +27,7 @@ export class StandByMode {
 		return this.feature.get().IsEnabled();
 	}
 
-	public onSourceTypeChanged(slot: (status: boolean, switchReason: SwitchReason) => void): SignalConnection {
+	public onEnabledChanged(slot: (status: boolean, switchReason: SwitchReason) => void): SignalConnection {
 		return new SignalConnection(this.feature.get().OnEnabledChanged().connect((status: boolean, switchReason: number) => {
 			return slot(status, StandByMode.switchReasonFromValue(switchReason));
 		}));
