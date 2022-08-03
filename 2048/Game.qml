@@ -297,9 +297,9 @@ Rectangle {
 			visible: parent.width > 0;
 
 			model: ListModel {
-				ListElement { text: "Continue" }
-				ListElement { text: "New game" }
-				ListElement { text: "Help" }
+				ListElement { text: "Continue"; }
+				ListElement { text: "New game"; }
+				ListElement { text: "Help"; }
 			}
 			delegate: MenuDelegate { }
 
