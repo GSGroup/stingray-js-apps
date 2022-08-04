@@ -27,7 +27,7 @@ Delegate {
 
 			font: titleFont;
 			color: "#ffffff";
-			text: model.text;
+			text: tr(model.text);
 		}
 	}
 }
