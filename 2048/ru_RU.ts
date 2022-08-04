@@ -27,6 +27,8 @@
         <source>You win!</source>
         <translation>Вы выиграли!</translation>
     </message>
+</context>
+<context>
     <name>MenuDelegate</name>
     <message>
         <source>Continue</source>
