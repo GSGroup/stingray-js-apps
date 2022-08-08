@@ -179,7 +179,7 @@ Item {
 		}
 		else if (key == "Stop") {
 			playerObj.abort();
-		} else if (key == "Volume Mute" || key == "V" || key == "v") {
+		} else if (key == "Volume Mute") {
 			mainWindow.muteToggle();
 		} else if (!this.disableControls) {
 			playbackProgress.show();
