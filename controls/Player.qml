@@ -66,7 +66,7 @@ Item {
 
 			onPlayPressed: {
 				if (playerObj.currentMediaData)
-					playerObj.playUrl(playerObj.currentMediaData);
+					playerObj.playMedia(playerObj.currentMediaData);
 			}
 
 			onPausePressed:	{ playerObj.pause(); }
