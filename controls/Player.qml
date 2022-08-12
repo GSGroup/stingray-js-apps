@@ -10,6 +10,8 @@ import controls.Spinner;
 import "TopLabel.qml";
 import "PlaybackProgress.qml";
 
+import stingray.Config;
+
 Item {
 	id: playerObj;
 	signal started(started);
@@ -142,11 +144,11 @@ Item {
 			return false;
 
 		if (key == "Volume Up" || (playbackProgress.visible && key == "Up") || (!playbackProgress.visible && key == "Right")) {
-			mainWindow.volumeUp();
+			Config.Feature.volumeUp();
 			return true;
 		}
 		if (key == "Volume Down" || (playbackProgress.visible && key == "Down") || (!playbackProgress.visible && key == "Left")) {
-			mainWindow.volumeDown();
+			Config.Feature.volumeDown();
 			return true;
 		}
 
@@ -180,7 +182,7 @@ Item {
 		else if (key == "Stop") {
 			playerObj.abort();
 		} else if (key == "Volume Mute") {
-			mainWindow.muteToggle();
+			Config.Feature.toggleMute();
 		} else if (!this.disableControls) {
 			playbackProgress.show();
 		}
