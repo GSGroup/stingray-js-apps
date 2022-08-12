@@ -7,6 +7,7 @@
 
 /// <reference path="cas.d.ts" />
 /// <reference path="channelRepository.d.ts" />
+/// <reference path="config.d.ts" />
 /// <reference path="drm.d.ts" />
 /// <reference path="standByMode.d.ts" />
 /// <reference path="timeManager.d.ts" />
@@ -22,6 +23,11 @@ declare namespace app {
 	 * Function to get {@link stingray.IChannelRepositoryPtr}
 	 */
 	export function ChannelRepository(): stingray.IChannelRepositoryPtr;
+
+	/**
+	 * Function to get {@link stingray.IConfigPtr}
+	 */
+	export function Config(): stingray.IConfigPtr;
 
 	/**
 	 * Function to get {@link stingray.IDrmFeaturePtr}

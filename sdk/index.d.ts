@@ -8,6 +8,7 @@
 /// <reference path="app.d.ts" />
 /// <reference path="cas.d.ts" />
 /// <reference path="channelRepository.d.ts" />
+/// <reference path="config.d.ts" />
 /// <reference path="drm.d.ts" />
 /// <reference path="misc.d.ts" />
 /// <reference path="net.d.ts" />
