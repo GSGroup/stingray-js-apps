@@ -6,6 +6,7 @@
 		"imports": [
 			["Cas",						"cas.js"],
 			["ChannelRepository",		"channelRepository.js"],
+			["Config",					"config.js"],
 			["Drm",						"drm.js"],
 			["StandByMode",				"standByMode.js"],
 			["Statistics",				"statistics.js"],

@@ -13,6 +13,7 @@
 	"files": [
 		"cas.ts",
 		"channelRepository.ts",
+		"config.ts",
 		"drm.ts",
 		"standByMode.ts",
 		"statistics.ts",
