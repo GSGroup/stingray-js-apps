@@ -123,6 +123,7 @@ Rectangle {
 
 				if (!engine.check())
 				{
+					restartMenu.isWin = false;
 					restartMenu.visible = true;
 					restartMenu.setFocus();
 					restartMenu.message = tr("Game over");
@@ -221,6 +222,7 @@ Rectangle {
 		id: restartMenu;
 
 		property string message;
+		property bool isWin;
 
 		anchors.fill: parent;
 
@@ -231,29 +233,32 @@ Rectangle {
 		visible: false;
 
 		Text {
-			anchors.centerIn: parent;
 			anchors.bottomMargin: game.cellSize / 2;
+			anchors.centerIn: parent;
 
 			font: titleFont;
-			color: "#734a12";
+			color: restartMenu.isWin ? "#628316" : "#734a12";
 			text: restartMenu.message;
 		}
 
 		Rectangle {
-			width: game.cellSize;
+			width: restartText.width + 40;
 			height: game.cellSize / 2;
-			anchors.centerIn: parent;
-			anchors.topMargin: game.cellSize / 2;
 
-			color: "#734a12";
+			anchors.topMargin: game.cellSize / 2;
+			anchors.centerIn: parent;
+
+			color: restartMenu.isWin ? "#628316" : "#734a12";
 			radius: 10;
 
 			Text {
+				id: restartText;
+
 				anchors.centerIn: parent;
 
 				font: bodyFont;
 				color: "#ffffff";
-				text: tr("Try again");
+				text: restartMenu.isWin ? tr("New game") : tr("Try again");
 			}
 		}
 
@@ -357,6 +362,7 @@ Rectangle {
 	}
 
 	function win() {
+		restartMenu.isWin = true;
 		restartMenu.visible = true;
 		restartMenu.setFocus();
 		restartMenu.message = tr("You win!");
