@@ -39,7 +39,7 @@ Rectangle {
 
 			width: parent.width;
 
-			menuText: "Выйти";
+			menuText: tr("Exit");
 
 			onSelectPressed: { exitRect.exitGame(); }
 		}
@@ -49,7 +49,7 @@ Rectangle {
 
 			width: parent.width;
 
-			menuText: "Продолжить игру";
+			menuText: tr("Resume");
 
 			onSelectPressed: { exitRect.backToGame(); }
 		}
@@ -59,7 +59,7 @@ Rectangle {
 
 			width: parent.width;
 
-			menuText: "Новая игра";
+			menuText: tr("New game");
 
 			onSelectPressed: { exitRect.setNewGame(); }
 		}

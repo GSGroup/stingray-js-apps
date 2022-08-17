@@ -27,7 +27,7 @@ Rectangle {
 
 		anchors.horizontalCenter: parent.horizontalCenter;
 
-		text: tr("Выберите уровень");
+		text: tr("Select level");
 	}
 
 	ListView {

@@ -19,6 +19,10 @@
 <context>
     <name>GameOverMenu</name>
     <message>
+        <source>Exit</source>
+        <translation>Выйти</translation>
+    </message>
+    <message>
         <source>Game over</source>
         <translation>Игра окончена</translation>
     </message>
@@ -26,20 +30,16 @@
         <source>Play again</source>
         <translation>Поиграть ещё</translation>
     </message>
-    <message>
-        <source>Exit</source>
-        <translation>Выйти</translation>
-    </message>
 </context>
 <context>
     <name>InfoRect</name>
     <message>
-        <source>Score</source>
-        <translation>Счёт</translation>
+        <source>Level </source>
+        <translation>Уровень </translation>
     </message>
     <message>
-        <source>Level</source>
-        <translation>Уровень</translation>
+        <source>Score    </source>
+        <translation>Счёт    </translation>
     </message>
 </context>
 <context>

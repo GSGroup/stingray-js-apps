@@ -26,7 +26,7 @@ Rectangle {
 
 		anchors.horizontalCenter: gameOverRect.horizontalCenter;
 
-		text: tr("Игра окончена");
+		text: tr("Game over");
 	}
 
 	Column {
@@ -50,7 +50,7 @@ Rectangle {
 
 			width: gameOverColumn.width;
 
-			menuText: "Поиграть еще";
+			menuText: tr("Play again");
 
 			onSelectPressed: { gameOverRect.setNewGame(); }
 		}
@@ -60,7 +60,7 @@ Rectangle {
 
 			width: gameOverColumn.width;
 
-			menuText: "Выйти";
+			menuText: tr("Exit");
 
 			onSelectPressed: { gameOverRect.exitGame(); }
 		}

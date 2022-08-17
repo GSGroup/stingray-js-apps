@@ -18,7 +18,7 @@ Rectangle {
 	SubheadText {
 		anchors.centerIn: parent;
 
-		text: tr("Пауза...");
+		text: tr("Pause...");
 	}
 
 	onUpPressed: { pauseRect.continueGame(); }

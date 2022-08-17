@@ -30,7 +30,7 @@ Rectangle {
 		anchors.top: nextBlockView.bottom;
 		anchors.topMargin: 80;
 
-		text: tr("Уровень ");
+		text: tr("Level ");
 	}
 
 	TitleText {
@@ -50,7 +50,7 @@ Rectangle {
 		anchors.top: levelText.bottom;
 		anchors.topMargin: 40;
 
-		text: tr("Счет    ");
+		text: tr("Score    ");
 	}
 
 	TitleText {
