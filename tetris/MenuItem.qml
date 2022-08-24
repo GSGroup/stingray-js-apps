@@ -8,7 +8,7 @@
 Rectangle {
 	id: itemRect;
 
-	property string menuText;
+	property alias menuText: textItem.text;
 
 	height: 53;
 
@@ -19,7 +19,6 @@ Rectangle {
 		id: textItem;
 
 		anchors.centerIn: itemRect;
-		text: itemRect.menuText;
 
 		color: itemRect.activeFocus ? colorTheme.focusedTextColor : colorTheme.activeTextColor;
 	}
