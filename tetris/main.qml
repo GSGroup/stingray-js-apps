@@ -10,8 +10,6 @@ import "Game.qml";
 Application {
 	id: gTetris;
 
-	displayname: "Tetris";
-
 	Game {
 		id: tetris;
 		appName: gTetris.name;

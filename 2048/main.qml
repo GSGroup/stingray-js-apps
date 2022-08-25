@@ -10,7 +10,6 @@ import "Game.qml";
 Application {
 	id: g2048;
 
-	displayname: "2048";
 	focus: true;
 
 	Rectangle {
