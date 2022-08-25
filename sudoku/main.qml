@@ -15,7 +15,6 @@ import "Help.qml";
 Application {
 		id: sudokuApplication;
 		focus: true;
-		name: "sudoku";
 		displayName: tr("Sudoku");
 		anchors.horizontalCenter: safeArea.horizontalCenter;
 		anchors.verticalCenter: safeArea.verticalCenter;		
