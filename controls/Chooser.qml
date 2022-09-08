@@ -29,8 +29,6 @@ Item {
 	height: chooserBackground.height;
 	width: Math.min(chooserWidth, listView.contentWidth + listView.anchors.leftMargin + listView.anchors.rightMargin);
 
-	focusedChild: listView;
-	
 	ActivePanel {
 		id: chooserBackground;
 
