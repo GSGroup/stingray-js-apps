@@ -23,21 +23,17 @@ Item {
 
 	property int chooserWidth: 520;
 
-	property Color gradientNonFocusColor: chooserBackground.nonFocusColor;
-	property Color backgroundNonFocusColor: colorTheme.buttonColor;
+	property Color gradientNonFocusColor: colorTheme.focusablePanelColor;
 
 	height: chooserBackground.height;
 	width: Math.min(chooserWidth, listView.contentWidth + listView.anchors.leftMargin + listView.anchors.rightMargin);
 
-	ActivePanel {
+	Panel {
 		id: chooserBackground;
 
 		anchors.fill: parent;
 
-		nonFocusColor: chooserItem.backgroundNonFocusColor;
-		color: chooserItem.activeFocus ? focusColor : nonFocusColor;
-
-		focus: false;
+		color: chooserItem.activeFocus ? colorTheme.activeFocusColor : colorTheme.focusablePanelColor;
 	}
 	
 	Image {
@@ -91,6 +87,8 @@ Item {
 		clip: true;
 		highlightColor: chooserItem.activeFocus ? colorTheme.highlightPanelColor : colorTheme.passiveHighlightPanel;
 		positionMode: Center;
+
+		focus: true;
 
 		delegate: ChooserDelegate { chooserFocused: listView.activeFocus; }
 		
