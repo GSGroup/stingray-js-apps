@@ -43,7 +43,7 @@ Player.prototype = {
 		if (!this.session)
 			return;
 
-		app.MediaPlayer().Pause(this.session, pause);
+		this.session.Pause(pause);
 	},
 
 	stop: function() {
@@ -69,7 +69,7 @@ Player.prototype = {
 		log("seeking to " + position + "ms");
 		var pos = position > this.getDuration() ? this.getDuration() : position;
 		pos = position < 0 ? 0 : position;
-		app.MediaPlayer().Seek(this.session, new stingray.TimeDuration(Math.max(0, pos)));
+		this.session.Seek(new stingray.TimeDuration(Math.max(0, pos)));
 	},
 
 	seek: function(msDelta) {
@@ -77,7 +77,7 @@ Player.prototype = {
 			return;
 
 		log("seeking to " + msDelta + "ms from current pos");
-		app.MediaPlayer().Seek(this.session, new stingray.TimeDuration(Math.max(0, this.getProgress() + msDelta)));
+		this.session.Seek(new stingray.TimeDuration(Math.max(0, this.getProgress() + msDelta)));
 	},
 
 	getProgress: function() {
