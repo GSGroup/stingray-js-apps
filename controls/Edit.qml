@@ -14,6 +14,7 @@ BaseEdit {
 	property variant font: subheadFont;
 
 	property Color textColor: colorTheme.activeTextColor;
+	property Color backgroundColor: colorTheme.focusablePanelColor;
 	property Color borderColor: activeFocus ? colorTheme.activeBorderColor : colorTheme.borderColor;
 	property Color color: activeFocus ? colorTheme.activeFocusColor : editItem.backgroundColor;
 
@@ -68,9 +69,11 @@ BaseEdit {
 	SubheadText {
 		id: editText;
 
-		anchors.fill: parent;
+		anchors.left: borderRect.left;
+		anchors.right: borderRect.right;
+		anchors.rightMargin: editItem.isCursorActivated ? 6 : 0;
+		anchors.verticalCenter: borderRect.verticalCenter;
 
-		verticalAlignment: AlignVCenter;
 		horizontalAlignment: AlignHCenter;
 
 		font: editItem.font;
@@ -100,17 +103,19 @@ BaseEdit {
 		id: cursorRect;
 
 		width: 2;
+		height: 30;
 
-		anchors.top: parent.top;
-		anchors.bottom: parent.bottom;
-		anchors.left: editText.right;
-		anchors.margins: 7;
-		anchors.leftMargin: 2;
+		anchors.right: editText.right;
+		anchors.rightMargin: -2 - cursorRect.width
+				+ (editText.horizontalAlignment == editText.AlignRight ? 0 :
+						editText.horizontalAlignment == editText.AlignLeft ? editText.width - editText.paintedWidth :
+								(editText.width - editText.paintedWidth) / 2);
+		anchors.verticalCenter: borderRect.verticalCenter;
 
 		color: editText.color;
 
 		visible: false;
-		opacity: borderRect.opacity;
+		opacity: 0.3;
 
 		Behavior on color { animation: Animation { duration: 200; } }
 	}
