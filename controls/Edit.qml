@@ -27,6 +27,8 @@ BaseEdit {
 	property int radius: colorTheme.rounded ? 8 : 0;
 	property bool showUnderLining: !showBackground;
 
+	property bool isCursorActivated: (editText.text != "") && (alwaysShowCursor || activeFocus);
+
 	width: 100;
 	height: 40;
 
@@ -74,6 +76,8 @@ BaseEdit {
 		color: editItem.textColor;
 
 		Behavior on opacity { animation: Animation { duration: 300; } }
+
+		onTextChanged: { editItem.restartCursorBlinkTimer(); }
 	}
 
 	SubheadText {
@@ -115,14 +119,14 @@ BaseEdit {
 
 		interval: 500;
 		repeat: true;
-		running: cursorRect.visible;
+		triggeredOnStart: true;
 
 		onTriggered: { cursorRect.visible = !cursorRect.visible; }
 	}
 
 	onTextChanged: { editItem.updateText(); }
 
-	onActiveFocusChanged: { cursorRect.visible = activeFocus || alwaysShowCursor;}
+	onIsCursorActivatedChanged: { editItem.restartCursorBlinkTimer(); }
 
 	function updateText() {
 		var line = editItem.text;
@@ -133,6 +137,14 @@ BaseEdit {
 			editText.text = line;
 		else
 			editText.text = new Array(line.length + 1).join(mask);
+	}
+
+	function restartCursorBlinkTimer() {
+		cursorBlinkTimer.stop();
+		cursorRect.visible = false;
+
+		if (editItem.isCursorActivated)
+			cursorBlinkTimer.start();
 	}
 
 	onCompleted: { editItem.updateText(); }
