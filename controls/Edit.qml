@@ -21,13 +21,14 @@ BaseEdit {
 
 	property string mask: "*";
 	property bool showBackground: true;
+	property bool activeShowCursor;
 	property bool alwaysShowCursor;
 	property bool passwordMode;
 	property int borderWidth: 2;
 	property int radius: colorTheme.rounded ? 8 : 0;
 	property bool showUnderLining: !showBackground;
 
-	property bool isCursorActivated: (editText.text != "") && (alwaysShowCursor || activeFocus);
+	property bool isCursorActivated: (editText.text != "") && (alwaysShowCursor || (activeShowCursor && activeFocus));
 
 	width: 100;
 	height: 40;
