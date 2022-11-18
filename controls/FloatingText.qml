@@ -21,6 +21,8 @@ Item {
 	maxWidthReached: maxWidth > 0 && maxWidth < innerText.width;
 	floatingNeeded: (floatingTextItem.width + 2) < innerText.paintedWidth;
 
+	Behavior on color { animation: Animation { duration: 300; } }
+
 	Item {
 		anchors.fill: parent;
 		anchors.topMargin: -10;
@@ -60,7 +62,6 @@ Item {
 
 			onWidthChanged: { floatingTextItem.reset(); }
 
-			Behavior on color { animation: Animation { duration: 300; } }
 			Behavior on opacity { animation: Animation { id: opacityAnimation; duration: 500; } }
 
 			Behavior on x {
