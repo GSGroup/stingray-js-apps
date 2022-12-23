@@ -271,7 +271,7 @@ this.NextMove = function (white, simulate, model) {
 		var i;
 		for (i = 0; i < moves.length && moves[i].p == moves[0].p; i++);
 		var move = moves[Math.floor(Math.random() * i)];
-		log("move: " + move.y + ", " + move.x + ", weight: " + move.p);
+		console.log("move: " + move.y + ", " + move.x + ", weight: " + move.p);
 		var weight = this.MakeMove(move.y, move.x, white, false);
 		this.WriteModel(model);
 

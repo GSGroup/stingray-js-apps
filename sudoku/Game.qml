@@ -90,7 +90,7 @@ Rectangle {
 
 		onSelectPressed:{
 			if (!gameItem.timeIndicator.timer.running) {gameItem.timeIndicator.timer.start();}
-			else { log("TIMER IS RUNNING");}
+			else { console.log("TIMER IS RUNNING");}
 			parent.setShownValue(gameView.currentIndex,currentIndex+1);			 			
 			if (gameItem.isFilled()){
 				gameItem.timeIndicator.timer.stop();
@@ -274,7 +274,7 @@ Rectangle {
 
 		onSelectPressed: {
 			if (!gameView.model.get(gameView.currentIndex)['isBase']){
-				log("Show digit chooser");
+				console.log("Show digit chooser");
 				digitChooser.opacity = 1;
 				hintDigitChooser.opacity = 1;
 				eraser.opacity = 1;
@@ -289,9 +289,9 @@ Rectangle {
 				var start = new Date().getTime();
 				parent.setShownValue(gameView.currentIndex,parseInt(key));
 				var end   = new Date().getTime();
-				log("PROFILE TIME: = "+(end - start)+" key = "+key);
+				console.log("PROFILE TIME: = "+(end - start)+" key = "+key);
 				if (!gameItem.timeIndicator.timer.running) gameItem.timeIndicator.timer.start();
-				else { log("TIMER IS RUNNING");}
+				else { console.log("TIMER IS RUNNING");}
 				if (gameItem.isFilled()){
 				   gameItem.timeIndicator.timer.stop();
 				   gameItem.gameOverEvent(!gameItem.fullStateCheck());
@@ -324,7 +324,7 @@ Rectangle {
 	}
 
 	function gameHide() {
-		log("Game hide");
+		console.log("Game hide");
 		digitChooser.opacity = 0;
 		eraser.opacity = 0;
 		hintDigitChooser.opacity = 0;
@@ -338,7 +338,7 @@ Rectangle {
 		this.gameView.model.reset();
 		this.gameView.fillModel(this.diffInt==1);
 		if(this.diffInt==1) this.setHints();
-		log("DIFFINT = "+this.diffInt)
+		console.log("DIFFINT = "+this.diffInt)
 	}
 
 	function isFilled(){
@@ -371,7 +371,7 @@ Rectangle {
 
 
 	function setHints(){
-		log("SET HINTS");
+		 console.log("SET HINTS");
 		 var sctrArray=[[[],[],[]],[[],[],[]],[[],[],[]]];
 		 var clmnArray=[[],[],[],[],[],[],[],[],[]];
 		 var rwArray=[[],[],[],[],[],[],[],[],[]];
@@ -420,7 +420,7 @@ Rectangle {
 	}
 
 	function reSetHints(index){
-		log("RESET HINTS");
+		console.log("RESET HINTS");
 		var sctrArray=[[[],[],[]],[[],[],[]],[[],[],[]]];
 		var clmnArray=[[],[],[],[],[],[],[],[],[]];
 		var rwArray=[[],[],[],[],[],[],[],[],[]];

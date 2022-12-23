@@ -139,7 +139,7 @@ Item {
 			}
 			
 			onSelectPressed: {
-				log("newGameButton PRESSED!");
+				console.log("newGameButton PRESSED!");
 				parent.newGameEvent(mainMenu.difficultyChooser.listView.model.get(difficultyChooser.currentIndex).name,
 					mainMenu.playerChooser.listView.model.get(playerChooser.currentIndex).player,
 					mainMenu.difficultyChooser.listView.model.get(difficultyChooser.currentIndex).factor);
@@ -182,7 +182,7 @@ Item {
 			}
 			
 			onSelectPressed: {
-				log("playButton PRESSED!");
+				console.log("playButton PRESSED!");
 				parent.playEvent(mainMenu.difficultyChooser.listView.model.get(difficultyChooser.currentIndex).text,
 					mainMenu.playerChooser.listView.model.get(playerChooser.currentIndex).text);
 			}
@@ -226,7 +226,7 @@ Item {
 			}
 			
 			onSelectPressed: {
-				log("helpButton PRESSED!");
+				console.log("helpButton PRESSED!");
 				parent.helpEvent();
 			
 			}
@@ -239,7 +239,7 @@ Item {
 			visible: false;
 
 			onAccepted: {
-				log("set player name");
+				console.log("set player name");
 				mainMenu.playerChooser.listView.model.setProperty(mainMenu.playerChooser.currentIndex,'player',text);
 				visible = false;
 				mainMenu.playerChooser.setFocus();
@@ -248,7 +248,7 @@ Item {
 
 		function load(data)
 		{
-			log("loading players..");
+			console.log("loading players..");
 
 			if(!(this.players = load("sudokuPlayers")))
 			{
@@ -260,7 +260,7 @@ Item {
 				mainMenu.playerChooser.append(this.players[i]);
 			}
 
-			log("loading difficulty levels..");
+			console.log("loading difficulty levels..");
 			this.difflevels = data ["difflevels"];
 			for (var  i= 0; i< this.difflevels.length; ++i )
 			{
@@ -281,7 +281,7 @@ Item {
 			for(var i =0 ;i<mainMenu.playerChooser.listView.model.count;++i){
 				players.push(mainMenu.playerChooser.listView.model.get(i));
 			}
-			log("plaerys "+players);
+			console.log("plaerys "+players);
 			save("sudokuPlayers",players);
 		}
 }

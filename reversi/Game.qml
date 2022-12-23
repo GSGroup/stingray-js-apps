@@ -212,7 +212,7 @@ Rectangle {
 				if (aiMoveTimer.running) //ai is "thinking"
 					return true;
 
-				log("player moves into " + Math.floor(gameView.currentIndex / 8) + ", " + gameView.currentIndex % 8);
+				console.log("player moves into " + Math.floor(gameView.currentIndex / 8) + ", " + gameView.currentIndex % 8);
 				var weight = engine.MakeMove(Math.floor(gameView.currentIndex / 8), gameView.currentIndex % 8, game.playerWhite, false);
 				if (weight <= 0)
 					return true;

@@ -36,7 +36,7 @@ var first_object = null;
 var throw_obj = false;
 
 this.run_mini_game = function(size, level_cap) {
-	log("run_mini_game", size, level_cap);
+	console.log("run_mini_game", size, level_cap);
 	this.minigame.size = size;
 	this.minigame.bonus = Math.floor(level_cap * (1 + Math.random()) * 1);
 	this.minigame.start();
@@ -152,7 +152,7 @@ var gettile = function(cell) {
 var menu = function() {
 	menuPanel.text = "";
 	if (objects) {
-		log(objects);
+		console.log(objects);
 		for(var i = 0; i < objects.length; ++i) {
 			var object = objects[i][0];
 			menuPanel.text += "[" + (i + 1) + "] " + object.name + "\n";

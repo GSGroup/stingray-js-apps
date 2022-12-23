@@ -32,7 +32,7 @@ GridView {
                 return;
 
             if (request.status && request.status === 200) {
-                log("response was received");
+                console.log("response was received");
                 //log(request.responseText);
                 catalogModel.reset();
 
@@ -52,14 +52,14 @@ GridView {
                 });
                 catalogView.loading = false;
                 catalogView.setFocus();
-                log("catalog was updated");
+                console.log("catalog was updated");
             } else
-                log("unhandled status", request.status);
+                console.log("unhandled status", request.status);
         }
 
         request.open("GET", url, true);
         request.send();
-        log("request was sended");
+        console.log("request was sended");
     }
 
     function extractBackgroundImage(catalogItem) {

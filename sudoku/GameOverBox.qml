@@ -96,7 +96,7 @@ Item {
 		}
 			
 		onSelectPressed: {
-			log("CONTINUE PRESSED!");
+			console.log("CONTINUE PRESSED!");
 			parent.continueEvent();
 		}
 	}
@@ -135,7 +135,7 @@ Item {
 		}
 			
 		onSelectPressed: {
-			log("helpButton PRESSED!");
+			console.log("helpButton PRESSED!");
 			parent.menuCallEvent();
 		}
 	}	

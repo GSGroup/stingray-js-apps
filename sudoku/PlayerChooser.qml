@@ -33,7 +33,7 @@ Item {
 	}
 
 	function append(obj) {
-		log("appending to player chooser " );
+		console.log("appending to player chooser " );
 		this.listView.model.append(obj);
 	}
 	

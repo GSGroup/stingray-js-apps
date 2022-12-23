@@ -71,7 +71,7 @@ Application {
                     catalogView.visible = true;
                     var currentCategory = model.get(categoryMenu.currentIndex);
                     catalogView.loadCatalog(currentCategory.url);
-                    log("category was selected", currentCategory.title);
+                    console.log("category was selected", currentCategory.title);
                 }
             }
         }
@@ -95,7 +95,7 @@ Application {
             menuItem.visible = false;
             iviPlayer.visible = true;
             iviPlayer.title = catalogView.model.get(catalogView.currentIndex).title;
-            log("start watching", catalogView.model.get(catalogView.currentIndex).id);
+            console.log("start watching", catalogView.model.get(catalogView.currentIndex).id);
             iviPlayer.playVideoById(catalogView.model.get(catalogView.currentIndex).id);
         }
 
@@ -168,10 +168,10 @@ Application {
         visible: false;
 
         onBackPressed: {
-            log("player abort");
+            console.log("player abort");
             iviPlayer.abort();
             this.visible = false;
-            log("show catalog page");
+            console.log("show catalog page");
             menuItem.visible = true;
             catalogPage.visible = true;
             catalogPage.setFocus();

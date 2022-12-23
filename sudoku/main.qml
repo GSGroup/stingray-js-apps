@@ -44,20 +44,20 @@ Application {
 				width: 400;
 				
 				onNewGameEvent: {
-					log("onNewGameEvent player = "+player+" difficulty "+difficulty+" diffInt "+diffInt);
+					console.log("onNewGameEvent player = "+player+" difficulty "+difficulty+" diffInt "+diffInt);
 					pageStack.currentIndex = 1;
 					gameStats.opacity=0.01;
 					game.difficulty = difficulty;
 					game.diffInt = diffInt;
 					game.player = player;
 					game.gameReset();
-					log("GAME.DIFFINT "+game.diffInt+ " DIFFINT "+diffInt);
+					console.log("GAME.DIFFINT "+game.diffInt+ " DIFFINT "+diffInt);
 					gameStats.opacity=0.01;
 					game.setFocus();
 				}
 
 				onPlayEvent: {
-					log("onPlayEvent player "+player+ " diff "+difficulty);
+					console.log("onPlayEvent player "+player+ " diff "+difficulty);
 					if (game.isIncomplete)
 					{
 						pageStack.currentIndex = 1;
@@ -70,7 +70,7 @@ Application {
 				}
 
 				onHelpEvent: {
-					log("onHelpEvent");
+					console.log("onHelpEvent");
 					pageStack.currentIndex=4;
 					gameStats.opacity = 0.01;
 					help.setFocus();
@@ -112,7 +112,7 @@ Application {
 					{
 						this.gameOverEvent("test");
 					}
-					log("KEY PRESSED")
+					console.log("KEY PRESSED")
 				}
 
 				onGameOverEvent: {
@@ -141,7 +141,7 @@ Application {
 				anchors.fill: parent;
 
 				onContinueEvent: {
-					log("CONTINUE EVENT DETECTED");
+					console.log("CONTINUE EVENT DETECTED");
 					pageStack.currentIndex = 1;
 					game.setFocus();
 					if(game.timeIndicator.sec>0) game.timeIndicator.timer.start();
@@ -149,7 +149,7 @@ Application {
 				}
 
 				onMenuCallEvent: {
-					log("MENUCALL EVENT DETECTED");
+					console.log("MENUCALL EVENT DETECTED");
 					pageStack.currentIndex = 0;
 					gameMenu.setFocus();
 					game.isIncomplete = true;

@@ -57,7 +57,7 @@ Rectangle {
 
 		function box(x, y, w, h, dots) {
 			var l = x, r = x + w, t = y, b = y + h;
-			log("box " + l + ", " + t + ", " + r + ", " + b);
+			console.log("box " + l + ", " + t + ", " + r + ", " + b);
 			this.hline(l, r, t);
 			this.hline(l, r, b - 1);
 			this.vline(t, b, l);
@@ -73,7 +73,7 @@ Rectangle {
 		}
 
 		function init(w, h) {
-			log("setting model size to " + w + "x" + h);
+			console.log("setting model size to " + w + "x" + h);
 			this.w = w;
 			this.h = h;
 			for(var i = 0; i < h; ++i)
@@ -239,7 +239,7 @@ Rectangle {
 
 	onVisibleChanged: {
 		if (visible) {
-			log("game visible");
+			console.log("game visible");
 			this.setFocus();
 		}
 	}

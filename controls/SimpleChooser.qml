@@ -63,7 +63,7 @@ Item {
 	}
 
 	function append(text) {
-		log("appending to chooser " + text);
+		console.log("appending to chooser " + text);
 		this.listView.model.append({"text": text});
 	}
 	

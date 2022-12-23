@@ -159,7 +159,7 @@ Item {
         text: "Начать просмотр";
 
         onSelectPressed: {
-            log("watch button pressed");
+            console.log("watch button pressed");
             catalogPage.watch();
         }
 

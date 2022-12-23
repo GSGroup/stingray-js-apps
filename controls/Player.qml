@@ -213,7 +213,7 @@ Item {
 	}
 
 	function stop() {
-		log("Player: stop playing");
+		console.log("Player: stop playing");
 		this.player.stop();
 		this.visible = false;
 		this.isStopped = true;
@@ -225,7 +225,7 @@ Item {
 			this.togglePlay();
 			return;
 		}
-		log("Player: start playing " + Object.entries(mediaData.info).toString());
+		console.log("Player: start playing " + Object.entries(mediaData.info).toString());
 		loadSpinner.show = false;
 		loadSpinner.show = true;
 		spinnerTimer.restart();
@@ -239,7 +239,7 @@ Item {
 
 		this.player.started = function (started) {
 			if (started)
-				log("Player: play is started");
+				console.log("Player: play is started");
 
 			self.isStopped = !started;
 			self.started(started)

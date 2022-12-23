@@ -96,7 +96,7 @@ Item {
 			if(scrollBar.y<220){
 				scrollBar.y+= 15;
 				this.currentIndex+=1;
-				log("scrollBar y "+scrollBar.y);
+				console.log("scrollBar y "+scrollBar.y);
 			}
 		}
 		
@@ -104,7 +104,7 @@ Item {
 			if(scrollBar.y>-35){
 				scrollBar.y-= 15;
 				this.currentIndex-=1;
-				log("scrollBar y "+scrollBar.y);
+				console.log("scrollBar y "+scrollBar.y);
 			}
 		}
 }

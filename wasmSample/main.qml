@@ -26,6 +26,6 @@ Application {
 		const result = module.getPrimeNumberCount(limit);
 		const end = new Date().getTime();
 
-		log(`${moduleName} module found ${result} prime numbers with ${limit} limit in ${end - start} ms`);
+		console.log(`${moduleName} module found ${result} prime numbers with ${limit} limit in ${end - start} ms`);
 	}
 }

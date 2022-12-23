@@ -51,7 +51,7 @@ Player.prototype = {
 			return;
 
 		for (var i = 0; i < this.connections.length; ++i) {
-			log("connection " + this.connections[i]);
+			console.log("connection " + this.connections[i]);
 			this.connections[i].disconnect();
 		}
 		
@@ -66,7 +66,7 @@ Player.prototype = {
 		if (!this.session)
 			return;
 
-		log("seeking to " + position + "ms");
+		console.log("seeking to " + position + "ms");
 		var pos = position > this.getDuration() ? this.getDuration() : position;
 		pos = position < 0 ? 0 : position;
 		this.session.Seek(new stingray.TimeDuration(Math.max(0, pos)));
@@ -76,7 +76,7 @@ Player.prototype = {
 		if (!this.session)
 			return;
 
-		log("seeking to " + msDelta + "ms from current pos");
+		console.log("seeking to " + msDelta + "ms from current pos");
 		this.session.Seek(new stingray.TimeDuration(Math.max(0, this.getProgress() + msDelta)));
 	},
 

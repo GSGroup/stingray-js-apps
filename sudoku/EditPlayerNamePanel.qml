@@ -120,8 +120,8 @@ Item {
 		onDownPressed: {
 			if (keyView.currentIndex >= 12 * 3) {
 				var row = keyView.currentIndex % 12;
-				log(keyView.currentIndex);
-				log(row);
+				console.log(keyView.currentIndex);
+				console.log(row);
 				if (row < 2)
 					langBtn.setFocus();
 				else if (row < 4)
@@ -214,10 +214,10 @@ Item {
 	}
 
 	onKeyPressed: {
-		log("key pressed " + key);
+		console.log("key pressed " + key);
 		if (!visible)
 			return false;
-		log("key pressed " + key);
+		console.log("key pressed " + key);
 
 		if (key == "Red") {
 			edit.removeChar();

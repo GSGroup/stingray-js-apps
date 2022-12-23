@@ -31,7 +31,7 @@ Item {
 	}
 
 	function append(obj) {
-		log("appending to difficulty chooser " );
+		console.log("appending to difficulty chooser " );
 		this.listView.model.append(obj);
 	}
 	

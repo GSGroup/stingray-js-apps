@@ -117,12 +117,12 @@ Application {
 			Button {
 				id: continueButton;
 				text: "Continue";
-				onSelectPressed: { log("continue"); ui.map.restart(); restartDialog.visible = false; }
+				onSelectPressed: { console.log("continue"); ui.map.restart(); restartDialog.visible = false; }
 			}
 
 			Button {
 				id: restartButton; text: "Restart";
-				onSelectPressed: { log("restart"); fontanero.startGame(); restartDialog.visible = false; }
+				onSelectPressed: { console.log("restart"); fontanero.startGame(); restartDialog.visible = false; }
 			}
 		}
 		onVisibleChanged: {
@@ -208,7 +208,7 @@ Application {
 	}
 
 	gameOver: {
-		log("game over");
+		console.log("game over");
 		restartDialog.visible = true;
 		restartDialog.continueButton.setFocus();
 	}
@@ -240,7 +240,7 @@ Application {
 		ui.throwingObject = throwingObject
 		ui.throwingObjectTimer = throwingObjectTimer;
 		ui.minigame = minigame;
-		log("Fontanero HD. Adventure for Gold and Glory. v4 argile qml");
+		console.log("Fontanero HD. Adventure for Gold and Glory. v4 argile qml");
 	}
 
 	onVisibleChanged: {

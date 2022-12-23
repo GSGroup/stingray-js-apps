@@ -25,12 +25,12 @@ Player {
                 return;
 
             if (request.status === 200) {
-                log("response was received");
+                console.log("response was received");
                 iviPlayer.abort();
                 iviPlayer.playUrl(iviPlayer.getBestQualityVideoUrl(JSON.parse(request.responseText)["result"]["files"]));
                 iviPlayer.setFocus();
             } else
-                log("unhandled status", request.status);
+                console.log("unhandled status", request.status);
         }
 
         var parameters = {params: [ id, { site: "s175"} ],

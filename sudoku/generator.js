@@ -60,7 +60,7 @@ this.getHiddenMatrix = function () {
 	for (var i = 0; i < 40; ++i) {
 		filterMatrix[Math.floor(Math.random() * 9)][Math.floor(Math.random() * 9)] = false;
 	}
-	log("filterMatrix = "+filterMatrix);
+	console.log("filterMatrix = "+filterMatrix);
 	return filterMatrix;
 }
 

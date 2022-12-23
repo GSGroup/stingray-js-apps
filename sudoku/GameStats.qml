@@ -148,7 +148,7 @@ Item {
 		}
 
 		function filterByDifficulty(difficulty){
-			log("FILTERING BY DIFFICULTY "+difficulty);
+			console.log("FILTERING BY DIFFICULTY "+difficulty);
 			this.listView.model.reset();
 			for(var i =0; i<this.stats.length; ++i){
 				if(this.stats[i].difficulty==difficulty){
@@ -161,7 +161,7 @@ Item {
 		}
 
 		function addNrestat(argObj){
-			 log("ADDNRESTAT");
+			 console.log("ADDNRESTAT");
 				var tmpModel = [];
 				var tmpObj ={};
 				var isInList = false;
@@ -218,7 +218,7 @@ Item {
 								difficulty: tmpObj.difficulty.toString(),
 								isBetter: tmpObj.isBetter?"true":"false"});
 			}
-			log("statistic "+statistic);		
+			console.log("statistic "+statistic);
 			save("sudokuStats",statistic);
 		}
 
