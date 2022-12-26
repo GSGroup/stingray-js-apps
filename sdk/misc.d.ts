@@ -89,6 +89,65 @@ declare function warning(str: string): void;
 declare function error(str: string): void;
 
 /**
+ * The console object provides access to the debugging console
+ */
+declare interface Console {
+
+	/**
+	 * Method writes an error {@link message} to the console if the {@link assertion} is false. If the assertion is true, nothing happens
+	 *
+	 * @param assertion - Any boolean expression. If the assertion is false, the message is written to the console.
+	 * @param message - Message to be written.
+	 */
+	assert(assertion: boolean, message: string): void;
+
+	/**
+	 * Method starts a timer you can use to track how long an operation takes. When you call {@code console.timeEnd(label)}, console will output elapsed time
+	 *
+	 * @param label - timer identifier
+	 */
+	time(label: string): void;
+
+	/**
+	 * Method logs the current value of a timer.
+	 * @param label - timer identifier
+	 */
+	timeEnd(label: string): void;
+
+	/**
+	 * Method stops a timer with the given label.
+	 * @param label - timer identifier
+	 */
+	timeLog(label: string): void;
+
+	/**
+	 * The method logs the number of times that this has been called with the given label
+	 * @param label - counter identifier
+	 */
+	count(label: string): void;
+
+	/**
+	 * The method resets counter with the given label
+	 * @param label - counter identifier
+	 */
+	countReset(label: string): void;
+
+	/**
+	 * Logger methods with the corresponding log level
+	 *
+	 * @param args - objects to be printed.
+	 */
+	log(...args: any[]): void;
+	warn(...args: any[]): void;
+	error(...args: any[]): void;
+	trace(...args: any[]): void;
+	debug(...args: any[]): void;
+}
+
+declare const console: Console;
+
+
+/**
  * Generates an event after a set interval, with an option to generate recurring events.
  */
 declare interface Timer {
