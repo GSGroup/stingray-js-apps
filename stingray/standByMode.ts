@@ -7,8 +7,6 @@
 
 import { FeatureHolder, SignalConnection } from 'stingray/utils'
 
-class StandByModeFeatureHolder extends FeatureHolder<stingray.IStandByModePtr> {}
-
 export enum SwitchReason {
 	Default,
 	User,
@@ -16,19 +14,17 @@ export enum SwitchReason {
 	Scheduler
 }
 
-export class StandByMode {
-	private readonly feature: StandByModeFeatureHolder;
-
+export class StandByMode extends FeatureHolder<stingray.IStandByModePtr> {
 	public constructor() {
-		this.feature = new StandByModeFeatureHolder(app.StandByMode());
+		super(app.StandByMode());
 	}
 
 	public get isEnabled(): boolean {
-		return this.feature.get().IsEnabled();
+		return this.getFeature().IsEnabled();
 	}
 
 	public onEnabledChanged(slot: (status: boolean, switchReason: SwitchReason) => void): SignalConnection {
-		return new SignalConnection(this.feature.get().OnEnabledChanged().connect((status: boolean, switchReason: number) => {
+		return new SignalConnection(this.getFeature().OnEnabledChanged().connect((status: boolean, switchReason: number) => {
 			return slot(status, StandByMode.switchReasonFromValue(switchReason));
 		}));
 	}

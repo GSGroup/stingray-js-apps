@@ -7,8 +7,6 @@
 
 import { ConnectionPool, FeatureHolder, SignalConnection, CollectionOp, collectionOpFromValue } from 'stingray/utils'
 
-class TricolorAccountFeatureHolder extends FeatureHolder<stingray.ITricolorAccountPtr> {}
-
 export enum AccountCallResult {
 	Success,
 	Error
@@ -143,11 +141,9 @@ export class TricolorPurchaseItem {
 	}
 }
 
-export class TricolorAccount {
-	private readonly feature: TricolorAccountFeatureHolder;
-
+export class TricolorAccount extends FeatureHolder<stingray.ITricolorAccountPtr> {
 	public constructor() {
-		this.feature = new TricolorAccountFeatureHolder(app.TricolorAccount());
+		super(app.TricolorAccount());
 	}
 
 	public onCardListChanged(slot: (op: CollectionOp, idx: number, item: TricolorPaymentCardInfo) => void): SignalConnection {
@@ -176,7 +172,7 @@ export class TricolorAccount {
 	}
 
 	private getPaymentGateway(): stingray.ITricolorPaymentGatewayPtr {
-		return this.feature.get().GetPaymentGateway();
+		return this.getFeature().GetPaymentGateway();
 	}
 }
 

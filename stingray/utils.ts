@@ -33,17 +33,21 @@ export class ConnectionPool {
 export class FeatureHolder<Type extends stingray.IFeature> {
 	private readonly feature: Type;
 
-	public constructor(feature: Type) {
-		this.feature = feature;
+	public isValid(): boolean {
+		return this.feature.IsFeatureValid();
 	}
 
-	public get(): Type {
+	public getFeature(): Type {
 		this.checkFeature();
 		return this.feature;
 	}
 
+	protected constructor(feature: Type) {
+		this.feature = feature;
+	}
+
 	private checkFeature(): void {
-		if (!this.feature.IsFeatureValid())
+		if (!this.isValid())
 			throw "Feature is not valid!";
 	}
 }

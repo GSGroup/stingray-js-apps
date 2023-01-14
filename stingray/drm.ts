@@ -7,17 +7,12 @@
 
 import { FeatureHolder } from 'stingray/utils'
 
-class DrmFeatureHolder extends FeatureHolder<stingray.IDrmFeaturePtr> {}
-
-export class Drm {
-	private readonly feature: DrmFeatureHolder;
-
+export class Drm extends FeatureHolder<stingray.IDrmFeaturePtr> {
 	public constructor() {
-		this.feature = new DrmFeatureHolder(app.Drm());
+		super(app.Drm());
 	}
-
 	public get dreId(): string {
-		return this.feature.get().GetDreId();
+		return this.getFeature().GetDreId();
 	}
 }
 

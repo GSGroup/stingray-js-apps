@@ -7,21 +7,17 @@
 
 import { FeatureHolder, SignalConnection } from 'stingray/utils'
 
-class TimeManagerFeatureHolder extends FeatureHolder<stingray.ITimeManagerPtr> {}
-
-export class TimeManager {
-	private readonly feature: TimeManagerFeatureHolder;
-
+export class TimeManager extends  FeatureHolder<stingray.ITimeManagerPtr>{
 	public constructor() {
-		this.feature = new TimeManagerFeatureHolder(app.TimeManager());
+		super(app.TimeManager());
 	}
 
 	public get timeZone(): number {
-		return TimeManager.transformTimeZone(this.feature.get().GetTimeZone());
+		return TimeManager.transformTimeZone(this.getFeature().GetTimeZone());
 	}
 
 	public onTimeZoneChanged(slot: (timeZone: number) => void): SignalConnection {
-		return new SignalConnection(this.feature.get().OnTimeZoneChanged().connect((timeZone: stingray.TimeZone) => {
+		return new SignalConnection(this.getFeature().OnTimeZoneChanged().connect((timeZone: stingray.TimeZone) => {
 			slot(TimeManager.transformTimeZone(timeZone));
 		}));
 	}

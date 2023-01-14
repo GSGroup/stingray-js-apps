@@ -7,8 +7,6 @@
 
 import { FeatureHolder, SignalConnection } from 'stingray/utils'
 
-class ChannelRepositoryFeatureHolder extends FeatureHolder<stingray.IChannelRepositoryPtr> {}
-
 export enum SourceType {
 	None,
 	Dvb,
@@ -16,19 +14,17 @@ export enum SourceType {
 	Hybrid
 }
 
-export class ChannelRepository {
-	private readonly feature: ChannelRepositoryFeatureHolder;
-
+export class ChannelRepository extends FeatureHolder<stingray.IChannelRepositoryPtr> {
 	public constructor() {
-		this.feature = new ChannelRepositoryFeatureHolder(app.ChannelRepository());
+		super(app.ChannelRepository());
 	}
 
 	public get sourceType(): SourceType {
-		return ChannelRepository.sourceTypeFromValue(this.feature.get().GetSourceType());
+		return ChannelRepository.sourceTypeFromValue(this.getFeature().GetSourceType());
 	}
 
 	public onSourceTypeChanged(slot: (sourceType: SourceType) => void): SignalConnection {
-		return new SignalConnection(this.feature.get().OnSourceTypeChanged().connect((sourceType: number) => {
+		return new SignalConnection(this.getFeature().OnSourceTypeChanged().connect((sourceType: number) => {
 			return slot(ChannelRepository.sourceTypeFromValue(sourceType));
 		}));
 	};

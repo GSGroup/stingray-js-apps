@@ -7,57 +7,53 @@
 
 import { FeatureHolder, SignalConnection } from 'stingray/utils'
 
-class ConfigFeatureHolder extends FeatureHolder<stingray.IConfigPtr> {}
-
-export class Config {
-	private readonly feature: ConfigFeatureHolder;
-
+export class Config extends FeatureHolder<stingray.IConfigPtr> {
 	public constructor() {
-		this.feature = new ConfigFeatureHolder(app.Config());
+		super(app.Config());
 	}
 
 	public get volume(): number {
-		return this.feature.get().GetVolume();
+		return this.getFeature().GetVolume();
 	}
 
 	public set volume(volume_: number) {
-		this.feature.get().SetVolume(volume_);
+		this.getFeature().SetVolume(volume_);
 	}
 
 	public volumeUp(): void {
-		return this.feature.get().VolumeUp();
+		return this.getFeature().VolumeUp();
 	}
 
 	public volumeDown(): void {
-		return this.feature.get().VolumeDown();
+		return this.getFeature().VolumeDown();
 	}
 
 	public onVolumeAboutToBeChanged(slot: () => void): SignalConnection {
-		return new SignalConnection(this.feature.get().OnVolumeAboutToBeChanged().connect(() => {
+		return new SignalConnection(this.getFeature().OnVolumeAboutToBeChanged().connect(() => {
 			return slot();
 		}));
 	};
 
 	public onVolumeChanged(slot: (volume: number) => void): SignalConnection {
-		return new SignalConnection(this.feature.get().OnVolumeChanged().connect((volume: number) => {
+		return new SignalConnection(this.getFeature().OnVolumeChanged().connect((volume: number) => {
 			return slot(volume);
 		}));
 	};
 
 	public get muted(): boolean {
-		return this.feature.get().IsMuted();
+		return this.getFeature().IsMuted();
 	}
 
 	public set muted(muted_: boolean) {
-		this.feature.get().Mute(muted_);
+		this.getFeature().Mute(muted_);
 	}
 
 	public toggleMute(): void {
-		return this.feature.get().ToggleMute();
+		return this.getFeature().ToggleMute();
 	}
 
 	public onMutedChanged(slot: (muted: boolean) => void): SignalConnection {
-		return new SignalConnection(this.feature.get().OnMutedChanged().connect((muted: boolean) => {
+		return new SignalConnection(this.getFeature().OnMutedChanged().connect((muted: boolean) => {
 			return slot(muted);
 		}));
 	};
