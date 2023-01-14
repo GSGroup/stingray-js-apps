@@ -11,8 +11,15 @@ export class Drm extends FeatureHolder<stingray.IDrmFeaturePtr> {
 	public constructor() {
 		super(app.Drm());
 	}
-	public get dreId(): string {
-		return this.getFeature().GetDreId();
+	public get dreId(): string | null {
+		const nativeFeature = this.getFeature();
+		try {
+			return nativeFeature.GetDreId();
+		}
+		catch (ex) {
+			console.warn('GetDreId failed: ' + ex);
+			return null;
+		}
 	}
 }
 
