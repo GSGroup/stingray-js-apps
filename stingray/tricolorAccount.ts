@@ -165,7 +165,7 @@ export class TricolorAccount extends FeatureHolder<stingray.ITricolorAccountPtr>
 			if (nativeData && nativeData.GetEmail())
 				email = nativeData.GetEmail().get();
 			if (nativeData && nativeData.GetPhoneNumber())
-				email = nativeData.GetPhoneNumber().get();
+				phoneNumber = nativeData.GetPhoneNumber().get();
 
 			slot(email, phoneNumber);
 		}));
