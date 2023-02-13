@@ -23,7 +23,7 @@ Item {
 
 	Image {
 		id: scrollBar;
-		x: 347;
+		x: 347hpw;
 		y: -35;
 		source: "apps/sudoku/img/scroll.png";
 	}

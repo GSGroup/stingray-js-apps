@@ -24,7 +24,7 @@ Delegate {
 
 		BodyText {
 			id: delegateText;
-			x: 10;
+			x: 10hpw;
 			anchors.verticalCenter: parent.verticalCenter;
 			color: simpleChooserDelegate.activeFocus ? colorTheme.activeTextColor : simpleChooserDelegate.parent.focused ? colorTheme.textColor : colorTheme.disabledTextColor;
 			text: model.text;

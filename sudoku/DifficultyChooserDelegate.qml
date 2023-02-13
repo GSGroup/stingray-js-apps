@@ -20,7 +20,7 @@ Delegate {
 
 	BodyText {
 		id: delegateText;
-		x: 10;
+		x: 10hpw;
 		anchors.verticalCenter: parent.verticalCenter;
 		anchors.horizontalCenter: parent.horizontalCenter;
 //		color: parent.activeFocus ? colorTheme.activeTextColor : parent.parent.focused ? colorTheme.textColor : colorTheme.disabledTextColor;

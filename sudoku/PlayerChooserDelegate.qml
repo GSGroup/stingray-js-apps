@@ -21,7 +21,7 @@ Delegate {
 
 	BodyText {
 		id: delegateText;
-		x: 10;
+		x: 10hpw;
 //		anchors.left: parent.left;
 		anchors.verticalCenter: parent.verticalCenter;
 		anchors.horizontalCenter: parent.horizontalCenter;
