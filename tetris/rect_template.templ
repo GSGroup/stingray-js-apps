@@ -8,7 +8,7 @@
 		Behavior on borderWidth { animation: Animation { id: borderWidthAnimation; } }
 
 		onColorIndexChanged: {
-			this.radius = this.colorIndex == 5 ? 5 : 0;
+			this.radius = this.colorIndex == 5 ? calculateWidth(5, 'h') : 0;
 			this.color = gameConsts.getColor(this.colorIndex);
 		}
 
@@ -22,7 +22,7 @@
 			this.width = gameConsts.getBlockSize();
 			this.height = gameConsts.getBlockSize();
 
-			this.radius = this.colorIndex == 5 ? 5 : 0;
+			this.radius = this.colorIndex == 5 ? calculateWidth(5, 'h') : 0;
 			this.color = gameConsts.getColor(this.colorIndex);
 			this.borderWidth = gameConsts.getBorderSize();
 

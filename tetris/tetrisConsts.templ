@@ -9,7 +9,7 @@ var dropTime = 16000;
 var spaceBetweenBlocks = 1;
 var glassWidth = $glassWidth;
 var glassHeight = $glassHeight;
-var blockSize = 35;
+var blockSize = 36;
 var borderSize = 1;
 var gameWidth = blockSize * glassWidth;
 var gameHeight = blockSize * glassHeight;
@@ -50,11 +50,11 @@ this.getColor = function(colorIndex) {
 }
 
 this.getGameWidth = function() {
-	return gameWidth;
+	return calculateWidth(gameWidth, 'h');
 }
 
 this.getGameHeight = function() {
-	return gameHeight;
+	return calculateHeight(gameHeight, 'h');
 }
 
 this.getGlassWidth = function() {
@@ -66,7 +66,7 @@ this.getGlassHeight = function() {
 }
 
 this.getBlockSize = function() {
-	return blockSize;
+	return calculateWidth(blockSize, 'h');
 }
 
 this.getSpaceBetweenBlocks = function() {
