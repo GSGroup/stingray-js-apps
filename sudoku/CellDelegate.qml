@@ -66,7 +66,7 @@ Delegate {
 		anchors.horizontalCenter:parent.horizontalCenter;
 		anchors.verticalCenter: parent.verticalCenter;
 		anchors.leftMargin: 5hpw;
-		anchors.topMargin:12;
+		anchors.topMargin: 12hph;
 
 		color: cellItemDelegate.focused ? "#FFFFFF" : "#375900";
 

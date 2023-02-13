@@ -33,7 +33,7 @@ Item {
 			id: playerLabel;
 
 			anchors.top: mainMenuTheme.top;
-			anchors.topMargin: 253;
+			anchors.topMargin: 253hph;
 			anchors.left: mainMenuTheme.left;
 			anchors.leftMargin: 440hpw;
 
@@ -49,7 +49,7 @@ Item {
 				anchors.left: mainMenuTheme.left;
 				anchors.leftMargin: 518hpw;
 				anchors.top: mainMenuTheme.top;
-				anchors.topMargin: 246;
+				anchors.topMargin: 246hph;
 				
 				onDownPressed: {
 					difficultyChooser.setFocus();
@@ -71,7 +71,7 @@ Item {
 
 			anchors.horizontalCenter: playerLabel.horizontalCenter;
 			anchors.top: playerLabel.bottom;
-			anchors.topMargin: 42;
+			anchors.topMargin: 42hph;
 
 			color: "#581B18";
 			text: "LEVEL:";
@@ -86,7 +86,7 @@ Item {
 				anchors.left: mainMenuTheme.left;
 				anchors.leftMargin: 518hpw;
 				anchors.top: mainMenuTheme.top;
-				anchors.topMargin: 315;
+				anchors.topMargin: 315hph;
 
 				onUpPressed: {
 					playerChooser.setFocus();
@@ -107,8 +107,8 @@ Item {
 			id: newGameButton;
 			anchors.top: difficultyChooser.bottom;
 			anchors.horizontalCenter: parent.horizontalCenter;
-			anchors.topMargin: 10;
-//			anchors.bottomMargin: 10;
+			anchors.topMargin: 10hph;
+//			anchors.bottomMargin: 10hph;
 			width: 250hpw;
 			height: 50hph;
 			font: titleFont;
@@ -150,7 +150,7 @@ Item {
 			id: playButton;
 			anchors.top: newGameButton.bottom;
 			anchors.horizontalCenter: parent.horizontalCenter;
-			anchors.topMargin: 5;
+			anchors.topMargin: 5hph;
 
 			width: 250hpw;
 			height: 50hph;
@@ -195,7 +195,7 @@ Item {
 			anchors.horizontalCenter: parent.horizontalCenter;
 			width: 250hpw;
 			height: 50hph;
-			anchors.topMargin: 5;
+			anchors.topMargin: 5hph;
 
 			font: titleFont;
 			text: "Help";

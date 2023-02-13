@@ -40,7 +40,7 @@ Rectangle {
 		height: this.contentHeight;
 
 		anchors.bottom: levelRect.bottom;
-		anchors.bottomMargin: 20;
+		anchors.bottomMargin: 20hph;
 
 		orientation: Horizontal;
 		uniformDelegateSize: true;

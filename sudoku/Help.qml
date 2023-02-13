@@ -32,7 +32,7 @@ Item {
 		id:listView;
 		anchors.horizontalCenter: parent.horizontalCenter;
 		anchors.top: finalTheme.top;
-		anchors.topMargin: 150;
+		anchors.topMargin: 150hph;
 		height: 300hph;
 		width: 200hpw;
 		spacing: 10;

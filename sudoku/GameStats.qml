@@ -26,7 +26,7 @@ Item {
 
 				id:firstPlace;
 				anchors.top: parent.top;
-				anchors.topMargin: 5;
+				anchors.topMargin: 5hph;
 				anchors.horizontalCenter: parent.horizontalCenter;
 
 				BodyText {
@@ -38,7 +38,7 @@ Item {
 				BodyText {
 					id: time;
 					anchors.bottom: parent.top;
-					anchors.bottomMargin: 100;
+					anchors.bottomMargin: 100hph;
 					anchors.horizontalCenter: parent.horizontalCenter;
 					text: Math.floor(listView.model.get(0).time/60)+":"+listView.model.get(0).time%60;
 				}
@@ -48,7 +48,7 @@ Item {
 
 				id:secondPlace;
 				anchors.top: parent.top;
-				anchors.topMargin: 65;
+				anchors.topMargin: 65hph;
 				anchors.left: parent.left;
 
 				BodyText {
@@ -59,7 +59,7 @@ Item {
 				BodyText {
 					id: time;
 					anchors.bottom: parent.top;
-					anchors.bottomMargin: 90;
+					anchors.bottomMargin: 90hph;
 					anchors.horizontalCenter: parent.horizontalCenter;
 					text: Math.floor(listView.model.get(1).time/60)+":"+listView.model.get(1).time%60;
 				}
@@ -69,7 +69,7 @@ Item {
 
 				id:thirdPlace;
 				anchors.top: parent.top;
-				anchors.topMargin: 65;
+				anchors.topMargin: 65hph;
 				anchors.right: parent.right;
 
 				BodyText {
@@ -81,7 +81,7 @@ Item {
 				BodyText {
 					id: time;
 					anchors.bottom: parent.top;
-					anchors.bottomMargin: 90;
+					anchors.bottomMargin: 90hph;
 					anchors.horizontalCenter: parent.horizontalCenter;
 					text: Math.floor(listView.model.get(2).time/60)+":"+listView.model.get(2).time%60;
 				}

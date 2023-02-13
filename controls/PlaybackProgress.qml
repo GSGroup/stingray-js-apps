@@ -175,7 +175,7 @@ Item {
 		anchors.left: parent.left;
 		anchors.right: parent.right;
 		anchors.bottom: controlPanel.top;
-		anchors.bottomMargin: 2;
+		anchors.bottomMargin: 2hph;
 		height: 5hph;
 		barColor: colorTheme.accentColor;
 		progress: playbackProgressItem.duration > 0 ? (1.0 * playbackProgressItem.barProgress) / playbackProgressItem.duration : 0;

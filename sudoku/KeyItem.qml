@@ -25,7 +25,7 @@ Rectangle {
 		id: buttonText;
 
 		anchors.centerIn: parent;
-		anchors.topMargin: 4; //need to fix fonts instead
+		anchors.topMargin: 4hph; //need to fix fonts instead
 
 		text: keyItem.text;
 		color: parent.focused ? colorTheme.activeTextColor : colorTheme.textColor;

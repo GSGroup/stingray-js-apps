@@ -23,7 +23,7 @@ Application {
 			id: titleText;
 			anchors.horizontalCenter: parent.horizontalCenter;
 			anchors.top: parent.top;
-			anchors.topMargin: 140;
+			anchors.topMargin: 140hph;
 			color: "#FFFFFF";
 			text: "sudoku";
 		}
@@ -35,7 +35,7 @@ Application {
 			anchors.verticalCenter: parent.verticalCenter;
 			anchors.horizontalCenter: parent.horizontalCenter;
 			width: 500hpw;
-			anchors.topMargin: 40;
+			anchors.topMargin: 40hph;
 	
 			GameMenu {
 				id: gameMenu;
@@ -214,7 +214,7 @@ Application {
 			id: gameStats;
 			difficulty: gameMenu.difficultyChooser.listView.currentIndex+1;
 			anchors.top: pageStack.top;
-			anchors.topMargin: 120;
+			anchors.topMargin: 120hph;
 			anchors.left: pageStack.right;
 			anchors.leftMargin: 70hpw;
 			width: 50hpw;

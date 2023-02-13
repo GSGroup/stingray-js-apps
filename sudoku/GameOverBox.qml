@@ -30,7 +30,7 @@ Item {
 		id: resText;
 		anchors.horizontalCenter: parent.horizontalCenter;
 		anchors.bottom: finalTheme.bottom;	
-		anchors.bottomMargin:180;
+		anchors.bottomMargin: 180hph;
 		
 		text:"";
 	}
@@ -40,7 +40,7 @@ Item {
 		id: difficulty;
 		anchors.horizontalCenter: parent.horizontalCenter;
 		anchors.top: finalTheme.top;	
-		anchors.topMargin:60;
+		anchors.topMargin: 60hph;
 		
 		text:"";
 	}
@@ -49,7 +49,7 @@ Item {
 		id: player;
 		anchors.horizontalCenter: parent.horizontalCenter;
 		anchors.top: finalTheme.top;	
-		anchors.topMargin:100;
+		anchors.topMargin: 100hph;
 		
 		text:"";
 	}
@@ -58,7 +58,7 @@ Item {
 		id: time;
 		anchors.horizontalCenter: parent.horizontalCenter;
 		anchors.bottom: finalTheme.bottom;	
-		anchors.bottomMargin:120;
+		anchors.bottomMargin: 120hph;
 		
 		text:"";
 	}
@@ -67,7 +67,7 @@ Item {
 		id: continueButton;
 		anchors.horizontalCenter: parent.horizontalCenter;
 		anchors.bottom: finalTheme.bottom;
-		anchors.bottomMargin: 70;
+		anchors.bottomMargin: 70hph;
 		width: 250hpw;
 		height: 50hph;
 
@@ -108,7 +108,7 @@ Item {
 		anchors.horizontalCenter: parent.horizontalCenter;
 		width: 250hpw;
 		height: 50hph;
-		anchors.topMargin: 5;
+		anchors.topMargin: 5hph;
 
 
 		color: "#00000000";

@@ -21,7 +21,7 @@ Item {
 
 	SubheadText {
 		anchors.top: finalPageProto.top;
-		anchors.topMargin: 50;
+		anchors.topMargin: 50hph;
 		anchors.horizontalCenter: finalPageProto.horizontalCenter;
 		anchors.rightMargin: 40hpw;
 
@@ -45,7 +45,7 @@ Item {
 
 		anchors.bottom: finalPageProto.bottom;
 		anchors.horizontalCenter: finalPageProto.horizontalCenter;
-		anchors.bottomMargin: 50;
+		anchors.bottomMargin: 50hph;
 
 		text: "Еще раз";
 		

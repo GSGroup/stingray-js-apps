@@ -27,7 +27,7 @@ Rectangle {
 		anchors.left: exitRect.left;
 		anchors.right: exitRect.right;
 
-		anchors.topMargin: 20;
+		anchors.topMargin: 20hph;
 		anchors.leftMargin: 30hpw;
 		anchors.rightMargin: 30hpw;
 

@@ -18,7 +18,7 @@ Item {
 	HighlightListView {
 		anchors.fill: cardsFirst;
 		anchors.leftMargin: -8hpw;
-		anchors.topMargin: -8;
+		anchors.topMargin: -8hph;
 
 		orientation: Horizontal;
 		spacing: 40;
@@ -50,7 +50,7 @@ Item {
 
 	SubheadText {
 		anchors.bottom: cardsFirst.top;
-		anchors.bottomMargin: 15;
+		anchors.bottomMargin: 15hph;
 		anchors.horizontalCenter: cardsFirst.horizontalCenter;
 		anchors.rightMargin: 40hpw;
 

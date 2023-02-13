@@ -33,7 +33,7 @@ Rectangle {
     TitleText {
             id: difficultyIndicator;
             anchors.top: parent.top;
-			anchors.topMargin: 68;
+			anchors.topMargin: 68hph;
 			anchors.horizontalCenter: difficultyHeader.horizontalCenter;
 			color:"#813722";
             text: parent.difficulty;
@@ -42,7 +42,7 @@ Rectangle {
 	TitleText {
 			id:difficultyHeader;
 			anchors.bottom: difficultyIndicator.top;
-			anchors.bottomMargin: 18;
+			anchors.bottomMargin: 18hph;
 			anchors.right: parent.right;
 			anchors.rightMargin: 105hpw;
 			anchors.horizontalCenter: difficultyIndicator.horizontalCenter;
@@ -53,7 +53,7 @@ Rectangle {
 	FixedStringTimer {
 			id: timeIndicator;
 			anchors.top: difficultyIndicator.bottom;
-			anchors.topMargin: 78;
+			anchors.topMargin: 78hph;
 			anchors.horizontalCenter: difficultyIndicator.horizontalCenter;
 
 			Timer {
@@ -68,7 +68,7 @@ Rectangle {
 //1
 	TitleText {
 			anchors.bottom: timeIndicator.top;
-			anchors.bottomMargin: 15;
+			anchors.bottomMargin: 15hph;
 			anchors.horizontalCenter: difficultyIndicator.horizontalCenter;
 			color: "#813722";
 			text:"time:"
@@ -256,7 +256,7 @@ Rectangle {
 		id: gameView;
 		anchors.horizontalCenter: mainGameTheme.horizontalCenter;
 		anchors.bottom: mainGameTheme.bottom;
-		anchors.bottomMargin: 21;
+		anchors.bottomMargin: 21hph;
 		height: mainGameTheme.height - 142hph;
 		width: mainGameTheme.height - 142hpw;
 		cellWidth: width/9;

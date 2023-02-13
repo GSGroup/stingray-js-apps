@@ -35,7 +35,7 @@ Rectangle {
 			id: titleText;
 
 			anchors.top: parent.top;
-			anchors.topMargin: 20;
+			anchors.topMargin: 20hph;
 			anchors.horizontalCenter: parent.horizontalCenter;
 
 			text: tr("Reversi");
@@ -298,7 +298,7 @@ Rectangle {
 
 			BodyText {
 				anchors.centerIn: parent;
-				anchors.bottomMargin: 10;
+				anchors.bottomMargin: 10hph;
 
 				text: tr("Help");
 			}
@@ -308,7 +308,7 @@ Rectangle {
 				width: parent.width / 3;
 
 				anchors.centerIn: parent;
-				anchors.bottomMargin: -30;
+				anchors.bottomMargin: -30hph;
 
 				radius: 2hpw;
 				color: "#ff0000";
@@ -325,7 +325,7 @@ Rectangle {
 
 			BodyText {
 				anchors.centerIn: parent;
-				anchors.bottomMargin: 10;
+				anchors.bottomMargin: 10hph;
 
 				text: tr("Start with white");
 			}
@@ -335,7 +335,7 @@ Rectangle {
 				width: parent.width / 3;
 
 				anchors.centerIn: parent;
-				anchors.bottomMargin: -30;
+				anchors.bottomMargin: -30hph;
 
 				radius: 2hpw;
 				color: "#00ff00";
@@ -352,7 +352,7 @@ Rectangle {
 
 			BodyText {
 				anchors.centerIn: parent;
-				anchors.bottomMargin: 10;
+				anchors.bottomMargin: 10hph;
 
 				text: tr("Start with black");
 			}
@@ -362,7 +362,7 @@ Rectangle {
 				width: parent.width / 3;
 
 				anchors.centerIn: parent;
-				anchors.bottomMargin: -30;
+				anchors.bottomMargin: -30hph;
 
 				radius: 2hpw;
 				color: "#ffff00";
@@ -381,7 +381,7 @@ Rectangle {
 				id: difftext;
 
 				anchors.centerIn: parent;
-				anchors.bottomMargin: 10;
+				anchors.bottomMargin: 10hph;
 
 				text: game.easy ? tr("Hard") : tr("Easy");
 			}
@@ -391,7 +391,7 @@ Rectangle {
 				width: parent.width / 3;
 
 				anchors.centerIn: parent;
-				anchors.bottomMargin: -30;
+				anchors.bottomMargin: -30hph;
 
 				radius: 2hpw;
 				color: "#0000ff";

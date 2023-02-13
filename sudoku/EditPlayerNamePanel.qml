@@ -93,7 +93,7 @@ Item {
 		anchors.right: parent.right;
 		anchors.rightMargin: 5hpw;
 		anchors.leftMargin: 10hpw;
-		anchors.topMargin: 10;
+		anchors.topMargin: 10hph;
 		height: cellHeight * 4;
 		cellWidth: width / 12;
 		cellHeight: cellWidth;

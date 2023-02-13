@@ -25,8 +25,8 @@ Item {
 
 	Item {
 		anchors.fill: parent;
-		anchors.topMargin: -10;
-		anchors.bottomMargin: -10;
+		anchors.topMargin: -10hph;
+		anchors.bottomMargin: -10hph;
 		clip: true;
 
 		Text {

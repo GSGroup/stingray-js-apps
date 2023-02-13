@@ -34,7 +34,7 @@ Application {
 				id: recipesListView;
 
 				anchors.top: titleText.bottom;
-				anchors.topMargin: 5;
+				anchors.topMargin: 5hph;
 				anchors.left: titleText.left;
 				anchors.bottom: safeArea.bottom;
 
@@ -65,7 +65,7 @@ Application {
 				id: recipeImage;
 
 				anchors.top: recipeTitleText.bottom;
-				anchors.topMargin: 20;
+				anchors.topMargin: 20hph;
 				anchors.horizontalCenter: parent.horizontalCenter;
 			}
 
@@ -75,7 +75,7 @@ Application {
 				width: parent.width / 2;
 
 				anchors.top: recipeImage.bottom;
-				anchors.topMargin: 20;
+				anchors.topMargin: 20hph;
 				anchors.bottom: parent.bottom;
 				anchors.horizontalCenter: parent.horizontalCenter;
 

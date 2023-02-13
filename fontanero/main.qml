@@ -104,7 +104,7 @@ Application {
 		anchors.centerIn: parent;
 
 		SubheadText {
-			anchors.topMargin: -10;
+			anchors.topMargin: -10hph;
 			anchors.centerIn: parent;
 			text: "YOU'RE DEAD! Continue?";
 		}

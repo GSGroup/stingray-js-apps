@@ -16,7 +16,7 @@ Item {
 	Gradient {
 		height: 150hph;
 		anchors.top: mainWindow.top;
-		anchors.bottomMargin: -30;
+		anchors.bottomMargin: -30hph;
 		anchors.left: mainWindow.left;
 		anchors.right: mainWindow.right;
 

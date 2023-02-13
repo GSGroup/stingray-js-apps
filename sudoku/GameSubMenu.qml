@@ -22,7 +22,7 @@ Item {
 		TitleText {
 			id: playerInfoText;
 			anchors.top: subMenuTheme.top;
-			anchors.topMargin: 140;
+			anchors.topMargin: 140hph;
 			anchors.horizontalCenter: parent.horizontalCenter;
 			text: "";
 		}
@@ -30,7 +30,7 @@ Item {
 		TitleText {
 			id: gameInfoText;
 			anchors.top: playerInfoText.bottom;
-			anchors.topMargin: 20;
+			anchors.topMargin: 20hph;
 			anchors.horizontalCenter: parent.horizontalCenter;
 		 
 		}
@@ -39,8 +39,8 @@ Item {
 			id: continueButton;
 			anchors.top: gameInfoText.bottom;
 			anchors.horizontalCenter: parent.horizontalCenter;
-			anchors.topMargin: 10;
-			anchors.bottomMargin: 10;
+			anchors.topMargin: 10hph;
+			anchors.bottomMargin: 10hph;
 			width: 250hpw;
 			height: 50hph;
 
@@ -80,8 +80,8 @@ Item {
 			anchors.horizontalCenter: parent.horizontalCenter;
 			width: 250hpw;
 			height: 50hph;
-			anchors.topMargin: 10;
-			anchors.bottomMargin: 10;
+			anchors.topMargin: 10hph;
+			anchors.bottomMargin: 10hph;
 
 			color: "#00000000";
 

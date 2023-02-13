@@ -17,7 +17,7 @@ Item {
 
 	SubheadText {
 		anchors.bottom: cards.top;
-		anchors.bottomMargin: 15;
+		anchors.bottomMargin: 15hph;
 		anchors.horizontalCenter: cards.horizontalCenter;
 		anchors.rightMargin: 40hpw;
 

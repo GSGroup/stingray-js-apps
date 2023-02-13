@@ -28,7 +28,7 @@ Rectangle {
 		id: levelRect;
 
 		anchors.top: nextBlockView.bottom;
-		anchors.topMargin: 80;
+		anchors.topMargin: 80hph;
 
 		text: tr("Level ");
 	}
@@ -39,7 +39,7 @@ Rectangle {
 		anchors.right: infoRect.right;
 		anchors.rightMargin: 140hpw;
 		anchors.top: nextBlockView.bottom;
-		anchors.topMargin: 67;
+		anchors.topMargin: 67hph;
 
 		text: infoRect.currentLevel;
 	}
@@ -48,7 +48,7 @@ Rectangle {
 		id: scoreRect;
 
 		anchors.top: levelText.bottom;
-		anchors.topMargin: 40;
+		anchors.topMargin: 40hph;
 
 		text: tr("Score    ");
 	}
@@ -59,7 +59,7 @@ Rectangle {
 		anchors.right: infoRect.right;
 		anchors.rightMargin: 140hpw;
 		anchors.top: levelText.bottom;
-		anchors.topMargin: 27;
+		anchors.topMargin: 27hph;
 
 		text: infoRect.gameScore;
 	}
