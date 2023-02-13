@@ -11,56 +11,81 @@ import "PasswordEditDelegate.qml";
 BaseEdit {
 	id: passwordEditItem;
 
-	property Color pinDotColor: activeFocus ? colorTheme.focusedTextColor : colorTheme.activeTextColor;
+	property bool showBackground: true;
 
-	width: pinList.width;
-	height: 12hph;
-	
+	width: echoTextView.width;
+
 	focus: true;
 
+	ActivePanel {
+		id: bgRect;
+
+		anchors.fill: parent;
+
+		visible: passwordEditItem.showBackground;
+	}
+
 	ListView {
-		id: pinList;
+		id: echoTextView;
 
-		property int currentPinLength;
-		property Color pinDotColor: passwordEditItem.pinDotColor;
+		width: contentWidth;
+		height: contentHeight;
 
-		width: passwordEditItem.maxLen ? passwordEditItem.maxLen * 12hpw + (passwordEditItem.maxLen - 1) * this.spacing :
-			pinList.currentPinLength ? pinList.currentPinLength * 12hpw + (pinList.currentPinLength - 1) * this.spacing :
-			0;
-		height: parent.height;
+		anchors.centerIn: parent;
 
 		spacing: 12hpw;
 		orientation: Horizontal;
 		uniformDelegateSize: true;
 
-		model: ListModel { id: listModel; }
-		delegate: PasswordEditDelegate {
-			filled: pinList.currentPinLength >= (modelIndex + 1);
-			color: pinList.pinDotColor;
+		model: ListModel {
+			id: listModel;
+			property bool filled;
 		}
-
-		onCompleted: {
-			if (passwordEditItem.maxLen)
-				passwordEditItem.fillModel(passwordEditItem.maxLen);
-			else
-				passwordEditItem.fillModel(passwordEditItem.text.length);
+		delegate: PasswordEditDelegate {
+			editing: passwordEditItem.activeFocus;
+			colorAnimable: passwordEditItem.maxLen != 0;
 		}
 	}
+
+	Timer {
+		id: clearPasswordTimer;
+
+		interval: 100;
+
+		onTriggered: { passwordEditItem.clear(); }
+	}
+
+	onKeyPressed: { passwordEditItem.finishDeferredClear(); }
 
 	onTextChanged: {
-		pinList.currentPinLength = passwordEditItem.text.length;
-
-		if (!passwordEditItem.maxLen)
-			passwordEditItem.fillModel(passwordEditItem.text.length);
+		passwordEditItem.finishDeferredClear();
+		passwordEditItem.fillModel();
 	}
 
-	function fillModel(textSize) {
-		while (listModel.count != textSize)
+	function onMaxLenChanged() { passwordEditItem.fillModel(); }
+
+	function clearWithDelay() { clearPasswordTimer.restart(); }
+
+	function finishDeferredClear() {
+		if (clearPasswordTimer.running)
 		{
-			if (listModel.count > textSize)
-				listModel.remove(listModel.count - 1);
-			else
-				listModel.append({ });
+			clearPasswordTimer.stop();
+			passwordEditItem.clear();
 		}
 	}
+
+	function fillModel() {
+		const textSize = passwordEditItem.text.length;
+		const maxLength = passwordEditItem.maxLen;
+		const modelRowsCount = maxLength ? maxLength : textSize;
+
+		const rows = new Array();
+		for (let i = 0; i < modelRowsCount; i++)
+			rows.push({ filled: i < textSize });
+
+		listModel.reset();
+		listModel.append(...rows);
+	}
+
+	onCompleted: { passwordEditItem.fillModel(); }
 }

@@ -8,16 +8,22 @@
 Delegate {
 	id: passwordEditDelegateItem;
 
-	property bool filled;
+	property bool editing;
+	property bool filled: model.filled;
+	property bool colorAnimable;
 
 	width: 12hpw;
 	height: 12hph;
+
+	opacity: filled ? 1.0 : 0.2;
 
 	Rectangle {
 		anchors.fill: parent;
 
 		radius: height / 2;
 
-		opacity: passwordEditDelegateItem.filled ? 1.0 : 0.2;
+		color: passwordEditDelegateItem.editing ? colorTheme.focusedTextColor : colorTheme.activeTextColor;
+
+		Behavior on color { animation: Animation { duration: passwordEditDelegateItem.colorAnimable ? 300 : 0; } }
 	}
 }
