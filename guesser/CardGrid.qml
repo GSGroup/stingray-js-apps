@@ -11,7 +11,7 @@ Item {
 	id: cardGridProto;
 
 	property int size: 4;
-	property int cardArea: 140;
+	property int cardArea: 140hpw;
 
 	width: cardArea * size;
 	height: cardArea * size;

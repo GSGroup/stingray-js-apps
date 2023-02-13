@@ -12,7 +12,7 @@ import "engine.js" as engine;
 Rectangle {
 	id: game;
 
-	property int space: 6;
+	property int space: 6hpw;
 	property int cellSize:  (safeArea.height - space * 4) / 4;
 
 	width: cellSize * 4 + space * 4;

@@ -72,7 +72,7 @@ Delegate {
 
 		font: Font {
 			  family: "Proxima Nova Condensed";
-			  pixelSize:20;
+			  pixelSize: 20;
 		}
 
 		text:  model.isBase?"":(model.shownValue===""?(model.isHint1?"1":"  " ):"")+"   "+
