@@ -21,7 +21,7 @@ Delegate {
 
 		color: "#151";
 		borderColor: "#432100";
-		borderWidth: 1;
+		borderWidth: 1hpw;
 
 		ReversiDisc {
 			id: white;

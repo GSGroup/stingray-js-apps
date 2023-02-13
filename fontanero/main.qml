@@ -18,7 +18,7 @@ Application {
 	GridView {
 		id: cells;
 		model: cellsModel;
-		cellWidth: 32;
+		cellWidth: 32hpw;
 		cellHeight: 32;
 		anchors.centerIn: parent;
 		delegate: CellDelegate { }

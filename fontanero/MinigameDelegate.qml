@@ -8,7 +8,7 @@ Delegate {
 
 	Rectangle {
 		anchors.fill: parent;
-		borderWidth: 5;
+		borderWidth: 5hpw;
 		borderColor: minigameDelegate.activeFocus ? "#fff": "#222";
 		color: model.fixed? "#0e0": "#e00";
 	}

@@ -181,7 +181,7 @@ Rectangle {
 			anchors.fill: parent;
 
 			cellHeight: 65;
-			cellWidth: 65;
+			cellWidth: 65hpw;
 			orintation: GridView.Horizontal;
 
 			model: ListModel { }

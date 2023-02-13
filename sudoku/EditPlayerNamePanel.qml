@@ -35,7 +35,7 @@ Item {
 		anchors.fill: parent;
 		color: "#000";
 		radius: 8hpw;
-		borderWidth: 1;
+		borderWidth: 1hpw;
 		borderColor: "#555";
 		opacity: 0.7;
 	}

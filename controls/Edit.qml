@@ -25,7 +25,7 @@ BaseEdit {
 	property bool activeShowCursor;
 	property bool alwaysShowCursor;
 	property bool passwordMode;
-	property int borderWidth: 2;
+	property int borderWidth: 2hpw;
 	property int radius: colorTheme.rounded ? 8hpw : 0;
 	property bool showUnderLining: !showBackground;
 

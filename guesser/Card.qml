@@ -15,7 +15,7 @@ Item {
 	property string cardNumber;
 	property int number;
 	property bool show: false;
-	property int minWidth: 80;
+	property int minWidth: 80hpw;
 
 	width: minWidth;
 	height: 120;

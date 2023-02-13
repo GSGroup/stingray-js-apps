@@ -19,7 +19,7 @@ Delegate {
 		anchors.fill: parent;
 		color: simpleChooserDelegate.activeFocus ? colorTheme.activeBorderColor : colorTheme.backgroundColor;
 		borderColor: simpleChooserDelegate.activeFocus ? colorTheme.activeBorderColor : colorTheme.borderColor;
-		borderWidth: 2;
+		borderWidth: 2hpw;
 		radius: colorTheme.rounded ? 10hpw : 0;
 
 		BodyText {

@@ -18,7 +18,7 @@ Delegate {
 
 		color: hintDigitChooserDelegate.activeFocus ? colorTheme.activeBorderColor : colorTheme.backgroundColor;
 		borderColor: hintDigitChooserDelegate.activeFocus ? colorTheme.activeBorderColor : colorTheme.borderColor;
-		borderWidth: 2;
+		borderWidth: 2hpw;
 
 		Text {
 			anchors.horizontalCenter: parent.horizontalCenter;

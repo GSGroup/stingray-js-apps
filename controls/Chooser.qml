@@ -21,7 +21,7 @@ Item {
 	property bool showArrows: true;
 	property bool wrapNavigation;
 
-	property int chooserWidth: 520;
+	property int chooserWidth: 520hpw;
 
 	property Color gradientNonFocusColor: colorTheme.focusablePanelColor;
 

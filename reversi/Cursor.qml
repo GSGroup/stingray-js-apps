@@ -9,7 +9,7 @@ Rectangle {
 	anchors.fill: parent;
 
 	color: "#0000";
-	borderWidth: 6;
+	borderWidth: 6hpw;
    	borderColor: "#00ff00";
 	radius: 5hpw;
 

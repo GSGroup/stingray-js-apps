@@ -17,7 +17,7 @@ ActivePanel {
 
 	property bool wrapNavigation: true;
 	property string text;
-	property int chooserWidth: Math.min(width * 2 / 3, width - textItem.width - textItem.anchors.leftMargin - 30);
+	property int chooserWidth: Math.min(width * 2 / 3, width - textItem.width - textItem.anchors.leftMargin - 30hpw);
 
 	nonFocusColor: colorTheme.buttonColor;
 

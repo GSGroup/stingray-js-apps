@@ -18,7 +18,7 @@ Delegate {
 
 		color: digitChooserDelegate.activeFocus ? colorTheme.activeBorderColor : colorTheme.backgroundColor;
 		borderColor: digitChooserDelegate.activeFocus ? colorTheme.activeBorderColor : colorTheme.borderColor;
-		borderWidth: 2;
+		borderWidth: 2hpw;
 
 		Text {
 			anchors.centerIn: parent;
