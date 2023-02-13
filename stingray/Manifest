@@ -8,6 +8,7 @@
 			["ChannelRepository",		"channelRepository.js"],
 			["Config",					"config.js"],
 			["Drm",						"drm.js"],
+			["Permissions",				"permissions.js"],
 			["StandByMode",				"standByMode.js"],
 			["Statistics",				"statistics.js"],
 			["TimeManager",				"timeManager.js"],

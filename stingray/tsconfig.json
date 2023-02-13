@@ -16,6 +16,7 @@
 		"config.ts",
 		"drm.ts",
 		"standByMode.ts",
+		"permissions.ts",
 		"statistics.ts",
 		"timeManager.ts",
 		"tricolorAccount.ts",
