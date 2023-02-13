@@ -107,7 +107,7 @@ Rectangle {
 	Column {
 		anchors.verticalCenter: parent.verticalCenter;
 		anchors.right: boardRect.left;
-		anchors.rightMargin: 20;
+		anchors.rightMargin: 20hpw;
 
 		spacing: 10;
 
@@ -125,7 +125,7 @@ Rectangle {
 	SubheadText {
 		anchors.verticalCenter: parent.verticalCenter;
 		anchors.right: boardRect.left;
-		anchors.rightMargin: 20;
+		anchors.rightMargin: 20hpw;
 
 		visible: game.multiplayer && !mainMenu.visible;
 
@@ -152,7 +152,7 @@ Rectangle {
 
 		Rectangle {
 			anchors.fill: parent;
-			anchors.margins: -20;
+			anchors.margins: -20hpw;
 
 			color: "#000c";
 		}

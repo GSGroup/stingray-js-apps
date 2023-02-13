@@ -20,7 +20,7 @@ Item {
 	Image {
 		anchors.left: parent.left;
 		anchors.verticalCenter: listView.verticalCenter;
-		anchors.rightMargin: 8;
+		anchors.rightMargin: 8hpw;
 		source: colorTheme.pathToStyleFolder + "/left.svg";
 		visible: chooserItem.showArrows;
 		opacity: parent.activeFocus ? 1 : 0.3;
@@ -36,8 +36,8 @@ Item {
 	ListView {
 		id: listView;
 		anchors.fill: parent;
-		anchors.leftMargin: (chooserItem.showAtCenter ? Math.max((chooserItem.width - 60 - contentWidth) / 2, 0) : 0) + 30;
-		anchors.rightMargin: 30;
+		anchors.leftMargin: (chooserItem.showAtCenter ? Math.max((chooserItem.width - 60hpw - contentWidth) / 2, 0) : 0) + 30hpw;
+		anchors.rightMargin: 30hpw;
 		orientation: Horizontal;
 		wrapNavigation: true;
 		clip: true;
@@ -49,7 +49,7 @@ Item {
 	Image {
 		anchors.right: parent.right;
 		anchors.verticalCenter: listView.verticalCenter;
-		anchors.rightMargin: 8;
+		anchors.rightMargin: 8hpw;
 		source: colorTheme.pathToStyleFolder + "/right.svg";
 		visible: chooserItem.showArrows;
 		opacity: parent.activeFocus ? 1 : 0.3;

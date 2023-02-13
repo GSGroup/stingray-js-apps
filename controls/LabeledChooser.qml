@@ -27,7 +27,7 @@ ActivePanel {
 		text: parent.text;
 
 		anchors.left: parent.left;
-		anchors.leftMargin: 30;
+		anchors.leftMargin: 30hpw;
 		anchors.verticalCenter: parent.verticalCenter;
 
 		color: parent.activeFocus ? colorTheme.focusedTextColor : colorTheme.activeTextColor;

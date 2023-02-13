@@ -41,7 +41,7 @@ Item {
 
 		anchors.verticalCenter: listView.verticalCenter;
 		anchors.right: listView.left;
-		anchors.rightMargin: (30 - leftImage.width) / 2;
+		anchors.rightMargin: (30hpw - leftImage.width) / 2;
 
 		forcedLoading: true;
 		source: colorTheme.pathToStyleFolder + "/left.svg";
@@ -58,7 +58,7 @@ Item {
 
 		anchors.verticalCenter: listView.verticalCenter;
 		anchors.left: listView.right;
-		anchors.leftMargin: (30 - rightImage.width) / 2;
+		anchors.leftMargin: (30hpw - rightImage.width) / 2;
 
 		forcedLoading: true;
 		source: colorTheme.pathToStyleFolder + "/right.svg";
@@ -77,8 +77,8 @@ Item {
 
 		anchors.right: chooserItem.right;
 		anchors.left: chooserItem.left;
-		anchors.rightMargin: 30;
-		anchors.leftMargin: 30;
+		anchors.rightMargin: 30hpw;
+		anchors.leftMargin: 30hpw;
 		anchors.verticalCenter: parent.verticalCenter;
 
 		wrapNavigation: chooserItem.wrapNavigation;

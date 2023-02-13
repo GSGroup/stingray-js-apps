@@ -19,7 +19,7 @@ Item {
 			anchors.bottom: parent.top;
 			anchors.left: parent.left;
 		//	anchors.right: parent.right;
-			anchors.leftMargin:0;
+			anchors.leftMargin: 0;
 //			anchors.horizontalCenter: parent.horizontalCenter;
 
 			Item {

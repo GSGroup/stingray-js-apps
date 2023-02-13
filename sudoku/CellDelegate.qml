@@ -42,7 +42,7 @@ Delegate {
 
 		anchors.horizontalCenter: parent.horizontalCenter;
 		anchors.verticalCenter: parent.verticalCenter;
-		anchors.margins: 5;
+		anchors.margins: 5hpw;
 
 		horizontalAlignment: AlignHCenter;
 		verticalAlignment: AlignVCenter;
@@ -65,7 +65,7 @@ Delegate {
 
 		anchors.horizontalCenter:parent.horizontalCenter;
 		anchors.verticalCenter: parent.verticalCenter;
-		anchors.leftMargin:5;
+		anchors.leftMargin: 5hpw;
 		anchors.topMargin:12;
 
 		color: cellItemDelegate.focused ? "#FFFFFF" : "#375900";

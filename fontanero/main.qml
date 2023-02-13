@@ -110,7 +110,7 @@ Application {
 		}
 
 		Row {
-			anchors.margins: 10;
+			anchors.margins: 10hpw;
 			anchors.bottom: parent.bottom;
 			anchors.horizontalCenter: parent.horizontalCenter;
 
@@ -181,7 +181,7 @@ Application {
 			id: winPanelImage;
 			anchors.right: winText.left;
 			anchors.verticalCenter: winText.verticalCenter;
-			anchors.margins: 64;
+			anchors.margins: 64hpw;
 
 			width: 128hpw;
 			height: 128;

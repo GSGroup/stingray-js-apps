@@ -42,7 +42,7 @@ GameObject {
 		anchors.verticalCenter: parent.verticalCenter;
 		anchors.topMargin: parent.height / 2;
 
-		anchors.leftMargin: (parent.width / 2 + 2) * (playerItem.faceLeft? -1: 1);
+		anchors.leftMargin: (parent.width / 2 + 2hpw) * (playerItem.faceLeft? -1: 1);
 
 		Behavior on height { animation: Animation { duration: 100; } }
 	}

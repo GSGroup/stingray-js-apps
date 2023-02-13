@@ -155,7 +155,7 @@ Rectangle {
 		horizontalAlignment: AlignHCenter;
 
 		anchors.right: parent.left;
-		anchors.rightMargin: 10;
+		anchors.rightMargin: 10hpw;
 	}
 
 	Timer {

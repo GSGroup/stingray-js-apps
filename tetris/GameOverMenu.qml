@@ -37,8 +37,8 @@ Rectangle {
 		anchors.right: gameOverRect.right;
 
 		anchors.topMargin: 30;
-		anchors.leftMargin: 30;
-		anchors.rightMargin: 30;
+		anchors.leftMargin: 30hpw;
+		anchors.rightMargin: 30hpw;
 
 		anchors.horizontalCenter: gameOverRect.horizontalCenter;
 

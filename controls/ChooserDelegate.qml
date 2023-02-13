@@ -19,7 +19,7 @@ Delegate {
 		id: chooserIcon;
 
 		anchors.left: parent.left;
-		anchors.leftMargin: 10;
+		anchors.leftMargin: 10hpw;
 		anchors.verticalCenter: parent.verticalCenter;
 
 		source: model.icon;
@@ -37,7 +37,7 @@ Delegate {
 		id: chooserDelegateText;
 
 		anchors.right: parent.right;
-		anchors.rightMargin: 10;
+		anchors.rightMargin: 10hpw;
 		anchors.verticalCenter: parent.verticalCenter;
 
 		text: model.text;

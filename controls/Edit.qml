@@ -71,7 +71,7 @@ BaseEdit {
 
 		anchors.left: borderRect.left;
 		anchors.right: borderRect.right;
-		anchors.rightMargin: editItem.isCursorActivated ? 6 : 0;
+		anchors.rightMargin: editItem.isCursorActivated ? 6hpw : 0;
 		anchors.verticalCenter: borderRect.verticalCenter;
 
 		horizontalAlignment: AlignHCenter;
@@ -106,7 +106,7 @@ BaseEdit {
 		height: 30;
 
 		anchors.right: editText.right;
-		anchors.rightMargin: -2 - cursorRect.width
+		anchors.rightMargin: -2hpw - cursorRect.width
 				+ (editText.horizontalAlignment == editText.AlignRight ? 0 :
 						editText.horizontalAlignment == editText.AlignLeft ? editText.width - editText.paintedWidth :
 								(editText.width - editText.paintedWidth) / 2);

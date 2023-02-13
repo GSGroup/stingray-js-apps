@@ -44,7 +44,7 @@ Rectangle {
 			anchors.bottom: difficultyIndicator.top;
 			anchors.bottomMargin: 18;
 			anchors.right: parent.right;
-			anchors.rightMargin: 105;
+			anchors.rightMargin: 105hpw;
 			anchors.horizontalCenter: difficultyIndicator.horizontalCenter;
 			color: "#813722";
 			text:"level:";

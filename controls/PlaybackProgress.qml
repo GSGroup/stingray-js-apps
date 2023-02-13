@@ -52,7 +52,7 @@ Item {
 		SubheadText {
 			anchors.verticalCenter: parent.verticalCenter;
 			anchors.left: parent.left;
-			anchors.leftMargin: 10;
+			anchors.leftMargin: 10hpw;
 			text: playbackProgressItem.curTimeStr;
 			visible: playbackProgressItem.duration > 0;
 		}
@@ -60,7 +60,7 @@ Item {
 		SubheadText {
 			anchors.verticalCenter: parent.verticalCenter;
 			anchors.right: parent.right;
-			anchors.rightMargin: 10;
+			anchors.rightMargin: 10hpw;
 			text: playbackProgressItem.fullTimeStr;
 			visible: playbackProgressItem.duration > 0;
 		}

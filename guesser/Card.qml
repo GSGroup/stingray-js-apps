@@ -26,7 +26,7 @@ Item {
 
 		anchors.top: image.top;
 		anchors.left: image.left;
-		anchors.margins: 5;
+		anchors.margins: 5hpw;
 
 		radius: 15hpw;
 		color: "#0003";

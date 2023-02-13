@@ -23,7 +23,7 @@ Item {
 		anchors.top: finalPageProto.top;
 		anchors.topMargin: 50;
 		anchors.horizontalCenter: finalPageProto.horizontalCenter;
-		anchors.rightMargin: 40;
+		anchors.rightMargin: 40hpw;
 
 		color: "#fff";
 		text: "Я угадал!";

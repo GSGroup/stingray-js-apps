@@ -28,8 +28,8 @@ Rectangle {
 		anchors.right: exitRect.right;
 
 		anchors.topMargin: 20;
-		anchors.leftMargin: 30;
-		anchors.rightMargin: 30;
+		anchors.leftMargin: 30hpw;
+		anchors.rightMargin: 30hpw;
 
 		spacing: 16;
 		focus: true;

@@ -55,8 +55,8 @@ Item {
 			anchors.bottom: safeArea.bottom;
 			anchors.left: safeArea.left;
 			anchors.right: safeArea.right;
-			anchors.leftMargin: 5;
-			anchors.rightMargin: 5;
+			anchors.leftMargin: 5hpw;
+			anchors.rightMargin: 5hpw;
 			focus: true;
 			isPlaying: !playerObj.paused;
 			progress: playerObj.progress;

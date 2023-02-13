@@ -37,7 +37,7 @@ Rectangle {
 		id: levelText;
 
 		anchors.right: infoRect.right;
-		anchors.rightMargin: 140;
+		anchors.rightMargin: 140hpw;
 		anchors.top: nextBlockView.bottom;
 		anchors.topMargin: 67;
 
@@ -57,7 +57,7 @@ Rectangle {
 		id: scoreText;
 
 		anchors.right: infoRect.right;
-		anchors.rightMargin: 140;
+		anchors.rightMargin: 140hpw;
 		anchors.top: levelText.bottom;
 		anchors.topMargin: 27;
 

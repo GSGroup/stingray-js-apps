@@ -40,7 +40,7 @@ Rectangle {
 		id: innerRect;
 
 		anchors.fill: parent;
-		anchors.margins: 10;
+		anchors.margins: 10hpw;
 
 		radius: 10hpw;
 		color: rect.value == 0 ? "#ccc0b2" :

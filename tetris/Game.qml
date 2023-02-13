@@ -98,7 +98,7 @@ Rectangle{
 			height: game.height;
 
 			anchors.left: game.right;
-			anchors.leftMargin: 100;
+			anchors.leftMargin: 100hpw;
 
 			gameScore: game.gameScore;
 			currentLevel: game.currentLevel;

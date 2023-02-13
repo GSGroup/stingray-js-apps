@@ -15,7 +15,7 @@ Delegate {
 					 id:progress;
 					 anchors.verticalCenter: time.verticalCenter;
 					 anchors.left: parent.left;
-					 anchors.rightMargin:1;
+					 anchors.rightMargin: 1hpw;
 					 source: "apps/sudoku/img/ico_level_"+(model.isBetter?"up":"down")+".png";
 				}
 
@@ -23,7 +23,7 @@ Delegate {
                     id: player;
                     anchors.top: parent.top;
 					anchors.left: progress.right;
-					anchors.leftMargin: 10;
+					anchors.leftMargin: 10hpw;
 
                     text: model.player;
                 }

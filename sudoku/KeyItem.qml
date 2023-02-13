@@ -12,7 +12,7 @@ Rectangle {
 
 	height: 27;
 	width: height;
-	anchors.margins: 2;
+	anchors.margins: 2hpw;
 
 	focus: true;
 	color: activeFocus ? colorTheme.activeFocusColor : colorTheme.disabledBackgroundColor;

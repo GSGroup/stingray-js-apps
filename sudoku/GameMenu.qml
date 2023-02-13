@@ -35,7 +35,7 @@ Item {
 			anchors.top: mainMenuTheme.top;
 			anchors.topMargin: 253;
 			anchors.left: mainMenuTheme.left;
-			anchors.leftMargin: 440;
+			anchors.leftMargin: 440hpw;
 
 			color: "#581B18";
 			text: "PLAYER:";
@@ -47,7 +47,7 @@ Item {
 				width: 350hpw;
 
 				anchors.left: mainMenuTheme.left;
-				anchors.leftMargin: 518;
+				anchors.leftMargin: 518hpw;
 				anchors.top: mainMenuTheme.top;
 				anchors.topMargin: 246;
 				
@@ -84,7 +84,7 @@ Item {
 				width: 350hpw;
 
 				anchors.left: mainMenuTheme.left;
-				anchors.leftMargin: 518;
+				anchors.leftMargin: 518hpw;
 				anchors.top: mainMenuTheme.top;
 				anchors.topMargin: 315;
 

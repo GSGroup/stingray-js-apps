@@ -17,7 +17,7 @@ Item {
 
 	HighlightListView {
 		anchors.fill: cardsFirst;
-		anchors.leftMargin: -8;
+		anchors.leftMargin: -8hpw;
 		anchors.topMargin: -8;
 
 		orientation: Horizontal;
@@ -45,7 +45,7 @@ Item {
 		anchors.bottom: cardsSecond.top;
 		anchors.bottomMargin: 15;
 		anchors.horizontalCenter: cardsFirst.horizontalCenter;
-		anchors.rightMargin: 40;
+		anchors.rightMargin: 40hpw;
 
 		color: "#fff";
 		text: "В какой колонке карта?";

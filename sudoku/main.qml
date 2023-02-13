@@ -216,7 +216,7 @@ Application {
 			anchors.top: pageStack.top;
 			anchors.topMargin: 120;
 			anchors.left: pageStack.right;
-			anchors.leftMargin: 70;
+			anchors.leftMargin: 70hpw;
 			width: 50hpw;
 			opacity: 1;
 

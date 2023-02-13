@@ -19,7 +19,7 @@ Item {
 		anchors.bottom: cards.top;
 		anchors.bottomMargin: 15;
 		anchors.horizontalCenter: cards.horizontalCenter;
-		anchors.rightMargin: 40;
+		anchors.rightMargin: 40hpw;
 
 		color: "#fff";
 		text: "Загадайте карту и нажмите кнопку «Продолжить»";
@@ -37,7 +37,7 @@ Item {
 
 		anchors.top: cards.bottom;
 		anchors.horizontalCenter: cards.horizontalCenter;
-		anchors.rightMargin: 60;
+		anchors.rightMargin: 60hpw;
 
 		text: "Продолжить";
 		

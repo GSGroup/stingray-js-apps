@@ -46,7 +46,7 @@ Item {
 		anchors.top: parent.top;
 		anchors.left: parent.left;
 		anchors.right: backSpace.left;
-		anchors.margins: 10;
+		anchors.margins: 10hpw;
 		focus: true;
 
 		onRightPressed: {
@@ -68,7 +68,7 @@ Item {
 		anchors.top: edit.top;
 		anchors.bottom: edit.bottom;
 		anchors.right: parent.right;
-		anchors.rightMargin: 10;
+		anchors.rightMargin: 10hpw;
 		text: "<=";
 		width: keyView.cellHeight * 2;
 		borderColor: activeFocus ? colorTheme.activeBorderColor : "#EA2022";
@@ -91,8 +91,8 @@ Item {
 		anchors.top: edit.bottom;
 		anchors.left: parent.left;
 		anchors.right: parent.right;
-		anchors.rightMargin: 5;
-		anchors.leftMargin: 10;
+		anchors.rightMargin: 5hpw;
+		anchors.leftMargin: 10hpw;
 		anchors.topMargin: 10;
 		height: cellHeight * 4;
 		cellWidth: width / 12;
@@ -138,7 +138,7 @@ Item {
 		anchors.left: parent.left;
 		anchors.right: parent.right;
 		anchors.bottom: parent.bottom;
-		anchors.margins: 10;
+		anchors.margins: 10hpw;
 		spacing: 4;
 
 		KeyItem {
