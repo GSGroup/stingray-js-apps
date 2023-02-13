@@ -180,7 +180,7 @@ Rectangle {
 
 			anchors.fill: parent;
 
-			cellHeight: 65;
+			cellHeight: 65hph;
 			cellWidth: 65hpw;
 			orintation: GridView.Horizontal;
 

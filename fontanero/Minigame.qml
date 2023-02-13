@@ -28,7 +28,7 @@ Item {
 	GridView {
 		id: minigameView;
 		cellWidth: 400hpw / parent.size;
-		cellHeight: 400 / parent.size;
+		cellHeight: 400hph / parent.size;
 		width: cellWidth * parent.size;
 		height: cellHeight * parent.size;
 		anchors.centerIn: parent;

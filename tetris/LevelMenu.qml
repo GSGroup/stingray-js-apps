@@ -34,7 +34,7 @@ Rectangle {
 		id: levelGrid;
 
 		property int cellWidth: gameConsts.getGameWidth() / levelModel.count;
-		property int cellHeight: 47;
+		property int cellHeight: 47hph;
 
 		width: this.contentWidth;
 		height: this.contentHeight;

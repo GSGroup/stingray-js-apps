@@ -19,7 +19,7 @@ Application {
 		id: cells;
 		model: cellsModel;
 		cellWidth: 32hpw;
-		cellHeight: 32;
+		cellHeight: 32hph;
 		anchors.centerIn: parent;
 		delegate: CellDelegate { }
 	}
