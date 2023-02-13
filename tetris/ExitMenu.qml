@@ -31,7 +31,7 @@ Rectangle {
 		anchors.leftMargin: 30hpw;
 		anchors.rightMargin: 30hpw;
 
-		spacing: 16;
+		spacing: 16hph;
 		focus: true;
 
 		MenuItem {

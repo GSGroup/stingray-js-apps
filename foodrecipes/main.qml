@@ -38,7 +38,7 @@ Application {
 				anchors.left: titleText.left;
 				anchors.bottom: safeArea.bottom;
 
-				spacing: 5;
+				spacing: 5hph;
 
 				model: ListModel { id: recipesModel; }
 				delegate: RecipeDelegate { }

@@ -91,7 +91,7 @@ Item {
 			anchors.horizontalCenter: parent.horizontalCenter;
 			anchors.bottom: parent.bottom;
 			width: (70hpw + 10hpw) * count;
-			spacing: 10;
+			spacing: 10hpw;
 			orientation: Horizontal;
 			uniformDelegateSize: true;
 			delegate: PreviewPlayerButtonDelegate { }

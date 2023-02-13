@@ -17,7 +17,7 @@ Row {
 	height: 24hph;
 	width: (height * 3) + spacing * 2;
 
-	spacing: 6;
+	spacing: 6hpw;
 	collapseEmptyItems: false;
 
 	Timer {

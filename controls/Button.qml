@@ -27,7 +27,7 @@ ActivePanel {
 		x: simpleButton.textInCenter ? (parent.width - width) / 2 : simpleButton.contentMargin;
 
 		focus: true;
-		spacing: 12;
+		spacing: 12hpw;
 
 		Image {
 			id: buttonIcon;

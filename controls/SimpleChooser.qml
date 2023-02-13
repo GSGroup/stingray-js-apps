@@ -15,7 +15,7 @@ Item {
 	height: 50hph;
 	property alias currentIndex: listView.currentIndex;
 	property alias count: listView.count;
-	property int spacing: 5;
+	property int spacing: 5hpw;
 	
 	Image {
 		anchors.left: parent.left;

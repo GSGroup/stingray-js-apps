@@ -82,7 +82,7 @@ Rectangle {
 		anchors.left: boardRect.left;
 		anchors.bottom: boardRect.top;
 
-		spacing: 10;
+		spacing: 10hpw;
 
 		visible: !mainMenu.visible;
 
@@ -95,7 +95,7 @@ Rectangle {
 		anchors.right: boardRect.right;
 		anchors.bottom: boardRect.top;
 
-		spacing: 10;
+		spacing: 10hpw;
 
 		visible: !mainMenu.visible;
 
@@ -109,7 +109,7 @@ Rectangle {
 		anchors.right: boardRect.left;
 		anchors.rightMargin: 20hpw;
 
-		spacing: 10;
+		spacing: 10hph;
 
 		visible: !game.multiplayer && !mainMenu.visible;
 

@@ -139,7 +139,7 @@ Item {
 		anchors.right: parent.right;
 		anchors.bottom: parent.bottom;
 		anchors.margins: 10hpw;
-		spacing: 4;
+		spacing: 4hpw;
 
 		KeyItem {
 			id: langBtn;

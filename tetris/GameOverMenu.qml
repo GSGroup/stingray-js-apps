@@ -42,7 +42,7 @@ Rectangle {
 
 		anchors.horizontalCenter: gameOverRect.horizontalCenter;
 
-		spacing: 16;
+		spacing: 16hph;
 		focus: true;
 
 		MenuItem {

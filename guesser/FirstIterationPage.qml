@@ -21,7 +21,7 @@ Item {
 		anchors.topMargin: -8hph;
 
 		orientation: Horizontal;
-		spacing: 40;
+		spacing: 40hpw;
 		uniformDelegateSize: true;
 
 		model: ListModel {

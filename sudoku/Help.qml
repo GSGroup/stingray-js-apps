@@ -35,7 +35,7 @@ Item {
 		anchors.topMargin: 150hph;
 		height: 300hph;
 		width: 200hpw;
-		spacing: 10;
+		spacing: 10hph;
 		uniformDelegateSize: true;
 		model: ListModel {
 			   ListElement {text: "textline textline textline textline textline "}

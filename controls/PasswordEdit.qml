@@ -29,7 +29,7 @@ BaseEdit {
 			0;
 		height: parent.height;
 
-		spacing: 12;
+		spacing: 12hpw;
 		orientation: Horizontal;
 		uniformDelegateSize: true;
 

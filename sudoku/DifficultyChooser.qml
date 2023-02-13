@@ -27,7 +27,7 @@ Item {
 		uniformDelegateSize: true;
 		delegate: DifficultyChooserDelegate { }
 		model: ListModel { }
-		spacing: 1 ;
+		spacing: 1hpw;
 	}
 
 	function append(obj) {
