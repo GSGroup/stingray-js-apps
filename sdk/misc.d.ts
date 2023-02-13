@@ -8,6 +8,13 @@
 declare namespace stingray {
 
 	/**
+	 * Abstraction representing resettable smart pointer
+	 */
+	export class SmartPointer {
+		public reset(): void;
+	}
+
+	/**
 	 * Object representing decimal number
 	 */
 	export class Decimal {
