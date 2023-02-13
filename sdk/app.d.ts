@@ -9,9 +9,11 @@
 /// <reference path="channelRepository.d.ts" />
 /// <reference path="config.d.ts" />
 /// <reference path="drm.d.ts" />
+/// <reference path="permissionManager.d.ts" />
 /// <reference path="standByMode.d.ts" />
 /// <reference path="timeManager.d.ts" />
 /// <reference path="tricolorAccount.d.ts" />
+/// <reference path="userAccountManager.d.ts" />
 
 declare namespace app {
 	/**
@@ -35,6 +37,11 @@ declare namespace app {
 	export function Drm(): stingray.IDrmFeaturePtr;
 
 	/**
+	 * Function to get {@link stingray.IPermissionManagerPtr}
+	 */
+	export function PermissionManager(): stingray.IPermissionManagerPtr;
+
+	/**
 	 * Function to get {@link stingray.IStandByModePtr}
 	 */
 	export function StandByMode(): stingray.IStandByModePtr;
@@ -48,4 +55,9 @@ declare namespace app {
 	 * Function to get {@link stingray.ITricolorAccountPtr}
 	 */
 	export function TricolorAccount(): stingray.ITricolorAccountPtr;
+
+	/**
+	 * Function to get {@link stingray.IUserAccountManagerPtr}
+	 */
+	export function UserAccountManager(): stingray.IUserAccountManagerPtr;
 }
