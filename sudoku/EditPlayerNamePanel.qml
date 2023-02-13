@@ -34,7 +34,7 @@ Item {
 	Rectangle {
 		anchors.fill: parent;
 		color: "#000";
-		radius: 8;
+		radius: 8hpw;
 		borderWidth: 1;
 		borderColor: "#555";
 		opacity: 0.7;

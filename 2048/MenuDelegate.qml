@@ -20,7 +20,7 @@ Delegate {
 		anchors.centerIn: parent;
 
 		color: parent.activeFocus ? "#835a22ff" : "#734a12aa";
-		radius: 10;
+		radius: 10hpw;
 
 		Text {
 			anchors.centerIn: parent;

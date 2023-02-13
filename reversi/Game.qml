@@ -310,7 +310,7 @@ Rectangle {
 				anchors.centerIn: parent;
 				anchors.bottomMargin: -30;
 
-				radius: 2;
+				radius: 2hpw;
 				color: "#ff0000";
 			}
 		}
@@ -337,7 +337,7 @@ Rectangle {
 				anchors.centerIn: parent;
 				anchors.bottomMargin: -30;
 
-				radius: 2;
+				radius: 2hpw;
 				color: "#00ff00";
 			}
 		}
@@ -364,7 +364,7 @@ Rectangle {
 				anchors.centerIn: parent;
 				anchors.bottomMargin: -30;
 
-				radius: 2;
+				radius: 2hpw;
 				color: "#ffff00";
 			}
 		}
@@ -393,7 +393,7 @@ Rectangle {
 				anchors.centerIn: parent;
 				anchors.bottomMargin: -30;
 
-				radius: 2;
+				radius: 2hpw;
 				color: "#0000ff";
 			}
 		}

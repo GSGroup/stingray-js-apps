@@ -20,7 +20,7 @@ Delegate {
 		color: simpleChooserDelegate.activeFocus ? colorTheme.activeBorderColor : colorTheme.backgroundColor;
 		borderColor: simpleChooserDelegate.activeFocus ? colorTheme.activeBorderColor : colorTheme.borderColor;
 		borderWidth: 2;
-		radius: colorTheme.rounded ? 10 : 0;
+		radius: colorTheme.rounded ? 10hpw : 0;
 
 		BodyText {
 			id: delegateText;

@@ -42,7 +42,7 @@ Rectangle {
 		anchors.fill: parent;
 		anchors.margins: 10;
 
-		radius: 10;
+		radius: 10hpw;
 		color: rect.value == 0 ? "#ccc0b2" :
 			rect.value == 2 ? "#eee4da" :
 			rect.value == 4 ? "#ede0c8" :

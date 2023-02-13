@@ -16,7 +16,7 @@ Rectangle {
 
 	focus: true;
 	color: activeFocus ? colorTheme.activeFocusColor : colorTheme.disabledBackgroundColor;
-	radius: 5;
+	radius: 5hpw;
 
 	borderWidth: 1;
 	borderColor: activeFocus ? colorTheme.activeBorderColor : colorTheme.borderColor;

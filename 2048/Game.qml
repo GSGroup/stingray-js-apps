@@ -34,7 +34,7 @@ Rectangle {
 		anchors.left: parent.left;
 		anchors.margins: game.space;
 
-		radius: 10;
+		radius: 10hpw;
 		color: "#bcb0a2";
 		focus: true;
 
@@ -146,7 +146,7 @@ Rectangle {
 		anchors.bottomMargin: game.cellSize;
 		anchors.leftMargin: game.space;
 
-		radius: 10;
+		radius: 10hpw;
 		color: "#CCC0B2";
 
 		Text {
@@ -190,7 +190,7 @@ Rectangle {
 		anchors.topMargin: game.cellSize;
 		anchors.leftMargin: game.space;
 
-		radius: 10;
+		radius: 10hpw;
 		color: "#ccc0b2";
 
 		Text {
@@ -227,7 +227,7 @@ Rectangle {
 		anchors.fill: parent;
 
 		focus: true;
-		radius: 10;
+		radius: 10hpw;
 		color: "#eee4dab0";
 
 		visible: false;
@@ -249,7 +249,7 @@ Rectangle {
 			anchors.centerIn: parent;
 
 			color: restartMenu.isWin ? "#628316" : "#734a12";
-			radius: 10;
+			radius: 10hpw;
 
 			Text {
 				id: restartText;
@@ -278,7 +278,7 @@ Rectangle {
 		height: parent.height;
 		anchors.centerIn: parent;
 
-		radius: 10;
+		radius: 10hpw;
 		color: "#eee4dab0";
 		clip: true;
 		focus: true;

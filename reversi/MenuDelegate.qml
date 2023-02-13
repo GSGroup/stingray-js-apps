@@ -18,7 +18,7 @@ Delegate {
 
 		color: parent.activeFocus ? "#115511" : "#4c744c";
 
-		radius: 10;
+		radius: 10hpw;
 
 		TitleText {
 			anchors.centerIn: parent;

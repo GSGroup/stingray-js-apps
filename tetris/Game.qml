@@ -41,7 +41,7 @@ Rectangle{
 
 		color: colorTheme.focusablePanelColor;
 		focus: true;
-		radius: 5;
+		radius: 5hpw;
 
 		RectArray { }
 

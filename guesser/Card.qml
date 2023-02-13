@@ -28,7 +28,7 @@ Item {
 		anchors.left: image.left;
 		anchors.margins: 5;
 
-		radius: 15;
+		radius: 15hpw;
 		color: "#0003";
 	}
 

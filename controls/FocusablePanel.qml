@@ -10,7 +10,7 @@ Rectangle {
 	height: 46;
 	color: active ? colorTheme.activeFocusColor : colorTheme.focusablePanelColor;
 	focus: true;
-	radius: 3;
+	radius: 3hpw;
 
 	Behavior on color { animation: Animation { duration: 300; } }
 	Behavior on borderColor { animation: Animation { duration: 300; } }
