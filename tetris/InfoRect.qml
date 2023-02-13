@@ -18,7 +18,7 @@ Rectangle {
 	ItemGridView {
 		id: nextBlockView;
 
-		y: 38;
+		y: 38hph;
 
 		width: gameConsts.getBlockSize() * 4;
 		height: gameConsts.getBlockSize() * 4;

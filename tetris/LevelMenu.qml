@@ -23,7 +23,7 @@ Rectangle {
 	SubheadText {
 		id: titleText;
 
-		y: 20;
+		y: 20hph;
 
 		anchors.horizontalCenter: parent.horizontalCenter;
 

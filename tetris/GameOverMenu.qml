@@ -22,7 +22,7 @@ Rectangle {
 	SubheadText {
 		id: menuText;
 
-		y: 20;
+		y: 20hph;
 
 		anchors.horizontalCenter: gameOverRect.horizontalCenter;
 
