@@ -23,7 +23,7 @@ GridView {
 	Rectangle {
 		id: innerBackground;
 
-		width: Math.min(highlightGridView.width - 2, highlightGridView.contentWidth - 2);
+		width: Math.min(highlightGridView.width - 2hpw, highlightGridView.contentWidth - 2hpw);
 		height: Math.min(highlightGridView.height, highlightGridView.contentHeight);
 
 		color: highlightGridView.backgroundColor;

@@ -258,7 +258,7 @@ Rectangle {
 		anchors.bottom: mainGameTheme.bottom;
 		anchors.bottomMargin: 21;
 		height: mainGameTheme.height-142;
-		width: mainGameTheme.height-142;
+		width: mainGameTheme.height - 142hpw;
 		cellWidth: width/9;
 		cellHeight: height/9;
 		model: GameFieldModel {}

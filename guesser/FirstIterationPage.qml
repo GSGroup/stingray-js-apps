@@ -32,7 +32,7 @@ Item {
 		}
 
 		delegate: Delegate {
-			width: 100;
+			width: 100hpw;
 			height: parent.height;
 
 			focus: true;

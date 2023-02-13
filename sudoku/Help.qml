@@ -11,7 +11,7 @@ import "HelpStringDelegate.qml";
 Item {
 	id: gameOverBox;
 	height:150;
-	width:350;
+	width: 350hpw;
 	focus: true;
 	
 	Image {
@@ -34,7 +34,7 @@ Item {
 		anchors.top: finalTheme.top;
 		anchors.topMargin: 150;
 		height: 300;
-		width: 200;
+		width: 200hpw;
 		spacing: 10;
 		uniformDelegateSize: true;
 		model: ListModel {

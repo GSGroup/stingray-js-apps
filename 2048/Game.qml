@@ -242,7 +242,7 @@ Rectangle {
 		}
 
 		Rectangle {
-			width: restartText.width + 40;
+			width: restartText.width + 40hpw;
 			height: game.cellSize / 2;
 
 			anchors.topMargin: game.cellSize / 2;

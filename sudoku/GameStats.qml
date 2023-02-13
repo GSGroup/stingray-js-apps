@@ -14,7 +14,7 @@ Item {
 		Item {
 			id: headerItem;		
 			height: 100;
-			width: 	150;
+			width: 	150hpw;
 
 			anchors.bottom: parent.top;
 			anchors.left: parent.left;
@@ -108,7 +108,7 @@ Item {
 
 			anchors.top: gameStats.headerItem.bottom;
 			anchors.horizontalCenter: headerItem.horizontalCenter;
-			width: 200;
+			width: 200hpw;
 			height: 250;
 			uniformDelegateSize: true;
 			model: ListModel { }

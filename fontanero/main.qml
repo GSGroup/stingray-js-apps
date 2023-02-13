@@ -28,7 +28,7 @@ Application {
 		anchors.fill: cells;
 		Image {
 			id: throwingObject;
-			width: 32;
+			width: 32hpw;
 			height: 32;
 			source: "apps/fontanero/t/7.png";
 			visible: false;
@@ -183,7 +183,7 @@ Application {
 			anchors.verticalCenter: winText.verticalCenter;
 			anchors.margins: 64;
 
-			width: 128;
+			width: 128hpw;
 			height: 128;
 			fillMode: Stretch;
 			source: "apps/fontanero/t/" + parent.tile + ".png";

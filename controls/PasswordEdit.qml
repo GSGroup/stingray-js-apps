@@ -24,8 +24,8 @@ BaseEdit {
 		property int currentPinLength;
 		property Color pinDotColor: passwordEditItem.pinDotColor;
 
-		width: passwordEditItem.maxLen ? passwordEditItem.maxLen * 12 + (passwordEditItem.maxLen - 1) * this.spacing :
-			pinList.currentPinLength ? pinList.currentPinLength * 12 + (pinList.currentPinLength - 1) * this.spacing :
+		width: passwordEditItem.maxLen ? passwordEditItem.maxLen * 12hpw + (passwordEditItem.maxLen - 1) * this.spacing :
+			pinList.currentPinLength ? pinList.currentPinLength * 12hpw + (pinList.currentPinLength - 1) * this.spacing :
 			0;
 		height: parent.height;
 

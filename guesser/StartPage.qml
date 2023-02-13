@@ -33,7 +33,7 @@ Item {
 		id: startButton;
 
 		height: 45;
-		width: 200;
+		width: 200hpw;
 
 		anchors.top: cards.bottom;
 		anchors.horizontalCenter: cards.horizontalCenter;

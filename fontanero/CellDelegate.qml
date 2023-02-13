@@ -1,5 +1,5 @@
 Delegate {
-	width: 32;
+	width: 32hpw;
 	height: 32;
 
 	focus: true;

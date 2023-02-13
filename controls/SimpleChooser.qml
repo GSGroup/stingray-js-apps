@@ -24,7 +24,7 @@ Item {
 		source: colorTheme.pathToStyleFolder + "/left.svg";
 		visible: chooserItem.showArrows;
 		opacity: parent.activeFocus ? 1 : 0.3;
-		width: 32;
+		width: 32hpw;
 		
 		Behavior on opacity {
 			animation: Animation {
@@ -53,7 +53,7 @@ Item {
 		source: colorTheme.pathToStyleFolder + "/right.svg";
 		visible: chooserItem.showArrows;
 		opacity: parent.activeFocus ? 1 : 0.3;
-		width: 32;
+		width: 32hpw;
 		
 		Behavior on opacity {
 			animation: Animation {

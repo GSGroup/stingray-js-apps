@@ -34,14 +34,14 @@ Application {
 			anchors.top: titleText.bottom;
 			anchors.verticalCenter: parent.verticalCenter;
 			anchors.horizontalCenter: parent.horizontalCenter;
-			width: 500;
+			width: 500hpw;
 			anchors.topMargin: 40;
 	
 			GameMenu {
 				id: gameMenu;
 				anchors.horizontalCenter: parent.horizontalCenter;
 				anchors.verticalCenter: parent.verticalCenter;
-				width: 400;
+				width: 400hpw;
 				
 				onNewGameEvent: {
 					console.log("onNewGameEvent player = "+player+" difficulty "+difficulty+" diffInt "+diffInt);
@@ -217,7 +217,7 @@ Application {
 			anchors.topMargin: 120;
 			anchors.left: pageStack.right;
 			anchors.leftMargin: 70;
-			width: 50;
+			width: 50hpw;
 			opacity: 1;
 
 			Behavior on opacity { animation: Animation { duration: 300;	}}

@@ -15,7 +15,7 @@ Item {
 	anchors.verticalCenter: parent.anchors.verticalCenter;
 	anchors.horizontalCenter: parent.anchors.horizontalCenter;
 	height:150;
-	width:350;
+	width: 350hpw;
 
 	focus: true;
 	
@@ -68,7 +68,7 @@ Item {
 		anchors.horizontalCenter: parent.horizontalCenter;
 		anchors.bottom: finalTheme.bottom;
 		anchors.bottomMargin: 70;
-		width: 250;
+		width: 250hpw;
 		height: 50;
 
 		color: "#00000000";
@@ -106,7 +106,7 @@ Item {
 		id: menuCallButton;
 		anchors.top: continueButton.bottom;
 		anchors.horizontalCenter: parent.horizontalCenter;
-		width: 250;
+		width: 250hpw;
 		height: 50;
 		anchors.topMargin: 5;
 

@@ -10,7 +10,7 @@ Delegate {
 
 	property bool filled;
 
-	width: 12;
+	width: 12hpw;
 	height: 12;
 
 	Rectangle {

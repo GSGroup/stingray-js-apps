@@ -19,7 +19,7 @@ Item {
 	focus: true;
 	property alias hint: edit.hint;
 	height: 220;
-	width: 400;
+	width: 400hpw;
 	property variant keysModel;
 	property bool isUpper;
 

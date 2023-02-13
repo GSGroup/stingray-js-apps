@@ -90,7 +90,7 @@ Item {
 			anchors.top: parent.top;
 			anchors.horizontalCenter: parent.horizontalCenter;
 			anchors.bottom: parent.bottom;
-			width: (70 + 10) * count;
+			width: (70hpw + 10hpw) * count;
 			spacing: 10;
 			orientation: Horizontal;
 			uniformDelegateSize: true;

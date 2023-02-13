@@ -26,7 +26,7 @@ Delegate {
 		ReversiDisc {
 			id: white;
 
-			width: model.disc == "White" ? 50 : 0;
+			width: model.disc == "White" ? 50hpw : 0;
 
 			anchors.centerIn: parent;
 
@@ -37,7 +37,7 @@ Delegate {
 		ReversiDisc {
 			id: black;
 
-			width: model.disc == "Black" ? 50 : 0;
+			width: model.disc == "Black" ? 50hpw : 0;
 
 			anchors.centerIn: parent;
 

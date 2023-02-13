@@ -41,7 +41,7 @@ Item {
 		id: repeatButton;
 
 		height: 45;
-		width: 200;
+		width: 200hpw;
 
 		anchors.bottom: finalPageProto.bottom;
 		anchors.horizontalCenter: finalPageProto.horizontalCenter;

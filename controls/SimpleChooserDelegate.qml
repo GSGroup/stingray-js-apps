@@ -8,7 +8,7 @@
 Delegate {
 	id: simpleChooserDelegate;
 
-	width: delegateText.width + 20;
+	width: delegateText.width + 20hpw;
 	height: 28;
 
 	anchors.verticalCenter: parent.verticalCenter;

@@ -44,7 +44,7 @@ Item {
 		PlayerChooser {
 				id: playerChooser;
 
-				width: 350;
+				width: 350hpw;
 
 				anchors.left: mainMenuTheme.left;
 				anchors.leftMargin: 518;
@@ -81,7 +81,7 @@ Item {
 		DifficultyChooser {
 				id: difficultyChooser;
 
-				width: 350;
+				width: 350hpw;
 
 				anchors.left: mainMenuTheme.left;
 				anchors.leftMargin: 518;
@@ -109,7 +109,7 @@ Item {
 			anchors.horizontalCenter: parent.horizontalCenter;
 			anchors.topMargin: 10;
 //			anchors.bottomMargin: 10;
-			width: 250;
+			width: 250hpw;
 			height: 50;
 			font: titleFont;
 
@@ -152,7 +152,7 @@ Item {
 			anchors.horizontalCenter: parent.horizontalCenter;
 			anchors.topMargin: 5;
 
-			width: 250;
+			width: 250hpw;
 			height: 50;
 			enabled: false;
 
@@ -193,7 +193,7 @@ Item {
 			id: helpButton;
 			anchors.top: playButton.bottom;
 			anchors.horizontalCenter: parent.horizontalCenter;
-			width: 250;
+			width: 250hpw;
 			height: 50;
 			anchors.topMargin: 5;
 

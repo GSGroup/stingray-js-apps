@@ -16,7 +16,7 @@ ActivePanel {
 	property int contentMargin: 12;
 	property bool textInCenter: true;
 
-	width: Math.max(176, iconTextItem.width + contentMargin * 2);
+	width: Math.max(176hpw, iconTextItem.width + contentMargin * 2);
 	height: 53;
 
 	nonFocusColor: colorTheme.buttonColor;
@@ -32,7 +32,7 @@ ActivePanel {
 		Image {
 			id: buttonIcon;
 
-			width: 34;
+			width: 34hpw;
 			height: 34;
 
 			anchors.verticalCenter: simpleButton.verticalCenter;

@@ -23,7 +23,7 @@ Rectangle {
 	Rectangle {
 		id: mainMenu;
 
-		width: 520;
+		width: 520hpw;
 		height: 520;
 
 		anchors.centerIn: parent;
@@ -45,7 +45,7 @@ Rectangle {
 		ListView {
 			id: menuList;
 
-			width: 390;
+			width: 390hpw;
 			height: 270;
 
 			anchors.centerIn: parent;
@@ -168,7 +168,7 @@ Rectangle {
 	Rectangle {
 		id: boardRect;
 
-		width: 65 * 8;
+		width: 65hpw * 8;
 		height: 65 * 8;
 
 		anchors.centerIn: parent;

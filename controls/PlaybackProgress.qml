@@ -97,7 +97,7 @@ Item {
 			Image {
 				id: rwBtn;
 				height: parent.height;
-				width: 80;
+				width: 80hpw;
 				focus: true;
 				color: activeFocus ? colorTheme.focusedTextColor : colorTheme.activeTextColor;
 				source: "res/apps/player/ico_rw.png";
@@ -127,7 +127,7 @@ Item {
 			Image {
 				id: playBtn;
 				height: parent.height;
-				width: 80;
+				width: 80hpw;
 				focus: true;
 				color: activeFocus ? colorTheme.focusedTextColor : colorTheme.activeTextColor;
 				source: "res/apps/player/ico_" + (!playbackProgressItem.isPlaying ? "play" : "pause") + ".png";
@@ -141,7 +141,7 @@ Item {
 			Image {
 				id: ffBtn;
 				height: parent.height;
-				width: 80;
+				width: 80hpw;
 				focus: true;
 				color: activeFocus ? colorTheme.focusedTextColor : colorTheme.activeTextColor;
 				source: "res/apps/player/ico_ff.png";
@@ -223,7 +223,7 @@ Item {
 			anchors.bottom: triangle.top;
 			anchors.horizontalCenter: parent.horizontalCenter;
 			height: 30;
-			width: seekText.paintedWidth + 20;
+			width: seekText.paintedWidth + 20hpw;
 			color: "#fff";
 		}
 

@@ -10,7 +10,7 @@ Delegate {
 
 	property bool chooserFocused;
 
-	width: 20 + chooserDelegateText.width * chooserDelegateText.visible + chooserIcon.width * chooserIcon.visible + (chooserIcon.visible && chooserDelegateText.visible) * 10;
+	width: 20hpw + chooserDelegateText.width * chooserDelegateText.visible + chooserIcon.width * chooserIcon.visible + (chooserIcon.visible && chooserDelegateText.visible) * 10hpw;
 	height: parent.height;
 
 	focus: true;

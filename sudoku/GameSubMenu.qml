@@ -41,7 +41,7 @@ Item {
 			anchors.horizontalCenter: parent.horizontalCenter;
 			anchors.topMargin: 10;
 			anchors.bottomMargin: 10;
-			width: 250;
+			width: 250hpw;
 			height: 50;
 
 			color: "#00000000";
@@ -78,7 +78,7 @@ Item {
 			id: menuCallButton;
 			anchors.top: continueButton.bottom;
 			anchors.horizontalCenter: parent.horizontalCenter;
-			width: 250;
+			width: 250hpw;
 			height: 50;
 			anchors.topMargin: 10;
 			anchors.bottomMargin: 10;

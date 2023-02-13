@@ -115,7 +115,7 @@ Item {
 	}
 	
 	Item {
-		width: 60;
+		width: 60hpw;
 
 		anchors.top: listView.top;
 		anchors.left: listView.left;
@@ -150,7 +150,7 @@ Item {
 	}
 
 	Item {
-		width: 60;
+		width: 60hpw;
 
 		anchors.top: listView.top;
 		anchors.right: listView.right;
