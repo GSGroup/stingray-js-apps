@@ -45,7 +45,7 @@ Item {
 		source: show ? cardProto.resPath + cardProto.cardNumber + ".png" : cardProto.shirt;
 		fillMode: Stretch;
 
-		onShowChanged: { this.width = 80; }
+		onShowChanged: { this.width = calculateWidth(80, 'h'); }
 
 		Behavior on width {
 			animation: Animation {

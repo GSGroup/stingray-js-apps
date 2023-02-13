@@ -14,15 +14,15 @@ this.categories = [{ title: "Комедии", url: "https://api.ivi.ru/mobileapi
 this.colors = {"active" : "#EC174F",
                "inactive" : "#91949C"};
 
-this.poster = {"width"  : 172,
-               "height" : 264};
+this.poster = {"width"  : calculateWidth(172, 'h'),
+               "height" : calculateHeight(264, 'h')};
 
-this.menuWidth = 256;
+this.menuWidth = calculateWidth(256, 'h');
 
 this.inactiveOpacity = 0.5;
 
 this.animationDuration = 150;
 
-this.margin = 60;
+this.margin = calculateWidth(60, 'h');
 
 this.defaultPoster = "apps/ivi/resources/catalog_default.png";
