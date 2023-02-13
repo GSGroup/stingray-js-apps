@@ -14,7 +14,7 @@ Row {
 	property int delayedTicks: 1;
 	property Color color: colorTheme.activeFocusColor;
 
-	height: 24;
+	height: 24hph;
 	width: (height * 3) + spacing * 2;
 
 	spacing: 6;

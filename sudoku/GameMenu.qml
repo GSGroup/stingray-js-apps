@@ -110,7 +110,7 @@ Item {
 			anchors.topMargin: 10;
 //			anchors.bottomMargin: 10;
 			width: 250hpw;
-			height: 50;
+			height: 50hph;
 			font: titleFont;
 
 			radius: 0;
@@ -153,7 +153,7 @@ Item {
 			anchors.topMargin: 5;
 
 			width: 250hpw;
-			height: 50;
+			height: 50hph;
 			enabled: false;
 
 
@@ -194,7 +194,7 @@ Item {
 			anchors.top: playButton.bottom;
 			anchors.horizontalCenter: parent.horizontalCenter;
 			width: 250hpw;
-			height: 50;
+			height: 50hph;
 			anchors.topMargin: 5;
 
 			font: titleFont;

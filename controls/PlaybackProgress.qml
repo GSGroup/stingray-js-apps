@@ -46,7 +46,7 @@ Item {
 		anchors.left: parent.left;
 		anchors.right: parent.right;
 		anchors.bottom: parent.bottom;
-		height: 60;
+		height: 60hph;
 		color: colorTheme.activePanelColor;
 
 		SubheadText {
@@ -176,7 +176,7 @@ Item {
 		anchors.right: parent.right;
 		anchors.bottom: controlPanel.top;
 		anchors.bottomMargin: 2;
-		height: 5;
+		height: 5hph;
 		barColor: colorTheme.accentColor;
 		progress: playbackProgressItem.duration > 0 ? (1.0 * playbackProgressItem.barProgress) / playbackProgressItem.duration : 0;
 		animationDuration: 100;
@@ -187,7 +187,7 @@ Item {
 		id: seekCursor;
 		anchors.horizontalCenter: seekProgressBar.filledArea.right;
 		anchors.verticalCenter: seekProgressBar.verticalCenter;
-		height: 44;
+		height: 44hph;
 		width: height;
 		radius: height / 2;
 		color: colorTheme.accentColor;
@@ -196,7 +196,7 @@ Item {
 
 		Rectangle {
 			anchors.centerIn: parent;
-			height: 28;
+			height: 28hph;
 			width: height;
 			radius: height / 2;
 			color: colorTheme.accentColor;
@@ -214,7 +214,7 @@ Item {
 			anchors.bottom: parent.top;
 			source: "res/apps/player/triangle.png";
 			fillMode: PreserveAspectFit;
-			height: 15;
+			height: 15hph;
 			width: height * 2;
 		}
 
@@ -222,7 +222,7 @@ Item {
 			id: bgRect;
 			anchors.bottom: triangle.top;
 			anchors.horizontalCenter: parent.horizontalCenter;
-			height: 30;
+			height: 30hph;
 			width: seekText.paintedWidth + 20hpw;
 			color: "#fff";
 		}

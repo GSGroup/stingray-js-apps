@@ -16,7 +16,7 @@ Rectangle {
 
 	color: colorTheme.activePanelColor;
 
-	height: titleText.height + levelGrid.cellHeight + 60;
+	height: titleText.height + levelGrid.cellHeight + 60hph;
 
 	visible: false;
 

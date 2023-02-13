@@ -6,7 +6,7 @@
 // WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 Delegate {
-				  height: 20;
+				  height: 20hph;
 				  width: 400hpw;
 				  anchors.horizontalCenter: parent.horizontalCenter;
 				  BodyText {

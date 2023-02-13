@@ -13,7 +13,7 @@ Item {
 		
 		Item {
 			id: headerItem;		
-			height: 100;
+			height: 100hph;
 			width: 	150hpw;
 
 			anchors.bottom: parent.top;
@@ -109,7 +109,7 @@ Item {
 			anchors.top: gameStats.headerItem.bottom;
 			anchors.horizontalCenter: headerItem.horizontalCenter;
 			width: 200hpw;
-			height: 250;
+			height: 250hph;
 			uniformDelegateSize: true;
 			model: ListModel { }
 			delegate: GameStatsDelegate {}

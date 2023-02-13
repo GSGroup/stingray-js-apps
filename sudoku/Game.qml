@@ -257,7 +257,7 @@ Rectangle {
 		anchors.horizontalCenter: mainGameTheme.horizontalCenter;
 		anchors.bottom: mainGameTheme.bottom;
 		anchors.bottomMargin: 21;
-		height: mainGameTheme.height-142;
+		height: mainGameTheme.height - 142hph;
 		width: mainGameTheme.height - 142hpw;
 		cellWidth: width/9;
 		cellHeight: height/9;

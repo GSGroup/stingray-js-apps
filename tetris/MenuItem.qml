@@ -10,7 +10,7 @@ Rectangle {
 
 	property alias menuText: textItem.text;
 
-	height: 53;
+	height: 53hph;
 
 	color: itemRect.activeFocus ? colorTheme.activeFocusColor : colorTheme.buttonColor;
 	focus: true;

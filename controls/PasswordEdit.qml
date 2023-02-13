@@ -14,7 +14,7 @@ BaseEdit {
 	property Color pinDotColor: activeFocus ? colorTheme.focusedTextColor : colorTheme.activeTextColor;
 
 	width: pinList.width;
-	height: 12;
+	height: 12hph;
 	
 	focus: true;
 

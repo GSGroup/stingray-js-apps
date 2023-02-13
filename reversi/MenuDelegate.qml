@@ -6,13 +6,13 @@
 // WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 Delegate {
-	height: 90;
+	height: 90hph;
 
 	focus: true;
 
 	Rectangle {
 		width: parent.width;
-		height: parent.height - 25;
+		height: parent.height - 25hph;
 
 		anchors.centerIn: parent;
 

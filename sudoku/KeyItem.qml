@@ -10,7 +10,7 @@ Rectangle {
 
 	property string text;
 
-	height: 27;
+	height: 27hph;
 	width: height;
 	anchors.margins: 2hpw;
 

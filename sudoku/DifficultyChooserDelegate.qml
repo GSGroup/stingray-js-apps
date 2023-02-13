@@ -7,7 +7,7 @@
 
 Delegate {
 	width: 99hpw;
-	height: 28;
+	height: 28hph;
 	anchors.verticalCenter: parent.verticalCenter;
 	focus: true;
 

@@ -42,7 +42,7 @@ Item {
 			anchors.topMargin: 10;
 			anchors.bottomMargin: 10;
 			width: 250hpw;
-			height: 50;
+			height: 50hph;
 
 			color: "#00000000";
 
@@ -79,7 +79,7 @@ Item {
 			anchors.top: continueButton.bottom;
 			anchors.horizontalCenter: parent.horizontalCenter;
 			width: 250hpw;
-			height: 50;
+			height: 50hph;
 			anchors.topMargin: 10;
 			anchors.bottomMargin: 10;
 

@@ -7,7 +7,7 @@
 
 Rectangle {
 	property bool active: activeFocus;
-	height: 46;
+	height: 46hph;
 	color: active ? colorTheme.activeFocusColor : colorTheme.focusablePanelColor;
 	focus: true;
 	radius: 3hpw;

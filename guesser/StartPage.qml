@@ -32,7 +32,7 @@ Item {
 	Button {
 		id: startButton;
 
-		height: 45;
+		height: 45hph;
 		width: 200hpw;
 
 		anchors.top: cards.bottom;

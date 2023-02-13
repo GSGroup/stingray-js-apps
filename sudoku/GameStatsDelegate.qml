@@ -7,7 +7,7 @@
 
 Delegate {
                 width: 200hpw;
-                height:40;
+                height: 40hph;
 
 				anchors.horizontalCenter: parent.horizontalCenter;
 

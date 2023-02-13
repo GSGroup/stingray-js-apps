@@ -14,7 +14,7 @@ Rectangle {
 	signal backToGame();
 	signal exitGame();
 
-	height: gameExitColumn.height + 40;
+	height: gameExitColumn.height + 40hph;
 
 	color: colorTheme.activePanelColor;
 

@@ -46,7 +46,7 @@ Item {
 
 	Player {
 		id: previewPlayer;
-		height: parent.isFullscreen ? mainWindow.height : (parent.height - controls.height - 10);
+		height: parent.isFullscreen ? mainWindow.height : (parent.height - controls.height - 10hph);
 		anchors.top: parent.isFullscreen ? mainWindow.top : parent.top;
 		anchors.left: parent.isFullscreen ? mainWindow.left : parent.left;
 		anchors.right: parent.isFullscreen ? mainWindow.right : parent.right;
@@ -80,7 +80,7 @@ Item {
 		anchors.bottom: parent.bottom;
 		anchors.left: parent.left;
 		anchors.right: parent.right;
-		height: 70;
+		height: 70hph;
 		clip: true;
 		focus: true;
 		visible: !parent.isFullscreen;

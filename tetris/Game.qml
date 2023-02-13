@@ -239,7 +239,7 @@ Rectangle{
 			id: pauseMenu;
 
 			width: game.width;
-			height: 73;
+			height: 73hph;
 
 			anchors.centerIn: game;
 

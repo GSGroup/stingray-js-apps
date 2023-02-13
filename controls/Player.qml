@@ -51,7 +51,7 @@ Item {
 
 		PlaybackProgress {
 			id: playbackProgress;
-			height: 70;
+			height: 70hph;
 			anchors.bottom: safeArea.bottom;
 			anchors.left: safeArea.left;
 			anchors.right: safeArea.right;

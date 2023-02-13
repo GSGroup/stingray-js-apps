@@ -15,7 +15,7 @@ Rectangle {
 
 	color: colorTheme.activePanelColor;
 
-	height: menuText.height + gameOverColumn.height + 70;
+	height: menuText.height + gameOverColumn.height + 70hph;
 
 	visible: false;
 

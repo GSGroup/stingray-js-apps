@@ -24,7 +24,7 @@ Rectangle {
 		id: mainMenu;
 
 		width: 520hpw;
-		height: 520;
+		height: 520hph;
 
 		anchors.centerIn: parent;
 
@@ -46,7 +46,7 @@ Rectangle {
 			id: menuList;
 
 			width: 390hpw;
-			height: 270;
+			height: 270hph;
 
 			anchors.centerIn: parent;
 
@@ -169,7 +169,7 @@ Rectangle {
 		id: boardRect;
 
 		width: 65hpw * 8;
-		height: 65 * 8;
+		height: 65hph * 8;
 
 		anchors.centerIn: parent;
 
@@ -279,7 +279,7 @@ Rectangle {
 	}
 
 	Rectangle {
-		height: 64;
+		height: 64hph;
 
 		anchors.top: boardRect.bottom;
 		anchors.bottom: parent.bottom;
@@ -304,7 +304,7 @@ Rectangle {
 			}
 
 			Rectangle {
-				height: 5;
+				height: 5hph;
 				width: parent.width / 3;
 
 				anchors.centerIn: parent;
@@ -331,7 +331,7 @@ Rectangle {
 			}
 
 			Rectangle {
-				height: 5;
+				height: 5hph;
 				width: parent.width / 3;
 
 				anchors.centerIn: parent;
@@ -358,7 +358,7 @@ Rectangle {
 			}
 
 			Rectangle {
-				height: 5;
+				height: 5hph;
 				width: parent.width / 3;
 
 				anchors.centerIn: parent;
@@ -387,7 +387,7 @@ Rectangle {
 			}
 
 			Rectangle {
-				height: 5;
+				height: 5hph;
 				width: parent.width / 3;
 
 				anchors.centerIn: parent;

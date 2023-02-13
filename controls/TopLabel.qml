@@ -14,7 +14,7 @@ Item {
 	height: innerText.height;
 
 	Gradient {
-		height: 150;
+		height: 150hph;
 		anchors.top: mainWindow.top;
 		anchors.bottomMargin: -30;
 		anchors.left: mainWindow.left;

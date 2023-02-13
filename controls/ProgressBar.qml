@@ -12,7 +12,7 @@ Rectangle {
 	property Color barColor;
 	property int animationDuration: 800;
 
-	height: 15;
+	height: 15hph;
 	color: active ? colorTheme.focusColor : "#000000";
 	barColor: colorTheme.activeFocusTop;
 	clip: true;

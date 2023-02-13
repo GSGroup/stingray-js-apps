@@ -10,7 +10,7 @@ import "HelpStringDelegate.qml";
 
 Item {
 	id: gameOverBox;
-	height:150;
+	height: 150hph;
 	width: 350hpw;
 	focus: true;
 	
@@ -33,7 +33,7 @@ Item {
 		anchors.horizontalCenter: parent.horizontalCenter;
 		anchors.top: finalTheme.top;
 		anchors.topMargin: 150;
-		height: 300;
+		height: 300hph;
 		width: 200hpw;
 		spacing: 10;
 		uniformDelegateSize: true;

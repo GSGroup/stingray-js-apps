@@ -32,7 +32,7 @@ BaseEdit {
 	property bool isCursorActivated: (editText.text != "") && (alwaysShowCursor || (activeShowCursor && activeFocus));
 
 	width: 100hpw;
-	height: 40;
+	height: 40hph;
 
 	clip: true;
 	focus: true;
@@ -53,7 +53,7 @@ BaseEdit {
 	}
 
 	Rectangle {
-		height: 3;
+		height: 3hph;
 
 		anchors.bottom: parent.bottom;
 		anchors.left: parent.left;
@@ -103,7 +103,7 @@ BaseEdit {
 		id: cursorRect;
 
 		width: 2hpw;
-		height: 30;
+		height: 30hph;
 
 		anchors.right: editText.right;
 		anchors.rightMargin: -2hpw - cursorRect.width

@@ -40,7 +40,7 @@ Item {
 	Button {
 		id: repeatButton;
 
-		height: 45;
+		height: 45hph;
 		width: 200hpw;
 
 		anchors.bottom: finalPageProto.bottom;

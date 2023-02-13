@@ -29,7 +29,7 @@ Application {
 		Image {
 			id: throwingObject;
 			width: 32hpw;
-			height: 32;
+			height: 32hph;
 			source: "apps/fontanero/t/7.png";
 			visible: false;
 			Behavior on x {
@@ -67,14 +67,14 @@ Application {
 		anchors.left: parent.left;
 		anchors.right: parent.right;
 		anchors.top: parent.top;
-		height: 100;
+		height: 100hph;
 	}
 
 	BodyText {
 		id: menuPanel;
 		anchors.right: parent.right;
 		anchors.verticalCenter: parent.verticalCenter;
-		height: 250;
+		height: 250hph;
 	}
 
 	Item {
@@ -184,7 +184,7 @@ Application {
 			anchors.margins: 64hpw;
 
 			width: 128hpw;
-			height: 128;
+			height: 128hph;
 			fillMode: Stretch;
 			source: "apps/fontanero/t/" + parent.tile + ".png";
 		}

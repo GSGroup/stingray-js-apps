@@ -6,7 +6,7 @@
 // WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 Rectangle {
-	height: parent.height - 15;
+	height: parent.height - 15hph;
 
 	radius: 15hpw;
 	borderWidth: 2hpw;

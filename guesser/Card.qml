@@ -18,7 +18,7 @@ Item {
 	property int minWidth: 80hpw;
 
 	width: minWidth;
-	height: 120;
+	height: 120hph;
 
 	Rectangle {
 		width: image.width;

@@ -11,7 +11,7 @@ Delegate {
 	property bool filled;
 
 	width: 12hpw;
-	height: 12;
+	height: 12hph;
 
 	Rectangle {
 		anchors.fill: parent;

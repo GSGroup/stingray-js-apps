@@ -18,7 +18,7 @@ Item {
 	id: ePlayerNamePanelItem;
 	focus: true;
 	property alias hint: edit.hint;
-	height: 220;
+	height: 220hph;
 	width: 400hpw;
 	property variant keysModel;
 	property bool isUpper;
@@ -42,7 +42,7 @@ Item {
 
 	Edit {
 		id: edit;
-		height: 30;
+		height: 30hph;
 		anchors.top: parent.top;
 		anchors.left: parent.left;
 		anchors.right: backSpace.left;
@@ -64,7 +64,7 @@ Item {
 
 	KeyItem {
 		id: backSpace;
-		height: 30;
+		height: 30hph;
 		anchors.top: edit.top;
 		anchors.bottom: edit.bottom;
 		anchors.right: parent.right;

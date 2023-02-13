@@ -12,7 +12,7 @@ Item {
 	property bool showArrows: true;
 	property bool showAtCenter: true;
 	property bool onlyOneItemVisible: true;
-	height: 50;
+	height: 50hph;
 	property alias currentIndex: listView.currentIndex;
 	property alias count: listView.count;
 

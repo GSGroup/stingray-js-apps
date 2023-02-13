@@ -9,7 +9,7 @@ Delegate {
 	id: previewPlayerButtonDelegate;
 
 	width: 70hpw;
-	height: 70;
+	height: 70hph;
 
 	focus: true;
 
