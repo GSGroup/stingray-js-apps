@@ -100,7 +100,7 @@ Item {
 				width: 80hpw;
 				focus: true;
 				color: activeFocus ? colorTheme.focusedTextColor : colorTheme.activeTextColor;
-				source: "res/apps/player/ico_rw.png";
+				source: "res/apps/player/ico_rw.svg";
 
 				onSelectPressed:		{ this.press(); }
 				onLeftPressed:			{ this.press(); }
@@ -130,7 +130,7 @@ Item {
 				width: 80hpw;
 				focus: true;
 				color: activeFocus ? colorTheme.focusedTextColor : colorTheme.activeTextColor;
-				source: "res/apps/player/ico_" + (!playbackProgressItem.isPlaying ? "play" : "pause") + ".png";
+				source: "res/apps/player/ico_" + (!playbackProgressItem.isPlaying ? "play" : "pause") + ".svg";
 
 				onSelectPressed: {
 					hideTimer.restart();
@@ -144,7 +144,7 @@ Item {
 				width: 80hpw;
 				focus: true;
 				color: activeFocus ? colorTheme.focusedTextColor : colorTheme.activeTextColor;
-				source: "res/apps/player/ico_ff.png";
+				source: "res/apps/player/ico_ff.svg";
 
 				onSelectPressed:		{ this.press(); }
 				onRightPressed:			{ this.press(); }
@@ -212,7 +212,7 @@ Item {
 			id: triangle;
 			anchors.horizontalCenter: parent.horizontalCenter;
 			anchors.bottom: parent.top;
-			source: "res/apps/player/triangle.png";
+			source: "res/apps/player/triangle.svg";
 			fillMode: PreserveAspectFit;
 			height: 15hph;
 			width: height * 2;
