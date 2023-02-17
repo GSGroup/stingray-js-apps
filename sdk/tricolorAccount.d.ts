@@ -15,8 +15,8 @@ declare namespace stingray {
 	 * Basic information about abonent.
 	 */
 	export interface AbonentPersonalDataPtr {
-		GetEmail(): OptionalString;
-		GetPhoneNumber(): OptionalString;
+		GetEmail(): string | null;
+		GetPhoneNumber(): string | null;
 	}
 
 	/**
@@ -55,10 +55,10 @@ declare namespace stingray {
 	 * Basic information about purchase tariff.
 	 */
 	export interface TricolorPurchaseTariffInfoPtr {
-		GetId(): OptionalString;
-		GetServiceId(): OptionalString;
-		GetName(): OptionalString;
-		GetPrice(): OptionalDecimal;
+		GetId(): string | null;
+		GetServiceId(): string | null;
+		GetName(): string | null;
+		GetPrice(): string | null;
 		ToString(): string;
 	}
 
@@ -68,8 +68,8 @@ declare namespace stingray {
 	 */
 	export interface ITricolorPurchaseTariffPtr {
 		GetInfo(): TricolorPurchaseTariffInfoPtr;
-		GetPaymentForm(createBindingFlag: boolean, phoneNumber: OptionalString, email: OptionalString, debtAmount: OptionalDecimal): IGetPaymentFormResponsePtr;
-		Pay(cardInfo: TricolorPaymentCardInfoPtr, phoneNumber: OptionalString, email: OptionalString, debtAmount: OptionalDecimal): IDirectPaymentResponsePtr;
+		GetPaymentForm(createBindingFlag: boolean, phoneNumber: string | null, email: string | null, debtAmount: Decimal | null): IGetPaymentFormResponsePtr;
+		Pay(cardInfo: TricolorPaymentCardInfoPtr, phoneNumber: string | null, email: string | null, debtAmount: Decimal | null): IDirectPaymentResponsePtr;
 	}
 	type ITricolorPurchaseTariffsPtr = IEnumerable<ITricolorPurchaseTariffPtr>;
 

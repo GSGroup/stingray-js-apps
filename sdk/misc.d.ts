@@ -20,30 +20,6 @@ declare namespace stingray {
 	}
 
 	/**
-	 * Abstraction representing nullable object holder
-	 */
-	export class Optional<T> {
-		public reset(): void;
-		public is_initialized(): boolean;
-		public get(): T;
-	}
-
-	/**
-	 * Abstraction representing nullable {@link string} holder
-	 */
-	export class OptionalString extends Optional<string> {
-		public constructor(str: string);
-	}
-
-	/**
-	 * Abstraction representing nullable {@link Decimal} holder
-	 */
-	export class OptionalDecimal extends Optional<Decimal> {
-		public constructor(mantissa: number, exponent: number);
-		public constructor(str: string);
-	}
-
-	/**
 	 * String object containing translations map
 	 */
 	export interface TranslatedString {
