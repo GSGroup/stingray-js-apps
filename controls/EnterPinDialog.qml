@@ -41,7 +41,7 @@ BaseDialog {
 
 			width: parent.width;
 
-			wrapMode: Wrap;
+			wrapMode: WordWrap;
 			horizontalAlignment: AlignHCenter;
 
 			text: enterPinDialogItem.message;
