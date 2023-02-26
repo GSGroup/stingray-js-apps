@@ -172,15 +172,16 @@ Item {
 
 	ProgressBar {
 		id: seekProgressBar;
+
 		anchors.left: parent.left;
 		anchors.right: parent.right;
 		anchors.bottom: controlPanel.top;
 		anchors.bottomMargin: 2hph;
-		height: 5hph;
-		barColor: colorTheme.accentColor;
+
 		progress: playbackProgressItem.duration > 0 ? (1.0 * playbackProgressItem.barProgress) / playbackProgressItem.duration : 0;
-		animationDuration: 100;
-		clip: false;
+
+		color: colorTheme.globalBackgroundColor;
+		barColor: colorTheme.accentColor;
 	}
 
 	Rectangle {

@@ -5,31 +5,60 @@
 // IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
 // WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-Rectangle {
-	id: progressBarItem;
-	property bool active: true;
-	property real progress: 0; // 0..1
-	property Color barColor;
-	property int animationDuration: 800;
+Item {
+	id: progressBarProto;
 
-	height: 15hph;
-	color: active ? colorTheme.focusColor : "#000000";
-	barColor: colorTheme.activeFocusTop;
-	clip: true;
-	radius: height / 2;
+	property bool active;
+
+	property real progress: 0; // 0..1
+	property bool discreteProgress;
+
+	property int widthAnimationDuration: 800;
+	property int colorAnimationDuration: 0;
+
+	property int radius;
+
+	property Color color;
+	property Color barColor;
+
+ 	height: 5hph;
+
+	Rectangle {
+		id: backgroundRect;
+
+		width: parent.width;
+		height: parent.height;
+
+		radius: progressBarProto.radius;
+
+		color: progressBarProto.color;
+
+		opacity: 0.3;
+
+		Behavior on color { id: backgroundRectColorAnimation; animation: Animation { duration: progressBarProto.colorAnimationDuration; } }
+	}
 
 	Rectangle {
 		id: filledArea;
-		anchors.top: parent.top;
-		anchors.left: parent.left;
-		anchors.bottom: parent.bottom;
-		width: parent.width * progressBarItem.progress;
-		color: progressBarItem.active ? progressBarItem.barColor : colorTheme.borderColor;
-		radius: progressBarItem.radius;
 
-		Behavior on opacity { animation: Animation { duration: 500; } }
-		Behavior on width { id: filledAreaWidthAnim; animation: Animation { duration: progressBarItem.animationDuration; } }
+		property real progress: Math.min(1.0, Math.max(0.0, progressBarProto.progress));
+
+		width: !progressBarProto.discreteProgress ? parent.width * progress :
+				progress <= 0.5 ? Math.ceil(parent.width * progress) : Math.floor(parent.width * progress);
+		height: parent.height;
+
+		radius: progressBarProto.radius;
+
+		color: progressBarProto.barColor;
+
+		Behavior on width { id: filledAreaWidthAnimation; animation: Animation { duration: progressBarProto.widthAnimationDuration; } }
+		Behavior on color { id: filledAreaColorAnimation; animation: Animation { duration: progressBarProto.colorAnimationDuration; } }
 	}
 
-	reset: { filledAreaWidthAnim.complete(); }
+	resetAnimation: {
+		backgroundRectColorAnimation.complete();
+
+		filledAreaColorAnimation.complete();
+		filledAreaWidthAnimation.complete();
+	}
 }
