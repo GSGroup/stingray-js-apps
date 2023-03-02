@@ -100,7 +100,7 @@ Item {
 				width: 80hpw;
 				focus: true;
 				color: activeFocus ? colorTheme.focusedTextColor : colorTheme.activeTextColor;
-				source: "res/apps/player/ico_rw.svg";
+				source: "res/common/player/rewind.svg";
 
 				onSelectPressed:		{ this.press(); }
 				onLeftPressed:			{ this.press(); }
@@ -144,7 +144,7 @@ Item {
 				width: 80hpw;
 				focus: true;
 				color: activeFocus ? colorTheme.focusedTextColor : colorTheme.activeTextColor;
-				source: "res/apps/player/ico_ff.svg";
+				source: "res/common/player/fast_forward.svg";
 
 				onSelectPressed:		{ this.press(); }
 				onRightPressed:			{ this.press(); }
