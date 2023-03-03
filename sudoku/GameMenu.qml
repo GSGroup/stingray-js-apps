@@ -8,12 +8,13 @@
 import controls.Button;
 import controls.FocusablePanel;
 import "DifficultyChooser.qml";
-import "EditPlayerNamePanel.qml";
 import "PlayerChooser.qml";
 
 Item {
 	id: mainMenu;
 	focus: true;
+
+	property alias keyboardVisible: keyboard.visible;
 
 	signal newGameEvent(difficulty, player,diffInt);
 	signal playEvent(difficulty,player);
@@ -56,9 +57,7 @@ Item {
 
 			}
 
-			onSelectPressed: {
-				pNameEdit.show();
-			}
+			onSelectPressed: { keyboard.visible = true; }
 
 			onCurrentIndexChanged: {
 				parent.enablePlayBtnEvent(playerChooser.listView.model.get(playerChooser.listView.currentIndex).player,
@@ -232,17 +231,21 @@ Item {
 		}
 	}
 
-	EditPlayerNamePanel {
-		id: pNameEdit;
-		anchors.top: playerChooser.bottom;
-		anchors.horizontalCenter: parent.horizontalCenter;
-		visible: false;
+	InputKeyboard {
+		id: keyboard;
 
-		onAccepted: {
-			console.log("set player name");
-			mainMenu.playerChooser.listView.model.setProperty(mainMenu.playerChooser.currentIndex,'player',text);
-			visible = false;
-			mainMenu.playerChooser.setFocus();
+		defaultLangCode: "";
+
+		savedWordsGroup: "GamesNickname";
+
+		function onAccepted(text) {
+			console.log("set player name" + text);
+			mainMenu.playerChooser.listView.model.setProperty(mainMenu.playerChooser.currentIndex, 'player', text);
+		}
+
+		onVisibleChanged: {
+			if (!visible)
+				mainMenu.playerChooser.setFocus();
 		}
 	}
 
@@ -284,5 +287,7 @@ Item {
 		console.log("plaerys "+players);
 		save("sudokuPlayers",players);
 	}
+
+	function reset() { keyboard.resetLanguage(); }
 }
 

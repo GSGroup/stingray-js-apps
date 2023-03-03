@@ -87,6 +87,8 @@ Application {
 
 				this.playButton.enabled=(player==game.player && diffInt==game.diffInt && game.isIncomplete);
 			}
+
+			onKeyboardVisibleChanged: { gameStats.opacity = keyboardVisible ? 0.01 : 1; }
 		}
 
 		Game {
@@ -228,8 +230,12 @@ Application {
 	}
 
 	onVisibleChanged: {
-		if (visible) {
+		if (visible)
+		{
+			gameMenu.reset();
 			this.startGame();
 		}
+		else
+			gameMenu.keyboardVisible = false;
 	}
 }
