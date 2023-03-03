@@ -12,277 +12,277 @@ import "EditPlayerNamePanel.qml";
 import "PlayerChooser.qml";
 
 Item {
-		id: mainMenu;
-		focus: true;
+	id: mainMenu;
+	focus: true;
 
-		signal newGameEvent(difficulty, player,diffInt);
-		signal playEvent(difficulty,player);
-		signal difficultySet(difficulty);
-		signal helpEvent();
-		signal enablePlayBtnEvent(player,diffInt);
+	signal newGameEvent(difficulty, player,diffInt);
+	signal playEvent(difficulty,player);
+	signal difficultySet(difficulty);
+	signal helpEvent();
+	signal enablePlayBtnEvent(player,diffInt);
 
-		Image {
-			 id: mainMenuTheme;
-			 anchors.horizontalCenter: safeArea.horizontalCenter;
-			 anchors.verticalCenter: safeArea.verticalCenter;
-			 source: "apps/sudoku/img/ground_main.png";
+	Image {
+		 id: mainMenuTheme;
+		 anchors.horizontalCenter: safeArea.horizontalCenter;
+		 anchors.verticalCenter: safeArea.verticalCenter;
+		 source: "apps/sudoku/img/ground_main.png";
 
-		}
-		
-		BodyText {
-			id: playerLabel;
+	}
 
-			anchors.top: mainMenuTheme.top;
-			anchors.topMargin: 253hph;
+	BodyText {
+		id: playerLabel;
+
+		anchors.top: mainMenuTheme.top;
+		anchors.topMargin: 253hph;
+		anchors.left: mainMenuTheme.left;
+		anchors.leftMargin: 440hpw;
+
+		color: "#581B18";
+		text: "PLAYER:";
+	}
+
+	PlayerChooser {
+			id: playerChooser;
+
+			width: 350hpw;
+
 			anchors.left: mainMenuTheme.left;
-			anchors.leftMargin: 440hpw;
+			anchors.leftMargin: 518hpw;
+			anchors.top: mainMenuTheme.top;
+			anchors.topMargin: 246hph;
 
-			color: "#581B18";
-			text: "PLAYER:";
-		}
-
-		PlayerChooser {
-				id: playerChooser;
-
-				width: 350hpw;
-
-				anchors.left: mainMenuTheme.left;
-				anchors.leftMargin: 518hpw;
-				anchors.top: mainMenuTheme.top;
-				anchors.topMargin: 246hph;
-				
-				onDownPressed: {
-					difficultyChooser.setFocus();
-				
-				}
-
-				onSelectPressed: {
-					pNameEdit.show();
-				}
-
-				onCurrentIndexChanged: {
-					parent.enablePlayBtnEvent(playerChooser.listView.model.get(playerChooser.listView.currentIndex).player,
-						difficultyChooser.listView.model.get(difficultyChooser.listView.currentIndex).factor);
-				}
-		}
-
-		BodyText {
-			id:levelLabel;
-
-			anchors.horizontalCenter: playerLabel.horizontalCenter;
-			anchors.top: playerLabel.bottom;
-			anchors.topMargin: 42hph;
-
-			color: "#581B18";
-			text: "LEVEL:";
-		}
-
-
-		DifficultyChooser {
-				id: difficultyChooser;
-
-				width: 350hpw;
-
-				anchors.left: mainMenuTheme.left;
-				anchors.leftMargin: 518hpw;
-				anchors.top: mainMenuTheme.top;
-				anchors.topMargin: 315hph;
-
-				onUpPressed: {
-					playerChooser.setFocus();
-				}
-
-				onDownPressed: {
-					newGameButton.setFocus();
-				}
-
-				onCurrentIndexChanged: {
-					parent.difficultySet(this.listView.currentIndex+1);
-					parent.enablePlayBtnEvent(playerChooser.listView.model.get(playerChooser.listView.currentIndex).player,
-						difficultyChooser.listView.model.get(difficultyChooser.listView.currentIndex).factor);
-				}
-		}
-
-		FocusablePanel {
-			id: newGameButton;
-			anchors.top: difficultyChooser.bottom;
-			anchors.horizontalCenter: parent.horizontalCenter;
-			anchors.topMargin: 10hph;
-//			anchors.bottomMargin: 10hph;
-			width: 250hpw;
-			height: 50hph;
-			font: titleFont;
-
-			radius: 0;
-
-			Image {
-				id:dcDelegateImgage;
-				anchors.horizontalCenter: parent.horizontalCenter;
-				anchors.verticalCenter: parent.verticalCenter;
- 				source: "apps/sudoku/img/btn_main_"+(parent.enabled?(parent.activeFocus? "focus":"regular"):"disabled")+".png";
-			}
-
-			BodyText {
-				id: txt;
-				anchors.verticalCenter: parent.verticalCenter;
-				anchors.horizontalCenter: parent.horizontalCenter;
-				color: "#581B18";
-				text:"New Game";
-			}
-			
-			onUpPressed: {
+			onDownPressed: {
 				difficultyChooser.setFocus();
+
+			}
+
+			onSelectPressed: {
+				pNameEdit.show();
+			}
+
+			onCurrentIndexChanged: {
+				parent.enablePlayBtnEvent(playerChooser.listView.model.get(playerChooser.listView.currentIndex).player,
+					difficultyChooser.listView.model.get(difficultyChooser.listView.currentIndex).factor);
+			}
+	}
+
+	BodyText {
+		id:levelLabel;
+
+		anchors.horizontalCenter: playerLabel.horizontalCenter;
+		anchors.top: playerLabel.bottom;
+		anchors.topMargin: 42hph;
+
+		color: "#581B18";
+		text: "LEVEL:";
+	}
+
+
+	DifficultyChooser {
+			id: difficultyChooser;
+
+			width: 350hpw;
+
+			anchors.left: mainMenuTheme.left;
+			anchors.leftMargin: 518hpw;
+			anchors.top: mainMenuTheme.top;
+			anchors.topMargin: 315hph;
+
+			onUpPressed: {
+				playerChooser.setFocus();
 			}
 
 			onDownPressed: {
-				playButton.enabled?playButton.setFocus():helpButton.setFocus();
-			}
-			
-			onSelectPressed: {
-				console.log("newGameButton PRESSED!");
-				parent.newGameEvent(mainMenu.difficultyChooser.listView.model.get(difficultyChooser.currentIndex).name,
-					mainMenu.playerChooser.listView.model.get(playerChooser.currentIndex).player,
-					mainMenu.difficultyChooser.listView.model.get(difficultyChooser.currentIndex).factor);
-			}
-		}
-
-		FocusablePanel {
-			id: playButton;
-			anchors.top: newGameButton.bottom;
-			anchors.horizontalCenter: parent.horizontalCenter;
-			anchors.topMargin: 5hph;
-
-			width: 250hpw;
-			height: 50hph;
-			enabled: false;
-
-
-			Image {
-				id:dcDelegateImgage;
-				anchors.horizontalCenter: parent.horizontalCenter;
-				anchors.verticalCenter: parent.verticalCenter;
- 				source: "apps/sudoku/img/btn_main_"+(parent.enabled?(parent.activeFocus? "focus":"regular"):"disabled")+".png";
-			}
-
-			BodyText {
-				id: txt;
-				anchors.verticalCenter: parent.verticalCenter;
-				anchors.horizontalCenter: parent.horizontalCenter;
-				color: "#581B18";
-				text:"Play";
-			}
-
-			
-			onUpPressed: {
 				newGameButton.setFocus();
 			}
 
-			onDownPressed: {
-				helpButton.setFocus();
+			onCurrentIndexChanged: {
+				parent.difficultySet(this.listView.currentIndex+1);
+				parent.enablePlayBtnEvent(playerChooser.listView.model.get(playerChooser.listView.currentIndex).player,
+					difficultyChooser.listView.model.get(difficultyChooser.listView.currentIndex).factor);
 			}
-			
-			onSelectPressed: {
-				console.log("playButton PRESSED!");
-				parent.playEvent(mainMenu.difficultyChooser.listView.model.get(difficultyChooser.currentIndex).text,
-					mainMenu.playerChooser.listView.model.get(playerChooser.currentIndex).text);
-			}
-		}
+	}
 
+	FocusablePanel {
+		id: newGameButton;
+		anchors.top: difficultyChooser.bottom;
+		anchors.horizontalCenter: parent.horizontalCenter;
+		anchors.topMargin: 10hph;
+//		anchors.bottomMargin: 10hph;
+		width: 250hpw;
+		height: 50hph;
+		font: titleFont;
 
-		FocusablePanel {
-			id: helpButton;
-			anchors.top: playButton.bottom;
+		radius: 0;
+
+		Image {
+			id:dcDelegateImgage;
 			anchors.horizontalCenter: parent.horizontalCenter;
-			width: 250hpw;
-			height: 50hph;
-			anchors.topMargin: 5hph;
-
-			font: titleFont;
-			text: "Help";
-			color: "#00000000";
-			
-
-			Image {
-				id:dcDelegateImgage;
-				anchors.horizontalCenter: parent.horizontalCenter;
-				anchors.verticalCenter: parent.verticalCenter;
- 				source: "apps/sudoku/img/btn_main_"+(parent.enabled?(parent.activeFocus? "focus":"regular"):"disabled")+".png";
-			}
-
-
-			BodyText {
-				id: txt;
-				anchors.verticalCenter: parent.verticalCenter;
-				anchors.horizontalCenter: parent.horizontalCenter;
-				color: "#581B18";
-				text:"Help";
-			}
-
-			onUpPressed: {
-				playButton.enabled?playButton.setFocus():newGameButton.setFocus();
-			}
-
-			onDownPressed: {
-			}
-			
-			onSelectPressed: {
-				console.log("helpButton PRESSED!");
-				parent.helpEvent();
-			
-			}
+			anchors.verticalCenter: parent.verticalCenter;
+			source: "apps/sudoku/img/btn_main_"+(parent.enabled?(parent.activeFocus? "focus":"regular"):"disabled")+".png";
 		}
 
-		EditPlayerNamePanel {
-			id: pNameEdit;
-			anchors.top: playerChooser.bottom;
+		BodyText {
+			id: txt;
+			anchors.verticalCenter: parent.verticalCenter;
 			anchors.horizontalCenter: parent.horizontalCenter;
-			visible: false;
-
-			onAccepted: {
-				console.log("set player name");
-				mainMenu.playerChooser.listView.model.setProperty(mainMenu.playerChooser.currentIndex,'player',text);
-				visible = false;
-				mainMenu.playerChooser.setFocus();
-			}
+			color: "#581B18";
+			text:"New Game";
 		}
 
-		function load(data)
+		onUpPressed: {
+			difficultyChooser.setFocus();
+		}
+
+		onDownPressed: {
+			playButton.enabled?playButton.setFocus():helpButton.setFocus();
+		}
+
+		onSelectPressed: {
+			console.log("newGameButton PRESSED!");
+			parent.newGameEvent(mainMenu.difficultyChooser.listView.model.get(difficultyChooser.currentIndex).name,
+				mainMenu.playerChooser.listView.model.get(playerChooser.currentIndex).player,
+				mainMenu.difficultyChooser.listView.model.get(difficultyChooser.currentIndex).factor);
+		}
+	}
+
+	FocusablePanel {
+		id: playButton;
+		anchors.top: newGameButton.bottom;
+		anchors.horizontalCenter: parent.horizontalCenter;
+		anchors.topMargin: 5hph;
+
+		width: 250hpw;
+		height: 50hph;
+		enabled: false;
+
+
+		Image {
+			id:dcDelegateImgage;
+			anchors.horizontalCenter: parent.horizontalCenter;
+			anchors.verticalCenter: parent.verticalCenter;
+			source: "apps/sudoku/img/btn_main_"+(parent.enabled?(parent.activeFocus? "focus":"regular"):"disabled")+".png";
+		}
+
+		BodyText {
+			id: txt;
+			anchors.verticalCenter: parent.verticalCenter;
+			anchors.horizontalCenter: parent.horizontalCenter;
+			color: "#581B18";
+			text:"Play";
+		}
+
+
+		onUpPressed: {
+			newGameButton.setFocus();
+		}
+
+		onDownPressed: {
+			helpButton.setFocus();
+		}
+
+		onSelectPressed: {
+			console.log("playButton PRESSED!");
+			parent.playEvent(mainMenu.difficultyChooser.listView.model.get(difficultyChooser.currentIndex).text,
+				mainMenu.playerChooser.listView.model.get(playerChooser.currentIndex).text);
+		}
+	}
+
+
+	FocusablePanel {
+		id: helpButton;
+		anchors.top: playButton.bottom;
+		anchors.horizontalCenter: parent.horizontalCenter;
+		width: 250hpw;
+		height: 50hph;
+		anchors.topMargin: 5hph;
+
+		font: titleFont;
+		text: "Help";
+		color: "#00000000";
+
+
+		Image {
+			id:dcDelegateImgage;
+			anchors.horizontalCenter: parent.horizontalCenter;
+			anchors.verticalCenter: parent.verticalCenter;
+			source: "apps/sudoku/img/btn_main_"+(parent.enabled?(parent.activeFocus? "focus":"regular"):"disabled")+".png";
+		}
+
+
+		BodyText {
+			id: txt;
+			anchors.verticalCenter: parent.verticalCenter;
+			anchors.horizontalCenter: parent.horizontalCenter;
+			color: "#581B18";
+			text:"Help";
+		}
+
+		onUpPressed: {
+			playButton.enabled?playButton.setFocus():newGameButton.setFocus();
+		}
+
+		onDownPressed: {
+		}
+
+		onSelectPressed: {
+			console.log("helpButton PRESSED!");
+			parent.helpEvent();
+
+		}
+	}
+
+	EditPlayerNamePanel {
+		id: pNameEdit;
+		anchors.top: playerChooser.bottom;
+		anchors.horizontalCenter: parent.horizontalCenter;
+		visible: false;
+
+		onAccepted: {
+			console.log("set player name");
+			mainMenu.playerChooser.listView.model.setProperty(mainMenu.playerChooser.currentIndex,'player',text);
+			visible = false;
+			mainMenu.playerChooser.setFocus();
+		}
+	}
+
+	function load(data)
+	{
+		console.log("loading players..");
+
+		if(!(this.players = load("sudokuPlayers")))
 		{
-			console.log("loading players..");
-
-			if(!(this.players = load("sudokuPlayers")))
-			{
-				this.players = data ["players"];
-			}
-
-			for (var i = 0; i < this.players.length; ++i)
-			{
-				mainMenu.playerChooser.append(this.players[i]);
-			}
-
-			console.log("loading difficulty levels..");
-			this.difflevels = data ["difflevels"];
-			for (var  i= 0; i< this.difflevels.length; ++i )
-			{
-				mainMenu.difficultyChooser.append(this.difflevels[i]);
-			}
+			this.players = data ["players"];
 		}
 
-		function reFillPlayerChooser(data){
-				 mainMenu.playerChooser.listView.model.reset();
-				 for(var i =0; i<data.count; ++i){
-				 		 mainMenu.playerChooser.append({player: data.get(i)['player']});
-				 }
-		}
-
-		function savePlayers()
+		for (var i = 0; i < this.players.length; ++i)
 		{
-			var players =[];
-			for(var i =0 ;i<mainMenu.playerChooser.listView.model.count;++i){
-				players.push(mainMenu.playerChooser.listView.model.get(i));
-			}
-			console.log("plaerys "+players);
-			save("sudokuPlayers",players);
+			mainMenu.playerChooser.append(this.players[i]);
 		}
+
+		console.log("loading difficulty levels..");
+		this.difflevels = data ["difflevels"];
+		for (var  i= 0; i< this.difflevels.length; ++i )
+		{
+			mainMenu.difficultyChooser.append(this.difflevels[i]);
+		}
+	}
+
+	function reFillPlayerChooser(data){
+			 mainMenu.playerChooser.listView.model.reset();
+			 for(var i =0; i<data.count; ++i){
+					 mainMenu.playerChooser.append({player: data.get(i)['player']});
+			 }
+	}
+
+	function savePlayers()
+	{
+		var players =[];
+		for(var i =0 ;i<mainMenu.playerChooser.listView.model.count;++i){
+			players.push(mainMenu.playerChooser.listView.model.get(i));
+		}
+		console.log("plaerys "+players);
+		save("sudokuPlayers",players);
+	}
 }
 
