@@ -79,7 +79,7 @@ Application {
 				anchors.bottom: parent.bottom;
 				anchors.horizontalCenter: parent.horizontalCenter;
 
-				color: colorTheme.textColor;
+				color: colorTheme.activeTextColor;
 
 				onBackPressed: { appPageStack.currentIndex = 0; }
 			}

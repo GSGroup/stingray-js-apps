@@ -56,7 +56,7 @@ Item {
 				id: txt;
 				anchors.verticalCenter: parent.verticalCenter;
 				anchors.horizontalCenter: parent.horizontalCenter;
-				color: parent.activeFocus ? colorTheme.activeTextColor : colorTheme.textColor;
+				color: parent.activeFocus ? colorTheme.focusedTextColor : colorTheme.activeTextColor;
 				text:"continue";
 			}
 
@@ -95,7 +95,7 @@ Item {
 				id: txt;
 				anchors.verticalCenter: parent.verticalCenter;
 				anchors.horizontalCenter: parent.horizontalCenter;
-				color: parent.activeFocus ? colorTheme.activeTextColor : colorTheme.textColor;
+				color: parent.activeFocus ? colorTheme.focusedTextColor : colorTheme.activeTextColor;
 				text:"to main menu";
 			}
 			

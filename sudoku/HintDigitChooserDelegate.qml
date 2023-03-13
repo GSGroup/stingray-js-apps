@@ -25,7 +25,7 @@ Delegate {
 			anchors.verticalCenter: parent.verticalCenter;
 
 			font: bodyFont;
-			color: hintDigitChooserDelegate.activeFocus ? colorTheme.activeTextColor : colorTheme.textColor;
+			color: hintDigitChooserDelegate.activeFocus ? colorTheme.focusedTextColor : colorTheme.activeTextColor;
 			text: model.digit;
 		}
 
