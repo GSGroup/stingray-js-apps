@@ -15,7 +15,7 @@ BaseEdit {
 
 	property Color textColor: colorTheme.activeTextColor;
 	property Color backgroundColor: colorTheme.focusablePanelColor;
-	property Color borderColor: activeFocus ? colorTheme.activeBorderColor : colorTheme.borderColor;
+
 	property Color color: activeFocus ? colorTheme.activeFocusColor : editItem.backgroundColor;
 
 	property int lineAnimationDuration: 300;
@@ -25,8 +25,6 @@ BaseEdit {
 	property bool activeShowCursor;
 	property bool alwaysShowCursor;
 	property bool passwordMode;
-	property int borderWidth: 2hpw;
-	property int radius: colorTheme.rounded ? 8hpw : 0;
 	property bool showUnderLining: !showBackground;
 
 	property bool isCursorActivated: (editText.text != "") && (alwaysShowCursor || (activeShowCursor && activeFocus));
@@ -37,19 +35,14 @@ BaseEdit {
 	clip: true;
 	focus: true;
 
-	Rectangle {
-		id: borderRect;
+	Panel {
+		id: bgRect;
 
 		anchors.fill: parent;
 
-		borderWidth: parent.borderWidth;
-		radius: parent.radius;
-		color: colorTheme.globalBackgroundColor;
-		borderColor: parent.borderColor;
+		color: editItem.color;
 
 		visible: editItem.showBackground;
-
-		Behavior on borderColor { animation: Animation { duration: 200; } }
 	}
 
 	Rectangle {
@@ -69,10 +62,10 @@ BaseEdit {
 	SubheadText {
 		id: editText;
 
-		anchors.left: borderRect.left;
-		anchors.right: borderRect.right;
+		anchors.left: bgRect.left;
+		anchors.right: bgRect.right;
 		anchors.rightMargin: editItem.isCursorActivated ? 6hpw : 0;
-		anchors.verticalCenter: borderRect.verticalCenter;
+		anchors.verticalCenter: bgRect.verticalCenter;
 
 		horizontalAlignment: AlignHCenter;
 
@@ -87,8 +80,8 @@ BaseEdit {
 	SubheadText {
 		id: hintText;
 
-		anchors.bottom: borderRect.bottom;
-		anchors.horizontalCenter: borderRect.horizontalCenter;
+		anchors.bottom: bgRect.bottom;
+		anchors.horizontalCenter: bgRect.horizontalCenter;
 
 		color: colorTheme.textColor;
 		text: editItem.hint;
@@ -110,7 +103,7 @@ BaseEdit {
 				+ (editText.horizontalAlignment == editText.AlignRight ? 0 :
 						editText.horizontalAlignment == editText.AlignLeft ? editText.width - editText.paintedWidth :
 								(editText.width - editText.paintedWidth) / 2);
-		anchors.verticalCenter: borderRect.verticalCenter;
+		anchors.verticalCenter: bgRect.verticalCenter;
 
 		color: editText.color;
 
