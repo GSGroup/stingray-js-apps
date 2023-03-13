@@ -17,8 +17,8 @@ Delegate {
 
 	Rectangle {
 		anchors.fill: parent;
-		color: simpleChooserDelegate.activeFocus ? colorTheme.activeBorderColor : colorTheme.globalBackgroundColor;
-		borderColor: simpleChooserDelegate.activeFocus ? colorTheme.activeBorderColor : colorTheme.borderColor;
+		color: simpleChooserDelegate.activeFocus ? colorTheme.activeFocusColor : colorTheme.focusablePanelColor;
+		borderColor: colorTheme.activePanelColor;
 		borderWidth: 2hpw;
 
 		BodyText {
