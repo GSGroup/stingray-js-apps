@@ -11,6 +11,7 @@ BaseEdit {
 	id: editItem;
 
 	property string hint;
+
 	property variant font: subheadFont;
 
 	property Color textColor: colorTheme.activeTextColor;
@@ -19,12 +20,13 @@ BaseEdit {
 	property Color color: activeFocus ? colorTheme.activeFocusColor : editItem.backgroundColor;
 
 	property int lineAnimationDuration: 300;
+	property int hintAnimationDuration: 300;
 
 	property string mask: "*";
 	property bool showBackground: true;
+	property bool passwordMode;
 	property bool activeShowCursor;
 	property bool alwaysShowCursor;
-	property bool passwordMode;
 	property bool showUnderLining: !showBackground;
 
 	property bool isCursorActivated: (editText.text != "") && (alwaysShowCursor || (activeShowCursor && activeFocus));
@@ -52,14 +54,14 @@ BaseEdit {
 		anchors.left: parent.left;
 		anchors.right: parent.right;
 
-		color: colorTheme.activeTextColor;
+		color: colorTheme.highlightPanelColor;
 
 		opacity: editItem.showUnderLining && parent.activeFocus ? 1 : 0;
 
 		Behavior on opacity { animation: Animation { duration: editItem.lineAnimationDuration; } }
 	}
 
-	SubheadText {
+	Text {
 		id: editText;
 
 		anchors.left: bgRect.left;
@@ -70,26 +72,26 @@ BaseEdit {
 		horizontalAlignment: AlignHCenter;
 
 		font: editItem.font;
-		color: editItem.textColor;
+		color: parent.activeFocus ? colorTheme.focusedTextColor : editItem.textColor;
 
 		Behavior on opacity { animation: Animation { duration: 300; } }
+		Behavior on color { animation: Animation { duration: 200; } }
 
 		onTextChanged: { editItem.restartCursorBlinkTimer(); }
 	}
 
-	SubheadText {
+	Text {
 		id: hintText;
 
-		anchors.bottom: bgRect.bottom;
-		anchors.horizontalCenter: bgRect.horizontalCenter;
+		anchors.centerIn: bgRect;
 
-		color: colorTheme.textColor;
 		text: editItem.hint;
 		font: editItem.font;
+		color: parent.activeFocus ? colorTheme.focusedTextColor : editItem.textColor;
 
 		opacity: editText.text == "" ? 0.6 : 0;
 
-		Behavior on opacity { animation: Animation { duration: 300; } }
+		Behavior on opacity { animation: Animation { duration: editItem.hintAnimationDuration; } }
 	}
 
 	Rectangle {
