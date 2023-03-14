@@ -16,7 +16,7 @@ Delegate {
 	Rectangle {
 		anchors.fill: parent;
 
-		color: digitChooserDelegate.activeFocus ? colorTheme.activeBorderColor : colorTheme.backgroundColor;
+		color: digitChooserDelegate.activeFocus ? colorTheme.activeBorderColor : colorTheme.globalBackgroundColor;
 		borderColor: digitChooserDelegate.activeFocus ? colorTheme.activeBorderColor : colorTheme.borderColor;
 		borderWidth: 2hpw;
 

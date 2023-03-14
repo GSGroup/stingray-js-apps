@@ -17,7 +17,7 @@ Application {
 
 		focus: true;
 
-		color: colorTheme.backgroundColor;
+		color: colorTheme.globalBackgroundColor;
 
 		Game {
 			focus: true;

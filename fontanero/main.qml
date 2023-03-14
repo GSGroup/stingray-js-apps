@@ -98,7 +98,7 @@ Application {
 		id: restartDialog;
 		visible: false;
 
-		color: colorTheme.backgroundColor;
+		color: colorTheme.globalBackgroundColor;
 		width: parent.width / 3;
 		height: parent.height / 4;
 		anchors.centerIn: parent;

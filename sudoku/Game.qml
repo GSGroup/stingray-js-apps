@@ -185,7 +185,7 @@ Rectangle {
 		height: width;
 		radius: 0;
 
-		color: eraser.activeFocus ? colorTheme.activeBorderColor : "#000000"; //colorTheme.backgroundColor;
+		color: eraser.activeFocus ? colorTheme.activeBorderColor : "#000000";
 
 		opacity: 0;
 
@@ -231,7 +231,7 @@ Rectangle {
 		width: hintDigitChooser.width;
 		height: width;
 		radius: 0;
-		color: showHintButton.activeFocus ? colorTheme.activeBorderColor : "#000000"; //colorTheme.backgroundColor;
+		color: showHintButton.activeFocus ? colorTheme.activeBorderColor : "#000000";
 
 		opacity: 0;
 
