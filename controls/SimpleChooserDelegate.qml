@@ -25,8 +25,10 @@ Delegate {
 			id: delegateText;
 			x: 10hpw;
 			anchors.verticalCenter: parent.verticalCenter;
-			color: simpleChooserDelegate.activeFocus ? colorTheme.focusedTextColor : simpleChooserDelegate.parent.focused ? colorTheme.activeTextColor : colorTheme.disabledTextColor;
+			color: simpleChooserDelegate.activeFocus ? colorTheme.focusedTextColor : colorTheme.activeTextColor;
 			text: model.text;
+
+			opacity: simpleChooserDelegate.parent.focused ? 1 : 0.3;
 
 			Behavior on color { animation: Animation { duration: 200; } }
 		}

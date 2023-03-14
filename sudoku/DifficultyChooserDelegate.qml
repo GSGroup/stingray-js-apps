@@ -23,10 +23,12 @@ Delegate {
 		x: 10hpw;
 		anchors.verticalCenter: parent.verticalCenter;
 		anchors.horizontalCenter: parent.horizontalCenter;
-//		color: parent.activeFocus ? colorTheme.focusedTextColor : parent.parent.focused ? colorTheme.activeTextColor : colorTheme.disabledTextColor;
+//		color: parent.activeFocus ? colorTheme.focusedTextColor : colorTheme.activeTextColor;
 		color: "#581B18";
 		text: model.name;
-		
+
+//		opacity: parent.parent.focused ? 1 : 0.3;
+
 		Behavior on color { animation: Animation { duration: 200; } }
 	}
 
