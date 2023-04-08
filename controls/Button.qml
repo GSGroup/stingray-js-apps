@@ -6,15 +6,17 @@
 // WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 ActivePanel {
-	id: simpleButton;
+	id: buttonProto;
 
-	property alias font: buttonText.font;
+	property variant font: bodyFont;
 	property string icon;
 	property string text;
 
 	property Color textColor: activeFocus ? colorTheme.focusedTextColor : colorTheme.activeTextColor;
 	property int contentMargin: 12hpw;
-	property bool textInCenter: true;
+
+	enum { Right, Center, Left };
+	property int contentAlignment: Center;
 
 	width: Math.max(176hpw, iconTextItem.width + contentMargin * 2);
 	height: 53hph;
@@ -24,7 +26,9 @@ ActivePanel {
 	Row {
 		id: iconTextItem;
 
-		x: simpleButton.textInCenter ? (parent.width - width) / 2 : simpleButton.contentMargin;
+		x: buttonProto.contentAlignment == buttonProto.Center ? (parent.width - width) / 2 :
+				buttonProto.contentAlignment == buttonProto.Left ? buttonProto.contentMargin :
+				parent.width - width - buttonProto.contentMargin;
 
 		focus: true;
 		spacing: 12hpw;
@@ -35,23 +39,23 @@ ActivePanel {
 			width: 34hpw;
 			height: 34hph;
 
-			anchors.verticalCenter: simpleButton.verticalCenter;
+			anchors.verticalCenter: buttonProto.verticalCenter;
 
-			source: simpleButton.icon;
+			source: buttonProto.icon;
 
-			color: simpleButton.textColor;
+			color: buttonProto.textColor;
 
 			visible: source != "";
 		}
 
-		BodyText {
+		Text {
 			id: buttonText;
 
-			anchors.verticalCenter: simpleButton.verticalCenter;
+			anchors.verticalCenter: buttonProto.verticalCenter;
 
-			text: simpleButton.text;
-
-			color: simpleButton.textColor;
+			text: buttonProto.text;
+			font: buttonProto.font;
+			color: buttonProto.textColor;
 		}
 	}
 }
