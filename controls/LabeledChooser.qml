@@ -8,43 +8,45 @@
 import Chooser;
 
 ActivePanel {
-	id: labeledChooserItem;
+	id: labeledChooserProto;
 
-	property alias currentIndex: chooserItem.listView.currentIndex;
-	property alias count: chooserItem.listView.count;
-	property alias contentWidth: chooserItem.listView.contentWidth;
-	property alias model: chooserItem.listView.model;
+	property alias currentIndex: chooser.currentIndex;
+	property alias model: chooser.model;
+	property alias snapMode: chooser.snapMode;
 
-	property bool wrapNavigation: true;
-	property string text;
+	property string label;
+	property bool showArrows: true;
+
+	property int count: chooser.count;
+
 	property int chooserWidth: Math.min(width * 2 / 3, width - textItem.width - textItem.anchors.leftMargin - 30hpw);
-
-	nonFocusColor: colorTheme.buttonColor;
 
 	BodyText {
 		id: textItem;
-
-		text: parent.text;
 
 		anchors.left: parent.left;
 		anchors.leftMargin: 30hpw;
 		anchors.verticalCenter: parent.verticalCenter;
 
+		text: labeledChooserProto.label;
 		color: parent.activeFocus ? colorTheme.focusedTextColor : colorTheme.activeTextColor;
 
 		Behavior on color { animation: Animation { duration: 300; } }
 	}
-	
-	Chooser {
-		id: chooserItem;
 
-		height: parent.height;
+	Chooser {
+		id: chooser;
 
 		anchors.right: parent.right;
 
 		backgroundVisible: false;
-		wrapNavigation: parent.wrapNavigation;
-		chooserWidth: parent.chooserWidth;
-		gradientNonFocusColor: labeledChooserItem.nonFocusColor;
+		showArrows: labeledChooserProto.showArrows;
+		chooserWidth: labeledChooserProto.chooserWidth;
+		gradientNonFocusColor: labeledChooserProto.nonFocusColor;
+	}
+
+	completeAnimation: {
+		chooser.listView.completeContentAnimation();
+		chooser.listView.completeHighlightAnimation();
 	}
 }
