@@ -34,9 +34,6 @@ BaseEdit {
 	width: 100hpw;
 	height: 40hph;
 
-	clip: true;
-	focus: true;
-
 	Panel {
 		id: bgRect;
 
@@ -50,9 +47,9 @@ BaseEdit {
 	Rectangle {
 		height: 3hph;
 
-		anchors.bottom: parent.bottom;
 		anchors.left: parent.left;
 		anchors.right: parent.right;
+		anchors.bottom: parent.bottom;
 
 		color: colorTheme.highlightPanelColor;
 
