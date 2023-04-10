@@ -6,7 +6,10 @@
 // WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 Delegate {
-	id: delegateItem;
+	id: chooserDelegateProto;
+
+	property string text: model.text != undefined ? tr(model.text) : "";
+	property string icon: model.icon != undefined ? model.icon : "";
 
 	property bool chooserFocused;
 
@@ -20,19 +23,21 @@ Delegate {
 
 		anchors.left: parent.left;
 		anchors.leftMargin: 10hpw;
+		anchors.top: parent.top;
+		anchors.topMargin: 10hph;
+		anchors.bottom: parent.bottom;
+		anchors.bottomMargin: 10hph;
 		anchors.verticalCenter: parent.verticalCenter;
 
-		source: model.icon;
-		color: delegateItem.activeFocus ? colorTheme.globalBackgroundColor :
-			delegateItem.chooserFocused ? colorTheme.focusedTextColor : colorTheme.activeTextColor;
+		source: chooserDelegateProto.icon;
+		fillMode: PreserveAspectFit;
 
-		visible: model.icon != undefined ? source != "" : false;
-		opacity: parent.focused || delegateItem.chooserFocused ? 1 : 0.6;
+		visible: source != undefined && source != "";
+		opacity: parent.focused || chooserDelegateProto.chooserFocused ? 1 : 0.6;
 		
-		Behavior on color { animation: Animation { duration: 300; } }
 		Behavior on opacity { animation: Animation { duration: 300; } }
 	}
-	
+
 	BodyText {
 		id: chooserDelegateText;
 
@@ -40,12 +45,12 @@ Delegate {
 		anchors.rightMargin: 10hpw;
 		anchors.verticalCenter: parent.verticalCenter;
 
-		text: model.text;
-		color: delegateItem.activeFocus ? colorTheme.globalBackgroundColor :
-			delegateItem.chooserFocused ? colorTheme.focusedTextColor : colorTheme.activeTextColor;
+		text: chooserDelegateProto.text;
+		color: chooserDelegateProto.activeFocus ? colorTheme.globalBackgroundColor :
+				chooserDelegateProto.chooserFocused ? colorTheme.focusedTextColor : colorTheme.activeTextColor;
 
-		visible: model.text != undefined ? text != "" : false;
-		opacity: parent.focused || delegateItem.chooserFocused ? 1 : 0.6;
+		visible: text != undefined && text != "";
+		opacity: parent.focused || chooserDelegateProto.chooserFocused ? 1 : 0.6;
 		
 		Behavior on color { animation: Animation { duration: 300; } }
 		Behavior on opacity { animation: Animation { duration: 300; } }
