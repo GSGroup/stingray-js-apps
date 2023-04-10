@@ -10,137 +10,156 @@ import controls.HighlightListView;
 import "ChooserDelegate.qml";
 
 Item {
-	id: chooserItem;
+	id: chooserProto;
 
 	property alias currentIndex: listView.currentIndex;
-	property alias count: listView.count;
-	property alias contentWidth: listView.contentWidth;
 	property alias model: listView.model;
-	property alias backgroundVisible: chooserBackground.visible;
+
+	property int count: listView.count;
+	property bool backgroundVisible: true;
+
+	enum { No, One };
+	property int snapMode: No;
 
 	property bool showArrows: true;
-	property bool wrapNavigation;
 
 	property int chooserWidth: 520hpw;
+
+	property int margins: listView.anchors.leftMargin + listView.anchors.rightMargin;
 
 	property Color gradientNonFocusColor: colorTheme.focusablePanelColor;
 
 	height: chooserBackground.height;
-	width: Math.min(chooserWidth, listView.contentWidth + listView.anchors.leftMargin + listView.anchors.rightMargin);
+	width: snapMode == No ? Math.min(chooserWidth, listView.contentWidth + margins) :
+			listView.getDelegateRect(listView.currentIndex).Width() + margins;
 
 	Panel {
 		id: chooserBackground;
 
 		anchors.fill: parent;
 
-		color: chooserItem.activeFocus ? colorTheme.activeFocusColor : colorTheme.focusablePanelColor;
+		color: chooserProto.activeFocus ? colorTheme.activeFocusColor : colorTheme.focusablePanelColor;
+
+		visible: chooserProto.backgroundVisible;
 	}
-	
+
 	Image {
 		id: leftImage;
 
-		anchors.verticalCenter: listView.verticalCenter;
 		anchors.right: listView.left;
 		anchors.rightMargin: (30hpw - leftImage.width) / 2;
+		anchors.verticalCenter: listView.verticalCenter;
 
 		forcedLoading: true;
 		source: colorTheme.pathToStyleFolder + "/left.svg";
 		color: colorTheme.highlightPanelColor;
 
-		visible : chooserItem.showArrows && listView.count > 1;
+		visible : chooserProto.showArrows && listView.count > 1;
 		opacity: parent.activeFocus ? 1 : 0;
-		
+
 		Behavior on opacity { animation: Animation { duration: 300; } }
 	}
-	
+
 	Image {
 		id: rightImage;
 
-		anchors.verticalCenter: listView.verticalCenter;
 		anchors.left: listView.right;
 		anchors.leftMargin: (30hpw - rightImage.width) / 2;
+		anchors.verticalCenter: listView.verticalCenter;
 
 		forcedLoading: true;
 		source: colorTheme.pathToStyleFolder + "/right.svg";
 		color: colorTheme.highlightPanelColor;
 
-		visible: chooserItem.showArrows && listView.count > 1;
+		visible: chooserProto.showArrows && listView.count > 1;
 		opacity: parent.activeFocus ? 1 : 0;
 
 		Behavior on opacity { animation: Animation { duration: 300; } }
 	}
-	
+
 	HighlightListView {
 		id: listView;
 
 		height: parent.height;
 
-		anchors.right: chooserItem.right;
-		anchors.left: chooserItem.left;
-		anchors.rightMargin: 30hpw;
+		anchors.left: chooserProto.left;
 		anchors.leftMargin: 30hpw;
+		anchors.right: chooserProto.right;
+		anchors.rightMargin: 30hpw;
 		anchors.verticalCenter: parent.verticalCenter;
 
-		wrapNavigation: chooserItem.wrapNavigation;
+		contentXAnimationDuration: chooserProto.snapMode == chooserProto.No ? 250 : 0;
+
+		wrapNavigation: true;
 		handleNavigationKeys: false;
+		handleMouseEvents: MouseClickSwitchesItem;
+
 		orientation: Horizontal;
-		clip: true;
-		highlightColor: chooserItem.activeFocus ? colorTheme.highlightPanelColor : colorTheme.passiveHighlightPanel;
 		positionMode: Center;
+		clip: true;
+
+		highlightColor: chooserProto.activeFocus ? colorTheme.highlightPanelColor : colorTheme.passiveHighlightPanel;
 
 		focus: true;
 
-		delegate: ChooserDelegate { chooserFocused: listView.activeFocus; }
-		
-		Image {
-			anchors.right: highlight.left;
-			anchors.top: highlight.top;
-			anchors.bottom: highlight.bottom;
+		delegate: ChooserDelegate {
+			height: parent.height;
 
-			source: "res/common/shadow_left_" + colorTheme.shadowFilename + ".png";
-			fillMode: TileVertically;
+			chooserFocused: chooserProto.activeFocus;
 		}
-
-		Image {
-			anchors.left: highlight.right;
-			anchors.top: highlight.top;
-			anchors.bottom: highlight.bottom;
-
-			source: "res/common/shadow_right_" + colorTheme.shadowFilename + ".png";
-			fillMode: TileVertically;
-		}
-		
-		onLeftPressed: { this.moveCurrentIndexBackward(); }
-		onRightPressed: { this.moveCurrentIndexForward(); }
 	}
-	
+
+	Image {
+		anchors.right: listView.highlight.left;
+		anchors.top: listView.highlight.top;
+		anchors.bottom: listView.highlight.bottom;
+
+		source: "res/common/shadow_left_" + colorTheme.shadowFilename + ".png";
+		fillMode: TileVertically;
+
+		visible: parent.activeFocus;
+	}
+
+	Image {
+		anchors.left: listView.highlight.right;
+		anchors.top: listView.highlight.top;
+		anchors.bottom: listView.highlight.bottom;
+
+		source: "res/common/shadow_right_" + colorTheme.shadowFilename + ".png";
+		fillMode: TileVertically;
+
+		visible: parent.activeFocus;
+	}
+
 	Item {
 		width: 60hpw;
 
-		anchors.top: listView.top;
 		anchors.left: listView.left;
+		anchors.top: listView.top;
 		anchors.bottom: listView.bottom;
 
-		opacity: (listView.contentWidth > listView.width) && (listView.currentIndex != 0) ? 1 : 0;
+		opacity: listView.contentWidth > listView.width && listView.currentIndex != 0 && chooserProto.snapMode == chooserProto.No ? 1 : 0;
 
 		Gradient {
 			anchors.left: parent.left;
-			anchors.top: parent.top;
 			anchors.right: parent.right;
+			anchors.top: parent.top;
 			anchors.bottom: parent.bottom;
 
 			orientation: Horizontal;
 
 			GradientStop {
 				position: 0;
-				color: chooserItem.activeFocus ? colorTheme.activeFocusColor : chooserItem.gradientNonFocusColor;
+
+				color: chooserProto.activeFocus ? colorTheme.activeFocusColor : chooserProto.gradientNonFocusColor;
 
 				Behavior on color { animation: Animation { duration: 300;} }
 			}
 
 			GradientStop {
 				position: 1;
-				color: Utils.setAlpha((chooserItem.activeFocus ? colorTheme.activeFocusColor : chooserItem.gradientNonFocusColor), 0);
+
+				color: Utils.setAlpha((chooserProto.activeFocus ? colorTheme.activeFocusColor : chooserProto.gradientNonFocusColor), 0);
 
 				Behavior on color { animation: Animation { duration: 300;} }
 			}
@@ -152,30 +171,32 @@ Item {
 	Item {
 		width: 60hpw;
 
-		anchors.top: listView.top;
 		anchors.right: listView.right;
+		anchors.top: listView.top;
 		anchors.bottom: listView.bottom;
 
-		opacity: (listView.contentWidth > listView.width) && (listView.currentIndex != (listView.count - 1)) ? 1 : 0;
+		opacity: listView.contentWidth > listView.width && listView.currentIndex != (listView.count - 1) && chooserProto.snapMode == chooserProto.No ? 1 : 0;
 
 		Gradient {
 			anchors.left: parent.left;
-			anchors.top: parent.top;
 			anchors.right: parent.right;
+			anchors.top: parent.top;
 			anchors.bottom: parent.bottom;
 
 			orientation: Horizontal;
 
-		GradientStop {
+			GradientStop {
 				position: 0;
-				color: Utils.setAlpha((chooserItem.activeFocus ? colorTheme.activeFocusColor : chooserItem.gradientNonFocusColor), 0);
+
+				color: Utils.setAlpha((chooserProto.activeFocus ? colorTheme.activeFocusColor : chooserProto.gradientNonFocusColor), 0);
 
 				Behavior on color { animation: Animation { duration: 300;} }
 			}
 
-		GradientStop {
+			GradientStop {
 				position: 1;
-				color: chooserItem.activeFocus ? colorTheme.activeFocusColor : chooserItem.gradientNonFocusColor;
+
+				color: chooserProto.activeFocus ? colorTheme.activeFocusColor : chooserProto.gradientNonFocusColor;
 
 				Behavior on color { animation: Animation { duration: 300;} }
 			}
@@ -183,4 +204,7 @@ Item {
 
 		Behavior on opacity { animation: Animation { duration: 300;} }
 	}
+
+	onLeftPressed:	{ listView.moveCurrentIndexBackward(); }
+	onRightPressed:	{ listView.moveCurrentIndexForward(); }
 }
