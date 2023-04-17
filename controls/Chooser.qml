@@ -44,7 +44,7 @@ Item {
 		anchors.rightMargin: (30hpw - leftImage.width) / 2;
 
 		forcedLoading: true;
-		source: colorTheme.pathToStyleFolder + "/left.png";
+		source: colorTheme.pathToStyleFolder + "/left.svg";
 		color: colorTheme.highlightPanelColor;
 
 		visible : chooserItem.showArrows && listView.count > 1;
@@ -61,7 +61,7 @@ Item {
 		anchors.leftMargin: (30hpw - rightImage.width) / 2;
 
 		forcedLoading: true;
-		source: colorTheme.pathToStyleFolder + "/right.png";
+		source: colorTheme.pathToStyleFolder + "/right.svg";
 		color: colorTheme.highlightPanelColor;
 
 		visible: chooserItem.showArrows && listView.count > 1;

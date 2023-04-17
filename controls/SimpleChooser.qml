@@ -21,7 +21,7 @@ Item {
 		anchors.left: parent.left;
 		anchors.verticalCenter: listView.verticalCenter;
 		anchors.rightMargin: 8hpw;
-		source: colorTheme.pathToStyleFolder + "/left.png";
+		source: colorTheme.pathToStyleFolder + "/left.svg";
 		visible: chooserItem.showArrows;
 		opacity: parent.activeFocus ? 1 : 0.3;
 		width: 32hpw;
@@ -50,7 +50,7 @@ Item {
 		anchors.right: parent.right;
 		anchors.verticalCenter: listView.verticalCenter;
 		anchors.rightMargin: 8hpw;
-		source: colorTheme.pathToStyleFolder + "/right.png";
+		source: colorTheme.pathToStyleFolder + "/right.svg";
 		visible: chooserItem.showArrows;
 		opacity: parent.activeFocus ? 1 : 0.3;
 		width: 32hpw;
