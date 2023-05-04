@@ -8,14 +8,15 @@
 import "SpinnerRectangle.qml";
 
 Row {
-	id: spinner;
+	id: spinnerProto;
 
 	property int interval: 300;
 	property int delayedTicks: 1;
+
 	property Color color: colorTheme.activeFocusColor;
 
-	height: 24hph;
 	width: (height * 3) + spacing * 2;
+	height: 24hph;
 
 	spacing: 6hpw;
 	collapseEmptyItems: false;
@@ -23,29 +24,32 @@ Row {
 	Timer {
 		property int activeCircle;
 
-		interval: spinner.interval;
-		running: spinner.visible;
+		interval: spinnerProto.interval;
+		running: spinnerProto.visible;
 		repeat: true;
 
 		onTriggered: {
-			this.activeCircle = (this.activeCircle + 1) % (spinner.children.length + spinner.delayedTicks);
-			if (this.activeCircle < spinner.children.length)
-				spinner.children[this.activeCircle].fadeIn();
+			this.activeCircle = (this.activeCircle + 1) % (spinnerProto.children.length + spinnerProto.delayedTicks);
+			if (this.activeCircle < spinnerProto.children.length)
+				spinnerProto.children[this.activeCircle].fadeIn();
 		}
 	}
 
 	SpinnerRectangle {
-		height: spinner.height;
-		color: spinner.color;
+		height: spinnerProto.height;
+
+		color: spinnerProto.color;
 	}
 
 	SpinnerRectangle {
-		height: spinner.height;
-		color: spinner.color;
+		height: spinnerProto.height;
+
+		color: spinnerProto.color;
 	}
 
 	SpinnerRectangle {
-		height: spinner.height;
-		color: spinner.color;
+		height: spinnerProto.height;
+
+		color: spinnerProto.color;
 	}
 }
