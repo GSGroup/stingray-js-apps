@@ -7,22 +7,28 @@
 
 Item {
 	id: topLabelProto;
+
+	property int textWidth: width;
 	property string text;
-	anchors.top: safeArea.top;
+	property string additionalText;
+
+	height: innerTexts.height;
+
 	anchors.left: safeArea.left;
 	anchors.right: safeArea.right;
-	height: innerText.height;
+	anchors.top: safeArea.top;
 
 	Gradient {
-		height: 150hph;
-		anchors.top: mainWindow.top;
-		anchors.bottomMargin: -30hph;
+		height: 108hph;
+
 		anchors.left: mainWindow.left;
 		anchors.right: mainWindow.right;
+		anchors.top: mainWindow.top;
+		anchors.bottomMargin: -30hph;
 
 		GradientStop {
 			position: 0;
-			color: "#000";
+			color: colorTheme.globalBackgroundColor;
 		}
 
 		GradientStop {
@@ -31,12 +37,36 @@ Item {
 		}
 	}
 
-	TitleText {
-		id: innerText;
+	Column {
+		id: innerTexts;
+
+		width: Math.min(topLabelProto.textWidth, Math.max(topLabelText.initialTextWidth, topLabelAdditionalText.initialTextWidth));
+
 		anchors.top: parent.top;
 		anchors.horizontalCenter: parent.horizontalCenter;
-		horizontalAlignment: AlignHCenter;
-		text: topLabelProto.text;
-		color: "#fff";
+
+		spacing: 8hph;
+
+		ElidedText {
+			id: topLabelText;
+
+			width: parent.width;
+			height: paintedHeight;
+
+			horizontalAlignment: AlignHCenter;
+			text: topLabelProto.text;
+			font: titleFont;
+		}
+
+		ElidedText {
+			id: topLabelAdditionalText;
+
+			width: parent.width;
+			height: paintedHeight;
+
+			horizontalAlignment: AlignHCenter;
+			text: topLabelProto.additionalText;
+			font: bodyFont;
+		}
 	}
 }
