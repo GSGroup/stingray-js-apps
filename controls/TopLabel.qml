@@ -53,7 +53,7 @@ Item {
 			width: parent.width;
 			height: paintedHeight;
 
-			horizontalAlignment: AlignHCenter;
+			horizontalAlignment: dummyText.AlignHCenter;
 			text: topLabelProto.text;
 			font: titleFont;
 		}
@@ -64,9 +64,11 @@ Item {
 			width: parent.width;
 			height: paintedHeight;
 
-			horizontalAlignment: AlignHCenter;
+			horizontalAlignment: dummyText.AlignHCenter;
 			text: topLabelProto.additionalText;
 			font: bodyFont;
 		}
 	}
+
+	Text { id: dummyText; } // TODO: revert after STB-34119
 }
