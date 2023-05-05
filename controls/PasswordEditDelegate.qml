@@ -6,7 +6,7 @@
 // WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 Delegate {
-	id: passwordEditDelegateItem;
+	id: passwordEditDelegateProto;
 
 	property bool editing;
 	property bool filled: model.filled;
@@ -22,8 +22,8 @@ Delegate {
 
 		radius: height / 2;
 
-		color: passwordEditDelegateItem.editing ? colorTheme.focusedTextColor : colorTheme.activeTextColor;
+		color: passwordEditDelegateProto.editing ? colorTheme.focusedTextColor : colorTheme.activeTextColor;
 
-		Behavior on color { animation: Animation { duration: passwordEditDelegateItem.colorAnimable ? 300 : 0; } }
+		Behavior on color { animation: Animation { duration: passwordEditDelegateProto.colorAnimable ? 300 : 0; } }
 	}
 }
