@@ -15,11 +15,7 @@ BaseEdit {
 
 	width: echoTextView.width;
 
-	focus: true;
-
 	ActivePanel {
-		id: bgRect;
-
 		anchors.fill: parent;
 
 		visible: passwordEditItem.showBackground;
