@@ -6,114 +6,119 @@
 // WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 Item {
-	id: floatingTextItem;
+	id: floatingTextProto;
+
 	property string text;
-	property Color color;
-	property int maxWidth;
-	property int floatingPeriod: 100;
-	property bool maxWidthReached;
+
+	property Color color: colorTheme.activeTextColor;
+	property bool colorAnimable: true;
+
 	property bool floating: false;
-	property bool floatingNeeded;
-	property int horizontalAlignment;
+	property int floatingPeriod: 100;
+	property bool floatingNeeded: (floatingTextProto.width + 2) < innerText.paintedWidth;
+
+	enum { AlignLeft, AlignRight, AlignHCenter };
+	property int horizontalAlignment: AlignLeft;
 
 	height: innerText.height;
-	color: colorTheme.activeTextColor;
-	maxWidthReached: maxWidth > 0 && maxWidth < innerText.width;
-	floatingNeeded: (floatingTextItem.width + 2) < innerText.paintedWidth;
 
-	Behavior on color { animation: Animation { duration: 300; } }
+	Behavior on color { animation: Animation { duration: floatingTextProto.colorAnimable ? 300 : 0; } }
 
 	Item {
-		anchors.fill: parent;
 		anchors.topMargin: -10hph;
 		anchors.bottomMargin: -10hph;
+		anchors.fill: parent;
+
 		clip: true;
 
 		Text {
 			id: innerText;
-			anchors.verticalCenter: parent.verticalCenter;
-			color: floatingTextItem.color;
-			text: floatingTextItem.text; //TODO onTextChanged doesn't called for non-dynamic instances like Checkbox
-			font: subheadFont;
+
 			x: 0;
+
+			anchors.verticalCenter: parent.verticalCenter;
+
+			color: floatingTextProto.color;
+			font: subheadFont;
+			text: floatingTextProto.text; //TODO onTextChanged doesn't called for non-dynamic instances like Checkbox
 
 			Timer {
 				id: movementTimer;
+
 				interval: 1000;
 				repeat: true;
-				running: floatingTextItem.floating && floatingTextItem.floatingNeeded;
+				running: floatingTextProto.floating && floatingTextProto.floatingNeeded;
 
 				onTriggered: {
-					if (interval != 1000) {
+					if (interval != 1000)
+					{
 						movementTimer.interval = 1000;
-						floatingTextItem.reset();
+						floatingTextProto.reset();
 
 						innerText.opacity = 0;
 						opacityAnimation.complete();
 						innerText.opacity = 1;
-					} else {
-						if (innerText.width > floatingTextItem.width) {
-							innerText.x = -(innerText.width - floatingTextItem.width);
-							movementTimer.interval = floatingTextItem.floatingPeriod + 1000;
-						}
+					}
+					else if (innerText.width > floatingTextProto.width)
+					{
+						innerText.x = -(innerText.width - floatingTextProto.width);
+						movementTimer.interval = floatingTextProto.floatingPeriod + 1000;
 					}
 				}
 			}
 
-			onWidthChanged: { floatingTextItem.reset(); }
+			onWidthChanged: { floatingTextProto.reset(); }
 
 			Behavior on opacity { animation: Animation { id: opacityAnimation; duration: 500; } }
-
-			Behavior on x {
-				animation: Animation {
-					id: xAnamation;
-					duration: floatingTextItem.floatingPeriod;
-				}
-			}
+			Behavior on x {	animation: Animation { id: xAnimation; duration: floatingTextProto.floatingPeriod; } }
 		}
 	}
 
-	onMaxWidthChanged: { this.updateWidth(); }
-	onHorizontalAlignmentChanged: { this.reset(); }
-
 	onFloatingNeededChanged: {
-		if (!this.floatingNeeded) {
-			this.reset();
-		}
+		if (!floatingTextProto.floatingNeeded)
+			floatingTextProto.reset();
 	}
 
 	onFloatingChanged: {
-		if (!floatingTextItem.floating) {
-			this.reset();
-		} else if (innerText.width > floatingTextItem.width) {
-			floatingTextItem.floatingPeriod = (innerText.width - floatingTextItem.width) * 20;
+		if (!floatingTextProto.floating)
+			floatingTextProto.reset();
+		else if (innerText.width > floatingTextProto.width)
+		{
+			floatingTextProto.floatingPeriod = (innerText.width - floatingTextProto.width) * 20;
 			innerText.x = -(innerText.width - this.width);
 		}
 	}
 
-	onTextChanged:	{ this.preprocess(); }
-	onWidthChanged:	{ this.preprocess(); }
+	onHorizontalAlignmentChanged: { floatingTextProto.reset(); }
+
+	onTextChanged:	{ floatingTextProto.preprocess(); }
+	onWidthChanged:	{ floatingTextProto.preprocess(); }
 
 	preprocess: {
-		if (this.floating && innerText.width > floatingTextItem.width) {
-			floatingTextItem.floatingPeriod = (innerText.width - floatingTextItem.width) * 20;
-		}
+		innerText.text = floatingTextProto.text.replaceAll("\n", " ");
+
+		floatingTextProto.reset();
+		if (floatingTextProto.floating && innerText.width > floatingTextProto.width)
+			floatingTextProto.floatingPeriod = (innerText.width - floatingTextProto.width) * 20;
 	}
 
 	reset: {
-		var val = 0;
-		switch (this.horizontalAlignment) {
-		case this.AlignLeft: val = 0; break;
-		case this.AlignRight: val = this.floatingNeeded ? 0 : (this.width - innerText.width); break;
-		case this.AlignHCenter: val = this.floatingNeeded ? 0 : ((this.width - innerText.width) / 2); break;
+		switch (floatingTextProto.horizontalAlignment)
+		{
+		case floatingTextProto.AlignLeft:
+			innerText.x = 0;
+			break;
+		case floatingTextProto.AlignRight:
+			innerText.x = floatingTextProto.floatingNeeded ? 0 : (floatingTextProto.width - innerText.width);
+			break;
+		case floatingTextProto.AlignHCenter:
+			innerText.x = floatingTextProto.floatingNeeded ? 0 : ((floatingTextProto.width - innerText.width) / 2);
+			break;
 		}
-		innerText.x = val;
-		xAnamation.complete();
+
+		xAnimation.complete();
+		movementTimer.interval = 1000;
 	}
 
-	updateWidth: {
-		if (floatingTextItem.maxWidth <= 0)
-			return;
-		floatingTextItem.width = innerText.width > floatingTextItem.maxWidth ? floatingTextItem.maxWidth : innerText.width;
-	}
+	onCompleted: { floatingTextProto.preprocess(); }
 }
