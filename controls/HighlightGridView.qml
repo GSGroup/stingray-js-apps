@@ -6,15 +6,13 @@
 // WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 GridView {
-	id: highlightGridView;
+	id: highlightGridViewProto;
 
 	property bool showActiveFocus;
 	property bool showShadow: true;
 
-	property Color highlightColor: colorTheme.activeFocusColor;
-
 	property bool showBackground: true;
-	property Color backgroundColor: highlightGridView.activeFocus ? colorTheme.activePanelColor : colorTheme.focusablePanelColor;
+	property Color backgroundColor: activeFocus ? colorTheme.activePanelColor : colorTheme.focusablePanelColor;
 	property real backgroundOpacity: 1;
 
 	property int highlightWidthAnimationDuration: contentXAnimationDuration;
@@ -23,13 +21,13 @@ GridView {
 	Rectangle {
 		id: innerBackground;
 
-		width: Math.min(highlightGridView.width - 2hpw, highlightGridView.contentWidth - 2hpw);
-		height: Math.min(highlightGridView.height, highlightGridView.contentHeight);
+		width: Math.min(highlightGridViewProto.width - 2hpw, highlightGridViewProto.contentWidth - 2hpw);
+		height: Math.min(highlightGridViewProto.height, highlightGridViewProto.contentHeight);
 
-		color: highlightGridView.backgroundColor;
+		color: highlightGridViewProto.backgroundColor;
 
-		visible: highlightGridView.showBackground;
-		opacity: highlightGridView.backgroundOpacity;
+		visible: highlightGridViewProto.showBackground;
+		opacity: highlightGridViewProto.backgroundOpacity;
 
 		Behavior on color { animation: Animation { duration: 300; } }
 	}
@@ -37,8 +35,8 @@ GridView {
 	BorderShadow {
 		anchors.fill: highlight;
 
-		visible: highlightGridView.count && highlightGridView.showShadow;
-		opacity: highlightGridView.activeFocus || highlightGridView.showActiveFocus ? 1 : 0;
+		visible: highlightGridViewProto.count && highlightGridViewProto.showShadow;
+		opacity: highlightGridViewProto.activeFocus || highlightGridViewProto.showActiveFocus ? 1 : 0;
 		z: 10;
 	}
 
@@ -50,20 +48,20 @@ GridView {
 
 		property bool disableContentAnimation;
 
-		x: delegateX - highlightGridView.contentX;
-		y: delegateY - highlightGridView.contentY;
+		x: delegateX - highlightGridViewProto.contentX;
+		y: delegateY - highlightGridViewProto.contentY;
 
-		color: highlightGridView.highlightColor;
+		color: colorTheme.activeFocusColor;
 
-		visible: highlightGridView.count;
-		opacity: highlightGridView.activeFocus || highlightGridView.showActiveFocus ? 1 : 0;
+		visible: highlightGridViewProto.count;
+		opacity: highlightGridViewProto.activeFocus || highlightGridViewProto.showActiveFocus ? 1 : 0;
 
 		Behavior on delegateX {
 			id: highlightXAnim;
 
 			animation: Animation {
-				duration: highlight.disableContentAnimation ? 0 : highlightGridView.contentXAnimationDuration;
-				easingType: highlightGridView.contentXAnimationType;
+				duration: highlight.disableContentAnimation ? 0 : highlightGridViewProto.contentXAnimationDuration;
+				easingType: highlightGridViewProto.contentXAnimationType;
 			}
 		}
 
@@ -71,8 +69,8 @@ GridView {
 			id: highlightYAnim;
 
 			animation: Animation {
-				duration: highlight.disableContentAnimation ? 0 : highlightGridView.contentYAnimationDuration;
-				easingType: highlightGridView.contentYAnimationType;
+				duration: highlight.disableContentAnimation ? 0 : highlightGridViewProto.contentYAnimationDuration;
+				easingType: highlightGridViewProto.contentYAnimationType;
 			}
 		}
 
@@ -80,8 +78,8 @@ GridView {
 			id: highlightWidthAnim;
 
 			animation: Animation {
-				duration: highlight.disableContentAnimation ? 0 : highlightGridView.highlightWidthAnimationDuration;
-				easingType: highlightGridView.contentXAnimationType;
+				duration: highlight.disableContentAnimation ? 0 : highlightGridViewProto.highlightWidthAnimationDuration;
+				easingType: highlightGridViewProto.contentXAnimationType;
 			}
 		}
 
@@ -89,8 +87,8 @@ GridView {
 			id: highlightHeightAnim;
 
 			animation: Animation {
-				duration: highlight.disableContentAnimation ? 0 : highlightGridView.highlightHeightAnimationDuration;
-				easingType: highlightGridView.contentYAnimationType;
+				duration: highlight.disableContentAnimation ? 0 : highlightGridViewProto.highlightHeightAnimationDuration;
+				easingType: highlightGridViewProto.contentYAnimationType;
 			}
 		}
 
