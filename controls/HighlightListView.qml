@@ -5,19 +5,21 @@
 // IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
 // WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+import controls.MovingArrows;
+
 ListView {
-	id: highlightListView;
+	id: highlightListViewProto;
 
 	property bool showActiveFocus;
-	property bool showPassiveFocus;
+	property bool showPassiveFocus: true;
 	property Color passiveFocusColor: colorTheme.activePanelColor;
 	property bool showShadow;
+	property bool showArrows;
 
 	property int highlightWidth;
 	property int highlightHeight;
 
-	property Color highlightColor: highlightListView.activeFocus || highlightListView.showActiveFocus ? colorTheme.activeFocusColor :
-		highlightListView.showPassiveFocus ? highlightListView.passiveFocusColor : colorTheme.focusablePanelColor;
+	property Color highlightColor: activeFocus || showActiveFocus ? colorTheme.activeFocusColor : showPassiveFocus ? passiveFocusColor : colorTheme.focusablePanelColor;
 	property int highlightBorderWidth;
 	property Color highlightBorderColor;
 	property bool highlightOverDelegates;
@@ -33,24 +35,24 @@ ListView {
 
 		property bool disableContentAnimation;
 
-		x: delegateX - highlightListView.contentX;
-		y: delegateY - highlightListView.contentY;
+		x: delegateX - highlightListViewProto.contentX;
+		y: delegateY - highlightListViewProto.contentY;
 
-		color: highlightListView.highlightColor;
+		color: highlightListViewProto.highlightColor;
 
-		borderWidth: highlightListView.highlightBorderWidth;
-		borderColor: highlightListView.highlightBorderColor;
+		borderWidth: highlightListViewProto.highlightBorderWidth;
+		borderColor: highlightListViewProto.highlightBorderColor;
 
-		visible: highlightListView.count;
-		opacity: highlightListView.activeFocus || highlightListView.showActiveFocus || highlightListView.showPassiveFocus ? 1 : 0;
-		z: highlightListView.highlightOverDelegates ? 100 : 0;
+		visible: highlightListViewProto.count;
+		opacity: highlightListViewProto.activeFocus || highlightListViewProto.showActiveFocus || highlightListViewProto.showPassiveFocus ? 1 : 0;
+		z: highlightListViewProto.highlightOverDelegates ? 100 : 0;
 
 		Behavior on delegateX {
 			id: highlightXAnim;
 
 			animation: Animation {
-				duration: highlight.disableContentAnimation ? 0 : highlightListView.contentXAnimationDuration;
-				easingType: highlightListView.contentXAnimationType;
+				duration: highlight.disableContentAnimation ? 0 : highlightListViewProto.contentXAnimationDuration;
+				easingType: highlightListViewProto.contentXAnimationType;
 			}
 		}
 
@@ -58,8 +60,8 @@ ListView {
 			id: highlightYAnim;
 
 			animation: Animation {
-				duration: highlight.disableContentAnimation ? 0 : highlightListView.contentYAnimationDuration;
-				easingType: highlightListView.contentYAnimationType;
+				duration: highlight.disableContentAnimation ? 0 : highlightListViewProto.contentYAnimationDuration;
+				easingType: highlightListViewProto.contentYAnimationType;
 			}
 		}
 
@@ -67,8 +69,8 @@ ListView {
 			id: highlightWidthAnim;
 
 			animation: Animation {
-				duration: highlight.disableContentAnimation ? 0 : highlightListView.highlightWidthAnimationDuration;
-				easingType: highlightListView.contentXAnimationType;
+				duration: highlight.disableContentAnimation ? 0 : highlightListViewProto.highlightWidthAnimationDuration;
+				easingType: highlightListViewProto.contentXAnimationType;
 			}
 		}
 
@@ -76,8 +78,8 @@ ListView {
 			id: highlightHeightAnim;
 
 			animation: Animation {
-				duration: highlight.disableContentAnimation ? 0 : highlightListView.highlightHeightAnimationDuration;
-				easingType: highlightListView.contentYAnimationType;
+				duration: highlight.disableContentAnimation ? 0 : highlightListViewProto.highlightHeightAnimationDuration;
+				easingType: highlightListViewProto.contentYAnimationType;
 			}
 		}
 
@@ -88,13 +90,15 @@ ListView {
 				duration: 300;
 			}
 		}
+
+		MovingArrows { showArrows: highlightListViewProto.showArrows; }
 	}
 
 	BorderShadow {
 		anchors.fill: highlight;
 
-		visible: highlightListView.count && highlightListView.showShadow;
-		opacity: highlightListView.activeFocus || highlightListView.showActiveFocus ? 1 : 0;
+		visible: highlightListViewProto.count && highlightListViewProto.showShadow;
+		opacity: highlightListViewProto.activeFocus || highlightListViewProto.showActiveFocus ? 1 : 0;
 		z: 1;
 	}
 
