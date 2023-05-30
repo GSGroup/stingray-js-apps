@@ -207,8 +207,8 @@ Application {
 		url: "apps/sudoku/gameData.json";
 
 		onDataChanged: {
-			gameMenu.load(JSON.parse(this.data));
-			gameStats.load(JSON.parse(this.data));
+			gameMenu.loadPlayers(JSON.parse(this.data));
+			gameStats.loadStats(JSON.parse(this.data));
 		}
 	}
 

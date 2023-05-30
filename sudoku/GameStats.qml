@@ -115,7 +115,7 @@ Item {
 			delegate: GameStatsDelegate {}
 		}
 
-		function load(data){
+		function loadStats(data) {
 				this.stats=[];
 				var statistic;
 				if(!(statistic = load("sudokuStats")))

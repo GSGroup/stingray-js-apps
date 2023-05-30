@@ -249,8 +249,7 @@ Item {
 		}
 	}
 
-	function load(data)
-	{
+	function loadPlayers(data) {
 		console.log("loading players..");
 
 		if(!(this.players = load("sudokuPlayers")))
