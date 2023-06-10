@@ -1,0 +1,14 @@
+Rectangle {
+	id: pointX$xY$y;
+
+	x: $pos_x - width / 2;
+	y: $pos_y - height / 2;
+
+	width: gameConsts.getCellWidth() / 5;
+	height: gameConsts.getCellHeight() / 5;
+
+	color: "#eee";
+	radius: width / 2;
+
+	onCompleted: { engine.setObject("$x/$y", this); }
+}
