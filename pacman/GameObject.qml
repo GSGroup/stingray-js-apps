@@ -13,8 +13,8 @@ Item {
 	property int dx;
 	property int dy;
 
-	x: width * cellX;
-	y: height * cellY;
+	x: width * cellX - width / 2;
+	y: height * cellY - height / 2;
 
 	z: 1;
 

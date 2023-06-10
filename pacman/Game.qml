@@ -6,165 +6,115 @@
 // WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 import "Enemy.qml";
-import "GameCell.qml";
 import "Player.qml";
+
+import "generated_files/PacmanPointArray.qml";
+import "generated_files/PacmanWallArray.qml";
+
+import "engine.js" as engine;
+import "generated_files/pacmanConsts.js" as gameConsts;
 
 Rectangle {
 	id: pacmanGame;
 
-	property bool horizontal;
-
-	property int speed: 250;
 	property int score;
-	property int cells: 21;
 
 	color: "#003";
 	focus: true;
 
-	ListModel {
-		id: gameGridModel;
+	Rectangle {
+		id: gameField;
 
-		function getCell(x, y) {
-			return (x >= 0 && x < this.width && y >= 0 && y < this.height)? this.get(x + y * this.width): { "walls": 15, "dot": false };
-		}
-
-		function setCell(x, y, cell) {
-			return this.set(x + y * this.width, cell);
-		}
-
-		function setCellProperty(x, y, name, value) {
-			return this.setProperty(x + y * this.width, name, value);
-		}
-
-		function hline(l, r, y) {
-			for (var i = l; i < r; ++i) {
-				var idx = y * this.width + i;
-				var c = this.get(idx).walls;
-				c |= (i != l? 8: 0) | (i + 1 != r? 2: 0);
-				this.setProperty(idx, "walls", c);
-				this.setProperty(idx, "dot", false);
-			}
-		}
-
-		function vline(t, b, x) {
-			for (var i = t; i < b; ++i) {
-				var idx = i * this.width + x;
-				var c = this.get(idx).walls;
-				c |= (i != t? 1: 0) | (i + 1 != b? 4: 0);
-				this.setProperty(idx, "walls", c);
-				this.setProperty(idx, "dot", false);
-			}
-		}
-
-		function box(x, y, width, height, dots) {
-			var l = x, r = x + width, t = y, b = y + height;
-			console.log("box " + l + ", " + t + ", " + r + ", " + b);
-			this.hline(l, r, t);
-			this.hline(l, r, b - 1);
-			this.vline(t, b, l);
-			this.vline(t, b, r - 1);
-			for (var i = t + 1; i + 1 < b; ++i)
-			{
-				var row = i * this.width;
-				for (var j = l + 1; j + 1 < r; ++j) {
-					var idx = row + j;
-					this.setProperty(idx, "dot", dots);
-				}
-			}
-		}
-
-		function init(width, height) {
-			console.log("setting model size to " + width + "x" + height);
-			this.width = width;
-			this.height = height;
-			for (var i = 0; i < height; ++i)
-				for (var j = 0; j < width; ++j) {
-					gameGridModel.append({ "dot": true, "walls": 0 });
-				}
-		}
-	}
-
-	GridView {
-		id: gameView;
-
-		width: cellWidth * parent.cells;
-		height: cellHeight * parent.cells;
+		width: parent.width;
+		height: parent.height;
 
 		anchors.centerIn: parent;
 
-		handleNavigationKeys: false;
+		color: "#003";
 
-		model: gameGridModel;
-		delegate: GameCell { }
+		PacmanWallArray {
+			anchors.centerIn: parent;
 
-		cellWidth: Math.floor(parent.width / parent.cells);
-		cellHeight: Math.floor(parent.height / parent.cells);
+			PacmanPointArray { }
 
-		Player {
-			id: player;
+			Player {
+				id: player;
 
-			width: gameView.cellWidth;
-			height: gameView.cellHeight;
-
-			cellX: 1;
-			cellY: 1;
-			speed: pacmanGame.speed;
-		}
-
-		Item {
-			id: enemies;
-
-			z: 1;
-
-			Enemy {
-				width: gameView.cellWidth;
-				height: gameView.cellHeight;
-
-				color: "#f00";
+				width: gameConsts.getCellWidth();
+				height: gameConsts.getCellHeight();
 
 				cellX: 1;
-				cellY: 12;
-				dx: 1;
-				speed: pacmanGame.speed;
+				cellY: 1;
+				speed: gameConsts.getSpeed();
 			}
 
-			Enemy {
-				width: gameView.cellWidth;
-				height: gameView.cellHeight;
+			Item {
+				id: enemies;
 
-				color: "#f0f";
+				z: 1;
 
-				cellX: 12;
-				cellY: 10;
-				dx: -1;
-				speed: pacmanGame.speed;
+				Enemy {
+					width: gameConsts.getCellWidth();
+					height: gameConsts.getCellHeight();
+
+					color: "#f00";
+
+					cellX: 15;
+					cellY: 15;
+					dx: 1;
+					speed: gameConsts.getSpeed();
+				}
+
+				Enemy {
+					width: gameConsts.getCellWidth();
+					height: gameConsts.getCellHeight();
+
+					color: "#f0f";
+
+					cellX: 15;
+					cellY: 16;
+					dx: -1;
+					speed: gameConsts.getSpeed();
+				}
+
+				Enemy {
+					width: gameConsts.getCellWidth();
+					height: gameConsts.getCellHeight();
+
+					color: "#0ff";
+
+					cellX: 15;
+					cellY: 17;
+					faceLeft: true;
+					dy: 1;
+					speed: gameConsts.getSpeed();
+				}
+
+				Enemy {
+					width: gameConsts.getCellWidth();
+					height: gameConsts.getCellHeight();
+
+					color: "#fc0";
+
+					cellX: 15;
+					cellY: 18;
+					faceLeft: true;
+					dy: -1;
+					speed: gameConsts.getSpeed();
+				}
 			}
+		}
 
-			Enemy {
-				width: gameView.cellWidth;
-				height: gameView.cellHeight;
+		function getCell(x, y) {
+			return engine.getCellType(x, y);
+		}
 
-				color: "#0ff";
+		function isWall(cell) {
+			return cell != gameConsts.CellType.EMPTY && cell != gameConsts.CellType.POINT;
+		}
 
-				cellX: 19;
-				cellY: 9;
-				faceLeft: true;
-				dy: 1;
-				speed: pacmanGame.speed;
-			}
-
-			Enemy {
-				width: gameView.cellWidth;
-				height: gameView.cellHeight;
-
-				color: "#fc0";
-
-				cellX: 10;
-				cellY: 10;
-				faceLeft: true;
-				dy: -1;
-				speed: pacmanGame.speed;
-			}
+		function init() {
+			engine.setGrid(gameConsts.getGrid());
 		}
 	}
 
@@ -180,46 +130,47 @@ Rectangle {
 	Timer {
 		repeat: true;
 		running: true;
-		interval: pacmanGame.speed;
+		interval: gameConsts.getSpeed();
 
 		onTriggered: {
-			var cell = gameGridModel.getCell(player.cellX, player.cellY);
-			if (cell.dot) {
+			if (gameField.getCell(player.cellX, player.cellY) == gameConsts.CellType.POINT) {
 				pacmanGame.score += 100;
-				gameGridModel.setCellProperty(player.cellX, player.cellY, "dot", false);
+				engine.setCellType(player.cellX, player.cellY, gameConsts.CellType.EMPTY);
+				engine.getObject(player.cellX + '/' + player.cellY).visible = false;
 			}
-			var x = player.cellX, y = player.cellY;
+
+			var cellX = player.cellX, cellY = player.cellY;
 			var dx = player.dx, dy = player.dy;
-			var horizontal = pacmanGame.horizontal;
 
-			var next_h_cell = gameGridModel.getCell(x + dx, y);
-			var next_v_cell = gameGridModel.getCell(x, y + dy);
+			var is_next_h_cell_wall = gameField.isWall(gameField.getCell(cellX + dx, cellY));
+			var is_next_v_cell_wall = gameField.isWall(gameField.getCell(cellX, cellY + dy));
 
-			if (next_h_cell.walls)
-				dx = 0;
-			if (next_v_cell.walls)
-				dy = 0;
-
-			if (!next_h_cell.walls && !next_v_cell.walls) { //both variants are valid, prefer last direction
-				if (horizontal)
+			if (!is_next_h_cell_wall && !is_next_v_cell_wall) {
+				if (pacmanGame.horizontal)
 					dy = 0;
 				else
 					dx = 0;
 			}
+			else {
+				if (is_next_h_cell_wall)
+					dx = 0;
 
-			player.cellX = x + dx;
-			player.cellY = y + dy;
+				if (is_next_v_cell_wall)
+					dy = 0;
+			}
 
-			//enemy phase
-			var ens = enemies.children;
-			for (var i = 0; i < ens.length; ++i) {
-				var obj = ens[i];
-				var x = obj.cellX, y = obj.cellY;
-				var dx = obj.dx, dy = obj.dy;
+			player.cellX = cellX + dx;
+			player.cellY = cellY + dy;
+
+			var enem = enemies.children;
+
+			for (var i = 0; i < enem.length; ++i) {
+				var oneEnemy = enem[i];
+				var enemyCellX = oneEnemy.cellX, enemyCellY = oneEnemy.cellY;
+				var dx = oneEnemy.dx, dy = oneEnemy.dy;
 
 				while (true) {
-					var next_cell = gameGridModel.getCell(x + dx, y + dy);
-					if (next_cell.walls) {
+					if (gameField.isWall(gameField.getCell(enemyCellX + dx, enemyCellY  + dy))) {
 						if (dx > 0) { dy = 1; dx = 0; }
 						else if (dx < 0) { dy = -1; dx = 0; }
 						else if (dy > 0) { dx = -1; dy = 0; }
@@ -228,10 +179,10 @@ Rectangle {
 						break;
 				}
 
-				obj.dx = dx;
-				obj.dy = dy;
-				obj.cellX = x + dx;
-				obj.cellY = y + dy;
+				oneEnemy.dx = dx;
+				oneEnemy.dy = dy;
+				oneEnemy.cellX = enemyCellX + dx;
+				oneEnemy.cellY = enemyCellY + dy;
 			}
 		}
 	}
@@ -239,19 +190,19 @@ Rectangle {
 	onKeyPressed: {
 		if (key == "Left") {
 			player.dx = -1;
-			this.horizontal = true;
+			pacmanGame.horizontal = true;
 			return true;
 		} else if (key == "Right") {
 			player.dx = 1;
-			this.horizontal = true;
+			pacmanGame.horizontal = true;
 			return true;
 		} else if (key == "Up") {
 			player.dy = -1;
-			this.horizontal = false;
+			pacmanGame.horizontal = false;
 			return true;
 		} else if (key == "Down") {
 			player.dy = 1;
-			this.horizontal = false;
+			pacmanGame.horizontal = false;
 			return true;
 		}
 	}
@@ -262,26 +213,6 @@ Rectangle {
 	}
 
 	onCompleted: {
-		gameGridModel.init(this.cells, this.cells);
-		gameGridModel.box(0, 0, this.cells, this.cells, true);
-
-		for (var i = 0; i < 2; ++i) {
-			var p = i * 4;
-			gameGridModel.box(2, 2 + p, 4, 3);
-			gameGridModel.box(7, 2 + p, 3, 3);
-
-			gameGridModel.box(this.cells - 10, 2 + p, 3, 3);
-			gameGridModel.box(this.cells - 6, 2 + p, 4, 3);
-		}
-
-		for (var i = 0; i < 2; ++i) {
-			var p = i * 4 + 5;
-
-			gameGridModel.box(2, this.cells - p, 4, 3);
-			gameGridModel.box(7, this.cells - p, 3, 3);
-
-			gameGridModel.box(this.cells - 10, this.cells - p, 3, 3);
-			gameGridModel.box(this.cells - 6, this.cells - p, 4, 3);
-		}
+		gameField.init();
 	}
 }
