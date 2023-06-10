@@ -13,6 +13,7 @@ Application {
 	Game {
 		width: parent.height;
 		height: width;
+
 		anchors.centerIn: parent;
 	}
 }

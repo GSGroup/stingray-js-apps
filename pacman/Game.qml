@@ -5,39 +5,40 @@
 // IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
 // WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-import "Player.qml";
 import "Enemy.qml";
 import "GameCell.qml";
+import "Player.qml";
 
 Rectangle {
-	color: "#003";
-	focus: true;
 	id: pacmanGame;
 
 	property bool horizontal;
 
 	property int speed: 250;
-	property int score: 0;
+	property int score;
 	property int cells: 21;
+
+	color: "#003";
+	focus: true;
 
 	ListModel {
 		id: gameGridModel;
 
 		function getCell(x, y) {
-			return (x >= 0 && x < this.w && y >= 0 && y < this.h)? this.get(x + y * this.w): { "walls": 15, "dot": false };
+			return (x >= 0 && x < this.width && y >= 0 && y < this.height)? this.get(x + y * this.width): { "walls": 15, "dot": false };
 		}
 
 		function setCell(x, y, cell) {
-			return this.set(x + y * this.w, cell);
+			return this.set(x + y * this.width, cell);
 		}
 
 		function setCellProperty(x, y, name, value) {
-			return this.setProperty(x + y * this.w, name, value);
+			return this.setProperty(x + y * this.width, name, value);
 		}
 
 		function hline(l, r, y) {
-			for(var i = l; i < r; ++i) {
-				var idx = y * this.w + i;
+			for (var i = l; i < r; ++i) {
+				var idx = y * this.width + i;
 				var c = this.get(idx).walls;
 				c |= (i != l? 8: 0) | (i + 1 != r? 2: 0);
 				this.setProperty(idx, "walls", c);
@@ -46,8 +47,8 @@ Rectangle {
 		}
 
 		function vline(t, b, x) {
-			for(var i = t; i < b; ++i) {
-				var idx = i * this.w + x;
+			for (var i = t; i < b; ++i) {
+				var idx = i * this.width + x;
 				var c = this.get(idx).walls;
 				c |= (i != t? 1: 0) | (i + 1 != b? 4: 0);
 				this.setProperty(idx, "walls", c);
@@ -55,94 +56,111 @@ Rectangle {
 			}
 		}
 
-		function box(x, y, w, h, dots) {
-			var l = x, r = x + w, t = y, b = y + h;
+		function box(x, y, width, height, dots) {
+			var l = x, r = x + width, t = y, b = y + height;
 			console.log("box " + l + ", " + t + ", " + r + ", " + b);
 			this.hline(l, r, t);
 			this.hline(l, r, b - 1);
 			this.vline(t, b, l);
 			this.vline(t, b, r - 1);
-			for(var i = t + 1; i + 1 < b; ++i)
+			for (var i = t + 1; i + 1 < b; ++i)
 			{
-				var row = i * this.w;
-				for(var j = l + 1; j + 1 < r; ++j) {
+				var row = i * this.width;
+				for (var j = l + 1; j + 1 < r; ++j) {
 					var idx = row + j;
 					this.setProperty(idx, "dot", dots);
 				}
 			}
 		}
 
-		function init(w, h) {
-			console.log("setting model size to " + w + "x" + h);
-			this.w = w;
-			this.h = h;
-			for(var i = 0; i < h; ++i)
-				for(var j = 0; j < w; ++j) {
+		function init(width, height) {
+			console.log("setting model size to " + width + "x" + height);
+			this.width = width;
+			this.height = height;
+			for (var i = 0; i < height; ++i)
+				for (var j = 0; j < width; ++j) {
 					gameGridModel.append({ "dot": true, "walls": 0 });
 				}
 		}
 	}
 
-	GridView
-	{
+	GridView {
 		id: gameView;
-		cellWidth: Math.floor(parent.width / parent.cells);
-		cellHeight: cellWidth;
-		width: cellWidth * parent.cells;
-		height : width;
 
-		model: gameGridModel;
-		handleNavigationKeys: false;
+		width: cellWidth * parent.cells;
+		height: width;
 
 		anchors.centerIn: parent;
-		delegate : GameCell { }
 
+		handleNavigationKeys: false;
+
+		model: gameGridModel;
+		delegate: GameCell { }
+
+		cellWidth: Math.floor(parent.width / parent.cells);
+		cellHeight: cellWidth;
 
 		Player {
 			id: player;
+
 			width: gameView.cellWidth;
 			height: gameView.cellHeight;
-			cellX: 1; cellY: 1;
+
+			cellX: 1;
+			cellY: 1;
 			speed: pacmanGame.speed;
 		}
+
 		Item {
-			z: 1;
 			id: enemies;
+
+			z: 1;
+
 			Enemy {
-				cellX: 1;
-				cellY: 12;
 				width: gameView.cellWidth;
 				height: gameView.cellHeight;
+
 				color: "#f00";
+
+				cellX: 1;
+				cellY: 12;
 				dx: 1;
 				speed: pacmanGame.speed;
 			}
+
 			Enemy {
-				cellX: 12;
-				cellY: 10;
 				width: gameView.cellWidth;
 				height: gameView.cellHeight;
+
 				color: "#f0f";
+
+				cellX: 12;
+				cellY: 10;
 				dx: -1;
 				speed: pacmanGame.speed;
 			}
+
 			Enemy {
-				cellX: 19;
-				cellY: 9;
 				width: gameView.cellWidth;
 				height: gameView.cellHeight;
+
 				color: "#0ff";
+
+				cellX: 19;
+				cellY: 9;
 				faceLeft: true;
 				dy: 1;
 				speed: pacmanGame.speed;
 			}
 
 			Enemy {
-				cellX: 10;
-				cellY: 10;
 				width: gameView.cellWidth;
 				height: gameView.cellHeight;
+
 				color: "#fc0";
+
+				cellX: 10;
+				cellY: 10;
 				faceLeft: true;
 				dy: -1;
 				speed: pacmanGame.speed;
@@ -151,11 +169,12 @@ Rectangle {
 	}
 
 	TitleText {
-		text: "SCORE\n" + pacmanGame.score;
-		horizontalAlignment: AlignHCenter;
-
 		anchors.right: parent.left;
 		anchors.rightMargin: 10hpw;
+
+		horizontalAlignment: AlignHCenter;
+
+		text: "SCORE\n" + pacmanGame.score;
 	}
 
 	Timer {
@@ -193,12 +212,12 @@ Rectangle {
 
 			//enemy phase
 			var ens = enemies.children;
-			for(var i = 0; i < ens.length; ++i) {
+			for (var i = 0; i < ens.length; ++i) {
 				var obj = ens[i];
 				var x = obj.cellX, y = obj.cellY;
 				var dx = obj.dx, dy = obj.dy;
 
-				while(true) {
+				while (true) {
 					var next_cell = gameGridModel.getCell(x + dx, y + dy);
 					if (next_cell.walls) {
 						if (dx > 0) { dy = 1; dx = 0; }
@@ -238,17 +257,15 @@ Rectangle {
 	}
 
 	onVisibleChanged: {
-		if (visible) {
-			console.log("game visible");
+		if (visible)
 			this.setFocus();
-		}
 	}
 
-	onCompleted : {
+	onCompleted: {
 		gameGridModel.init(this.cells, this.cells);
 		gameGridModel.box(0, 0, this.cells, this.cells, true);
 
-		for(var i = 0; i < 2; ++i) {
+		for (var i = 0; i < 2; ++i) {
 			var p = i * 4;
 			gameGridModel.box(2, 2 + p, 4, 3);
 			gameGridModel.box(7, 2 + p, 3, 3);
@@ -257,7 +274,7 @@ Rectangle {
 			gameGridModel.box(this.cells - 6, 2 + p, 4, 3);
 		}
 
-		for(var i = 0; i < 2; ++i) {
+		for (var i = 0; i < 2; ++i) {
 			var p = i * 4 + 5;
 
 			gameGridModel.box(2, this.cells - p, 4, 3);
@@ -268,4 +285,3 @@ Rectangle {
 		}
 	}
 }
-

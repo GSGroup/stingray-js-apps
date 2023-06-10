@@ -9,27 +9,35 @@ import "GameObject.qml";
 
 GameObject {
 	id: ghost;
+
 	property Color color;
 	property bool step;
 
 	Rectangle {
 		anchors.fill: parent;
+
 		color: parent.color;
 	}
 
 	Rectangle {
+		x: (parent.step ? 1hpw : 0) + width;
+
 		width: parent.width / 5;
 		height: width;
+
 		anchors.bottom: parent.bottom;
+
 		color: "#003";
-		x: (parent.step ? 1hpw : 0) + width;
 	}
 
 	Rectangle {
+		x: (parent.step ? 1hpw : 0) + width * 3;
+
 		width: parent.width / 5;
 		height: width;
-		x: (parent.step ? 1hpw : 0) + width * 3;
+
 		anchors.bottom: parent.bottom;
+
 		color: "#003";
 	}
 
@@ -37,23 +45,27 @@ GameObject {
 	Rectangle {
 		x: parent.faceLeft ? parent.width / 10hpw : 7 * parent.width / 10;
 		y: parent.width / 5;
-		color: "#fff";
+
 		width: parent.width / 5;
 		height: width;
+
+		color: "#fff";
 	}
 
 	Rectangle {
 		x: parent.faceLeft ? 5 * parent.width / 10hpw : 3 * parent.width / 10;
 		y: parent.width / 5;
-		color: "#fff";
+
 		width: parent.width / 5;
 		height: width;
+
+		color: "#fff";
 	}
 
 	Timer {
 		repeat: true;
 		running: true;
-		interval : 200;
+		interval: 200;
 		onTriggered: { ghost.step = !ghost.step; }
 	}
 }

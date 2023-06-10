@@ -12,6 +12,7 @@ GameObject {
 
 	Rectangle {
 		anchors.fill: parent;
+
 		color: "#ee2";
 		radius: width / 2;
 	}
@@ -30,10 +31,8 @@ GameObject {
 	//mouth
 	Rectangle {
 		id: mouth;
-		property bool opened;
 
-		color: "#003";
-		radius: width / 3;
+		property bool opened;
 
 		width: parent.width / 2;
 		height: opened? parent.height / 2: 0;
@@ -44,13 +43,16 @@ GameObject {
 
 		anchors.leftMargin: (parent.width / 2 + 2hpw) * (playerItem.faceLeft? -1: 1);
 
+		color: "#003";
+		radius: width / 3;
+
 		Behavior on height { animation: Animation { duration: 100; } }
 	}
 
 	Timer {
 		repeat: true;
 		running: true;
-		interval : 200;
+		interval: 200;
 		onTriggered: { mouth.opened = !mouth.opened; }
 	}
 }
