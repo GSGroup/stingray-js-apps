@@ -12,23 +12,28 @@ Item {
 	property string text;
 	property string additionalText;
 
+	enum { AlignLeft, AlignRight, AlignHCenter };
+	property int horizontalAlignment: AlignLeft;
+
 	height: innerTexts.height;
 
 	anchors.left: safeArea.left;
+	anchors.leftMargin: 10hpw;
 	anchors.right: safeArea.right;
+	anchors.rightMargin: 10hpw;
 	anchors.top: safeArea.top;
+	anchors.topMargin: 10hph;
 
 	Gradient {
-		height: 108hph;
+		height: safeArea.y + 120hph;
 
 		anchors.left: mainWindow.left;
 		anchors.right: mainWindow.right;
 		anchors.top: mainWindow.top;
-		anchors.bottomMargin: -30hph;
 
 		GradientStop {
 			position: 0;
-			color: colorTheme.globalBackgroundColor;
+			color: "#000";
 		}
 
 		GradientStop {
@@ -42,8 +47,9 @@ Item {
 
 		width: Math.min(topLabelProto.textWidth, Math.max(topLabelText.initialTextWidth, topLabelAdditionalText.initialTextWidth));
 
-		anchors.top: parent.top;
-		anchors.horizontalCenter: parent.horizontalCenter;
+		x: topLabelProto.horizontalAlignment == topLabelProto.AlignLeft ? 0 :
+				topLabelProto.horizontalAlignment == topLabelProto.AlignRight ? topLabelProto.width - width :
+				topLabelProto.width / 2 - width / 2;
 
 		spacing: 8hph;
 
@@ -53,7 +59,9 @@ Item {
 			width: parent.width;
 			height: paintedHeight;
 
-			horizontalAlignment: dummyText.AlignHCenter;
+			horizontalAlignment: topLabelProto.horizontalAlignment == topLabelProto.AlignLeft ? dummyText.AlignLeft :
+					topLabelProto.horizontalAlignment == topLabelProto.AlignRight ? dummyText.AlignRight :
+					dummyText.AlignHCenter;
 			text: topLabelProto.text;
 			font: titleFont;
 		}
@@ -64,9 +72,11 @@ Item {
 			width: parent.width;
 			height: paintedHeight;
 
-			horizontalAlignment: dummyText.AlignHCenter;
+			horizontalAlignment: topLabelProto.horizontalAlignment == topLabelProto.AlignHCenter ? dummyText.AlignHCenter :
+					topLabelProto.horizontalAlignment == topLabelProto.AlignLeft ? dummyText.AlignLeft :
+					dummyText.AlignRight;
 			text: topLabelProto.additionalText;
-			font: bodyFont;
+			font: subheadFont;
 		}
 	}
 
