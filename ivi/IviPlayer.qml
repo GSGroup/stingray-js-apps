@@ -14,8 +14,6 @@ Player {
 
     focus: true;
 
-    isFullscreen: true;
-
     function playVideoById(id) {
         var request = new XMLHttpRequest();
         request.open("POST", "https://api.ivi.ru/light/", true);

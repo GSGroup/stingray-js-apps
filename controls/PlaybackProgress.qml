@@ -6,300 +6,274 @@
 // WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 import "ProgressBar.qml";
+import "PlaybackProgressDurationText.qml";
 
 Item {
 	id: playbackProgressItem;
-	signal playPressed;
-	signal pausePressed;
-	signal seeked(position);
-	property bool isPlaying: false;
-	property int gear: 0;
+
+	signal togglePause;
+	signal seek(position);
+
+	property bool showControlPanel: true;
+
 	property int duration;
 	property int progress;
-	property int barProgress: gear ? seekProgress : progress;
+	property int barProgress: gear == 0 && !postSeekTimer.running ? progress : seekProgress;
 	property int seekProgress;
-	property string curTimeStr: "";
-	property string fullTimeStr: "";
+
+	property int gear;
+
+	property bool isPlaying;
+
+	property string text;
+	property string additionalText;
+
+	focus: true;
+
+	opacity: visible ? 1 : 0;
 
 	Timer {
 		id: hideTimer;
-		interval: 5000;
+
 		running: playbackProgressItem.visible;
+		interval: 5000;
 
 		onTriggered: { playbackProgressItem.visible = false; }
 	}
 
 	Timer {
 		id: seekTimer;
+
 		interval: 2000;
 
 		onTriggered: {
 			if (playbackProgressItem.gear != 0)
-				playbackProgressItem.seeked(playbackProgressItem.seekProgress);
+				playbackProgressItem.seek(playbackProgressItem.seekProgress);
+
+			postSeekTimer.restart();
 			playbackProgressItem.gear = 0;
 		}
 	}
 
-	Rectangle {
-		id: controlPanel;
-		property bool showHours: playbackProgressItem.duration > 3600000;
-		anchors.left: parent.left;
-		anchors.right: parent.right;
-		anchors.bottom: parent.bottom;
-		height: 60hph;
-		color: colorTheme.activePanelColor;
+	Timer {
+		id: postSeekTimer;
 
-		SubheadText {
-			anchors.verticalCenter: parent.verticalCenter;
-			anchors.left: parent.left;
-			anchors.leftMargin: 10hpw;
-			text: playbackProgressItem.curTimeStr;
-			visible: playbackProgressItem.duration > 0;
-		}
-
-		SubheadText {
-			anchors.verticalCenter: parent.verticalCenter;
-			anchors.right: parent.right;
-			anchors.rightMargin: 10hpw;
-			text: playbackProgressItem.fullTimeStr;
-			visible: playbackProgressItem.duration > 0;
-		}
-
-		Row {
-			id: controls;
-			height: parent.height;
-			anchors.horizontalCenter: parent.horizontalCenter;
-			focus: true;
-
-			Item { //empty item
-				height: 0;
-				width: 0;
-
-				BorderShadow {
-					anchors.fill: highlighter;
-					visible: controls.activeFocus;
-				}
-
-				Rectangle {
-					id: highlighter;
-					anchors.fill: rwBtn.activeFocus ? rwBtn : (playBtn.activeFocus ? playBtn : (ffBtn.activeFocus ? ffBtn : playBtn));
-					visible: controls.activeFocus;
-					color: colorTheme.activeFocusColor;
-					opacity: visible ? 1 : 0;
-
-					onVisibleChanged: { highLighXanim.complete(); }
-
-					Behavior on x { animation: Animation { id:highLighXanim; duration: 150; } }
-					Behavior on opacity { animation: Animation { duration: 100; } }
-				}
-			}
-
-			Image {
-				id: rwBtn;
-				height: parent.height;
-				width: 80hpw;
-				focus: true;
-				color: activeFocus ? colorTheme.focusedTextColor : colorTheme.activeTextColor;
-				source: "res/common/player/rewind.svg";
-
-				onSelectPressed:		{ this.press(); }
-				onLeftPressed:			{ this.press(); }
-
-				press: {
-					seekTimer.restart();
-					hideTimer.restart();
-
-					if (playbackProgressItem.gear < 0) {
-						playbackProgressItem.gear -= 2;
-					} else {
-						if (playbackProgressItem.gear == 0)
-							playbackProgressItem.seekProgress = playbackProgressItem.progress;
-
-						playbackProgressItem.gear = -1;
-					}
-
-					var val = playbackProgressItem.seekProgress + playbackProgressItem.gear * 1000;
-					playbackProgressItem.seekProgress = val > 0 ? val : 0;
-					playbackProgressItem.updateSeekText();
-				}
-			}
-
-			Image {
-				id: playBtn;
-				height: parent.height;
-				width: 80hpw;
-				focus: true;
-				color: activeFocus ? colorTheme.focusedTextColor : colorTheme.activeTextColor;
-				source: "res/apps/player/ico_" + (!playbackProgressItem.isPlaying ? "play" : "pause") + ".svg";
-
-				onSelectPressed: {
-					hideTimer.restart();
-					playbackProgressItem.togglePlay();
-				}
-			}
-
-			Image {
-				id: ffBtn;
-				height: parent.height;
-				width: 80hpw;
-				focus: true;
-				color: activeFocus ? colorTheme.focusedTextColor : colorTheme.activeTextColor;
-				source: "res/common/player/fast_forward.svg";
-
-				onSelectPressed:		{ this.press(); }
-				onRightPressed:			{ this.press(); }
-
-				press: {
-					seekTimer.restart();
-					hideTimer.restart();
-
-					if (playbackProgressItem.gear > 0) {
-						playbackProgressItem.gear += 2;
-					} else {
-						if (playbackProgressItem.gear == 0)
-							playbackProgressItem.seekProgress = playbackProgressItem.progress;
-
-						playbackProgressItem.gear = 1;
-					}
-
-					var val = playbackProgressItem.seekProgress + playbackProgressItem.gear * 1000;
-					playbackProgressItem.seekProgress = val < playbackProgressItem.duration ? val : playbackProgressItem.duration;
-					playbackProgressItem.updateSeekText();
-				}
-			}
-		}
+		interval: 500;
 	}
 
-	ProgressBar {
-		id: seekProgressBar;
-
-		anchors.left: parent.left;
-		anchors.right: parent.right;
-		anchors.bottom: controlPanel.top;
-		anchors.bottomMargin: 2hph;
-
-		progress: playbackProgressItem.duration > 0 ? (1.0 * playbackProgressItem.barProgress) / playbackProgressItem.duration : 0;
-
-		color: colorTheme.globalBackgroundColor;
-		barColor: colorTheme.accentColor;
+	TopLabel {
+		text: playbackProgressItem.text;
+		additionalText: playbackProgressItem.additionalText;
 	}
 
-	Rectangle {
-		id: seekCursor;
-		anchors.horizontalCenter: seekProgressBar.filledArea.right;
-		anchors.verticalCenter: seekProgressBar.verticalCenter;
-		height: 44hph;
-		width: height;
-		radius: height / 2;
-		color: colorTheme.accentColor;
-		opacity: 0.5;
-		visible: playbackProgressItem.gear != 0;
+	Gradient {
+		height: safeAreaManager.bottomMargin + 120hph;
 
-		Rectangle {
-			anchors.centerIn: parent;
-			height: 28hph;
-			width: height;
-			radius: height / 2;
-			color: colorTheme.accentColor;
-		}
-	}
+		anchors.left: mainWindow.left;
+		anchors.right: mainWindow.right;
+		anchors.bottom: mainWindow.bottom;
 
-	Item {
-		anchors.top: seekCursor.top;
-		anchors.horizontalCenter: seekCursor.horizontalCenter;
-		visible: playbackProgressItem.gear != 0;
-
-		Image {
-			id: triangle;
-			anchors.horizontalCenter: parent.horizontalCenter;
-			anchors.bottom: parent.top;
-			source: "res/apps/player/triangle.svg";
-			fillMode: PreserveAspectFit;
-			height: 15hph;
-			width: height * 2;
+		GradientStop {
+			position: 0;
+			color: "#0000";
 		}
 
-		Rectangle {
-			id: bgRect;
-			anchors.bottom: triangle.top;
-			anchors.horizontalCenter: parent.horizontalCenter;
-			height: 30hph;
-			width: seekText.paintedWidth + 20hpw;
-			color: "#fff";
-		}
-
-		BodyText {
-			id: seekText;
-			anchors.centerIn: bgRect;
+		GradientStop {
+			position: 1;
 			color: "#000";
 		}
 	}
 
-	doFF:		{ ffBtn.press(); }
-	doRewind:	{ rwBtn.press(); }
+	PlaybackProgressDurationText {
+		id: currentProgressText;
 
-	updateSeekText: {
-		var p = this.seekProgress;
+		anchors.left: parent.left;
+		anchors.leftMargin: 10hpw + durationText.showHours && !currentProgressText.showHours ? currentProgressText.hmsWidth - currentProgressText.hmWidth : 0;
+		anchors.verticalCenter: progressBar.verticalCenter;
 
-		seekText.text = "";
-		if (p >= 0) {
-			//fixme: gognocode
-			p /= 1000;
-			if (p < 0)
-				return;
+		milliseconds: playbackProgressItem.progress;
 
-			var h = Math.floor(p / 3600);
-			seekText.text = h > 0 ? h + ":" : "";
-			p -= h * 3600;
-			seekText.text +=
-							(p / 60 >= 10 ? "" : "0") +
-								Math.floor(p / 60) + ":" + 
-							(p % 60 >= 10 ? "" : "0") + 
-								Math.floor(p % 60);
+		visible: progressBar.visible && playbackProgressItem.duration > 0;
+	}
+
+	ProgressBar {
+		id: progressBar;
+
+		property int maxSliderHeight: 33hph;
+		property int sliderMargin: 6hph;
+
+		anchors.left: currentProgressText.right;
+		anchors.leftMargin: 24hpw;
+		anchors.right: durationText.left;
+		anchors.rightMargin: 24hpw;
+		anchors.bottom: seekProgressText.top;
+		anchors.bottomMargin: progressBar.sliderMargin + progressBar.maxSliderHeight / 2 - progressBar.height / 2;
+
+		active: activeFocus;
+		progress: playbackProgressItem.duration > 0 ? 1.0 * playbackProgressItem.barProgress / playbackProgressItem.duration : 0;
+		widthAnimationDuration: filledArea.width == 0 ? 0 : playbackProgressItem.gear != 0 ? 100 : 800;
+
+		colorAnimationDuration: 250;
+
+		color: colorTheme.activeTextColor;
+		barColor: active ? colorTheme.activeFocusColor : colorTheme.activeTextColor;
+
+		focus: visible;
+
+		visible: playbackProgressItem.showControlPanel;
+
+		onKeyPressed: {
+			if (key == "Select" || key == "Pause")
+			{
+				hideTimer.restart();
+
+				if (seekTimer.running)
+				{
+					seekTimer.stopAndTrigger();
+
+					if (key == "Pause")
+						playbackProgressItem.togglePause();
+				}
+				else
+				{
+					playbackProgressItem.resetSeek();
+					playbackProgressItem.togglePause();
+				}
+
+				progressBar.resetAnimation();
+
+				return true;
+			}
+		}
+
+		onLeftPressed: { playbackProgressItem.rewind(); }
+		onRightPressed: { playbackProgressItem.fastForward(); }
+
+		onWidthChanged: { progressBar.resetAnimation(); }
+		onActiveFocusChanged: { hideTimer.restart(); }
+	}
+
+	Rectangle {
+		id: sliderRect;
+
+		width: height;
+		height: progressBar.active ? progressBar.maxSliderHeight : 13hph;
+
+		radius: height / 2;
+
+		anchors.left: progressBar.filledArea.right;
+		anchors.leftMargin: -sliderRect.width / 2;
+		anchors.verticalCenter: progressBar.filledArea.verticalCenter;
+
+		color: progressBar.barColor;
+
+		visible: progressBar.visible;
+
+		Image {
+			id: playbackImage;
+
+			anchors.centerIn: parent;
+
+			color: colorTheme.focusedTextColor;
+
+			source: playbackProgressItem.gear > 0 ? "res/apps/infopanel/playback/forward.svg" :
+					playbackProgressItem.gear < 0 ? "res/apps/infopanel/playback/rewind.svg" :
+					playbackProgressItem.isPlaying ? "res/apps/infopanel/playback/pause.svg" :
+					"res/apps/infopanel/playback/play.svg";
+
+			visible: progressBar.active;
 		}
 	}
 
-	onKeyPressed: {
-		if (!visible)
-			return false;
+	PlaybackProgressDurationText {
+		id: seekProgressText;
 
-		if (key != "Back") {
-			hideTimer.restart();
-		} else {
-			this.visible = false;
-			return true;
-		}
-		return false;
+		anchors.bottom: playbackProgressItem.bottom;
+		anchors.bottomMargin: 10hph;
+		anchors.horizontalCenter: sliderRect.horizontalCenter;
+
+		milliseconds: playbackProgressItem.barProgress;
+
+		visible: playbackProgressItem.gear != 0;
 	}
 
-	togglePlay: {
-		if (!this.isPlaying)
-			this.playPressed();
+	PlaybackProgressDurationText {
+		id: durationText;
+
+		anchors.right: parent.right;
+		anchors.rightMargin: 10hpw;
+		anchors.verticalCenter: progressBar.verticalCenter;
+
+		milliseconds: playbackProgressItem.duration;
+
+		visible: progressBar.visible && playbackProgressItem.duration > 0;
+	}
+
+	onBackPressed: { this.visible = false; }
+	onRedPressed: { this.visible = false; }
+
+	onKeyPressed: { hideTimer.restart(); }
+
+	onVisibleChanged: {
+		if (visible)
+		{
+			this.seekProgress = this.progress;
+			progressBar.resetAnimation();
+
+			if (progressBar.visible)
+				progressBar.setFocus();
+			else
+				this.visible = false;
+		}
 		else
-			this.pausePressed();
+			this.resetSeek();
 	}
 
 	resetSeek: {
 		this.gear = 0;
 		this.seekProgress = 0;
 		seekTimer.stop();
+		postSeekTimer.stop();
 	}
 
-	onVisibleChanged: {
-		if (visible) {
-			playbackProgressItem.seekProgress = playbackProgressItem.progress;
-			playBtn.setFocus();
-		} else {
-			this.resetSeek();
-		}
-	}
-
-	show: {
-		this.visible = true;
+	fastForward: {
 		hideTimer.restart();
+		seekTimer.restart();
+
+		if (this.gear > 0)
+			this.gear += 2;
+		else
+		{
+			if (this.gear == 0)
+				this.seekProgress = this.progress;
+
+			this.gear = 1;
+		}
+
+		postSeekTimer.stop();
+		this.seekProgress = Math.min(this.seekProgress + this.gear * 1000, this.duration);
 	}
 
-	hide: {
-		this.visible = false;
+	rewind: {
+		hideTimer.restart();
+		seekTimer.restart();
+
+		if (this.gear < 0)
+			this.gear -= 2;
+		else
+		{
+			if (this.gear == 0)
+				this.seekProgress = this.progress;
+
+			this.gear = -1;
+		}
+
+		postSeekTimer.stop();
+		this.seekProgress = Math.max(this.seekProgress + this.gear * 1000, 0);
+	}
+
+	onShowControlPanelChanged: {
+		if (showControlPanel)
+			this.visible = true;
 	}
 }

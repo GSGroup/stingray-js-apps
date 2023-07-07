@@ -51,7 +51,7 @@ Item {
 		anchors.left: parent.isFullscreen ? mainWindow.left : parent.left;
 		anchors.right: parent.isFullscreen ? mainWindow.right : parent.right;
 		focus: parent.isFullscreen;
-		isFullscreen: parent.isFullscreen;
+		fullscreen: parent.isFullscreen;
 		duration: parent.duration;
 		title: parent.title;
 

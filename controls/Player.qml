@@ -13,229 +13,248 @@ import "PlaybackProgress.qml";
 import stingray.Config;
 
 Item {
-	id: playerObj;
+	id: playerProto;
+
 	signal started(started);
 	signal finished(finished);
-	signal stopped();
-	property bool paused: false;
-	property bool isStopped: true;
-	property bool isFullscreen: false;
-	property bool seeking: false;
-	property bool hideSpinner: false;
-	property bool disableControls: false;
-	property int duration: 0;
-	property int cursorPos: 0;
-	property int progress: 0;
-	property int cursorGain: 1000;
-	property int prevProgress;
-	property string curTimeStr: "";
-	property string fullTimeStr: "";
+	signal stopped;
+
+	property bool fullscreen: true;
+	property bool hideSpinner;
+	property bool disableControls;
 	property string title;
-	clip: true;
+
+	property bool paused;
+	property bool isStopped: true;
+	property bool isMuted;
+
+	Timer {
+		id: spinnerTimer;
+
+		interval: 400;
+		repeat: running;
+		running: playerProto.visible;
+
+		onTriggered: {
+			playbackProgress.progress = playerProto.player.getProgress();
+			playbackProgress.duration = playerProto.player.getDuration();
+
+			if (!playerProto.isStopped && spinner.show)
+				spinner.show = false;
+		}
+	}
+
+	Timer {
+		id: playIconHideTimer;
+
+		interval: 800;
+
+		onTriggered: {
+			playIcon.animationDuration = pauseIcon.visible ? 100 : 300;
+			playIcon.opacity = 0;
+		}
+	}
 
 	VideoOverlay {
 		anchors.fill: parent;
-		visible: !playerObj.isStopped;
+
+		visible: !playerProto.isStopped;
 	}
 
 	AlphaControl { alphaFunc: MaxAlpha; }
 
-	Item {
-		anchors.fill: parent;
-		visible: playerObj.isFullscreen;
+	PlaybackProgress {
+		id: playbackProgress;
 
-		TopLabel {
-			visible: playbackProgress.visible;
-			text: playerObj.title;
+		property bool canShow: playerProto.fullscreen && playerProto.visible && !playerProto.disableControls;
+
+		anchors.left: playerProto.fullscreen ? safeArea.left : playerProto.left;
+		anchors.right: playerProto.fullscreen ? safeArea.right : playerProto.right;
+		anchors.bottom: playerProto.fullscreen ? safeArea.bottom : playerProto.bottom;
+
+		showControlPanel: !spinner.visible;
+
+		isPlaying: !playerProto.paused;
+
+		text: playerProto.title;
+
+		onTogglePause: { playerProto.togglePause(); }
+
+		onSeek: { playerProto.seekAbs(position); }
+
+		onCanShowChanged: { playbackProgress.visible = canShow; }
+	}
+
+	Spinner {
+		id: spinner;
+
+		property bool show: true;
+
+		anchors.centerIn: parent;
+
+		visible: show && !playerProto.hideSpinner;
+	}
+
+	onKeyPressed: {
+		if (key == "Record List" || key == "Menu" || (key == "Blue" && event.Source == "kids"))
+			return false;
+
+		if (key == "Volume Up" || key == "Right")
+		{
+			Config.Feature.volumeUp();
+			return true;
 		}
-
-		PlaybackProgress {
-			id: playbackProgress;
-			height: 70hph;
-			anchors.bottom: safeArea.bottom;
-			anchors.left: safeArea.left;
-			anchors.right: safeArea.right;
-			anchors.leftMargin: 5hpw;
-			anchors.rightMargin: 5hpw;
-			focus: true;
-			isPlaying: !playerObj.paused;
-			progress: playerObj.progress;
-			opacity: visible ? 1 : 0;
-			duration: playerObj.duration;
-			curTimeStr: playerObj.curTimeStr;
-			fullTimeStr: playerObj.fullTimeStr;
-			visible: playerObj.visible && !playerObj.disableControls;
-
-			onPlayPressed: {
-				if (playerObj.currentMediaData)
-					playerObj.playMedia(playerObj.currentMediaData);
+		else if (key == "Volume Down" || key == "Left")
+		{
+			Config.Feature.volumeDown();
+			return true;
+		}
+		else if (key == "Last")
+		{
+			this.abort();
+			return false;
+		}
+		else if (key == "Select" || key == "Pause")
+		{
+			if (!this.disableControls)
+			{
+				playbackProgress.resetSeek();
+				playbackProgress.visible = true;
+				playbackProgress.togglePause();
 			}
+			return true;
+		}
+		else if (key == "Fast Forward")
+		{
+			if (!this.disableControls)
+			{
+				playbackProgress.visible = true;
+				playbackProgress.fastForward();
+			}
+			return true;
+		}
+		else if (key == "Rewind")
+		{
+			if (!this.disableControls)
+			{
+				playbackProgress.visible = true;
+				playbackProgress.rewind();
+			}
+			return true;
+		}
+		else if (key == "Back" || key == "Stop")
+		{
+			playerProto.abort();
+			return true;
+		}
+		else if (key == "Volume Mute")
+		{
+			Config.Feature.toggleMute();
+			playerProto.isMuted = Config.Feature.muted;
+			return true;
+		}
+		else if (!this.disableControls)
+			playbackProgress.visible = true;
 
-			onPausePressed:	{ playerObj.pause(); }
-			onSeeked:		{ playerObj.seekAbs(position); }
+		return true;
+	}
 
-			Behavior on opacity { animation: Animation { duration: 300; } }
+	Image {
+		anchors.left: safeArea.left;
+		anchors.top: safeArea.top;
+
+		source: "res/common/mute.svg";
+
+		opacity: playerProto.isMuted && playerProto.fullscreen ? 0.8 : 0;
+
+		Behavior on opacity { animation: Animation { duration: 300; } }
+	}
+
+	Image {
+		id: pauseIcon;
+
+		anchors.centerIn: parent;
+
+		source: "res/common/player/big_pause.svg";
+
+		visible: playerProto.paused && !spinner.visible;
+		opacity: visible ? 0.8 : 0;
+
+		Behavior on opacity { animation: Animation { duration: 100; easingType: InOutQuad; } }
+
+		onVisibleChanged: {
+			if (visible)
+				playIconHideTimer.stopAndTrigger();
+			else
+			{
+				playIcon.animationDuration = 100;
+				playIcon.opacity = 0.8;
+				playIconHideTimer.restart();
+			}
 		}
 	}
 
 	Image {
-		id: pauseImage;
+		id: playIcon;
+
+		property int animationDuration;
+
 		anchors.centerIn: parent;
-		visible: parent.paused && !playerObj.disableControls;
-		fillMode: PreserveAspectFit;
-		source: "apps/controls/res/preview/icoPause.png";
+
+		source: "res/common/player/big_play.svg";
+
+		opacity: 0;
+
+		Behavior on opacity { animation: Animation { duration: playIcon.animationDuration; easingType: InQuad; } }
 	}
 
-	Spinner {
-		id: loadSpinner;
-		property bool show: true;
-		anchors.centerIn: parent;
-		visible: show && !playerObj.hideSpinner;
-	}
-
-	Timer {
-		id: spinnerTimer;
-		interval: 400;
-		running: playerObj.visible;
-		repeat: running;
-		
-		onTriggered: {
-			var p = playerObj.player.getProgress();
-			var d = playerObj.player.getDuration();
-			playerObj.progress = p;
-			playerObj.duration = d;
-
-			if (!playerObj.isStopped && loadSpinner.show)
-				loadSpinner.show = false;
-
-			if (p && d >= 0) {
-				//fixme: gognocode
-				p /= 1000;
-				d /= 1000;
-				if (p < 0 || d < 0)
-					return;
-
-				var h = Math.floor(p / 3600);
-				playerObj.curTimeStr = h > 0 ? h + ":" : "";
-				p -= h * 3600;
-				playerObj.curTimeStr +=
-									(p / 60 >= 10 ? "" : "0") +
-										Math.floor(p / 60) + ":" + 
-									(p % 60 >= 10 ? "" : "0") + 
-										Math.floor(p % 60);
-
-				h = Math.floor(d / 3600);
-				playerObj.fullTimeStr = h > 0 ? h + ":" : "";
-				d -= h * 3600;
-				playerObj.fullTimeStr += 
-									(d / 60 >= 10 ? "" : "0") + 
-										Math.floor(d / 60) + ":" + 
-									(d  % 60 >= 10 ? "" : "0") + 
-										Math.floor(d % 60);
-			} else {
-				playerObj.curTimeStr = "";
-				playerObj.fullTimeStr = "";
-			}
-		}
-	}
-
-	onKeyPressed: {
-		if (!visible || key == "Menu")
-			return false;
-
-		if (key == "Volume Up" || (playbackProgress.visible && key == "Up") || (!playbackProgress.visible && key == "Right")) {
-			Config.Feature.volumeUp();
-			return true;
-		}
-		if (key == "Volume Down" || (playbackProgress.visible && key == "Down") || (!playbackProgress.visible && key == "Left")) {
-			Config.Feature.volumeDown();
-			return true;
-		}
-
-		if (key == "Pause" && !this.disableControls) {
-			playbackProgress.show();
-			playbackProgress.togglePlay();
-			return true;
-		}
-		if (key == "Fast Forward" && !this.disableControls) {
-			playbackProgress.show();
-			playbackProgress.doFF();
-			return true;
-		}
-		if (key == "Rewind" && !this.disableControls) {
-			playbackProgress.show();
-			playbackProgress.doRewind();
-			return true;
-		}
-
-		if (key == "Last") {
-			playerObj.abort();
-			return false;
-		}
-
-		if (key == "Back") {
-			if (playbackProgress.visible)
-				playbackProgress.hide();
-			else
-				playerObj.abort();
-		}
-		else if (key == "Stop") {
-			playerObj.abort();
-		} else if (key == "Volume Mute") {
-			Config.Feature.toggleMute();
-		} else if (!this.disableControls) {
-			playbackProgress.show();
-		}
-		return true;
-	}
-
-	pause: { this.togglePlay(); }
+	onVisibleChanged: { this.isMuted = Config.Feature.muted; }
 
 	abort: {
 		this.player.stop();
 		this.paused = false;
 		this.isStopped = true;
-		playerObj.stopped();
+		playerProto.stopped();
 	}
 
-	function togglePlay() {
+	togglePause: {
 		this.paused = !this.paused;
 		this.player.pause(this.paused);
 	}
 
-	function seekAbs(position) {
-		this.player.seekAbs(position);
-	}
-
-	function seek(msDelta) {
-		if (!this.paused)
-			this.player.seek(msDelta);
-	}
-
-	function stop() {
+	stop: {
 		console.log("Player: stop playing");
+
 		this.player.stop();
 		this.visible = false;
 		this.isStopped = true;
 	}
 
-	function playMedia(mediaData)
-	{
-		if (this.paused && Object.entries(mediaData.info).toString() === Object.entries(this.currentMediaData.info).toString()) {
-			this.togglePlay();
+	function seekAbs(position) {
+		this.player.seekAbs(position);
+		this.paused = false;
+	}
+
+	function playMedia(mediaData) {
+		if (this.paused && Object.entries(mediaData.info).toString() === Object.entries(this.currentMediaData.info).toString())
+		{
+			this.togglePause();
 			return;
 		}
+
 		console.log("Player: start playing " + Object.entries(mediaData.info).toString());
-		loadSpinner.show = false;
-		loadSpinner.show = true;
+
+		spinner.show = false;
+		spinner.show = true;
 		spinnerTimer.restart();
+
 		this.currentMediaData = mediaData;
 		this.visible = true;
 		this.player.stop();
 
 		this.paused = false;
 
-		var self = playerObj;
+		var self = playerProto;
 
 		this.player.started = function (started) {
 			if (started)

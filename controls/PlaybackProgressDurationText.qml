@@ -25,7 +25,7 @@ BodyText {
 	text: showHours ? (hours > 9 ? hours : "0" + hours) + ":" + minSec : minSec;
 
 	onCompleted: {
-		this.hmWidth = this.getTextRect("88:88").Width();
-		this.hmsWidth = this.getTextRect("88:88:88").Width();
+		this.hmWidth = this.font.getTextRect("88:88").Width();
+		this.hmsWidth = this.font.getTextRect("88:88:88").Width();
 	}
 }
