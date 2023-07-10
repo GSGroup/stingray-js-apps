@@ -7,7 +7,6 @@
 
 import controls.Media;
 import controls.Spinner;
-import "TopLabel.qml";
 import "PlaybackProgress.qml";
 
 import stingray.Config;
