@@ -4,37 +4,39 @@
 	"scope": "system",
 	"library": {
 		"imports": [
-			["Button",				"Button.qml"],
-			["ButtonWithShadow",	"ButtonWithShadow.qml"],
-			["Edit",				"Edit.qml"],
-			["EllipsisText",		"EllipsisText.qml"],
-			["EnterPinDialog",		"EnterPinDialog.qml"],
-			["PasswordEdit",		"PasswordEdit.qml"],
-			["Chooser",				"Chooser.qml"],
-			["LabeledChooser",		"LabeledChooser.qml"],
-			["SimpleChooser",		"SimpleChooser.qml"],
-			["MovingArrows",		"MovingArrows.qml"],
-			["NumberValidator",		"NumberValidator.qml"],
+			["Button",							"Button.qml"],
+			["ButtonWithShadow",				"ButtonWithShadow.qml"],
+			["Edit",							"Edit.qml"],
+			["EllipsisText",					"EllipsisText.qml"],
+			["EnterPinDialog",					"EnterPinDialog.qml"],
+			["PasswordEdit",					"PasswordEdit.qml"],
+			["Chooser",							"Chooser.qml"],
+			["LabeledChooser",					"LabeledChooser.qml"],
+			["SimpleChooser",					"SimpleChooser.qml"],
+			["MovingArrows",					"MovingArrows.qml"],
+			["NumberValidator",					"NumberValidator.qml"],
 
-			["FloatingText",		"FloatingText.qml"],
-			["FocusablePanel",		"FocusablePanel.qml"],
-			["Panel",				"Panel.qml"],
-			["SelectionGradient",	"SelectionGradient.qml"],
+			["FloatingText",					"FloatingText.qml"],
+			["FocusablePanel",					"FocusablePanel.qml"],
+			["Panel",							"Panel.qml"],
+			["SelectionGradient",				"SelectionGradient.qml"],
 
-			["HighlightGridView",	"HighlightGridView.qml"],
-			["HighlightListView",	"HighlightListView.qml"],
+			["HighlightGridView",				"HighlightGridView.qml"],
+			["HighlightListView",				"HighlightListView.qml"],
 
-			["Player",				"Player.qml"],
-			["PreviewPlayer",		"PreviewPlayer.qml"],
+			["PlaybackProgress",				"PlaybackProgress.qml"],
+			["PlaybackProgressDurationText",	"PlaybackProgressDurationText.qml"],
+			["Player",							"Player.qml"],
+			["PreviewPlayer",					"PreviewPlayer.qml"],
 
-			["RtspPlayer",			"RtspPlayer.qml"],
+			["RtspPlayer",						"RtspPlayer.qml"],
 
-			["Spinner",				"Spinner.qml"],
+			["Spinner",							"Spinner.qml"],
 
-			["Media",				"media.js"],
-			["UrlParse",			"urlparse.js"],
-			["Utils",				"utils.js"],
-			["VkAPI",				"vkapi.js"]
+			["Media",							"media.js"],
+			["UrlParse",						"urlparse.js"],
+			["Utils",							"utils.js"],
+			["VkAPI",							"vkapi.js"]
 		]
 	}
 }
