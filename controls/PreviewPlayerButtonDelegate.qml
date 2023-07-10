@@ -19,8 +19,9 @@ Delegate {
 		color: previewPlayerButtonDelegate.activeFocus ? colorTheme.activeFocusColor : colorTheme.activePanelColor;
 
 		Image {
-			source: model.source;
 			anchors.centerIn: parent;
+
+			source: model.source;
 			color: previewPlayerButtonDelegate.activeFocus ? colorTheme.focusedTextColor : colorTheme.activeTextColor;
 		}
 	}

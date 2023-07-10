@@ -9,67 +9,68 @@ import "SimpleChooserDelegate.qml";
 
 Item {
 	id: chooserItem;
+
+	height: 50hph;
+
 	property bool showArrows: true;
 	property bool showAtCenter: true;
 	property bool onlyOneItemVisible: true;
-	height: 50hph;
+
+	property int spacing: 5hpw;
+
 	property alias currentIndex: listView.currentIndex;
 	property alias count: listView.count;
-	property int spacing: 5hpw;
+
+	Behavior on opacity { animation: Animation { duration: 300; } }
 	
 	Image {
+		width: 32hpw;
+
 		anchors.left: parent.left;
-		anchors.verticalCenter: listView.verticalCenter;
 		anchors.rightMargin: 8hpw;
+		anchors.verticalCenter: listView.verticalCenter;
+
 		source: colorTheme.pathToStyleFolder + "/left.svg";
+
 		visible: chooserItem.showArrows;
 		opacity: parent.activeFocus ? 1 : 0.3;
-		width: 32hpw;
-		
-		Behavior on opacity {
-			animation: Animation {
-				duration: 300;
-			}
-		}
+
+		Behavior on opacity { animation: Animation { duration: 300; } }
 	}
 	
 	ListView {
 		id: listView;
-		anchors.fill: parent;
+
 		anchors.leftMargin: (chooserItem.showAtCenter ? Math.max((chooserItem.width - 60hpw - contentWidth) / 2, 0) : 0) + 30hpw;
 		anchors.rightMargin: 30hpw;
+		anchors.fill: parent;
+
 		orientation: Horizontal;
 		wrapNavigation: true;
 		clip: true;
-		delegate: SimpleChooserDelegate { }
-		model: ListModel { }
 		spacing: chooserItem.spacing;
+
+		model: ListModel { }
+		delegate: SimpleChooserDelegate { }
 	}
 	
 	Image {
+		width: 32hpw;
+
 		anchors.right: parent.right;
-		anchors.verticalCenter: listView.verticalCenter;
 		anchors.rightMargin: 8hpw;
+		anchors.verticalCenter: listView.verticalCenter;
+
 		source: colorTheme.pathToStyleFolder + "/right.svg";
+
 		visible: chooserItem.showArrows;
 		opacity: parent.activeFocus ? 1 : 0.3;
-		width: 32hpw;
-		
-		Behavior on opacity {
-			animation: Animation {
-				duration: 300;
-			}
-		}
+
+		Behavior on opacity { animation: Animation { duration: 300; } }
 	}
 
 	function append(text) {
 		console.log("appending to chooser " + text);
 		this.listView.model.append({"text": text});
-	}
-	
-	Behavior on opacity {
-		animation: Animation {
-			duration: 300;
-		}
 	}
 }

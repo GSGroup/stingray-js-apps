@@ -34,11 +34,11 @@ Item {
         anchors.top: catalogPage.top;
         anchors.left: catalogPage.left;
 
-        visible: posterImage.status !== Ready;
-
         source: constants.defaultPoster;
 
         fillMode: PreserveAspectFit;
+
+        visible: posterImage.status !== Ready;
     }
 
     Image {

@@ -6,6 +6,7 @@ import "CellDelegate.qml";
 
 Application {
 	id: fontanero;
+
 	focus: true;
 	color: "#055";
 
@@ -17,46 +18,50 @@ Application {
 
 	GridView {
 		id: cells;
-		model: cellsModel;
+
+		anchors.centerIn: parent;
+
 		cellWidth: 32hpw;
 		cellHeight: 32hph;
-		anchors.centerIn: parent;
+
+		model: cellsModel;
 		delegate: CellDelegate { }
 	}
 
 	Item {
 		anchors.fill: cells;
+
 		Image {
 			id: throwingObject;
+
 			width: 32hpw;
 			height: 32hph;
+
 			source: "apps/fontanero/t/7.png";
+
 			visible: false;
-			Behavior on x {
-				animation: Animation {
-					duration: 200;
-				}
-			}
-			Behavior on y {
-				animation: Animation {
-					duration: 200;
-				}
-			}
+
 			Timer {
 				id: throwingObjectTimer;
+
 				running: throwingObject.visible;
 				interval: 200;
+
 				onTriggered: {
 					throwingObject.visible = false;
 					if (this.finalize)
 						this.finalize();
 				}
 			}
+
+			Behavior on x { animation: Animation { duration: 200; } }
+			Behavior on y { animation: Animation { duration: 200; } }
 		}
 	}
 
 	BodyText {
 		id: logText;
+
 		anchors.left: parent.left;
 		anchors.right: parent.right;
 		anchors.bottom: parent.bottom;
@@ -64,22 +69,27 @@ Application {
 
 	BodyText {
 		id: overlayPanel;
+
+		height: 100hph;
+
 		anchors.left: parent.left;
 		anchors.right: parent.right;
 		anchors.top: parent.top;
-		height: 100hph;
 	}
 
 	BodyText {
 		id: menuPanel;
+
+		height: 250hph;
+
 		anchors.right: parent.right;
 		anchors.verticalCenter: parent.verticalCenter;
-		height: 250hph;
 	}
 
 	Item {
-		focus: true;
 		id: fontaneroInput;
+
+		focus: true;
 
 		onKeyPressed: {
 			if (!fontanero.visible)
@@ -96,32 +106,41 @@ Application {
 
 	Rectangle {
 		id: restartDialog;
-		visible: false;
 
-		color: colorTheme.globalBackgroundColor;
 		width: parent.width / 3;
 		height: parent.height / 4;
+
 		anchors.centerIn: parent;
+
+		color: colorTheme.globalBackgroundColor;
+
+		visible: false;
 
 		SubheadText {
 			anchors.topMargin: -10hph;
 			anchors.centerIn: parent;
+
 			text: "YOU'RE DEAD! Continue?";
 		}
 
 		Row {
-			anchors.margins: 10hpw;
 			anchors.bottom: parent.bottom;
+			anchors.margins: 10hpw;
 			anchors.horizontalCenter: parent.horizontalCenter;
 
 			Button {
 				id: continueButton;
+
 				text: "Continue";
+
 				onSelectPressed: { console.log("continue"); ui.map.restart(); restartDialog.visible = false; }
 			}
 
 			Button {
-				id: restartButton; text: "Restart";
+				id: restartButton;
+
+				text: "Restart";
+
 				onSelectPressed: { console.log("restart"); fontanero.startGame(); restartDialog.visible = false; }
 			}
 		}
@@ -136,7 +155,9 @@ Application {
 
 	Minigame {
 		id: minigame;
+
 		anchors.fill: parent;
+
 		onVisibleChanged: {
 			if (!visible) {
 				ui.map.hero.add_cash(this.bonus);
@@ -148,56 +169,68 @@ Application {
 
 	Rectangle {
 		id: hintPanel;
-		visible: false;
 
 		property string text;
 
 		anchors.fill: mainWindow;
+
 		color: "#333c";
+
+		visible: false;
 
 		TitleText {
 			anchors.centerIn: parent;
+
 			text: parent.text;
 		}
 	}
 
 	Rectangle {
 		id: winPanel;
-		visible: false;
 
 		property string text;
 		property int tile: 4;
 
 		anchors.fill: mainWindow;
+
 		color: "#333c";
+
+		visible: false;
 
 		TitleText {
 			id: winText;
+
 			anchors.centerIn: parent;
+
 			text: parent.text;
 		}
 
 		Image {
 			id: winPanelImage;
-			anchors.right: winText.left;
-			anchors.verticalCenter: winText.verticalCenter;
-			anchors.margins: 64hpw;
 
 			width: 128hpw;
 			height: 128hph;
+
+			anchors.right: winText.left;
+			anchors.margins: 64hpw;
+			anchors.verticalCenter: winText.verticalCenter;
+
 			fillMode: Stretch;
 			source: "apps/fontanero/t/" + parent.tile + ".png";
 		}
+
 		Timer {
 			running: winPanel.visible;
 			repeat: true;
 			interval: 2000;
+
 			onTriggered: {
 				winPanel.tile = (winPanel.tile + 1) % 24
 				if (winPanel.tile < 4)
 					winPanel.tile = 4;
 			}
 		}
+
 		onKeyPressed: {
 			if (key == "Back" || key == "Select") {
 				winPanel.visible = false;
@@ -230,6 +263,12 @@ Application {
 		fontanero.setFocus();
 	}
 
+	onVisibleChanged: {
+		if (visible && !ui.map) {
+			this.startGame();
+		}
+	}
+
 	onCompleted: {
 		ui.logText = logText;
 		ui.overlayPanel = overlayPanel;
@@ -241,11 +280,5 @@ Application {
 		ui.throwingObjectTimer = throwingObjectTimer;
 		ui.minigame = minigame;
 		console.log("Fontanero HD. Adventure for Gold and Glory. v4 argile qml");
-	}
-
-	onVisibleChanged: {
-		if (visible && !ui.map) {
-			this.startGame();
-		}
 	}
 }
