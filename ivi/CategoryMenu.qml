@@ -10,18 +10,18 @@ import "CategoryDelegate.qml";
 import "js/constants.js" as constants;
 
 ListView {
-    id: categoryList;
+	id: categoryList;
 
-    focus: true;
-    clip: true;
+	focus: true;
+	clip: true;
 
-    model: ListModel {}
+	model: ListModel {}
 
-    delegate: CategoryDelegate {}
+	delegate: CategoryDelegate {}
 
-    onCompleted: {
-        constants.categories.forEach(function (category) {
-            model.append( { title: category.title, url: category.url });
-        });
-    }
+	onCompleted: {
+		constants.categories.forEach(function (category) {
+			model.append( { title: category.title, url: category.url });
+		});
+	}
 }
