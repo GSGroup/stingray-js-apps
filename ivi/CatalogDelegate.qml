@@ -28,6 +28,9 @@ Delegate {
 
 			anchors.centerIn: parent;
 
+			sourceWidth: Math.max(constants.poster["width"] + (constants.margin / 3), constants.poster["width"]);
+			sourceHeight: Math.max(constants.poster["height"] + (constants.margin / 3), constants.poster["height"]);
+
 			source: constants.defaultPoster;
 
 			fillMode: PreserveAspectFit;

@@ -37,12 +37,14 @@ ActivePanel {
 		Image {
 			id: buttonIcon;
 
-			width: 34hpw;
-			height: 34hph;
-
 			anchors.verticalCenter: buttonProto.verticalCenter;
 
+			sourceWidth: 34hpw;
+			sourceHeight: 34hph;
+
 			source: buttonProto.icon;
+
+			fillMode: Stretch;
 
 			color: buttonProto.textColor;
 

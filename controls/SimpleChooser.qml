@@ -24,13 +24,14 @@ Item {
 	Behavior on opacity { animation: Animation { duration: 300; } }
 	
 	Image {
-		width: 32hpw;
-
 		anchors.left: parent.left;
 		anchors.rightMargin: 8hpw;
 		anchors.verticalCenter: listView.verticalCenter;
 
+		sourceWidth: 32hpw;
+
 		source: colorTheme.pathToStyleFolder + "/left.svg";
+		fillMode: PreserveAspectFit;
 
 		visible: chooserItem.showArrows;
 		opacity: parent.activeFocus ? 1 : 0.3;
@@ -55,13 +56,15 @@ Item {
 	}
 	
 	Image {
-		width: 32hpw;
-
 		anchors.right: parent.right;
 		anchors.rightMargin: 8hpw;
 		anchors.verticalCenter: listView.verticalCenter;
 
+		sourceWidth: 32hpw;
+
 		source: colorTheme.pathToStyleFolder + "/right.svg";
+
+		fillMode: PreserveAspectFit;
 
 		visible: chooserItem.showArrows;
 		opacity: parent.activeFocus ? 1 : 0.3;
