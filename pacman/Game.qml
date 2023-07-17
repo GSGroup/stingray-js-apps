@@ -88,7 +88,7 @@ Rectangle {
 		id: gameView;
 
 		width: cellWidth * parent.cells;
-		height: width;
+		height: cellHeight * parent.cells;
 
 		anchors.centerIn: parent;
 
@@ -98,7 +98,7 @@ Rectangle {
 		delegate: GameCell { }
 
 		cellWidth: Math.floor(parent.width / parent.cells);
-		cellHeight: cellWidth;
+		cellHeight: Math.floor(parent.height / parent.cells);
 
 		Player {
 			id: player;

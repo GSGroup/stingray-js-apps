@@ -23,7 +23,7 @@ GameObject {
 		x: (parent.step ? 1hpw : 0) + width;
 
 		width: parent.width / 5;
-		height: width;
+		height: parent.height / 5;
 
 		anchors.bottom: parent.bottom;
 
@@ -34,7 +34,7 @@ GameObject {
 		x: (parent.step ? 1hpw : 0) + width * 3;
 
 		width: parent.width / 5;
-		height: width;
+		height: parent.height / 5;
 
 		anchors.bottom: parent.bottom;
 
@@ -43,21 +43,21 @@ GameObject {
 
 	//eyes
 	Rectangle {
-		x: parent.faceLeft ? parent.width / 10hpw : 7 * parent.width / 10;
-		y: parent.width / 5;
+		x: parent.faceLeft ? parent.width / 10 : 7 * parent.width / 10;
+		y: parent.height / 5;
 
 		width: parent.width / 5;
-		height: width;
+		height: parent.height / 5;
 
 		color: "#fff";
 	}
 
 	Rectangle {
-		x: parent.faceLeft ? 5 * parent.width / 10hpw : 3 * parent.width / 10;
-		y: parent.width / 5;
+		x: parent.faceLeft ? 5 * parent.width / 10 : 3 * parent.width / 10;
+		y: parent.height / 5;
 
 		width: parent.width / 5;
-		height: width;
+		height: parent.height / 5;
 
 		color: "#fff";
 	}
