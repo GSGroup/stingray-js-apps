@@ -81,7 +81,7 @@ Item {
 		anchors.right: playerProto.fullscreen ? safeArea.right : playerProto.right;
 		anchors.bottom: playerProto.fullscreen ? safeArea.bottom : playerProto.bottom;
 
-		showControls: !spinner.visible;
+		showControls: !spinner.visible && canShow;
 
 		isPlaying: !playerProto.paused;
 
@@ -94,8 +94,6 @@ Item {
 		onSeeked: { playerProto.seekAbs(position); }
 		onPlayPressed: { playerProto.togglePause(); }
 		onPausePressed: { playerProto.togglePause(); }
-
-		onCanShowChanged: { playbackProgress.visible = canShow; }
 	}
 
 	Spinner {
