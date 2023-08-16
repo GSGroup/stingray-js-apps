@@ -81,7 +81,7 @@ Item {
 		anchors.right: playerProto.fullscreen ? safeArea.right : playerProto.right;
 		anchors.bottom: playerProto.fullscreen ? safeArea.bottom : playerProto.bottom;
 
-		showControlPanel: !spinner.visible;
+		showControls: !spinner.visible;
 
 		isPlaying: !playerProto.paused;
 

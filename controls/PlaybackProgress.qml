@@ -19,7 +19,7 @@ Item {
 	signal pausePressed;
 	signal seeked(position);
 
-	property bool showControlPanel: true;
+	property bool showControls: true;
 
 	property int duration;
 	property int progress;
@@ -128,7 +128,7 @@ Item {
 
 		focus: visible;
 
-		visible: playbackProgressItem.showControlPanel;
+		visible: playbackProgressItem.showControls;
 
 		onKeyPressed: {
 			if (key == "Select" || key == "Pause")
@@ -290,8 +290,8 @@ Item {
 		this.seekProgress = Math.max(this.seekProgress + this.gear * 1000, 0);
 	}
 
-	onShowControlPanelChanged: {
-		if (showControlPanel)
+	onShowControlsChanged: {
+		if (showControls)
 			this.visible = true;
 	}
 }
