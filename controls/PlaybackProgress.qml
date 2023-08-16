@@ -19,6 +19,7 @@ Item {
 	signal pausePressed;
 	signal seeked(position);
 
+	property bool disableAutoShow;
 	property bool showControls: true;
 
 	property int duration;
@@ -290,8 +291,16 @@ Item {
 		this.seekProgress = Math.max(this.seekProgress + this.gear * 1000, 0);
 	}
 
+	onDisableAutoShowChanged: {
+		if (!disableAutoShow && showControls)
+		{
+			hideTimer.restart();
+			this.visible = true;
+		}
+	}
+
 	onShowControlsChanged: {
-		if (showControls)
+		if (showControls && !disableAutoShow)
 			this.visible = true;
 	}
 }
