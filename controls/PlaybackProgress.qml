@@ -300,7 +300,12 @@ Item {
 	}
 
 	onShowControlsChanged: {
-		if (showControls && !disableAutoShow)
+		if (!showControls)
+			hideTimer.stopAndTrigger();
+		else if (!disableAutoShow)
+		{
+			hideTimer.restart();
 			this.visible = true;
+		}
 	}
 }
