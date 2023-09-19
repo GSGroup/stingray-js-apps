@@ -7,7 +7,6 @@
 			["Button",							"Button.qml"],
 			["ButtonWithShadow",				"ButtonWithShadow.qml"],
 			["Edit",							"Edit.qml"],
-			["EllipsisText",					"EllipsisText.qml"],
 			["EnterPinDialog",					"EnterPinDialog.qml"],
 			["PasswordEdit",					"PasswordEdit.qml"],
 			["Chooser",							"Chooser.qml"],
