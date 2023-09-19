@@ -15,9 +15,6 @@ Item {
 	property alias currentIndex: listView.currentIndex;
 	property alias model: listView.model;
 
-	property alias contentWidth: listView.contentWidth;
-	property bool wrapNavigation: true;
-
 	property int count: listView.count;
 	property bool backgroundVisible: true;
 
@@ -93,7 +90,7 @@ Item {
 
 		contentXAnimationDuration: chooserProto.snapMode == chooserProto.No ? 250 : 0;
 
-		wrapNavigation: chooserProto.wrapNavigation;
+		wrapNavigation: true;
 		handleNavigationKeys: false;
 		handleMouseEvents: MouseClickSwitchesItem;
 
