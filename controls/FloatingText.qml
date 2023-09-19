@@ -20,9 +20,6 @@ Item {
 	enum { AlignLeft, AlignRight, AlignHCenter };
 	property int horizontalAlignment: AlignLeft;
 
-	property int maxWidth;
-	property bool maxWidthReached: maxWidth > 0 && maxWidth < innerText.width;
-
 	height: innerText.height;
 
 	Behavior on color { animation: Animation { duration: floatingTextProto.colorAnimable ? 300 : 0; } }
@@ -92,8 +89,6 @@ Item {
 		}
 	}
 
-	onMaxWidthChanged: { floatingTextProto.updateWidth(); }
-
 	onHorizontalAlignmentChanged: { floatingTextProto.reset(); }
 
 	onTextChanged:	{ floatingTextProto.preprocess(); }
@@ -123,12 +118,6 @@ Item {
 
 		xAnimation.complete();
 		movementTimer.interval = 1000;
-	}
-
-	updateWidth: {
-		if (floatingTextProto.maxWidth <= 0)
-			return;
-		floatingTextProto.width = innerText.width > floatingTextProto.maxWidth ? floatingTextProto.maxWidth : innerText.width;
 	}
 
 	onCompleted: { floatingTextProto.preprocess(); }
