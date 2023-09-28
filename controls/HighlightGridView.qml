@@ -18,6 +18,8 @@ GridView {
 	property int highlightWidthAnimationDuration: contentXAnimationDuration;
 	property int highlightHeightAnimationDuration: contentYAnimationDuration;
 
+	property Color highlightColor: colorTheme.activeFocusColor;
+
 	Rectangle {
 		id: innerBackground;
 
@@ -51,7 +53,7 @@ GridView {
 		x: delegateX - highlightGridViewProto.contentX;
 		y: delegateY - highlightGridViewProto.contentY;
 
-		color: colorTheme.activeFocusColor;
+		color: highlightGridViewProto.highlightColor;
 
 		visible: highlightGridViewProto.count;
 		opacity: highlightGridViewProto.activeFocus || highlightGridViewProto.showActiveFocus ? 1 : 0;
