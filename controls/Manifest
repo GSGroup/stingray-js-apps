@@ -23,6 +23,7 @@
 			["PlaybackProgress",				"PlaybackProgress.qml"],
 			["PlaybackProgressDurationText",	"PlaybackProgressDurationText.qml"],
 			["Player",							"Player.qml"],
+			["PreviewPlayer",					"PreviewPlayer.qml"],
 
 			["RtspPlayer",						"RtspPlayer.qml"],
 
