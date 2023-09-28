@@ -14,7 +14,11 @@ ActivePanel {
 	property alias model: chooser.model;
 	property alias snapMode: chooser.snapMode;
 
-	property string label;
+	property alias contentWidth: chooser.listView.contentWidth;
+	property string text;
+	property bool wrapNavigation: true;
+
+	property string label: text;
 	property bool showArrows: true;
 
 	property int count: chooser.count;
@@ -43,6 +47,8 @@ ActivePanel {
 		showArrows: labeledChooserProto.showArrows;
 		chooserWidth: labeledChooserProto.chooserWidth;
 		gradientNonFocusColor: labeledChooserProto.nonFocusColor;
+
+		wrapNavigation: labeledChooserProto.wrapNavigation;
 	}
 
 	completeAnimation: {
