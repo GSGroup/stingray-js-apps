@@ -27,6 +27,16 @@ Item {
 	property bool isStopped: true;
 	property bool isMuted;
 
+	property alias isFullscreen: fullscreen;
+	property bool seeking: false;
+	property int duration: playbackProgress.duration;
+	property int cursorPos: 0;
+	property int progress: playbackProgress.progress;
+	property int cursorGain: 1000;
+	property int prevProgress;
+	property string curTimeStr: playbackProgress.curTimeStr;
+	property string fullTimeStr: playbackProgress.fullTimeStr;
+
 	Timer {
 		id: spinnerTimer;
 
@@ -81,6 +91,10 @@ Item {
 		onTogglePause: { playerProto.togglePause(); }
 
 		onSeek: { playerProto.seekAbs(position); }
+
+		onSeeked: { playerProto.seekAbs(position); }
+		onPlayPressed: { playerProto.togglePause(); }
+		onPausePressed: { playerProto.togglePause(); }
 	}
 
 	Spinner {
@@ -208,6 +222,8 @@ Item {
 
 	onVisibleChanged: { this.isMuted = Config.Feature.muted; }
 
+	pause: { this.togglePause(); }
+
 	abort: {
 		this.player.stop();
 		this.paused = false;
@@ -226,6 +242,11 @@ Item {
 		this.player.stop();
 		this.visible = false;
 		this.isStopped = true;
+	}
+
+	function seek(msDelta) {
+		if (!this.paused)
+			this.player.seek(msDelta);
 	}
 
 	function seekAbs(position) {
