@@ -12,6 +12,7 @@
 			["PasswordEdit",					"PasswordEdit.qml"],
 			["Chooser",							"Chooser.qml"],
 			["LabeledChooser",					"LabeledChooser.qml"],
+			["SimpleChooser",					"SimpleChooser.qml"],
 			["MovingArrows",					"MovingArrows.qml"],
 			["NumberValidator",					"NumberValidator.qml"],
 
