@@ -21,6 +21,9 @@ const gridHeight = $grid_height;
 
 const grid = $grid;
 
+const initialPlayerPos = $initial_player_pos;
+const initialEnemiesPos = $initial_enemies_pos;
+
 this.getSpeed = function() {
 	return speed;
 }
@@ -43,4 +46,12 @@ this.getGridHeight = function() {
 
 this.getGrid = function() {
 	return grid;
+}
+
+this.getInitialPlayerPos = function() {
+	return initialPlayerPos;
+}
+
+this.getInitialEnemyPos = function(index) {
+	return initialEnemiesPos[index];
 }

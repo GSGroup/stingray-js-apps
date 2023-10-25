@@ -14,6 +14,12 @@ grid_height = 21
 cell_width = 30
 cell_height = 30
 
+initial_player_pos = [1, 1]
+initial_enemies_pos = [
+    [15, 15],
+    [15, 16],
+    [15, 17],
+    [15, 18] ]
 
 def main():
     parser = argparse.ArgumentParser(description='Pacman bootstrap')
@@ -50,8 +56,10 @@ def main():
                 .replace("$cell_width", str(cell_width)) \
                 .replace("$cell_height", str(cell_height)) \
                 .replace("$grid_width", str(grid_width)) \
-                .replace("$grid_height", str(grid_height))  \
-                .replace("$grid", grid_string)
+                .replace("$grid_height", str(grid_height)) \
+                .replace("$grid", str(grid_string))    \
+                .replace("$initial_player_pos", str(initial_player_pos))    \
+                .replace("$initial_enemies_pos", str(initial_enemies_pos))
 
         consts_result_file.write(consts_template_string)
 

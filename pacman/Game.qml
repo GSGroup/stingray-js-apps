@@ -44,8 +44,6 @@ Rectangle {
 				width: gameConsts.getCellWidth();
 				height: gameConsts.getCellHeight();
 
-				cellX: 1;
-				cellY: 1;
 				speed: gameConsts.getSpeed();
 			}
 
@@ -58,8 +56,6 @@ Rectangle {
 
 					color: "#f00";
 
-					cellX: 15;
-					cellY: 15;
 					speed: gameConsts.getSpeed();
 				}
 
@@ -69,8 +65,6 @@ Rectangle {
 
 					color: "#f0f";
 
-					cellX: 15;
-					cellY: 16;
 					speed: gameConsts.getSpeed();
 				}
 
@@ -80,8 +74,6 @@ Rectangle {
 
 					color: "#0ff";
 
-					cellX: 15;
-					cellY: 17;
 					speed: gameConsts.getSpeed();
 				}
 
@@ -91,8 +83,6 @@ Rectangle {
 
 					color: "#fc0";
 
-					cellX: 15;
-					cellY: 18;
 					speed: gameConsts.getSpeed();
 				}
 			}
@@ -183,6 +173,7 @@ Rectangle {
 	}
 
 	function init() {
+		player.reset(...gameConsts.getInitialPlayerPos());
 		resetEnemies();
 
 		engine.setGrid(gameConsts.getGrid());
@@ -191,6 +182,9 @@ Rectangle {
 	function resetEnemies() {
 		for (let i = 0; i < enemies.children.length; ++i) {
 			const enemy = enemies.children[i];
+
+			enemy.reset(...gameConsts.getInitialEnemyPos(i));
+
 			enemy.dx = getRandomVelocity();
 			enemy.dy = getRandomVelocity(enemy.dx != 0);
 		}
