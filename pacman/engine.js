@@ -13,6 +13,11 @@ this.setCellType = function(x, y, type) {
     grid[y][x] = type;
 }
 
+this.isWall = function(x, y) {
+    const type = this.getCellType(x, y);
+    return type != gameConsts.CellType.EMPTY && type != gameConsts.CellType.POINT;
+}
+
 this.getGrid = function() {
     return grid;
 }

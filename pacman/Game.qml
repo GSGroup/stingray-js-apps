@@ -23,8 +23,6 @@ Rectangle {
 	focus: true;
 
 	Rectangle {
-		id: gameField;
-
 		width: parent.width;
 		height: parent.height;
 
@@ -105,10 +103,6 @@ Rectangle {
 				}
 			}
 		}
-
-		function isWall(cell) {
-			return cell != gameConsts.CellType.EMPTY && cell != gameConsts.CellType.POINT;
-		}
 	}
 
 	TitleText {
@@ -138,19 +132,19 @@ Rectangle {
 
 			const cellX = player.cellX, cellY = player.cellY;
 
-			if (inputX != 0 && !gameField.isWall(engine.getCellType(cellX + inputX, cellY))) {
+			if (inputX != 0 && !engine.isWall(cellX + inputX, cellY)) {
 				player.dx = inputX;
 				player.dy = 0;
 			}
-			else if (inputY != 0 && !gameField.isWall(engine.getCellType(cellX, cellY + inputY))) {
+			else if (inputY != 0 && !engine.isWall(cellX, cellY + inputY)) {
 				player.dx = 0;
 				player.dy = inputY;
 			}
 			else {
-				if (player.dx != 0 && gameField.isWall(engine.getCellType(cellX + player.dx, cellY)))
+				if (player.dx != 0 && engine.isWall(cellX + player.dx, cellY))
 					player.dx = 0;
 
-				if (player.dy != 0 && gameField.isWall(engine.getCellType(cellX, cellY + player.dy)))
+				if (player.dy != 0 && engine.isWall(cellX, cellY + player.dy))
 					player.dy = 0;
 			}
 
@@ -162,7 +156,7 @@ Rectangle {
 
 				let dx = enemy.dx, dy = enemy.dy;
 				while (true) {
-					if (gameField.isWall(engine.getCellType(enemy.cellX + dx, enemy.cellY + dy))) {
+					if (engine.isWall(enemy.cellX + dx, enemy.cellY + dy)) {
 						if (dx > 0) { dy = 1; dx = 0; }
 						else if (dx < 0) { dy = -1; dx = 0; }
 						else if (dy > 0) { dx = -1; dy = 0; }
