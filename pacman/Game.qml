@@ -140,11 +140,11 @@ Rectangle {
 				engine.getObject(player.cellX + '/' + player.cellY).visible = false;
 			}
 
-			var inputDirection = player.inputDirection;
-			var inputX = inputDirection == player.Left ? -1 : inputDirection == player.Right ? 1 : 0;
-			var inputY = inputDirection == player.Up ? -1 : inputDirection == player.Down ? 1 : 0;
+			const inputDirection = player.inputDirection;
+			const inputX = inputDirection == player.Left ? -1 : inputDirection == player.Right ? 1 : 0;
+			const inputY = inputDirection == player.Up ? -1 : inputDirection == player.Down ? 1 : 0;
 
-			var cellX = player.cellX, cellY = player.cellY;
+			const cellX = player.cellX, cellY = player.cellY;
 
 			if (inputX != 0 && !gameField.isWall(gameField.getCell(cellX + inputX, cellY))) {
 				player.dx = inputX;
@@ -165,15 +165,12 @@ Rectangle {
 			player.move();
 			player.inputDirection = player.None;
 
-			var enem = enemies.children;
+			for (let i = 0; i < enemies.children.length; ++i) {
+				const enemy = enemies.children[i];
 
-			for (var i = 0; i < enem.length; ++i) {
-				var oneEnemy = enem[i];
-				var enemyCellX = oneEnemy.cellX, enemyCellY = oneEnemy.cellY;
-				var dx = oneEnemy.dx, dy = oneEnemy.dy;
-
+				let dx = enemy.dx, dy = enemy.dy;
 				while (true) {
-					if (gameField.isWall(gameField.getCell(enemyCellX + dx, enemyCellY  + dy))) {
+					if (gameField.isWall(gameField.getCell(enemy.cellX + dx, enemy.cellY + dy))) {
 						if (dx > 0) { dy = 1; dx = 0; }
 						else if (dx < 0) { dy = -1; dx = 0; }
 						else if (dy > 0) { dx = -1; dy = 0; }
@@ -182,9 +179,9 @@ Rectangle {
 						break;
 				}
 
-				oneEnemy.dx = dx;
-				oneEnemy.dy = dy;
-				oneEnemy.move();
+				enemy.dx = dx;
+				enemy.dy = dy;
+				enemy.move();
 			}
 		}
 	}

@@ -1,20 +1,20 @@
-var objectMap = new Map();
-var grid = [];
+const objectMap = new Map();
+let grid = [];
 
-this.getCellType = function(width, height) {
-    return grid[height][width];
+this.getCellType = function(x, y) {
+    return grid[y][x];
 }
 
-this.setCellType = function(width, height, val) {
-    grid[height][width] = val;
+this.setCellType = function(x, y, type) {
+    grid[y][x] = type;
 }
 
 this.getGrid = function() {
     return grid;
 }
 
-this.setGrid = function(newGrid) {
-    grid = newGrid;
+this.setGrid = function(grid_) {
+    grid = grid_;
 }
 
 this.getObject = function(id) {
