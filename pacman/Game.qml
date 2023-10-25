@@ -104,10 +104,10 @@ Rectangle {
 		interval: gameConsts.getSpeed();
 
 		onTriggered: {
-			if (engine.getCellType(player.cellX, player.cellY) == gameConsts.CellType.POINT) {
+			const point = engine.getPoint(player.cellX, player.cellY);
+			if (point && point.visible) {
 				pacmanGame.score += 100;
-				engine.setCellType(player.cellX, player.cellY, gameConsts.CellType.EMPTY);
-				engine.getPoint(player.cellX, player.cellY).visible = false;
+				point.visible = false;
 			}
 
 			const inputDirection = player.inputDirection;
