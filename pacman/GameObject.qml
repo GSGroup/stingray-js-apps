@@ -18,8 +18,17 @@ Item {
 	x: width * cellX - width / 2;
 	y: height * cellY - height / 2;
 
-	Behavior on x { animation: Animation { duration: gameObjectProto.speed; } }
-	Behavior on y { animation: Animation { duration: gameObjectProto.speed; } }
+	Behavior on x {
+		id: xAnimation;
+
+		animation: Animation { duration: gameObjectProto.speed; }
+	}
+
+	Behavior on y {
+		id: yAnimation;
+
+		animation: Animation { duration: gameObjectProto.speed; }
+	}
 
 	function move() {
 		gameObjectProto.cellX += gameObjectProto.dx;
@@ -27,5 +36,16 @@ Item {
 
 		if (gameObjectProto.dx != 0)
 			gameObjectProto.faceLeft = gameObjectProto.dx < 0;
+	}
+
+	function reset(x, y) {
+		gameObjectProto.cellX = x;
+		xAnimation.complete();
+
+		gameObjectProto.cellY = y;
+		yAnimation.complete();
+
+		gameObjectProto.dx = 0;
+		gameObjectProto.dy = 0;
 	}
 }
