@@ -13,8 +13,8 @@ this.CellType = CellType;
 
 const speed = 250;
 
-const cellWidth = $cell_width;
-const cellHeight = $cell_height;
+const cellWidth = calculateWidth($cell_width, 'h');
+const cellHeight = calculateHeight($cell_height, 'h');
 
 const fieldWidth = $field_width;
 const fieldHeight = $field_height;
@@ -26,11 +26,11 @@ this.getSpeed = function() {
 }
 
 this.getCellWidth = function() {
-	return calculateWidth(cellWidth, 'h');
+	return cellWidth;
 }
 
 this.getCellHeight = function() {
-	return calculateHeight(cellHeight, 'h');
+	return cellHeight;
 }
 
 this.getFieldWidth = function() {
