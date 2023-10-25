@@ -46,12 +46,12 @@ def main():
             grid_string += "],\n"
         grid_string += "];\n\n"
 
-        consts_template_string = consts_template_string.replace("$grid", grid_string) \
-                .replace("$cell_types", cell_types) \
+        consts_template_string = consts_template_string.replace("$cell_types", cell_types) \
                 .replace("$cell_width", str(cell_width)) \
                 .replace("$cell_height", str(cell_height)) \
-                .replace("$field_width", str(grid_width)) \
-                .replace("$field_height", str(grid_height))
+                .replace("$grid_width", str(grid_width)) \
+                .replace("$grid_height", str(grid_height))  \
+                .replace("$grid", grid_string)
 
         consts_result_file.write(consts_template_string)
 

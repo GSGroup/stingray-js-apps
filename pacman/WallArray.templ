@@ -3,8 +3,8 @@ import "../engine.js" as engine;
 Item {
 	id: pacmanWallArrayProto;
 
-	width: gameConsts.getCellWidth() * (gameConsts.getFieldWidth() - 1);
-	height: gameConsts.getCellHeight() * (gameConsts.getFieldHeight() - 1);
+	width: gameConsts.getCellWidth() * (gameConsts.getGridWidth() - 1);
+	height: gameConsts.getCellHeight() * (gameConsts.getGridHeight() - 1);
 
 $array_of_walls
 

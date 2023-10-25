@@ -16,8 +16,8 @@ const speed = 250;
 const cellWidth = calculateWidth($cell_width, 'h');
 const cellHeight = calculateHeight($cell_height, 'h');
 
-const fieldWidth = $field_width;
-const fieldHeight = $field_height;
+const gridWidth = $grid_width;
+const gridHeight = $grid_height;
 
 const grid = $grid;
 
@@ -33,12 +33,12 @@ this.getCellHeight = function() {
 	return cellHeight;
 }
 
-this.getFieldWidth = function() {
-	return fieldWidth;
+this.getGridWidth = function() {
+	return gridWidth;
 }
 
-this.getFieldHeight = function() {
-	return fieldHeight;
+this.getGridHeight = function() {
+	return gridHeight;
 }
 
 this.getGrid = function() {
