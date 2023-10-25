@@ -6,6 +6,8 @@
 // WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 Item {
+	id: gameObjectProto;
+
 	property int cellX;
 	property int cellY;
 	property int speed;
@@ -18,6 +20,6 @@ Item {
 
 	z: 1;
 
-	Behavior on x { animation: Animation { duration: playerItem.speed; } }
-	Behavior on y { animation: Animation { duration: playerItem.speed; } }
+	Behavior on x { animation: Animation { duration: gameObjectProto.speed; } }
+	Behavior on y { animation: Animation { duration: gameObjectProto.speed; } }
 }

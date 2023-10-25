@@ -8,7 +8,7 @@
 import "GameObject.qml";
 
 GameObject {
-	id: playerItem;
+	id: playerProto;
 
 	Rectangle {
 		anchors.fill: parent;
@@ -17,31 +17,29 @@ GameObject {
 		radius: width / 2;
 	}
 
-	//eye
 	Rectangle {
 		width: parent.width / 5;
 		height: parent.height / 5;
 
 		anchors.horizontalCenter: parent.horizontalCenter;
-		anchors.leftMargin: 3 * parent.width / 5 * (playerItem.faceLeft? -1: 1);
+		anchors.leftMargin: 3 * parent.width / 5 * (playerProto.faceLeft ? -1 : 1);
 		anchors.top: parent.top;
 		anchors.topMargin: height;
 	}
 
-	//mouth
 	Rectangle {
 		id: mouth;
 
 		property bool opened;
 
 		width: parent.width / 2;
-		height: opened? parent.height / 2: 0;
+		height: opened ? parent.height / 2 : 0;
 
 		anchors.horizontalCenter: parent.horizontalCenter;
 		anchors.verticalCenter: parent.verticalCenter;
 		anchors.topMargin: parent.height / 2;
 
-		anchors.leftMargin: (parent.width / 2 + 2hpw) * (playerItem.faceLeft? -1: 1);
+		anchors.leftMargin: (parent.width / 2 + 2hpw) * (playerProto.faceLeft ? -1 : 1);
 
 		color: "#003";
 		radius: width / 3;

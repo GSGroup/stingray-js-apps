@@ -8,7 +8,7 @@
 import "GameObject.qml";
 
 GameObject {
-	id: ghost;
+	id: enemyProto;
 
 	property Color color;
 	property bool step;
@@ -41,7 +41,7 @@ GameObject {
 		color: "#003";
 	}
 
-	//eyes
+	// Eyes
 	Rectangle {
 		x: parent.faceLeft ? parent.width / 10 : 7 * parent.width / 10;
 		y: parent.height / 5;
@@ -66,6 +66,6 @@ GameObject {
 		repeat: true;
 		running: true;
 		interval: 200;
-		onTriggered: { ghost.step = !ghost.step; }
+		onTriggered: { enemyProto.step = !enemyProto.step; }
 	}
 }
