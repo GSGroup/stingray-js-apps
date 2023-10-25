@@ -205,11 +205,6 @@ Rectangle {
 		}
 	}
 
-	onVisibleChanged: {
-		if (visible)
-			this.setFocus();
-	}
-
 	onCompleted: {
 		gameField.init();
 	}
