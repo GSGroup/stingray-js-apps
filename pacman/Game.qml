@@ -40,6 +40,9 @@ Rectangle {
 			Player {
 				id: player;
 
+				enum { None, Left, Right, Up, Down };
+				property int inputDirection: None;
+
 				width: gameConsts.getCellWidth();
 				height: gameConsts.getCellHeight();
 
@@ -139,28 +142,32 @@ Rectangle {
 				engine.getObject(player.cellX + '/' + player.cellY).visible = false;
 			}
 
+			var inputDirection = player.inputDirection;
+			var inputX = inputDirection == player.Left ? -1 : inputDirection == player.Right ? 1 : 0;
+			var inputY = inputDirection == player.Up ? -1 : inputDirection == player.Down ? 1 : 0;
+
 			var cellX = player.cellX, cellY = player.cellY;
-			var dx = player.dx, dy = player.dy;
 
-			var is_next_h_cell_wall = gameField.isWall(gameField.getCell(cellX + dx, cellY));
-			var is_next_v_cell_wall = gameField.isWall(gameField.getCell(cellX, cellY + dy));
-
-			if (!is_next_h_cell_wall && !is_next_v_cell_wall) {
-				if (pacmanGame.horizontal)
-					dy = 0;
-				else
-					dx = 0;
+			if (inputX != 0 && !gameField.isWall(gameField.getCell(cellX + inputX, cellY))) {
+				player.dx = inputX;
+				player.dy = 0;
+			}
+			else if (inputY != 0 && !gameField.isWall(gameField.getCell(cellX, cellY + inputY))) {
+				player.dx = 0;
+				player.dy = inputY;
 			}
 			else {
-				if (is_next_h_cell_wall)
-					dx = 0;
+				if (player.dx != 0 && gameField.isWall(gameField.getCell(cellX + player.dx, cellY)))
+					player.dx = 0;
 
-				if (is_next_v_cell_wall)
-					dy = 0;
+				if (player.dy != 0 && gameField.isWall(gameField.getCell(cellX, cellY + player.dy)))
+					player.dy = 0;
 			}
 
-			player.cellX = cellX + dx;
-			player.cellY = cellY + dy;
+			player.cellX = cellX + player.dx;
+			player.cellY = cellY + player.dy;
+
+			player.inputDirection = player.None;
 
 			var enem = enemies.children;
 
@@ -189,20 +196,16 @@ Rectangle {
 
 	onKeyPressed: {
 		if (key == "Left") {
-			player.dx = -1;
-			pacmanGame.horizontal = true;
+			player.inputDirection = player.Left;
 			return true;
 		} else if (key == "Right") {
-			player.dx = 1;
-			pacmanGame.horizontal = true;
+			player.inputDirection = player.Right;
 			return true;
 		} else if (key == "Up") {
-			player.dy = -1;
-			pacmanGame.horizontal = false;
+			player.inputDirection = player.Up;
 			return true;
 		} else if (key == "Down") {
-			player.dy = 1;
-			pacmanGame.horizontal = false;
+			player.inputDirection = player.Down;
 			return true;
 		}
 	}
