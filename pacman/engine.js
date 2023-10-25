@@ -1,7 +1,7 @@
-const objectMap = new Map();
+const pointsMap = new Map();
 let grid = [];
 
-function getObjectId(x, y) {
+function getPointId(x, y) {
     return x + '/' + y;
 }
 
@@ -21,10 +21,10 @@ this.setGrid = function(grid_) {
     grid = grid_;
 }
 
-this.getObject = function(x, y) {
-    return objectMap.get(getObjectId(x, y));
+this.getPoint = function(x, y) {
+    return pointsMap.get(getPointId(x, y));
 }
 
-this.setObject = function(x, y, object) {
-    objectMap.set(getObjectId(x, y), object);
+this.setPoint = function(x, y, point) {
+    pointsMap.set(getPointId(x, y), point);
 }

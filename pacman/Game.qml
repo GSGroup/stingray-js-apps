@@ -137,7 +137,7 @@ Rectangle {
 			if (gameField.getCell(player.cellX, player.cellY) == gameConsts.CellType.POINT) {
 				pacmanGame.score += 100;
 				engine.setCellType(player.cellX, player.cellY, gameConsts.CellType.EMPTY);
-				engine.getObject(player.cellX, player.cellY).visible = false;
+				engine.getPoint(player.cellX, player.cellY).visible = false;
 			}
 
 			const inputDirection = player.inputDirection;
