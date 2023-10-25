@@ -164,9 +164,7 @@ Rectangle {
 					player.dy = 0;
 			}
 
-			player.cellX = cellX + player.dx;
-			player.cellY = cellY + player.dy;
-
+			player.move();
 			player.inputDirection = player.None;
 
 			var enem = enemies.children;
@@ -188,8 +186,7 @@ Rectangle {
 
 				oneEnemy.dx = dx;
 				oneEnemy.dy = dy;
-				oneEnemy.cellX = enemyCellX + dx;
-				oneEnemy.cellY = enemyCellY + dy;
+				oneEnemy.move();
 			}
 		}
 	}

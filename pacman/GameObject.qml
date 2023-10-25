@@ -11,7 +11,7 @@ Item {
 	property int cellX;
 	property int cellY;
 	property int speed;
-	property bool faceLeft: dx < 0;
+	property bool faceLeft;
 	property int dx;
 	property int dy;
 
@@ -22,4 +22,12 @@ Item {
 
 	Behavior on x { animation: Animation { duration: gameObjectProto.speed; } }
 	Behavior on y { animation: Animation { duration: gameObjectProto.speed; } }
+
+	function move() {
+		gameObjectProto.cellX += gameObjectProto.dx;
+		gameObjectProto.cellY += gameObjectProto.dy;
+
+		if (gameObjectProto.dx != 0)
+			gameObjectProto.faceLeft = gameObjectProto.dx < 0;
+	}
 }
