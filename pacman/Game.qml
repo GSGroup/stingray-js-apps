@@ -113,10 +113,6 @@ Rectangle {
 		function isWall(cell) {
 			return cell != gameConsts.CellType.EMPTY && cell != gameConsts.CellType.POINT;
 		}
-
-		function init() {
-			engine.setGrid(gameConsts.getGrid());
-		}
 	}
 
 	TitleText {
@@ -202,7 +198,11 @@ Rectangle {
 		}
 	}
 
+	function init() {
+		engine.setGrid(gameConsts.getGrid());
+	}
+
 	onCompleted: {
-		gameField.init();
+		pacmanGame.init();
 	}
 }
