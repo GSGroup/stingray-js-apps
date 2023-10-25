@@ -8,12 +8,16 @@
 import "Game.qml";
 
 Application {
-	id: gameScreen;
+	id: pacmanApp;
 
 	Game {
+		id: pacmanGame;
+
 		width: parent.height;
 		height: width;
 
 		anchors.centerIn: parent;
 	}
+
+	onStopped: { pacmanGame.reset(); }
 }

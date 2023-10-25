@@ -179,6 +179,21 @@ Rectangle {
 		engine.setGrid(gameConsts.getGrid());
 	}
 
+	function reset() {
+		player.reset(...gameConsts.getInitialPlayerPos());
+		resetEnemies();
+
+		for (let x = 0; x < gameConsts.getGridWidth(); ++x) {
+			for (let y = 0; y < gameConsts.getGridHeight(); ++y) {
+				const point = engine.getPoint(x, y);
+				if (point)
+					point.visible = true;
+			}
+		}
+
+		pacmanGame.score = 0;
+	}
+
 	function resetEnemies() {
 		for (let i = 0; i < enemies.children.length; ++i) {
 			const enemy = enemies.children[i];
