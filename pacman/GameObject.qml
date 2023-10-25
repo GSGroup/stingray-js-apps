@@ -18,8 +18,6 @@ Item {
 	x: width * cellX - width / 2;
 	y: height * cellY - height / 2;
 
-	z: 1;
-
 	Behavior on x { animation: Animation { duration: gameObjectProto.speed; } }
 	Behavior on y { animation: Animation { duration: gameObjectProto.speed; } }
 

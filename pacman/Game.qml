@@ -54,8 +54,6 @@ Rectangle {
 			Item {
 				id: enemies;
 
-				z: 1;
-
 				Enemy {
 					width: gameConsts.getCellWidth();
 					height: gameConsts.getCellHeight();
