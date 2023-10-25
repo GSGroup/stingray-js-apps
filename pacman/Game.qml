@@ -22,6 +22,12 @@ Rectangle {
 	color: "#003";
 	focus: true;
 
+	NotificatorManager {
+		id: notificatorManager;
+
+		interval: 5000;
+	}
+
 	Rectangle {
 		width: parent.width;
 		height: parent.height;
@@ -152,6 +158,15 @@ Rectangle {
 				enemy.dx = dx;
 				enemy.dy = dy;
 				enemy.move();
+
+				if (player.x < enemy.x + enemy.width &&
+						player.x + player.width > enemy.x &&
+						player.y < enemy.y + enemy.height &&
+						player.y + player.height > enemy.y) {
+					pacmanGame.notify("You died!");
+					pacmanGame.reset();
+					return;
+				}
 			}
 		}
 	}
@@ -208,6 +223,11 @@ Rectangle {
 	function getRandomVelocity(allowZero = true) {
 		const n = Math.floor(Math.random() * (allowZero ? 3 : 2));
 		return n == 0 ? -1 : n % 2;
+	}
+
+	function notify(text) {
+		notificatorManager.text = text;
+		notificatorManager.addNotify();
 	}
 
 	onCompleted: {
