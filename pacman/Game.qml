@@ -106,10 +106,6 @@ Rectangle {
 			}
 		}
 
-		function getCell(x, y) {
-			return engine.getCellType(x, y);
-		}
-
 		function isWall(cell) {
 			return cell != gameConsts.CellType.EMPTY && cell != gameConsts.CellType.POINT;
 		}
@@ -130,7 +126,7 @@ Rectangle {
 		interval: gameConsts.getSpeed();
 
 		onTriggered: {
-			if (gameField.getCell(player.cellX, player.cellY) == gameConsts.CellType.POINT) {
+			if (engine.getCellType(player.cellX, player.cellY) == gameConsts.CellType.POINT) {
 				pacmanGame.score += 100;
 				engine.setCellType(player.cellX, player.cellY, gameConsts.CellType.EMPTY);
 				engine.getPoint(player.cellX, player.cellY).visible = false;
@@ -142,19 +138,19 @@ Rectangle {
 
 			const cellX = player.cellX, cellY = player.cellY;
 
-			if (inputX != 0 && !gameField.isWall(gameField.getCell(cellX + inputX, cellY))) {
+			if (inputX != 0 && !gameField.isWall(engine.getCellType(cellX + inputX, cellY))) {
 				player.dx = inputX;
 				player.dy = 0;
 			}
-			else if (inputY != 0 && !gameField.isWall(gameField.getCell(cellX, cellY + inputY))) {
+			else if (inputY != 0 && !gameField.isWall(engine.getCellType(cellX, cellY + inputY))) {
 				player.dx = 0;
 				player.dy = inputY;
 			}
 			else {
-				if (player.dx != 0 && gameField.isWall(gameField.getCell(cellX + player.dx, cellY)))
+				if (player.dx != 0 && gameField.isWall(engine.getCellType(cellX + player.dx, cellY)))
 					player.dx = 0;
 
-				if (player.dy != 0 && gameField.isWall(gameField.getCell(cellX, cellY + player.dy)))
+				if (player.dy != 0 && gameField.isWall(engine.getCellType(cellX, cellY + player.dy)))
 					player.dy = 0;
 			}
 
@@ -166,7 +162,7 @@ Rectangle {
 
 				let dx = enemy.dx, dy = enemy.dy;
 				while (true) {
-					if (gameField.isWall(gameField.getCell(enemy.cellX + dx, enemy.cellY + dy))) {
+					if (gameField.isWall(engine.getCellType(enemy.cellX + dx, enemy.cellY + dy))) {
 						if (dx > 0) { dy = 1; dx = 0; }
 						else if (dx < 0) { dy = -1; dx = 0; }
 						else if (dy > 0) { dx = -1; dy = 0; }
