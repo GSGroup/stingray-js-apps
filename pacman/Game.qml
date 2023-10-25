@@ -60,7 +60,6 @@ Rectangle {
 
 					cellX: 15;
 					cellY: 15;
-					dx: 1;
 					speed: gameConsts.getSpeed();
 				}
 
@@ -72,7 +71,6 @@ Rectangle {
 
 					cellX: 15;
 					cellY: 16;
-					dx: -1;
 					speed: gameConsts.getSpeed();
 				}
 
@@ -84,8 +82,6 @@ Rectangle {
 
 					cellX: 15;
 					cellY: 17;
-					faceLeft: true;
-					dy: 1;
 					speed: gameConsts.getSpeed();
 				}
 
@@ -97,8 +93,6 @@ Rectangle {
 
 					cellX: 15;
 					cellY: 18;
-					faceLeft: true;
-					dy: -1;
 					speed: gameConsts.getSpeed();
 				}
 			}
@@ -189,7 +183,22 @@ Rectangle {
 	}
 
 	function init() {
+		resetEnemies();
+
 		engine.setGrid(gameConsts.getGrid());
+	}
+
+	function resetEnemies() {
+		for (let i = 0; i < enemies.children.length; ++i) {
+			const enemy = enemies.children[i];
+			enemy.dx = getRandomVelocity();
+			enemy.dy = getRandomVelocity(enemy.dx != 0);
+		}
+	}
+
+	function getRandomVelocity(allowZero = true) {
+		const n = Math.floor(Math.random() * (allowZero ? 3 : 2));
+		return n == 0 ? -1 : n % 2;
 	}
 
 	onCompleted: {
