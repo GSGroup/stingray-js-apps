@@ -17,6 +17,7 @@ import "generated_files/pacmanConsts.js" as gameConsts;
 Rectangle {
 	id: pacmanGame;
 
+	property int pointsCollected;
 	property int score;
 
 	color: "#003";
@@ -112,8 +113,16 @@ Rectangle {
 		onTriggered: {
 			const point = engine.getPoint(player.cellX, player.cellY);
 			if (point && point.visible) {
-				pacmanGame.score += 100;
 				point.visible = false;
+
+				pacmanGame.pointsCollected += 1;
+				pacmanGame.score += 100;
+
+				if (pacmanGame.pointsCollected == engine.getPointsCount()) {
+					pacmanGame.notify("You won!");
+					pacmanGame.reset();
+					return;
+				}
 			}
 
 			const inputDirection = player.inputDirection;
@@ -207,6 +216,7 @@ Rectangle {
 		}
 
 		pacmanGame.score = 0;
+		pacmanGame.pointsCollected = 0;
 	}
 
 	function resetEnemies() {

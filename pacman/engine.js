@@ -29,3 +29,7 @@ this.getPoint = function(x, y) {
 this.setPoint = function(x, y, point) {
     pointsMap.set(getPointId(x, y), point);
 }
+
+this.getPointsCount = function() {
+    return pointsMap.size;
+}
