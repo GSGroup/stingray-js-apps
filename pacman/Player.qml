@@ -49,8 +49,14 @@ GameObject {
 
 	Timer {
 		repeat: true;
-		running: true;
-		interval: 200;
+		running: playerProto.dx || playerProto.dy;
+		interval: 150;
+
 		onTriggered: { mouth.opened = !mouth.opened; }
+
+		onRunningChanged: {
+			if (!running)
+				mouth.opened = false;
+		}
 	}
 }
