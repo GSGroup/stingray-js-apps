@@ -14,12 +14,12 @@ grid_height = 21
 cell_width = 30
 cell_height = 30
 
-initial_player_pos = [1, 1]
+initial_player_pos = [10, 15]
 initial_enemies_pos = [
-    [15, 15],
-    [15, 16],
-    [15, 17],
-    [15, 18] ]
+    [9, 7],
+    [9, 7],
+    [10, 7],
+    [11, 7] ]
 
 def main():
     parser = argparse.ArgumentParser(description='Pacman bootstrap')
