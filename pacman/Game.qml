@@ -17,6 +17,7 @@ import "generated_files/pacmanConsts.js" as gameConsts;
 Rectangle {
 	id: pacmanGame;
 
+	property bool isPlayerMoved;
 	property int pointsCollected;
 	property int score;
 
@@ -52,6 +53,11 @@ Rectangle {
 				height: gameConsts.getCellHeight();
 
 				speed: gameConsts.getSpeed();
+
+				onInputDirectionChanged: {
+					if (inputDirection != player.None)
+						pacmanGame.isPlayerMoved = true;
+				}
 			}
 
 			Item {
@@ -150,6 +156,9 @@ Rectangle {
 			player.move();
 			player.inputDirection = player.None;
 
+			if (!pacmanGame.isPlayerMoved)
+				return;
+
 			for (let i = 0; i < enemies.children.length; ++i) {
 				const enemy = enemies.children[i];
 
@@ -217,6 +226,7 @@ Rectangle {
 
 		pacmanGame.score = 0;
 		pacmanGame.pointsCollected = 0;
+		pacmanGame.isPlayerMoved = false;
 	}
 
 	function resetEnemies() {
