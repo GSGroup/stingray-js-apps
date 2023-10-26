@@ -35,6 +35,7 @@ def main():
         sys.exit(1)
 
     grid = walls_generator.generate(args.target_dir, cell_width, cell_height, grid_width, grid_height)
+    grid[initial_player_pos[1]][initial_player_pos[0]] = CellType.EMPTY
     grid = points_generator.generate(args.target_dir, cell_width, cell_height, grid, grid_width, grid_height)
 
     with open(args.target_dir + "/generated_files/pacmanConsts.js", "w") as consts_result_file:
