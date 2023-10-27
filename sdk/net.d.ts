@@ -181,12 +181,6 @@ declare class XMLHttpRequest {
 	responseText: string;
 
 	/**
-	 * Holds the property that that contains the response to the request, or null if the request was unsuccessful,
-	 * has not yet been sent, or cannot be parsed as XML or HTML.
-	 */
-	responseXML: string;
-
-	/**
 	 * Holds the property that determines the event handler that is called whenever the readyState attribute changes.
 	 */
 	onreadystatechange: () => void;
