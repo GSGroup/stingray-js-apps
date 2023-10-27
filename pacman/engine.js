@@ -5,13 +5,9 @@ function getPointId(x, y) {
     return x + '/' + y;
 }
 
-this.getCellType = function(x, y) {
-    return grid[y][x];
-}
-
 this.isWall = function(x, y) {
-    const type = this.getCellType(x, y);
-    return type != gameConsts.CellType.EMPTY && type != gameConsts.CellType.POINT;
+    const cell = grid[y][x];
+    return cell != gameConsts.CellType.EMPTY && cell != gameConsts.CellType.POINT;
 }
 
 this.getGrid = function() {
