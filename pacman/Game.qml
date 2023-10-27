@@ -13,6 +13,7 @@ import "generated_files/PacmanWallArray.qml";
 
 import "engine.js" as engine;
 import "generated_files/pacmanConsts.js" as gameConsts;
+import "utils.js" as utils;
 
 Rectangle {
 	id: pacmanGame;
@@ -79,6 +80,8 @@ Rectangle {
 					color: "#f0f";
 
 					speed: gameConsts.getSpeed();
+
+					targetOffsetX: 1;
 				}
 
 				Enemy {
@@ -88,6 +91,8 @@ Rectangle {
 					color: "#0ff";
 
 					speed: gameConsts.getSpeed();
+
+					targetOffsetY: 1;
 				}
 
 				Enemy {
@@ -97,6 +102,8 @@ Rectangle {
 					color: "#fc0";
 
 					speed: gameConsts.getSpeed();
+
+					targetOffsetX: -1;
 				}
 			}
 		}
@@ -162,20 +169,7 @@ Rectangle {
 			for (let i = 0; i < enemies.children.length; ++i) {
 				const enemy = enemies.children[i];
 
-				let dx = enemy.dx, dy = enemy.dy;
-				while (true) {
-					if (engine.isWall(enemy.cellX + dx, enemy.cellY + dy)) {
-						if (dx > 0) { dy = 1; dx = 0; }
-						else if (dx < 0) { dy = -1; dx = 0; }
-						else if (dy > 0) { dx = -1; dy = 0; }
-						else if (dy < 0) { dx = 1; dy = 0; }
-					} else
-						break;
-				}
-
-				enemy.dx = dx;
-				enemy.dy = dy;
-				enemy.move();
+				pacmanGame.processEnemyAi(enemy);
 
 				if (player.x < enemy.x + enemy.width &&
 						player.x + player.width > enemy.x &&
@@ -230,19 +224,59 @@ Rectangle {
 	}
 
 	function resetEnemies() {
-		for (let i = 0; i < enemies.children.length; ++i) {
-			const enemy = enemies.children[i];
-
-			enemy.reset(...gameConsts.getInitialEnemyPos(i));
-
-			enemy.dx = getRandomVelocity();
-			enemy.dy = getRandomVelocity(enemy.dx != 0);
-		}
+		for (let i = 0; i < enemies.children.length; ++i)
+			enemies.children[i].reset(...gameConsts.getInitialEnemyPos(i));
 	}
 
-	function getRandomVelocity(allowZero = true) {
-		const n = Math.floor(Math.random() * (allowZero ? 3 : 2));
-		return n == 0 ? -1 : n % 2;
+	function processEnemyAi(enemy) {
+		const targetX = player.cellX + enemy.targetOffsetX, targetY = player.cellY + enemy.targetOffsetY;
+
+		let dx = enemy.dx, dy = enemy.dy;
+		let minDistanceSquared = Infinity;
+
+		// Check upper cell
+		if (enemy.dy != 1 && !engine.isWall(enemy.cellX, enemy.cellY - 1)) {
+			const d = utils.getDistanceSquared(enemy.cellX, enemy.cellY - 1, targetX, targetY);
+			if (d < minDistanceSquared) {
+				minDistanceSquared = d;
+				dx = 0;
+				dy = -1;
+			}
+		}
+
+		// Check right cell
+		if (enemy.dx != -1 && !engine.isWall(enemy.cellX + 1, enemy.cellY)) {
+			const d = utils.getDistanceSquared(enemy.cellX + 1, enemy.cellY, targetX, targetY);
+			if (d < minDistanceSquared) {
+				minDistanceSquared = d;
+				dx = 1;
+				dy = 0;
+			}
+		}
+
+		// Check down cell
+		if (enemy.dy != -1 && !engine.isWall(enemy.cellX, enemy.cellY + 1)) {
+			const d = utils.getDistanceSquared(enemy.cellX, enemy.cellY + 1, targetX, targetY);
+			if (d < minDistanceSquared) {
+				minDistanceSquared = d;
+				dx = 0;
+				dy = 1;
+			}
+		}
+
+		// Check left cell
+		if (enemy.dx != 1 && !engine.isWall(enemy.cellX - 1, enemy.cellY)) {
+			const d = utils.getDistanceSquared(enemy.cellX - 1, enemy.cellY, targetX, targetY);
+			if (d < minDistanceSquared) {
+				minDistanceSquared = d;
+				dx = -1;
+				dy = 0;
+			}
+		}
+
+		enemy.dx = dx;
+		enemy.dy = dy;
+		enemy.move();
 	}
 
 	function notify(text) {

@@ -14,6 +14,8 @@ Item {
 	property bool faceLeft;
 	property int dx;
 	property int dy;
+	property int targetOffsetX;
+	property int targetOffsetY;
 
 	x: width * cellX - width / 2;
 	y: height * cellY - height / 2;
