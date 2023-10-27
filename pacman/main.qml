@@ -17,6 +17,8 @@ Application {
 		height: width;
 
 		anchors.centerIn: parent;
+
+		visible: pacmanApp.visible;
 	}
 
 	onStopped: { pacmanGame.reset(); }

@@ -52,6 +52,7 @@ Rectangle {
 				height: gameConsts.getCellHeight();
 
 				speed: gameConsts.getSpeed();
+				animated: tickTimer.running;
 
 				onInputDirectionChanged: {
 					if (inputDirection != player.None)
@@ -144,8 +145,10 @@ Rectangle {
 	}
 
 	Timer {
+		id: tickTimer;
+
 		repeat: true;
-		running: true;
+		running: pacmanGame.visible;
 		interval: gameConsts.getSpeed();
 
 		onTriggered: {
