@@ -26,8 +26,6 @@ GameObject {
 		height: parent.height / 5;
 
 		anchors.bottom: parent.bottom;
-
-		color: "#003";
 	}
 
 	Rectangle {
@@ -37,8 +35,6 @@ GameObject {
 		height: parent.height / 5;
 
 		anchors.bottom: parent.bottom;
-
-		color: "#003";
 	}
 
 	// Eyes
@@ -49,7 +45,7 @@ GameObject {
 		width: parent.width / 5;
 		height: parent.height / 5;
 
-		color: "#fff";
+		color: "#FFF";
 	}
 
 	Rectangle {
@@ -59,7 +55,7 @@ GameObject {
 		width: parent.width / 5;
 		height: parent.height / 5;
 
-		color: "#fff";
+		color: "#FFF";
 	}
 
 	Timer {

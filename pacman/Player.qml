@@ -13,7 +13,7 @@ GameObject {
 	Rectangle {
 		anchors.fill: parent;
 
-		color: "#ee2";
+		color: "#FFFB00";
 		radius: width / 2;
 	}
 
@@ -41,7 +41,6 @@ GameObject {
 
 		anchors.leftMargin: (parent.width / 2 + 2hpw) * (playerProto.faceLeft ? -1 : 1);
 
-		color: "#003";
 		radius: width / 3;
 
 		Behavior on height { animation: Animation { duration: 100; } }

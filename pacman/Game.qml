@@ -22,7 +22,6 @@ Rectangle {
 	property int pointsCollected;
 	property int score;
 
-	color: "#003";
 	focus: true;
 
 	NotificatorManager {
@@ -31,13 +30,11 @@ Rectangle {
 		interval: 5000;
 	}
 
-	Rectangle {
+	Item {
 		width: parent.width;
 		height: parent.height;
 
 		anchors.centerIn: parent;
-
-		color: "#003";
 
 		PacmanWallArray {
 			anchors.centerIn: parent;
@@ -68,7 +65,7 @@ Rectangle {
 					width: gameConsts.getCellWidth();
 					height: gameConsts.getCellHeight();
 
-					color: "#f00";
+					color: "#FF3100";
 
 					speed: gameConsts.getSpeed();
 				}
@@ -77,7 +74,7 @@ Rectangle {
 					width: gameConsts.getCellWidth();
 					height: gameConsts.getCellHeight();
 
-					color: "#f0f";
+					color: "#00FCFF";
 
 					speed: gameConsts.getSpeed();
 
@@ -88,7 +85,7 @@ Rectangle {
 					width: gameConsts.getCellWidth();
 					height: gameConsts.getCellHeight();
 
-					color: "#0ff";
+					color: "#FFA1CD";
 
 					speed: gameConsts.getSpeed();
 
@@ -99,7 +96,7 @@ Rectangle {
 					width: gameConsts.getCellWidth();
 					height: gameConsts.getCellHeight();
 
-					color: "#fc0";
+					color: "#FFCC00";
 
 					speed: gameConsts.getSpeed();
 
