@@ -129,8 +129,8 @@ Rectangle {
 				pacmanGame.score += 100;
 
 				if (pacmanGame.pointsCollected == engine.getPointsCount()) {
-					pacmanGame.notify("You won!");
-					pacmanGame.reset();
+					pacmanGame.notify("Level completed!");
+					pacmanGame.reset(true);
 					return;
 				}
 			}
@@ -203,7 +203,7 @@ Rectangle {
 		engine.setGrid(gameConsts.getGrid());
 	}
 
-	function reset() {
+	function reset(keepScore = false) {
 		player.reset(...gameConsts.getInitialPlayerPos());
 		resetEnemies();
 
@@ -215,7 +215,9 @@ Rectangle {
 			}
 		}
 
-		pacmanGame.score = 0;
+		if (!keepScore)
+			pacmanGame.score = 0;
+
 		pacmanGame.pointsCollected = 0;
 		pacmanGame.isPlayerMoved = false;
 	}
