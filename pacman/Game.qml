@@ -270,7 +270,7 @@ Rectangle {
 	function processEnemyAi(enemy) {
 		const targetX = player.cellX + enemy.targetOffsetX, targetY = player.cellY + enemy.targetOffsetY;
 
-		let dx = enemy.dx, dy = enemy.dy;
+		let dx = 0, dy = 0;
 		let minDistanceSquared = Infinity;
 
 		// Check upper cell
