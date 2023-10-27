@@ -21,6 +21,7 @@ Rectangle {
 	property bool isPlayerMoved;
 	property int pointsCollected;
 	property int score;
+	property int highScore;
 
 	focus: true;
 
@@ -106,13 +107,40 @@ Rectangle {
 		}
 	}
 
-	TitleText {
+	SubheadText {
+		id: scoreText;
+
 		anchors.right: parent.left;
-		anchors.rightMargin: 10hpw;
+		anchors.rightMargin: 40hpw;
 
-		horizontalAlignment: AlignHCenter;
+		horizontalAlignment: AlignRight;
 
-		text: "SCORE\n" + pacmanGame.score;
+		text: "Score";
+	}
+
+	TitleText {
+		anchors.right: scoreText.right;
+		anchors.top: scoreText.bottom;
+
+		horizontalAlignment: AlignRight;
+
+		text: pacmanGame.score;
+	}
+
+	SubheadText {
+		id: highScoreText;
+
+		anchors.left: parent.right;
+		anchors.leftMargin: 40hpw;
+
+		text: "High Score";
+	}
+
+	TitleText {
+		anchors.left: highScoreText.left;
+		anchors.top: highScoreText.bottom;
+
+		text: pacmanGame.highScore;
 	}
 
 	Timer {
@@ -126,10 +154,11 @@ Rectangle {
 				point.visible = false;
 
 				pacmanGame.pointsCollected += 1;
-				pacmanGame.score += 100;
+				pacmanGame.score += 10;
 
 				if (pacmanGame.pointsCollected == engine.getPointsCount()) {
 					pacmanGame.notify("Level completed!");
+					pacmanGame.updateHighScore();
 					pacmanGame.reset(true);
 					return;
 				}
@@ -173,6 +202,7 @@ Rectangle {
 						player.y < enemy.y + enemy.height &&
 						player.y + player.height > enemy.y) {
 					pacmanGame.notify("You died!");
+					pacmanGame.updateHighScore();
 					pacmanGame.reset();
 					return;
 				}
@@ -201,6 +231,16 @@ Rectangle {
 		resetEnemies();
 
 		engine.setGrid(gameConsts.getGrid());
+
+		pacmanGame.highScore = load("pacmanHighScore") || 0;
+	}
+
+	function updateHighScore() {
+		if (pacmanGame.score <= pacmanGame.highScore)
+			return;
+
+		pacmanGame.highScore = pacmanGame.score;
+		save("pacmanHighScore", pacmanGame.highScore);
 	}
 
 	function reset(keepScore = false) {
