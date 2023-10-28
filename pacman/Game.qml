@@ -20,6 +20,7 @@ Rectangle {
 
 	property bool isPlayerMoved;
 	property int pointsCollected;
+	property int level: 1;
 	property int score;
 	property int highScore;
 
@@ -120,12 +121,35 @@ Rectangle {
 	}
 
 	TitleText {
+		id: scoreValueText;
+
 		anchors.right: scoreText.right;
 		anchors.top: scoreText.bottom;
 
 		horizontalAlignment: AlignRight;
 
 		text: pacmanGame.score;
+	}
+
+	SubheadText {
+		id: levelText;
+
+		anchors.right: scoreText.right;
+		anchors.top: scoreValueText.bottom;
+		anchors.topMargin: 15hph;
+
+		horizontalAlignment: AlignRight;
+
+		text: tr("Level");
+	}
+
+	TitleText {
+		anchors.right: scoreText.right;
+		anchors.top: levelText.bottom;
+
+		horizontalAlignment: AlignRight;
+
+		text: pacmanGame.level;
 	}
 
 	SubheadText {
@@ -246,7 +270,7 @@ Rectangle {
 		save("pacmanHighScore", pacmanGame.highScore);
 	}
 
-	function reset(keepScore = false) {
+	function reset(nextLevel = false) {
 		player.reset(...gameConsts.getInitialPlayerPos());
 		resetEnemies();
 
@@ -258,9 +282,10 @@ Rectangle {
 			}
 		}
 
-		if (!keepScore)
+		if (!nextLevel)
 			pacmanGame.score = 0;
 
+		pacmanGame.level = nextLevel ? pacmanGame.level + 1 : 1;
 		pacmanGame.pointsCollected = 0;
 		pacmanGame.isPlayerMoved = false;
 	}
