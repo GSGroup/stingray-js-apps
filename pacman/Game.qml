@@ -270,6 +270,11 @@ Rectangle {
 		save("pacmanHighScore", pacmanGame.highScore);
 	}
 
+	function stop() {
+		pacmanGame.updateHighScore();
+		pacmanGame.reset();
+	}
+
 	function reset(nextLevel = false) {
 		player.reset(...gameConsts.getInitialPlayerPos());
 		resetEnemies();

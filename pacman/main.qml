@@ -21,5 +21,5 @@ Application {
 		visible: pacmanApp.visible;
 	}
 
-	onStopped: { pacmanGame.reset(); }
+	onStopped: { pacmanGame.stop(); }
 }
