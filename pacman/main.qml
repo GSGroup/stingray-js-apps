@@ -19,6 +19,8 @@ Application {
 		anchors.centerIn: parent;
 
 		visible: pacmanApp.visible;
+
+		onExit: { appManager.closeCurrentApp(); }
 	}
 
 	onStopped: { pacmanGame.stop(); }

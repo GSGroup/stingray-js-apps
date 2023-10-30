@@ -6,6 +6,7 @@
 // WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 import "Enemy.qml";
+import "GameDialog.qml";
 import "Player.qml";
 
 import "generated_files/PacmanPointArray.qml";
@@ -18,6 +19,8 @@ import "utils.js" as utils;
 Rectangle {
 	id: pacmanGame;
 
+	signal exit;
+
 	property bool isPlayerMoved;
 	property int pointsCollected;
 	property int level: 1;
@@ -25,12 +28,6 @@ Rectangle {
 	property int highScore;
 
 	focus: true;
-
-	NotificatorManager {
-		id: notificatorManager;
-
-		interval: 5000;
-	}
 
 	Item {
 		width: parent.width;
@@ -172,7 +169,7 @@ Rectangle {
 		id: tickTimer;
 
 		repeat: true;
-		running: pacmanGame.visible;
+		running: pacmanGame.visible && !gameDialog.visible;
 		interval: gameConsts.getSpeed();
 
 		onTriggered: {
@@ -184,9 +181,8 @@ Rectangle {
 				pacmanGame.score += 10;
 
 				if (pacmanGame.pointsCollected == engine.getPointsCount()) {
-					pacmanGame.notify("Level completed!");
 					pacmanGame.updateHighScore();
-					pacmanGame.reset(true);
+					gameDialog.showNextLevel(pacmanGame.score);
 					return;
 				}
 			}
@@ -228,13 +224,34 @@ Rectangle {
 						player.x + player.width > enemy.x &&
 						player.y < enemy.y + enemy.height &&
 						player.y + player.height > enemy.y) {
-					pacmanGame.notify("You died!");
 					pacmanGame.updateHighScore();
-					pacmanGame.reset();
+					gameDialog.showGameOver(pacmanGame.score);
 					return;
 				}
 			}
 		}
+	}
+
+	GameDialog {
+		id: gameDialog;
+
+		anchors.centerIn: parent;
+
+		onGoToNextLevel: {
+			gameDialog.hide();
+
+			pacmanGame.reset(true);
+		}
+
+		onContinue: { gameDialog.hide(); }
+
+		onRestart: {
+			gameDialog.hide();
+
+			pacmanGame.reset();
+		}
+
+		onExit: { pacmanGame.exit(); }
 	}
 
 	onKeyPressed: {
@@ -249,6 +266,9 @@ Rectangle {
 			return true;
 		} else if (key == "Down") {
 			player.inputDirection = player.Down;
+			return true;
+		} else if (key == "Back") {
+			gameDialog.showPause();
 			return true;
 		}
 	}
@@ -271,6 +291,8 @@ Rectangle {
 	}
 
 	function stop() {
+		gameDialog.hide();
+
 		pacmanGame.updateHighScore();
 		pacmanGame.reset();
 	}
@@ -349,11 +371,6 @@ Rectangle {
 		enemy.dx = dx;
 		enemy.dy = dy;
 		enemy.move();
-	}
-
-	function notify(text) {
-		notificatorManager.text = text;
-		notificatorManager.addNotify();
 	}
 
 	onCompleted: {
