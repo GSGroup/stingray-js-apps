@@ -114,7 +114,7 @@ Rectangle {
 
 		horizontalAlignment: AlignRight;
 
-		text: "Score";
+		text: tr("Score");
 	}
 
 	TitleText {
@@ -155,7 +155,7 @@ Rectangle {
 		anchors.left: parent.right;
 		anchors.leftMargin: 40hpw;
 
-		text: "High Score";
+		text: tr("High Score");
 	}
 
 	TitleText {
