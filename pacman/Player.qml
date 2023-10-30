@@ -10,6 +10,8 @@ import "GameObject.qml";
 GameObject {
 	id: playerProto;
 
+	property bool animated;
+
 	Rectangle {
 		anchors.fill: parent;
 
@@ -48,7 +50,7 @@ GameObject {
 
 	Timer {
 		repeat: true;
-		running: playerProto.dx || playerProto.dy;
+		running: playerProto.animated && (playerProto.dx || playerProto.dy);
 		interval: 150;
 
 		onTriggered: { mouth.opened = !mouth.opened; }
