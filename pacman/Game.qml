@@ -21,6 +21,9 @@ Item {
 
 	signal exit;
 
+	enum { Scatter, Chase };
+	property int enemyBehavior: Scatter;
+
 	property bool isPlayerMoved;
 	property int pointsCollected;
 	property int level: 1;
@@ -82,7 +85,7 @@ Item {
 			for (let i = 0; i < enemies.children.length; ++i) {
 				const enemy = enemies.children[i];
 
-				pacmanGame.processEnemyAi(enemy);
+				pacmanGame.processEnemyAi(enemy, i);
 
 				if (player.x < enemy.x + enemy.width &&
 						player.x + player.width > enemy.x &&
@@ -94,6 +97,15 @@ Item {
 				}
 			}
 		}
+	}
+
+	Timer {
+		id: enemyBehaviorTimer;
+
+		repeat: true;
+		running: tickTimer.running && pacmanGame.isPlayerMoved;
+
+		onTriggered: { pacmanGame.setEnemyBehavior(pacmanGame.enemyBehavior == pacmanGame.Chase ? pacmanGame.Scatter : pacmanGame.Chase); }
 	}
 
 	Rectangle {
@@ -139,7 +151,7 @@ Item {
 					width: gameConsts.getCellWidth();
 					height: gameConsts.getCellHeight();
 
-					color: "#FF3100";
+					color: pacmanGame.enemyBehavior == pacmanGame.Chase ? gameConsts.getEnemyChaseColor() : "#34B67A";
 
 					speed: gameConsts.getSpeed();
 				}
@@ -148,7 +160,7 @@ Item {
 					width: gameConsts.getCellWidth();
 					height: gameConsts.getCellHeight();
 
-					color: "#00FCFF";
+					color: pacmanGame.enemyBehavior == pacmanGame.Chase ? gameConsts.getEnemyChaseColor() : "#00FCFF";
 
 					speed: gameConsts.getSpeed();
 
@@ -159,7 +171,7 @@ Item {
 					width: gameConsts.getCellWidth();
 					height: gameConsts.getCellHeight();
 
-					color: "#FFA1CD";
+					color: pacmanGame.enemyBehavior == pacmanGame.Chase ? gameConsts.getEnemyChaseColor() : "#FFA1CD";
 
 					speed: gameConsts.getSpeed();
 
@@ -170,7 +182,7 @@ Item {
 					width: gameConsts.getCellWidth();
 					height: gameConsts.getCellHeight();
 
-					color: "#FFCC00";
+					color: pacmanGame.enemyBehavior == pacmanGame.Chase ? gameConsts.getEnemyChaseColor() : "#FFCC00";
 
 					speed: gameConsts.getSpeed();
 
@@ -316,6 +328,8 @@ Item {
 			}
 		}
 
+		pacmanGame.setEnemyBehavior(pacmanGame.Scatter);
+
 		if (!nextLevel)
 			pacmanGame.score = 0;
 
@@ -329,8 +343,9 @@ Item {
 			enemies.children[i].reset(...gameConsts.getInitialEnemyPos(i));
 	}
 
-	function processEnemyAi(enemy) {
-		const targetX = player.cellX + enemy.targetOffsetX, targetY = player.cellY + enemy.targetOffsetY;
+	function processEnemyAi(enemy, enemyIndex) {
+		const targetX = pacmanGame.enemyBehavior == pacmanGame.Scatter ? gameConsts.getEnemyScatterPos(enemyIndex)[0] : player.cellX + enemy.targetOffsetX;
+		const targetY = pacmanGame.enemyBehavior == pacmanGame.Scatter ? gameConsts.getEnemyScatterPos(enemyIndex)[1] : player.cellY + enemy.targetOffsetY;
 
 		let dx = 0, dy = 0;
 		let minDistanceSquared = Infinity;
@@ -378,6 +393,14 @@ Item {
 		enemy.dx = dx;
 		enemy.dy = dy;
 		enemy.move();
+	}
+
+	function setEnemyBehavior(enemyBehavior) {
+		pacmanGame.enemyBehavior = enemyBehavior;
+
+		const interval = pacmanGame.enemyBehavior == pacmanGame.Chase ? gameConsts.getEnemyChaseDurationInterval() :
+				gameConsts.getEnemyScatterDurationInterval();
+		enemyBehaviorTimer.interval = interval[0] + Math.random() * (interval[1] - interval[0]);
 	}
 
 	onCompleted: {

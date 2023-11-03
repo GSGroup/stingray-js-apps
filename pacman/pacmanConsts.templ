@@ -24,6 +24,11 @@ const grid = $grid;
 const initialPlayerPos = $initial_player_pos;
 const initialEnemiesPos = $initial_enemies_pos;
 
+const enemiesScatterPos = $enemies_scatter_pos;
+const enemyScatterDurationInterval = [8000, 12000];
+const enemyChaseDurationInterval = [3000, 6000];
+const enemyChaseColor = "#FF3100";
+
 this.getSpeed = function() {
 	return speed;
 }
@@ -54,4 +59,20 @@ this.getInitialPlayerPos = function() {
 
 this.getInitialEnemyPos = function(index) {
 	return initialEnemiesPos[index];
+}
+
+this.getEnemyScatterPos = function(index) {
+	return enemiesScatterPos[index];
+}
+
+this.getEnemyScatterDurationInterval = function() {
+	return enemyScatterDurationInterval;
+}
+
+this.getEnemyChaseDurationInterval = function() {
+	return enemyChaseDurationInterval;
+}
+
+this.getEnemyChaseColor = function() {
+	return enemyChaseColor;
 }

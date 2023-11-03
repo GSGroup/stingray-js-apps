@@ -20,6 +20,11 @@ initial_enemies_pos = [
     [9, 7],
     [10, 7],
     [11, 7] ]
+enemies_scatter_pos = [
+    [3, 3],
+    [3, 17],
+    [17, 3],
+    [17, 17] ]
 
 def main():
     parser = argparse.ArgumentParser(description='Pacman bootstrap')
@@ -60,7 +65,8 @@ def main():
                 .replace("$grid_height", str(grid_height)) \
                 .replace("$grid", str(grid_string))    \
                 .replace("$initial_player_pos", str(initial_player_pos))    \
-                .replace("$initial_enemies_pos", str(initial_enemies_pos))
+                .replace("$initial_enemies_pos", str(initial_enemies_pos))  \
+                .replace("$enemies_scatter_pos", str(enemies_scatter_pos))
 
         consts_result_file.write(consts_template_string)
 
