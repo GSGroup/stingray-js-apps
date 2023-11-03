@@ -37,7 +37,7 @@ Item {
 
 		repeat: true;
 		running: pacmanGame.visible && !gameDialog.visible;
-		interval: gameConsts.getSpeed();
+		interval: gameConsts.getTickInterval();
 
 		onTriggered: {
 			const point = engine.getPoint(player.cellX, player.cellY);
@@ -135,7 +135,7 @@ Item {
 				width: gameConsts.getCellWidth();
 				height: gameConsts.getCellHeight();
 
-				speed: gameConsts.getSpeed();
+				tickInterval: gameConsts.getTickInterval();
 				animated: tickTimer.running;
 
 				onInputDirectionChanged: {
@@ -153,7 +153,7 @@ Item {
 
 					color: pacmanGame.enemyBehavior == pacmanGame.Chase ? gameConsts.getEnemyChaseColor() : "#34B67A";
 
-					speed: gameConsts.getSpeed();
+					tickInterval: gameConsts.getTickInterval();
 				}
 
 				Enemy {
@@ -162,7 +162,7 @@ Item {
 
 					color: pacmanGame.enemyBehavior == pacmanGame.Chase ? gameConsts.getEnemyChaseColor() : "#00FCFF";
 
-					speed: gameConsts.getSpeed();
+					tickInterval: gameConsts.getTickInterval();
 
 					targetOffsetX: 1;
 				}
@@ -173,7 +173,7 @@ Item {
 
 					color: pacmanGame.enemyBehavior == pacmanGame.Chase ? gameConsts.getEnemyChaseColor() : "#FFA1CD";
 
-					speed: gameConsts.getSpeed();
+					tickInterval: gameConsts.getTickInterval();
 
 					targetOffsetY: 1;
 				}
@@ -184,7 +184,7 @@ Item {
 
 					color: pacmanGame.enemyBehavior == pacmanGame.Chase ? gameConsts.getEnemyChaseColor() : "#FFCC00";
 
-					speed: gameConsts.getSpeed();
+					tickInterval: gameConsts.getTickInterval();
 
 					targetOffsetX: -1;
 				}
