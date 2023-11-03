@@ -29,6 +29,73 @@ Item {
 
 	focus: true;
 
+	Timer {
+		id: tickTimer;
+
+		repeat: true;
+		running: pacmanGame.visible && !gameDialog.visible;
+		interval: gameConsts.getSpeed();
+
+		onTriggered: {
+			const point = engine.getPoint(player.cellX, player.cellY);
+			if (point && point.visible) {
+				point.visible = false;
+
+				pacmanGame.pointsCollected += 1;
+				pacmanGame.score += 10;
+
+				if (pacmanGame.pointsCollected == engine.getPointsCount()) {
+					pacmanGame.updateHighScore();
+					gameDialog.showNextLevel(pacmanGame.score);
+					return;
+				}
+			}
+
+			const inputDirection = player.inputDirection;
+			const inputX = inputDirection == player.Left ? -1 : inputDirection == player.Right ? 1 : 0;
+			const inputY = inputDirection == player.Up ? -1 : inputDirection == player.Down ? 1 : 0;
+
+			const cellX = player.cellX, cellY = player.cellY;
+
+			if (inputX != 0 && !engine.isWall(cellX + inputX, cellY)) {
+				player.dx = inputX;
+				player.dy = 0;
+			}
+			else if (inputY != 0 && !engine.isWall(cellX, cellY + inputY)) {
+				player.dx = 0;
+				player.dy = inputY;
+			}
+			else {
+				if (player.dx != 0 && engine.isWall(cellX + player.dx, cellY))
+					player.dx = 0;
+
+				if (player.dy != 0 && engine.isWall(cellX, cellY + player.dy))
+					player.dy = 0;
+			}
+
+			player.move();
+			player.inputDirection = player.None;
+
+			if (!pacmanGame.isPlayerMoved)
+				return;
+
+			for (let i = 0; i < enemies.children.length; ++i) {
+				const enemy = enemies.children[i];
+
+				pacmanGame.processEnemyAi(enemy);
+
+				if (player.x < enemy.x + enemy.width &&
+						player.x + player.width > enemy.x &&
+						player.y < enemy.y + enemy.height &&
+						player.y + player.height > enemy.y) {
+					pacmanGame.updateHighScore();
+					gameDialog.showGameOver(pacmanGame.score);
+					return;
+				}
+			}
+		}
+	}
+
 	Rectangle {
 		anchors.left: parent.left;
 		anchors.right: parent.right;
@@ -170,73 +237,6 @@ Item {
 		anchors.top: highScoreText.bottom;
 
 		text: pacmanGame.highScore;
-	}
-
-	Timer {
-		id: tickTimer;
-
-		repeat: true;
-		running: pacmanGame.visible && !gameDialog.visible;
-		interval: gameConsts.getSpeed();
-
-		onTriggered: {
-			const point = engine.getPoint(player.cellX, player.cellY);
-			if (point && point.visible) {
-				point.visible = false;
-
-				pacmanGame.pointsCollected += 1;
-				pacmanGame.score += 10;
-
-				if (pacmanGame.pointsCollected == engine.getPointsCount()) {
-					pacmanGame.updateHighScore();
-					gameDialog.showNextLevel(pacmanGame.score);
-					return;
-				}
-			}
-
-			const inputDirection = player.inputDirection;
-			const inputX = inputDirection == player.Left ? -1 : inputDirection == player.Right ? 1 : 0;
-			const inputY = inputDirection == player.Up ? -1 : inputDirection == player.Down ? 1 : 0;
-
-			const cellX = player.cellX, cellY = player.cellY;
-
-			if (inputX != 0 && !engine.isWall(cellX + inputX, cellY)) {
-				player.dx = inputX;
-				player.dy = 0;
-			}
-			else if (inputY != 0 && !engine.isWall(cellX, cellY + inputY)) {
-				player.dx = 0;
-				player.dy = inputY;
-			}
-			else {
-				if (player.dx != 0 && engine.isWall(cellX + player.dx, cellY))
-					player.dx = 0;
-
-				if (player.dy != 0 && engine.isWall(cellX, cellY + player.dy))
-					player.dy = 0;
-			}
-
-			player.move();
-			player.inputDirection = player.None;
-
-			if (!pacmanGame.isPlayerMoved)
-				return;
-
-			for (let i = 0; i < enemies.children.length; ++i) {
-				const enemy = enemies.children[i];
-
-				pacmanGame.processEnemyAi(enemy);
-
-				if (player.x < enemy.x + enemy.width &&
-						player.x + player.width > enemy.x &&
-						player.y < enemy.y + enemy.height &&
-						player.y + player.height > enemy.y) {
-					pacmanGame.updateHighScore();
-					gameDialog.showGameOver(pacmanGame.score);
-					return;
-				}
-			}
-		}
 	}
 
 	GameDialog {
