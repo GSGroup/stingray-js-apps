@@ -16,7 +16,7 @@ import "engine.js" as engine;
 import "generated_files/pacmanConsts.js" as gameConsts;
 import "utils.js" as utils;
 
-Rectangle {
+Item {
 	id: pacmanGame;
 
 	signal exit;
@@ -28,6 +28,13 @@ Rectangle {
 	property int highScore;
 
 	focus: true;
+
+	Rectangle {
+		anchors.left: parent.left;
+		anchors.right: parent.right;
+		anchors.top: mainWindow.top;
+		anchors.bottom: mainWindow.bottom;
+	}
 
 	Item {
 		width: parent.width;
