@@ -19,8 +19,6 @@ GridView {
 
 	handleNavigationKeys: false;
 
-	lazyDelegateCreation: false;
-
 	model: ListModel {
 		property int value;
 		property int colorIndex;
