@@ -14,18 +14,8 @@ BodyText {
 
 	property string minSec: (minutes > 9 ? minutes : "0" + minutes) + ":" + (seconds > 9 ? seconds : "0" + seconds);
 
-	property int hmWidth;
-	property int hmsWidth;
-
 	property bool showHours: hours > 0;
-
-	width: showHours ? hmsWidth : hmWidth;
 
 	color: colorTheme.activeTextColor;
 	text: showHours ? (hours > 9 ? hours : "0" + hours) + ":" + minSec : minSec;
-
-	onCompleted: {
-		this.hmWidth = this.font.getTextRect("88:88").Width();
-		this.hmsWidth = this.font.getTextRect("88:88:88").Width();
-	}
 }

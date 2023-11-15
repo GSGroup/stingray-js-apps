@@ -96,13 +96,17 @@ Item {
 	PlaybackProgressDurationText {
 		id: currentProgressText;
 
+		property int hoursWidth;
+
 		anchors.left: parent.left;
-		anchors.leftMargin: 10hpw + durationText.showHours && !currentProgressText.showHours ? currentProgressText.hmsWidth - currentProgressText.hmWidth : 0;
+		anchors.leftMargin: 10hpw + durationText.showHours && !currentProgressText.showHours ? currentProgressText.hoursWidth : 0;
 		anchors.verticalCenter: progressBar.verticalCenter;
 
 		milliseconds: playbackProgressItem.progress;
 
 		visible: progressBar.visible && playbackProgressItem.duration > 0;
+
+		onCompleted: { this.hoursWidth = this.font.getTextRect("88:").Width(); }
 	}
 
 	ProgressBar {
