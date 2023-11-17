@@ -198,8 +198,6 @@ Item {
 		anchors.right: parent.left;
 		anchors.rightMargin: 40hpw;
 
-		horizontalAlignment: AlignRight;
-
 		text: tr("Score");
 	}
 
@@ -208,8 +206,6 @@ Item {
 
 		anchors.right: scoreText.right;
 		anchors.top: scoreText.bottom;
-
-		horizontalAlignment: AlignRight;
 
 		text: pacmanGame.score;
 	}
@@ -221,16 +217,12 @@ Item {
 		anchors.top: scoreValueText.bottom;
 		anchors.topMargin: 15hph;
 
-		horizontalAlignment: AlignRight;
-
 		text: tr("Level");
 	}
 
 	TitleText {
 		anchors.right: scoreText.right;
 		anchors.top: levelText.bottom;
-
-		horizontalAlignment: AlignRight;
 
 		text: pacmanGame.level;
 	}
