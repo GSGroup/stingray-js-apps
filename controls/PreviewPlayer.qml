@@ -92,7 +92,7 @@ Item {
 			anchors.bottom: parent.bottom;
 			width: (70hpw + 10hpw) * count;
 			spacing: 10hpw;
-			orientation: Horizontal;
+			orientation: ui.ListView.Orientation.Horizontal;
 			uniformDelegateSize: true;
 			delegate: PreviewPlayerButtonDelegate { }
 			model: ListModel {

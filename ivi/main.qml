@@ -49,7 +49,7 @@ Application {
 
 			source: "apps/ivi/resources/menu.png";
 
-			fillMode: PreserveAspectFit;
+			fillMode: ui.Image.FillMode.PreserveAspectFit;
 		}
 
 		CategoryMenu {

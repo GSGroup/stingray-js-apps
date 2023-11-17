@@ -22,18 +22,18 @@ Delegate {
 	Gradient {
 		anchors.fill: parent;
 
-		opacity: cellItemDelegate.activeFocus? 1 : 0;	
-	
+		opacity: cellItemDelegate.activeFocus? 1 : 0;
+
 		GradientStop {
 			position: 0;
 			color: "#0096F0";
 		}
-		
+
 		GradientStop {
 			position: 1;
 			color: "#004B7E";
 		}
-		
+
 		Behavior on opacity { Animation { duration: 300; }}
 	}
 
@@ -44,8 +44,8 @@ Delegate {
 		anchors.verticalCenter: parent.verticalCenter;
 		anchors.margins: 5hpw;
 
-		horizontalAlignment: AlignHCenter;
-		verticalAlignment: AlignVCenter;
+		horizontalAlignment: ui.Text.HorizontalAlignment.AlignHCenter;
+		verticalAlignment: ui.Text.VerticalAlignment.AlignVCenter;
 
 		color: model.isBase? "#581B18":( cellItemDelegate.focused?"#FFFFFF":"#447F12");
  		font: Font {

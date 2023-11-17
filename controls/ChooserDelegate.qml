@@ -17,7 +17,7 @@ Delegate {
 	height: parent.height;
 
 	focus: true;
-	
+
 	Image {
 		id: chooserIcon;
 
@@ -30,11 +30,11 @@ Delegate {
 		anchors.verticalCenter: parent.verticalCenter;
 
 		source: chooserDelegateProto.icon;
-		fillMode: PreserveAspectFit;
+		fillMode: ui.Image.FillMode.PreserveAspectFit;
 
 		visible: source != undefined && source != "";
 		opacity: parent.focused || chooserDelegateProto.chooserFocused ? 1 : 0.6;
-		
+
 		Behavior on opacity { animation: Animation { duration: 300; } }
 	}
 
@@ -51,7 +51,7 @@ Delegate {
 
 		visible: text != undefined && text != "";
 		opacity: parent.focused || chooserDelegateProto.chooserFocused ? 1 : 0.6;
-		
+
 		Behavior on color { animation: Animation { duration: 300; } }
 		Behavior on opacity { animation: Animation { duration: 300; } }
 	}

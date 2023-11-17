@@ -215,7 +215,7 @@ Rectangle {
 			text: val;
 			font: titleFont;
 			color: "#ffffff";
-		}			
+		}
 	}
 
 	Rectangle {
@@ -339,10 +339,10 @@ Rectangle {
 			anchors.verticalCenter: parent.verticalCenter;
 			anchors.margins: game.space * 10;
 
-			horizontalAlignment: AlignHCenter;
+			horizontalAlignment: ui.Text.HorizontalAlignment.AlignHCenter;
 			color: "#6d654e";
 			focus: true;
-			wrapMode: Wrap;
+			wrapMode: ui.Text.WrapMode.Wrap;
 			text: tr("Use your arrow keys to move the tiles. When two tiles with the same number touch, they merge into one!");
 
 			visible: false;

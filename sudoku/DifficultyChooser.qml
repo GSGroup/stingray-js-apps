@@ -21,7 +21,7 @@ Item {
 		anchors.fill: parent;
 		anchors.leftMargin: (dChooserItem.showAtCenter ? Math.max((dChooserItem.width - 60hpw - contentWidth) / 2, 0) : 0) + 30hpw;
 		anchors.rightMargin: 30hpw;
-		orientation: Horizontal;
+		orientation: ui.ListView.Orientation.Horizontal;
 		wrapNavigation: true;
 		clip: true;
 		uniformDelegateSize: true;
@@ -34,7 +34,7 @@ Item {
 		console.log("appending to difficulty chooser " );
 		this.listView.model.append(obj);
 	}
-	
+
 	Behavior on opacity {
 		animation: Animation {
 			duration: 300;

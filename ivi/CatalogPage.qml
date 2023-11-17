@@ -36,9 +36,9 @@ Item {
 
 		source: constants.defaultPoster;
 
-		fillMode: PreserveAspectFit;
+		fillMode: ui.Image.FillMode.PreserveAspectFit;
 
-		visible: posterImage.status !== Ready;
+		visible: posterImage.status !== ui.Image.Status.Ready;
 	}
 
 	Image {
@@ -50,7 +50,7 @@ Item {
 		anchors.top: catalogPage.top;
 		anchors.left: catalogPage.left;
 
-		fillMode: PreserveAspectFit;
+		fillMode: ui.Image.FillMode.PreserveAspectFit;
 	}
 
 	SubheadText {
@@ -63,7 +63,7 @@ Item {
 
 		color: "#FFFFFF";
 
-		wrapMode: Wrap;
+		wrapMode: ui.Text.WrapMode.Wrap;
 	}
 
 	BodyText {

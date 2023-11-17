@@ -97,8 +97,8 @@ Item {
 		handleNavigationKeys: false;
 		handleMouseEvents: MouseClickSwitchesItem;
 
-		orientation: Horizontal;
-		positionMode: Center;
+		orientation: ui.ListView.Orientation.Horizontal;
+		positionMode: ui.BaseView.PositionMode.Center;
 		clip: true;
 
 		highlightColor: chooserProto.activeFocus ? colorTheme.highlightPanelColor : colorTheme.passiveHighlightPanel;
@@ -118,7 +118,7 @@ Item {
 		anchors.bottom: listView.highlight.bottom;
 
 		source: "res/common/shadow_left_" + colorTheme.shadowFilename + ".png";
-		fillMode: TileVertically;
+		fillMode: ui.Image.FillMode.TileVertically;
 
 		visible: parent.activeFocus;
 	}
@@ -129,7 +129,7 @@ Item {
 		anchors.bottom: listView.highlight.bottom;
 
 		source: "res/common/shadow_right_" + colorTheme.shadowFilename + ".png";
-		fillMode: TileVertically;
+		fillMode: ui.Image.FillMode.TileVertically;
 
 		visible: parent.activeFocus;
 	}
@@ -149,7 +149,7 @@ Item {
 			anchors.top: parent.top;
 			anchors.bottom: parent.bottom;
 
-			orientation: Horizontal;
+			orientation: ui.Gradient.Orientation.Horizontal;
 
 			GradientStop {
 				position: 0;
@@ -186,7 +186,7 @@ Item {
 			anchors.top: parent.top;
 			anchors.bottom: parent.bottom;
 
-			orientation: Horizontal;
+			orientation: ui.Gradient.Orientation.Horizontal;
 
 			GradientStop {
 				position: 0;

@@ -215,7 +215,7 @@ Application {
 			anchors.margins: 64hpw;
 			anchors.verticalCenter: winText.verticalCenter;
 
-			fillMode: Stretch;
+			fillMode: ui.Image.FillMode.Stretch;
 			source: "apps/fontanero/t/" + parent.tile + ".png";
 		}
 

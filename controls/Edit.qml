@@ -66,7 +66,7 @@ BaseEdit {
 		anchors.rightMargin: editItem.isCursorActivated ? 6hpw : 0;
 		anchors.verticalCenter: bgRect.verticalCenter;
 
-		horizontalAlignment: AlignHCenter;
+		horizontalAlignment: ui.Text.HorizontalAlignment.AlignHCenter;
 
 		font: editItem.font;
 		color: parent.activeFocus ? colorTheme.focusedTextColor : editItem.textColor;

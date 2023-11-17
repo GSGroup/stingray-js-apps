@@ -30,7 +30,7 @@ BaseEdit {
 		anchors.centerIn: parent;
 
 		spacing: 12hpw;
-		orientation: Horizontal;
+		orientation: ui.ListView.Orientation.Horizontal;
 		uniformDelegateSize: true;
 
 		model: ListModel {

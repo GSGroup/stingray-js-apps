@@ -41,8 +41,8 @@ BaseDialog {
 
 			width: parent.width;
 
-			wrapMode: WordWrap;
-			horizontalAlignment: AlignHCenter;
+			wrapMode: ui.Text.WrapMode.WordWrap;
+			horizontalAlignment: ui.Text.HorizontalAlignment.AlignHCenter;
 
 			text: enterPinDialogItem.message;
 

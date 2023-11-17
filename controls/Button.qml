@@ -44,7 +44,7 @@ ActivePanel {
 
 			source: buttonProto.icon;
 
-			fillMode: Stretch;
+			fillMode: ui.Image.FillMode.Stretch;
 
 			color: buttonProto.textColor;
 

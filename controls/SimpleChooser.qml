@@ -22,7 +22,7 @@ Item {
 	property alias count: listView.count;
 
 	Behavior on opacity { animation: Animation { duration: 300; } }
-	
+
 	Image {
 		anchors.left: parent.left;
 		anchors.rightMargin: 8hpw;
@@ -31,14 +31,14 @@ Item {
 		sourceWidth: 32hpw;
 
 		source: colorTheme.pathToStyleFolder + "/left.svg";
-		fillMode: PreserveAspectFit;
+		fillMode: ui.Image.FillMode.PreserveAspectFit;
 
 		visible: chooserItem.showArrows;
 		opacity: parent.activeFocus ? 1 : 0.3;
 
 		Behavior on opacity { animation: Animation { duration: 300; } }
 	}
-	
+
 	ListView {
 		id: listView;
 
@@ -46,7 +46,7 @@ Item {
 		anchors.rightMargin: 30hpw;
 		anchors.fill: parent;
 
-		orientation: Horizontal;
+		orientation: ui.ListView.Orientation.Horizontal;
 		wrapNavigation: true;
 		clip: true;
 		spacing: chooserItem.spacing;
@@ -54,7 +54,7 @@ Item {
 		model: ListModel { }
 		delegate: SimpleChooserDelegate { }
 	}
-	
+
 	Image {
 		anchors.right: parent.right;
 		anchors.rightMargin: 8hpw;
@@ -64,7 +64,7 @@ Item {
 
 		source: colorTheme.pathToStyleFolder + "/right.svg";
 
-		fillMode: PreserveAspectFit;
+		fillMode: ui.Image.FillMode.PreserveAspectFit;
 
 		visible: chooserItem.showArrows;
 		opacity: parent.activeFocus ? 1 : 0.3;

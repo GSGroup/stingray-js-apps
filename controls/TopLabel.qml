@@ -59,9 +59,9 @@ Item {
 			width: parent.width;
 			height: paintedHeight;
 
-			horizontalAlignment: topLabelProto.horizontalAlignment == topLabelProto.AlignLeft ? dummyText.AlignLeft :
-					topLabelProto.horizontalAlignment == topLabelProto.AlignRight ? dummyText.AlignRight :
-					dummyText.AlignHCenter;
+			horizontalAlignment: topLabelProto.horizontalAlignment == topLabelProto.AlignLeft ? ui.Text.HorizontalAlignment.AlignLeft :
+					topLabelProto.horizontalAlignment == topLabelProto.AlignRight ? ui.Text.HorizontalAlignment.AlignRight :
+					ui.Text.HorizontalAlignment.AlignHCenter;
 			text: topLabelProto.text;
 			font: titleFont;
 		}
@@ -72,13 +72,11 @@ Item {
 			width: parent.width;
 			height: paintedHeight;
 
-			horizontalAlignment: topLabelProto.horizontalAlignment == topLabelProto.AlignHCenter ? dummyText.AlignHCenter :
-					topLabelProto.horizontalAlignment == topLabelProto.AlignLeft ? dummyText.AlignLeft :
-					dummyText.AlignRight;
+			horizontalAlignment: topLabelProto.horizontalAlignment == topLabelProto.AlignHCenter ? ui.Text.HorizontalAlignment.AlignHCenter :
+					topLabelProto.horizontalAlignment == topLabelProto.AlignLeft ? ui.Text.HorizontalAlignment.AlignLeft :
+					ui.Text.HorizontalAlignment.AlignRight;
 			text: topLabelProto.additionalText;
 			font: subheadFont;
 		}
 	}
-
-	Text { id: dummyText; } // TODO: revert after STB-34119
 }

@@ -192,7 +192,7 @@ Item {
 		visible: playerProto.paused && !spinner.visible;
 		opacity: visible ? 0.8 : 0;
 
-		Behavior on opacity { animation: Animation { duration: 100; easingType: InOutQuad; } }
+		Behavior on opacity { animation: Animation { duration: 100; easingType: ui.Animation.EasingType.InOutQuad; } }
 
 		onVisibleChanged: {
 			if (visible)
@@ -217,7 +217,7 @@ Item {
 
 		opacity: 0;
 
-		Behavior on opacity { animation: Animation { duration: playIcon.animationDuration; easingType: InQuad; } }
+		Behavior on opacity { animation: Animation { duration: playIcon.animationDuration; easingType: ui.Animation.EasingType.InQuad; } }
 	}
 
 	onVisibleChanged: { this.isMuted = Config.Feature.muted; }

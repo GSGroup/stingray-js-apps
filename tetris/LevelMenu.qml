@@ -42,7 +42,7 @@ Rectangle {
 		anchors.bottom: levelRect.bottom;
 		anchors.bottomMargin: 20hph;
 
-		orientation: Horizontal;
+		orientation: ui.ListView.Orientation.Horizontal;
 		uniformDelegateSize: true;
 
 		visible: true;

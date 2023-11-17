@@ -33,9 +33,9 @@ Delegate {
 
 			source: constants.defaultPoster;
 
-			fillMode: PreserveAspectFit;
+			fillMode: ui.Image.FillMode.PreserveAspectFit;
 
-			visible: posterImage.status !== Ready;
+			visible: posterImage.status !== ui.Image.Status.Ready;
 
 			Behavior on width { animation: Animation { duration: constants.animationDuration; } }
 			Behavior on height { animation: Animation { duration: constants.animationDuration; } }
@@ -53,7 +53,7 @@ Delegate {
 
 			source: model.poster;
 
-			fillMode: PreserveAspectFit;
+			fillMode: ui.Image.FillMode.PreserveAspectFit;
 
 			Behavior on width { animation: Animation { duration: constants.animationDuration; } }
 			Behavior on height { animation: Animation { duration: constants.animationDuration; } }

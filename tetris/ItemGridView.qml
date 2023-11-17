@@ -13,7 +13,7 @@ GridView {
 
 	property int animationDuration: 0;
 
-	orientation: Vertical;
+	orientation: ui.GridView.Orientation.Vertical;
 	cellWidth: gameConsts.getBlockSize();
 	cellHeight: gameConsts.getBlockSize();
 

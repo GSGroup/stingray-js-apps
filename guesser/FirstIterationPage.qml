@@ -20,7 +20,7 @@ Item {
 		anchors.leftMargin: -8hpw;
 		anchors.topMargin: -8hph;
 
-		orientation: Horizontal;
+		orientation: ui.ListView.Orientation.Horizontal;
 		spacing: 40hpw;
 		uniformDelegateSize: true;
 
@@ -44,7 +44,7 @@ Item {
 			for (var i = 0; i < 4; ++i)
 				col.push(cardsFirst.children[x + i * 4]);
 
-			firstPageProto.choosed(col);	
+			firstPageProto.choosed(col);
 		}
 	}
 
