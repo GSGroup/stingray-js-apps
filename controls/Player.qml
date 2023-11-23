@@ -173,7 +173,8 @@ Item {
 
 	Image {
 		anchors.left: safeArea.left;
-		anchors.top: safeArea.top;
+		anchors.top: mainWindow.top;
+		anchors.topMargin: 130hph;
 
 		source: "res/common/mute.svg";
 
