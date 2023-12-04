@@ -21,8 +21,7 @@ Item {
 	property int count: listView.count;
 	property bool backgroundVisible: true;
 
-	enum { No, One };
-	property int snapMode: No;
+	property enum { No, One } snapMode: No;
 
 	property bool showArrows: true;
 

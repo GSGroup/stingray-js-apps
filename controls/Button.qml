@@ -16,8 +16,8 @@ ActivePanel {
 	property int contentMargin: 12hpw;
 
 	property bool textInCenter: true;
-	enum { Right, Center, Left };
-	property int contentAlignment: textInCenter ? Center : Left;
+	property enum { Right, Center, Left } contentAlignment: Center;
+	contentAlignment: textInCenter ? Center : Left;
 
 	width: Math.max(176hpw, iconTextItem.width + contentMargin * 2);
 	height: 53hph;

@@ -12,8 +12,7 @@ Item {
 	property string text;
 	property string additionalText;
 
-	enum { AlignLeft, AlignRight, AlignHCenter };
-	property int horizontalAlignment: AlignLeft;
+	property enum { AlignLeft, AlignRight, AlignHCenter } horizontalAlignment: AlignLeft;
 
 	height: innerTexts.height;
 

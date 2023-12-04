@@ -21,8 +21,7 @@ Item {
 
 	signal exit;
 
-	enum { Scatter, Chase };
-	property int enemyBehavior: Scatter;
+	property enum { Scatter, Chase } enemyBehavior: Scatter;
 
 	property bool isPlayerMoved;
 	property int pointsCollected;
@@ -129,8 +128,7 @@ Item {
 			Player {
 				id: player;
 
-				enum { None, Left, Right, Up, Down };
-				property int inputDirection: None;
+				property enum { None, Left, Right, Up, Down } inputDirection: None;
 
 				width: gameConsts.getCellWidth();
 				height: gameConsts.getCellHeight();

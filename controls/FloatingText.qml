@@ -17,8 +17,7 @@ Item {
 	property int floatingPeriod: 100;
 	property bool floatingNeeded: (floatingTextProto.width + 2) < innerText.paintedWidth;
 
-	enum { AlignLeft, AlignRight, AlignHCenter };
-	property int horizontalAlignment: AlignLeft;
+	property enum { AlignLeft, AlignRight, AlignHCenter } horizontalAlignment: AlignLeft;
 
 	property int maxWidth;
 	property bool maxWidthReached: maxWidth > 0 && maxWidth < innerText.width;

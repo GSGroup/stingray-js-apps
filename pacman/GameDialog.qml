@@ -15,8 +15,7 @@ Dialog {
 	signal restart;
 	signal exit;
 
-	enum { Pause, NextLevel, GameOver };
-	property int mode: Pause;
+	property enum { Pause, NextLevel, GameOver } mode: Pause;
 
 	property int score;
 
