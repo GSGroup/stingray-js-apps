@@ -45,9 +45,6 @@ Item {
 		running: playerProto.visible;
 
 		onTriggered: {
-			playbackProgress.progress = playerProto._player.getProgress();
-			playbackProgress.duration = playerProto._player.getDuration();
-
 			if (!playerProto.isStopped && spinner.show)
 				spinner.show = false;
 		}
@@ -289,6 +286,14 @@ Item {
 				self.stop();
 
 			self.finished(finished);
+		};
+
+		this._player.durationChanged = function (duration) {
+			playbackProgress.duration = duration;
+		};
+
+		this._player.progressChanged = function (progress) {
+			playbackProgress.progress = progress;
 		};
 
 		this._currentMediaData.play();
