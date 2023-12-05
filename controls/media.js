@@ -54,7 +54,7 @@ Player.prototype = {
 			console.log("connection " + this.connections[i]);
 			this.connections[i].disconnect();
 		}
-		
+
 		this.connections = [];
 
 		app.MediaPlayer().Stop(this.session);
@@ -79,17 +79,17 @@ Player.prototype = {
 	},
 
 	getProgress: function() {
-		var p = this.session ? this.session.GetProgress(): null;
-		if (!p)
+		var progress = this.session ? this.session.GetProgress(): null;
+		if (!progress)
 			return null;
-		return p.GetMilliseconds();
+		return progress.GetMilliseconds();
 	},
 
 	getDuration: function() {
-		var d = this.session ? this.session.GetDuration(): null;
-		if (!d)
+		var duration = this.session ? this.session.GetDuration(): null;
+		if (!duration)
 			return null;
-		return d.GetMilliseconds();
+		return duration.GetMilliseconds();
 	},
 
 	_onStarted: function(started) {
