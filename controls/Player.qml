@@ -38,19 +38,6 @@ Item {
 	property string fullTimeStr: playbackProgress.fullTimeStr;
 
 	Timer {
-		id: spinnerTimer;
-
-		interval: 400;
-		repeat: running;
-		running: playerProto.visible;
-
-		onTriggered: {
-			if (!playerProto.isStopped && spinner.show)
-				spinner.show = false;
-		}
-	}
-
-	Timer {
 		id: playIconHideTimer;
 
 		interval: 800;
@@ -261,21 +248,21 @@ Item {
 
 		console.log("Player: start playing " + Object.entries(mediaData.info).toString());
 
-		spinner.show = false;
-		spinner.show = true;
-		spinnerTimer.restart();
-
-		this._currentMediaData = mediaData;
-		this.visible = true;
 		this._player.stop();
+		this._currentMediaData = mediaData;
 
+		this.visible = true;
 		this.paused = false;
+		spinner.show = true;
 
 		var self = playerProto;
 
 		this._player.started = function (started) {
 			if (started)
+			{
 				console.log("Player: play is started");
+				spinner.show = false;
+			}
 
 			self.isStopped = !started;
 			self.started(started)
