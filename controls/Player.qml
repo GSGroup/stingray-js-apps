@@ -45,8 +45,8 @@ Item {
 		running: playerProto.visible;
 
 		onTriggered: {
-			playbackProgress.progress = playerProto.player.getProgress();
-			playbackProgress.duration = playerProto.player.getDuration();
+			playbackProgress.progress = playerProto._player.getProgress();
+			playbackProgress.duration = playerProto._player.getDuration();
 
 			if (!playerProto.isStopped && spinner.show)
 				spinner.show = false;
@@ -226,7 +226,7 @@ Item {
 	pause: { this.togglePause(); }
 
 	abort: {
-		this.player.stop();
+		this._player.stop();
 		this.paused = false;
 		this.isStopped = true;
 		playerProto.stopped();
@@ -234,29 +234,29 @@ Item {
 
 	togglePause: {
 		this.paused = !this.paused;
-		this.player.pause(this.paused);
+		this._player.pause(this.paused);
 	}
 
 	stop: {
 		console.log("Player: stop playing");
 
-		this.player.stop();
+		this._player.stop();
 		this.visible = false;
 		this.isStopped = true;
 	}
 
 	function seek(msDelta) {
 		if (!this.paused)
-			this.player.seek(msDelta);
+			this._player.seek(msDelta);
 	}
 
 	function seekAbs(position) {
-		this.player.seekAbs(position);
+		this._player.seekAbs(position);
 		this.paused = false;
 	}
 
 	function playMedia(mediaData) {
-		if (this.paused && Object.entries(mediaData.info).toString() === Object.entries(this.currentMediaData.info).toString())
+		if (this.paused && Object.entries(mediaData.info).toString() === Object.entries(this._currentMediaData.info).toString())
 		{
 			this.togglePause();
 			return;
@@ -268,15 +268,15 @@ Item {
 		spinner.show = true;
 		spinnerTimer.restart();
 
-		this.currentMediaData = mediaData;
+		this._currentMediaData = mediaData;
 		this.visible = true;
-		this.player.stop();
+		this._player.stop();
 
 		this.paused = false;
 
 		var self = playerProto;
 
-		this.player.started = function (started) {
+		this._player.started = function (started) {
 			if (started)
 				console.log("Player: play is started");
 
@@ -284,32 +284,32 @@ Item {
 			self.started(started)
 		};
 
-		this.player.finished = function (finished) {
+		this._player.finished = function (finished) {
 			if (finished)
 				self.stop();
 
 			self.finished(finished);
 		};
 
-		this.currentMediaData.play();
+		this._currentMediaData.play();
 	}
 
 	function playUrl(url) {
 		this.playMedia({
 			info: { url: url },
-			play: () => this.player.playUrl(url)
+			play: () => this._player.playUrl(url)
 		});
 	}
 
 	function playRtsp(url, protocol, login, password) {
 		this.playMedia({
 			info: { url: url, protocol: protocol, credentialsHash: md5Hash(md5Hash(login) + md5Hash(password)) },
-			play: () => this.player.playRtsp(url, protocol, login, password)
+			play: () => this._player.playRtsp(url, protocol, login, password)
 		});
 	}
 
 	onCompleted: {
-		this.player = new Media.Player();
-		this.currentMediaData = null;
+		this._player = new Media.Player();
+		this._currentMediaData = null;
 	}
 }
