@@ -21,6 +21,9 @@ Player.prototype = {
 	finished: function (finished) { },
 	started: function (started) { },
 
+	durationChanged: function (duration) { },
+	progressChanged: function (progress) { },
+
 	playMedia: function (mediaData) {
 		if (this.session)
 			this.stop();
@@ -29,6 +32,9 @@ Player.prototype = {
 
 		this.connections.push(this.session.OnFinished().connect(this._onFinished.bind(this)));
 		this.connections.push(this.session.OnStarted().connect(this._onStarted.bind(this)));
+
+		this.connections.push(this.session.OnDuration().connect(this._onDurationChanged.bind(this)));
+		this.connections.push(this.session.OnProgress().connect(this._onProgressChanged.bind(this)));
 	},
 
 	playUrl: function(url) {
@@ -98,6 +104,14 @@ Player.prototype = {
 
 	_onFinished: function(finished) {
 		this.finished(finished);
+	},
+
+	_onDurationChanged: function(duration) {
+		this.durationChanged(duration.GetMilliseconds());
+	},
+
+	_onProgressChanged: function(progress) {
+		this.progressChanged(progress.GetMilliseconds());
 	}
 }
 
