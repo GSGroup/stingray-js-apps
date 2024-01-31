@@ -97,10 +97,10 @@ Item {
 			for (let i = 0; i < enemies.children.length; ++i) {
 				const enemy = enemies.children[i];
 
-				if (player.x < enemy.x + enemy.width &&
-						player.x + player.width > enemy.x &&
-						player.y < enemy.y + enemy.height &&
-						player.y + player.height > enemy.y) {
+				if (player.x < enemy.x + enemy.halfWidth &&
+						player.x + player.halfWidth > enemy.x &&
+						player.y < enemy.y + enemy.halfHeight &&
+						player.y + player.halfHeight > enemy.y) {
 					pacmanGame.updateHighScore();
 					gameDialog.showGameOver(pacmanGame.score);
 					return;

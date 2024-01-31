@@ -17,8 +17,11 @@ Item {
 	property int targetOffsetX;
 	property int targetOffsetY;
 
-	x: width * cellX - width / 2;
-	y: height * cellY - height / 2;
+	property int halfWidth: width / 2;
+	property int halfHeight: height / 2;
+
+	x: width * cellX - halfWidth;
+	y: height * cellY - halfHeight;
 
 	Behavior on x {
 		id: xAnimation;
