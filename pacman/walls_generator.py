@@ -109,14 +109,12 @@ def generate(target_dir, cell_width, cell_height, grid_width, grid_height):
     create_mirrored_h_lines(grid, 6, 8, 12, grid_width, EndOfHLine(), BoxBottomRightCorner())
     create_mirrored_h_lines(grid, 6, 9, 14, grid_width)
     create_mirrored_h_lines(grid, 6, 8, 18, grid_width, EndOfHLine(), BoxBottomRightCorner())
-    create_mirrored_h_lines(grid, 8, 10, 4, grid_width, None)
     create_mirrored_h_lines(grid, 8, 10, 6, grid_width)
     create_mirrored_h_lines(grid, 8, 9, 8, grid_width, EndOfHLine(), BoxBottomRightCorner())
     create_mirrored_h_lines(grid, 8, 10, 10, grid_width, None)
     create_mirrored_h_lines(grid, 8, 10, 16, grid_width, None)
 
     create_mirrored_v_lines(grid, 0, 2, 6, grid_width)
-    create_mirrored_v_lines(grid, 0, 2, 8, grid_width)
     create_mirrored_v_lines(grid, 4, 6, 6, grid_width, None, None)
     create_mirrored_v_lines(grid, 6, 8, 8, grid_width, None, None)
     create_mirrored_v_lines(grid, 8, 10, 4, grid_width)
@@ -124,9 +122,10 @@ def generate(target_dir, cell_width, cell_height, grid_width, grid_height):
     create_mirrored_v_lines(grid, 12, 14, 4, grid_width)
     create_mirrored_v_lines(grid, 16, 18, 6, grid_width, None, None)
 
-    create_v_line(grid, 2, 4, 10, None)
+    create_h_line(grid, 8, 12, 2)
+    create_h_line(grid, 8, 12, 4)
+
     create_v_line(grid, 16, 18, 10)
-    create_v_line(grid, 10, 12, 10)
 
     with open(target_dir + "/generated_files/PacmanWallArray.qml", "w") as result_file:
         with open(target_dir + "/WallArray.templ", "r") as wall_array_template:
