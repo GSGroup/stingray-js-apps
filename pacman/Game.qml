@@ -276,7 +276,7 @@ Item {
 		} else if (key == "Down") {
 			player.inputDirection = player.Down;
 			return true;
-		} else if (key == "Back") {
+		} else if (key == "Back" || key == "Menu") {
 			gameDialog.showPause();
 			return true;
 		}
