@@ -81,10 +81,21 @@ Item {
 			if (!pacmanGame.isPlayerMoved)
 				return;
 
+			for (let i = 0; i < enemies.children.length; ++i)
+				pacmanGame.processEnemyAi(enemies.children[i], i);
+		}
+	}
+
+	Timer {
+		id: physicsTimer;
+
+		interval: 1;
+		repeat: true;
+		running: animationTimer.running && pacmanGame.isPlayerMoved;
+
+		onTriggered: {
 			for (let i = 0; i < enemies.children.length; ++i) {
 				const enemy = enemies.children[i];
-
-				pacmanGame.processEnemyAi(enemy, i);
 
 				if (player.x < enemy.x + enemy.width &&
 						player.x + player.width > enemy.x &&
