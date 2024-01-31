@@ -10,7 +10,7 @@ Item {
 
 	property int cellX;
 	property int cellY;
-	property int tickInterval;
+	property int animationDuration;
 	property bool faceLeft;
 	property int dx;
 	property int dy;
@@ -23,13 +23,13 @@ Item {
 	Behavior on x {
 		id: xAnimation;
 
-		animation: Animation { duration: gameObjectProto.tickInterval; }
+		animation: Animation { duration: gameObjectProto.animationDuration; }
 	}
 
 	Behavior on y {
 		id: yAnimation;
 
-		animation: Animation { duration: gameObjectProto.tickInterval; }
+		animation: Animation { duration: gameObjectProto.animationDuration; }
 	}
 
 	function move() {

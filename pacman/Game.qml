@@ -32,11 +32,11 @@ Item {
 	focus: true;
 
 	Timer {
-		id: tickTimer;
+		id: animationTimer;
 
 		repeat: true;
 		running: pacmanGame.visible && !gameDialog.visible;
-		interval: gameConsts.getTickInterval();
+		interval: gameConsts.getAnimationDuration();
 
 		onTriggered: {
 			const point = engine.getPoint(player.cellX, player.cellY);
@@ -102,7 +102,7 @@ Item {
 		id: enemyBehaviorTimer;
 
 		repeat: true;
-		running: tickTimer.running && pacmanGame.isPlayerMoved;
+		running: animationTimer.running && pacmanGame.isPlayerMoved;
 
 		onTriggered: { pacmanGame.setEnemyBehavior(pacmanGame.enemyBehavior == pacmanGame.Chase ? pacmanGame.Scatter : pacmanGame.Chase); }
 	}
@@ -133,8 +133,8 @@ Item {
 				width: gameConsts.getCellWidth();
 				height: gameConsts.getCellHeight();
 
-				tickInterval: gameConsts.getTickInterval();
-				animated: tickTimer.running;
+				animationDuration: gameConsts.getAnimationDuration();
+				animated: animationTimer.running;
 
 				onInputDirectionChanged: {
 					if (inputDirection != player.None)
@@ -151,7 +151,7 @@ Item {
 
 					color: pacmanGame.enemyBehavior == pacmanGame.Chase ? gameConsts.getEnemyChaseColor() : "#34B67A";
 
-					tickInterval: gameConsts.getTickInterval();
+					animationDuration: gameConsts.getAnimationDuration();
 				}
 
 				Enemy {
@@ -160,7 +160,7 @@ Item {
 
 					color: pacmanGame.enemyBehavior == pacmanGame.Chase ? gameConsts.getEnemyChaseColor() : "#00FCFF";
 
-					tickInterval: gameConsts.getTickInterval();
+					animationDuration: gameConsts.getAnimationDuration();
 
 					targetOffsetX: 1;
 				}
@@ -171,7 +171,7 @@ Item {
 
 					color: pacmanGame.enemyBehavior == pacmanGame.Chase ? gameConsts.getEnemyChaseColor() : "#FFA1CD";
 
-					tickInterval: gameConsts.getTickInterval();
+					animationDuration: gameConsts.getAnimationDuration();
 
 					targetOffsetY: 1;
 				}
@@ -182,7 +182,7 @@ Item {
 
 					color: pacmanGame.enemyBehavior == pacmanGame.Chase ? gameConsts.getEnemyChaseColor() : "#FFCC00";
 
-					tickInterval: gameConsts.getTickInterval();
+					animationDuration: gameConsts.getAnimationDuration();
 
 					targetOffsetX: -1;
 				}

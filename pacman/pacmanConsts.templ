@@ -11,7 +11,7 @@ const CellType = {
 }
 this.CellType = CellType;
 
-const tickInterval = 300;
+const animationDuration = 300;
 
 const cellWidth = calculateWidth($cell_width, 'h');
 const cellHeight = calculateHeight($cell_height, 'h');
@@ -29,8 +29,8 @@ const enemyScatterDurationInterval = [8000, 12000];
 const enemyChaseDurationInterval = [3000, 6000];
 const enemyChaseColor = "#FF3100";
 
-this.getTickInterval = function() {
-	return tickInterval;
+this.getAnimationDuration = function() {
+	return animationDuration;
 }
 
 this.getCellWidth = function() {
