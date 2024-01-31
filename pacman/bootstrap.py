@@ -32,6 +32,9 @@ enemies_scatter_pos = [
     [3, 17],
     [17, 3],
     [17, 17] ]
+empty_cell_pos = [
+    [ 10, 8 ]
+]
 
 def main():
     parser = argparse.ArgumentParser(description='Pacman bootstrap')
@@ -47,7 +50,15 @@ def main():
         sys.exit(1)
 
     grid = walls_generator.generate(args.target_dir, cell_width, cell_height, grid_width, grid_height)
+
     grid[initial_player_pos[1]][initial_player_pos[0]] = CellType.EMPTY
+
+    for enemy_pos in initial_enemies_pos:
+        grid[enemy_pos[1]][enemy_pos[0]] = CellType.EMPTY
+
+    for empty_pos in empty_cell_pos:
+        grid[empty_pos[1]][empty_pos[0]] = CellType.EMPTY
+
     grid = points_generator.generate(args.target_dir, cell_width, cell_height, grid, grid_width, grid_height)
 
     with open(args.target_dir + "/generated_files/pacmanConsts.js", "w") as consts_result_file:
