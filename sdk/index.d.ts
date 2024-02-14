@@ -6,9 +6,9 @@
 // WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 /// <reference path="app.d.ts" />
+/// <reference path="audioOutputManager.d.ts" />
 /// <reference path="cas.d.ts" />
 /// <reference path="channelRepository.d.ts" />
-/// <reference path="config.d.ts" />
 /// <reference path="drm.d.ts" />
 /// <reference path="misc.d.ts" />
 /// <reference path="net.d.ts" />

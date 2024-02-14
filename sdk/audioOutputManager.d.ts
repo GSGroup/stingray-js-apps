@@ -11,10 +11,10 @@
 declare namespace stingray {
 
 	/**
-	 * {@link IFeature} representing a module of a channel repository that provides
-	 * the ability to manage channels and related information.
+	 * {@link IFeature} representing an audio output module that provides
+	 * the ability to control sound volume and mute status.
 	 */
-	export interface IConfigPtr extends IFeature {
+	export interface IAudioOutputManagerPtr extends IFeature {
 		/**
 		 * Function that returns current volume (in percents)
 		 */

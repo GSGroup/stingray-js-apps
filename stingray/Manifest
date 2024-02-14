@@ -4,9 +4,9 @@
 	"scope": "system",
 	"library": {
 		"imports": [
+			["AudioOutputManager",		"audioOutputManager.js"],
 			["Cas",						"cas.js"],
 			["ChannelRepository",		"channelRepository.js"],
-			["Config",					"config.js"],
 			["Drm",						"drm.js"],
 			["Permissions",				"permissions.js"],
 			["StandByMode",				"standByMode.js"],

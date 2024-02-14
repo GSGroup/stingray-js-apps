@@ -7,9 +7,9 @@
 
 import { FeatureHolder, SignalConnection } from 'stingray/utils'
 
-export class Config extends FeatureHolder<stingray.IConfigPtr> {
+export class AudioOutputManager extends FeatureHolder<stingray.IAudioOutputManagerPtr> {
 	public constructor() {
-		super(app.Config());
+		super(app.AudioOutputManager());
 	}
 
 	public get volume(): number {
@@ -59,4 +59,4 @@ export class Config extends FeatureHolder<stingray.IConfigPtr> {
 	};
 }
 
-export const Feature = new Config();
+export const Feature = new AudioOutputManager();

@@ -9,7 +9,7 @@ import controls.Media;
 import controls.Spinner;
 import "PlaybackProgress.qml";
 
-import stingray.Config;
+import stingray.AudioOutputManager;
 
 Item {
 	id: playerProto;
@@ -97,12 +97,12 @@ Item {
 
 		if (key == "Volume Up" || key == "Right")
 		{
-			Config.Feature.volumeUp();
+			AudioOutputManager.Feature.volumeUp();
 			return true;
 		}
 		else if (key == "Volume Down" || key == "Left")
 		{
-			Config.Feature.volumeDown();
+			AudioOutputManager.Feature.volumeDown();
 			return true;
 		}
 		else if (key == "Last")
@@ -145,8 +145,8 @@ Item {
 		}
 		else if (key == "Volume Mute")
 		{
-			Config.Feature.toggleMute();
-			playerProto.isMuted = Config.Feature.muted;
+			AudioOutputManager.Feature.toggleMute();
+			playerProto.isMuted = AudioOutputManager.Feature.muted;
 			return true;
 		}
 		else if (!this.disableControls)
@@ -205,7 +205,7 @@ Item {
 		Behavior on opacity { animation: Animation { duration: playIcon.animationDuration; easingType: ui.Animation.EasingType.InQuad; } }
 	}
 
-	onVisibleChanged: { this.isMuted = Config.Feature.muted; }
+	onVisibleChanged: { this.isMuted = AudioOutputManager.Feature.muted; }
 
 	pause: { this.togglePause(); }
 
