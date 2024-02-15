@@ -24,6 +24,7 @@ Item {
 	property enum { Scatter, Chase } enemyBehavior: Scatter;
 
 	property bool isPlayerMoved;
+	property int playerLives: gameConsts.getPlayerLives();
 	property int pointsCollected;
 	property int level: 1;
 	property int score;
@@ -101,8 +102,13 @@ Item {
 						player.x + player.halfWidth > enemy.x &&
 						player.y < enemy.y + enemy.halfHeight &&
 						player.y + player.halfHeight > enemy.y) {
-					pacmanGame.updateHighScore();
-					gameDialog.showGameOver(pacmanGame.score);
+					pacmanGame.playerLives = pacmanGame.playerLives - 1;
+					if (pacmanGame.playerLives === 0) {
+						pacmanGame.updateHighScore();
+						gameDialog.showGameOver(pacmanGame.score);
+					} else
+						pacmanGame.restart();
+
 					return;
 				}
 			}
@@ -202,10 +208,46 @@ Item {
 	}
 
 	SubheadText {
-		id: scoreText;
+		id: levelText;
 
 		anchors.right: parent.left;
 		anchors.rightMargin: 40hpw;
+
+		text: tr("Level");
+	}
+
+	TitleText {
+		id: levelValueText;
+
+		anchors.right: levelText.right;
+		anchors.top: levelText.bottom;
+
+		text: pacmanGame.level;
+	}
+
+	SubheadText {
+		id: livesText;
+
+		anchors.right: levelText.right;
+		anchors.top: levelValueText.bottom;
+		anchors.topMargin: 15hph;
+
+		text: tr("Lives");
+	}
+
+	TitleText {
+		anchors.right: livesText.right;
+		anchors.top: livesText.bottom;
+		anchors.topMargin: 15hph;
+
+		text: Math.max(0, pacmanGame.playerLives - 1);
+	}
+
+	SubheadText {
+		id: scoreText;
+
+		anchors.left: parent.right;
+		anchors.leftMargin: 40hpw;
 
 		text: tr("Score");
 	}
@@ -213,34 +255,18 @@ Item {
 	TitleText {
 		id: scoreValueText;
 
-		anchors.right: scoreText.right;
+		anchors.left: scoreText.left;
 		anchors.top: scoreText.bottom;
 
 		text: pacmanGame.score;
 	}
 
 	SubheadText {
-		id: levelText;
-
-		anchors.right: scoreText.right;
-		anchors.top: scoreValueText.bottom;
-		anchors.topMargin: 15hph;
-
-		text: tr("Level");
-	}
-
-	TitleText {
-		anchors.right: scoreText.right;
-		anchors.top: levelText.bottom;
-
-		text: pacmanGame.level;
-	}
-
-	SubheadText {
 		id: highScoreText;
 
-		anchors.left: parent.right;
-		anchors.leftMargin: 40hpw;
+		anchors.left: scoreText.left;
+		anchors.top: scoreValueText.bottom;
+		anchors.topMargin: 15hph;
 
 		text: tr("High Score");
 	}
@@ -317,9 +343,16 @@ Item {
 		pacmanGame.reset();
 	}
 
-	function reset(nextLevel = false) {
+	function restart() {
 		player.reset(...gameConsts.getInitialPlayerPos());
 		resetEnemies();
+
+		pacmanGame.setEnemyBehavior(pacmanGame.Scatter);
+		pacmanGame.isPlayerMoved = false;
+	}
+
+	function reset(nextLevel = false) {
+		pacmanGame.restart();
 
 		for (let x = 0; x < gameConsts.getGridWidth(); ++x) {
 			for (let y = 0; y < gameConsts.getGridHeight(); ++y) {
@@ -329,14 +362,13 @@ Item {
 			}
 		}
 
-		pacmanGame.setEnemyBehavior(pacmanGame.Scatter);
-
-		if (!nextLevel)
+		if (!nextLevel) {
 			pacmanGame.score = 0;
+			pacmanGame.playerLives = gameConsts.getPlayerLives();
+		}
 
 		pacmanGame.level = nextLevel ? pacmanGame.level + 1 : 1;
 		pacmanGame.pointsCollected = 0;
-		pacmanGame.isPlayerMoved = false;
 	}
 
 	function resetEnemies() {

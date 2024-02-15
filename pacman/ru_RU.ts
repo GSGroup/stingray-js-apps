@@ -12,6 +12,10 @@
         <translation>Уровень</translation>
     </message>
     <message>
+        <source>Lives</source>
+        <translation>Жизни</translation>
+    </message>
+    <message>
         <source>Score</source>
         <translation>Счёт</translation>
     </message>

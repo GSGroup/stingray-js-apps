@@ -29,6 +29,8 @@ const enemyScatterDurationInterval = [12000, 16000];
 const enemyChaseDurationInterval = [3000, 6000];
 const enemyChaseColor = "#FF3100";
 
+const playerLives = 2;
+
 this.getAnimationDuration = function() {
 	return animationDuration;
 }
@@ -75,4 +77,8 @@ this.getEnemyChaseDurationInterval = function() {
 
 this.getEnemyChaseColor = function() {
 	return enemyChaseColor;
+}
+
+this.getPlayerLives = function() {
+	return playerLives;
 }
