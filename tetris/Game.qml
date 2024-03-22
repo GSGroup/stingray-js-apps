@@ -72,7 +72,7 @@ Rectangle{
 						}
 						else
 						{
-							engine.setNewBlock(nextBlockView.model);
+							engine.setNewBlock(infoItem.nextBlockView.model);
 						}
 					}
 				}
@@ -83,7 +83,7 @@ Rectangle{
 					engine.resetRemoveLinesAnimation();
 					engine.removeLines();
 
-					engine.setNewBlock(nextBlockView.model);
+					engine.setNewBlock(infoItem.nextBlockView.model);
 					engine.setStartCoordinates();
 
 					game.deletingLines = false;
@@ -165,7 +165,7 @@ Rectangle{
 
 			levelMenu.show();
 
-			var info = engine.restartGame(nextBlockView.model);
+			var info = engine.restartGame(infoItem.nextBlockView.model);
 			game.updateInfo(info);
 			engine.setStartCoordinates();
 		}
@@ -230,7 +230,7 @@ Rectangle{
 				levelMenu.visible = false;
 				game.currentLevel = level;
 				engine.setCurrentLevel(game.currentLevel);
-				engine.setNewBlock(nextBlockView.model);
+				engine.setNewBlock(infoItem.nextBlockView.model);
 				game.setFocus();
 			}
 		}
@@ -274,7 +274,7 @@ Rectangle{
 
 	onCompleted: {
 		levelMenu.show();
-		engine.initGame(nextBlockView.model);
+		engine.initGame(infoItem.nextBlockView.model);
 		engine.setStartCoordinates();
 	}
 }
