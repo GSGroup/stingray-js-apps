@@ -16,7 +16,7 @@ Item {
 	anchors.fill: parent;
 
 	HighlightListView {
-		anchors.fill: cardsFirst;
+		anchors.fill: cardsSecond;
 		anchors.leftMargin: -8hpw;
 		anchors.topMargin: -8hph;
 
@@ -44,7 +44,7 @@ Item {
 	SubheadText {
 		anchors.bottom: cardsSecond.top;
 		anchors.bottomMargin: 15hph;
-		anchors.horizontalCenter: cardsFirst.horizontalCenter;
+		anchors.horizontalCenter: cardsSecond.horizontalCenter;
 		anchors.rightMargin: 40hpw;
 
 		color: "#fff";
