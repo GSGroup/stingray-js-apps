@@ -182,7 +182,7 @@ Rectangle {
 
 			cellHeight: 65hph;
 			cellWidth: 65hpw;
-			orintation: GridView.Horizontal;
+			orientation: ui.GridView.Orientation.Horizontal;
 
 			model: ListModel { }
 			delegate: CellDelegate { }
