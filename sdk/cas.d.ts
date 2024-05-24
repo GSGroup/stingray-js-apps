@@ -30,9 +30,13 @@ declare namespace stingray {
 	 */
 	export interface ICasFeaturePtr extends IFeature {
 		/**
-		 * Function that provides access to {@link IConditionalAccessInfoPtr}
+		 * Function that provides access to dre {@link IConditionalAccessInfoPtr}
 		 */
 		GetDreCasInfo(): IConditionalAccessInfoPtr;
+		/**
+		 * Function that provides access to drm {@link IConditionalAccessInfoPtr}
+		 */
+		GetDrmCasInfo(): IConditionalAccessInfoPtr;
 	}
 
 }

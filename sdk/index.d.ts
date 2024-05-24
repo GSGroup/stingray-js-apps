@@ -9,7 +9,6 @@
 /// <reference path="audioOutputManager.d.ts" />
 /// <reference path="cas.d.ts" />
 /// <reference path="channelRepository.d.ts" />
-/// <reference path="drm.d.ts" />
 /// <reference path="misc.d.ts" />
 /// <reference path="net.d.ts" />
 /// <reference path="permissionManager.d.ts" />
