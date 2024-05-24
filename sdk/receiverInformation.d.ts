@@ -5,17 +5,23 @@
 // IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
 // WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-/// <reference path="app.d.ts" />
-/// <reference path="audioOutputManager.d.ts" />
-/// <reference path="cas.d.ts" />
-/// <reference path="channelRepository.d.ts" />
-/// <reference path="drm.d.ts" />
-/// <reference path="misc.d.ts" />
-/// <reference path="net.d.ts" />
-/// <reference path="permissionManager.d.ts" />
-/// <reference path="receiverInformation.d.ts" />
-/// <reference path="standByMode.d.ts" />
-/// <reference path="statistics.d.ts" />
-/// <reference path="timeManager.d.ts" />
-/// <reference path="tricolorAccount.d.ts" />
-/// <reference path="userAccountManager.d.ts" />
+/// <reference path="feature.d.ts" />
+
+declare namespace stingray {
+
+    /**
+     * {@link IFeature} representing a module that provides basic information about STB.
+     */
+    export interface IReceiverInformationPtr extends IFeature {
+        /**
+         * Function that provides access to STB platform name
+         */
+        GetPlatformName(): string;
+
+        /**
+         * Function that provides access to STB model name
+         */
+        GetModelName(): string;
+    }
+
+}

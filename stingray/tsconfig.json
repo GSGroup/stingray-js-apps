@@ -18,6 +18,7 @@
 		"drm.ts",
 		"standByMode.ts",
 		"permissions.ts",
+		"receiverInformation.ts",
 		"statistics.ts",
 		"timeManager.ts",
 		"tricolorAccount.ts",

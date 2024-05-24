@@ -10,6 +10,7 @@
 /// <reference path="channelRepository.d.ts" />
 /// <reference path="drm.d.ts" />
 /// <reference path="permissionManager.d.ts" />
+/// <reference path="receiverInformation.d.ts" />
 /// <reference path="standByMode.d.ts" />
 /// <reference path="timeManager.d.ts" />
 /// <reference path="tricolorAccount.d.ts" />
@@ -40,6 +41,11 @@ declare namespace app {
 	 * Function to get {@link stingray.IPermissionManagerPtr}
 	 */
 	export function PermissionManager(): stingray.IPermissionManagerPtr;
+
+	/**
+	 * Function to get {@link stingray.IReceiverInformationPtr}
+	 */
+	export function ReceiverInformation(): stingray.IReceiverInformationPtr;
 
 	/**
 	 * Function to get {@link stingray.IStandByModePtr}

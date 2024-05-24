@@ -10,6 +10,7 @@
 			["Config",					"config.js"],
 			["Drm",						"drm.js"],
 			["Permissions",				"permissions.js"],
+			["ReceiverInformation",		"receiverInformation.js"],
 			["StandByMode",				"standByMode.js"],
 			["Statistics",				"statistics.js"],
 			["TimeManager",				"timeManager.js"],
