@@ -8,12 +8,13 @@
 export class SignalConnection {
 	private readonly connection: stingray.SignalConnection;
 
-	public constructor(connection: stingray.SignalConnection) {
+	public constructor(connection: stingray.SignalConnection = null) {
 		this.connection = connection;
 	}
 
 	public disconnect(): void {
-		this.connection.disconnect();
+		if (this.connection)
+			this.connection.disconnect();
 	}
 }
 
