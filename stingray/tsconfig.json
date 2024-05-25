@@ -12,6 +12,7 @@
 	},
 	"files": [
 		"audioOutputManager.ts",
+		"caSubscriptions.ts",
 		"cas.ts",
 		"channelRepository.ts",
 		"config.ts",

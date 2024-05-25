@@ -5,16 +5,50 @@
 // IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
 // WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+/// <reference path="collections.d.ts" />
 /// <reference path="feature.d.ts" />
-/// <reference path="signals.d.ts" />
+/// <reference path="misc.d.ts" />
 
 declare namespace stingray {
 
 	/**
-	 * Class that can be used to obtain dre id
+	 * Class representing a subscription
+	 */
+	export interface ISubscriptionPtr {
+		GetName(): TranslatedString;
+	}
+
+	/**
+	 * Class representing a dre subscription
+	 */
+	export interface IDreSubscriptionPtr extends ISubscriptionPtr {
+		GetClassId(): number;
+	}
+
+	/**
+	 * Class representing a dre subscription lease
+	 */
+	export interface ISubscriptionLeasePtr {
+		GetDreSubscription(): IDreSubscriptionPtr;
+		GetTimeInterval(): (TimeInterval | null);
+		GetState(): number;
+		GetPackages(): ISubscriptionLeasePtrEnumerablePtr;
+	}
+	type ISubscriptionLeasePtrEnumerablePtr = IEnumerable<ISubscriptionLeasePtr>;
+
+	/**
+	 * Class that can be used to obtain {@link ISubscriptionLeasePtrEnumerablePtr}
+	 */
+	export interface ISubscriptionsListenerPtr {
+		OnSubscriptionsChanged(): Signal<[ISubscriptionLeasePtrEnumerablePtr]>;
+	}
+
+	/**
+	 * Class that can be used to obtain dre id and subscriptions
 	 */
 	export interface IConditionalAccessUserIdentityPtr {
 		GetId(): string;
+		GetSubscriptionsListener(): ISubscriptionsListenerPtr;
 	}
 
 	/**
