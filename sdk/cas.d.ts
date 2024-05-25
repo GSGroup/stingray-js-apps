@@ -26,10 +26,18 @@ declare namespace stingray {
 	}
 
 	/**
+	 * Class representing a drm subscription
+	 */
+	export interface IDrmSubscriptionPtr extends ISubscriptionPtr {
+		GetServiceCode(): string;
+	}
+
+	/**
 	 * Class representing a dre subscription lease
 	 */
 	export interface ISubscriptionLeasePtr {
 		GetDreSubscription(): IDreSubscriptionPtr;
+		GetDrmSubscription(): IDrmSubscriptionPtr;
 		GetTimeInterval(): (TimeInterval | null);
 		GetState(): number;
 		GetPackages(): ISubscriptionLeasePtrEnumerablePtr;
