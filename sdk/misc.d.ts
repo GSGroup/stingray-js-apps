@@ -33,6 +33,21 @@ declare namespace stingray {
 		GetAnyTranslation(): string;
 	}
 
+	/**
+	 * Object representing time
+	 */
+	export interface Time {
+		ToIso8601(): string;
+	}
+
+	/**
+	 * Object representing time interval
+	 */
+	export interface TimeInterval {
+		GetStart(): Time;
+		GetEnd(): Time;
+	}
+
 }
 
 /**
