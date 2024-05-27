@@ -124,7 +124,7 @@ Item {
 
 		active: activeFocus;
 		progress: playbackProgressItem.duration > 0 ? 1.0 * playbackProgressItem.barProgress / playbackProgressItem.duration : 0;
-		widthAnimationDuration: filledArea.width == 0 ? 0 : playbackProgressItem.gear != 0 ? 100 : 800;
+		widthAnimationDuration: 0;
 
 		colorAnimationDuration: 250;
 
