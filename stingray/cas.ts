@@ -8,25 +8,34 @@
 import { FeatureHolder, SignalConnection } from 'stingray/utils'
 
 export class Cas extends FeatureHolder<stingray.ICasFeaturePtr> {
-	private readonly signalConnection: stingray.SignalConnection;
+	private id: (string | null) = null;
 
-	private id: string = null;
+	private readonly casInfo: stingray.IConditionalAccessInfoPtr;
+	private readonly casInfoConnection: stingray.SignalConnection;
 
 	public constructor() {
 		super(app.Cas());
 
-		const dreCasInfo = this.getFeature().GetDreCasInfo();
+		this.casInfo = this.getFeature().GetDreCasInfo();
 
-		if (!dreCasInfo)
+		if (!this.casInfo)
 			return;
 
-		this.signalConnection = dreCasInfo.OnUserIdentityChanged().connect(
-			userIdentity => this.id = userIdentity ? userIdentity.GetId() : null
+		this.casInfoConnection = this.casInfo.OnUserIdentityChanged().connect(
+			(userIdentity: stingray.IConditionalAccessUserIdentityPtr) => this.id = userIdentity ? userIdentity.GetId() : null
 		);
 	}
 
-	public get dreId(): string {
+	public get dreId(): (string | null) {
 		return this.id;
+	}
+
+	public onDreIdChanged(slot: (dreId: (string | null)) => void): SignalConnection {
+		if (!this.casInfo)
+			return new SignalConnection();
+		return new SignalConnection(this.casInfo.OnUserIdentityChanged().connect(
+			(userIdentity: stingray.IConditionalAccessUserIdentityPtr) => slot(userIdentity ? userIdentity.GetId() : null)
+		));
 	}
 }
 
