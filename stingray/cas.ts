@@ -8,7 +8,7 @@
 import { FeatureHolder, SignalConnection } from 'stingray/utils'
 
 export class Cas extends FeatureHolder<stingray.ICasFeaturePtr> {
-	private readonly signalConnection: SignalConnection;
+	private readonly signalConnection: stingray.SignalConnection;
 
 	private id: string = null;
 
@@ -20,9 +20,9 @@ export class Cas extends FeatureHolder<stingray.ICasFeaturePtr> {
 		if (!dreCasInfo)
 			return;
 
-		this.signalConnection = new SignalConnection(dreCasInfo.OnUserIdentityChanged().connect(
+		this.signalConnection = dreCasInfo.OnUserIdentityChanged().connect(
 			userIdentity => this.id = userIdentity ? userIdentity.GetId() : null
-		));
+		);
 	}
 
 	public get dreId(): string {
