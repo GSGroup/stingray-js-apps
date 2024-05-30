@@ -119,6 +119,17 @@ export class Drm extends FeatureHolder<stingray.ICasFeaturePtr> {
 			return new SignalConnection();
 		return new DrmSubscriptionConnection(this.casInfo, slot);
 	}
+
+	public onConnectionStatusChanged(slot: (status: boolean, message: (string | null)) => void): SignalConnection {
+		const ott = app.Ott();
+
+		if (!ott.IsFeatureValid())
+			return new SignalConnection();
+
+		return new SignalConnection(ott.OnStatus().connect(
+			(status: boolean, message: stingray.TranslatedString) => slot(status, message.GetAnyTranslation())
+		));
+	}
 }
 
 export const Feature = new Drm();

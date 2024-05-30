@@ -8,6 +8,7 @@
 /// <reference path="audioOutputManager.d.ts" />
 /// <reference path="cas.d.ts" />
 /// <reference path="channelRepository.d.ts" />
+/// <reference path="ott.d.ts" />
 /// <reference path="permissionManager.d.ts" />
 /// <reference path="receiverInformation.d.ts" />
 /// <reference path="standByMode.d.ts" />
@@ -30,6 +31,11 @@ declare namespace app {
 	 * Function to get {@link stingray.IChannelRepositoryPtr}
 	 */
 	export function ChannelRepository(): stingray.IChannelRepositoryPtr;
+
+	/**
+	 * Function to get {@link stingray.IOttPtr}
+	 */
+	export function Ott(): stingray.IOttPtr;
 
 	/**
 	 * Function to get {@link stingray.IPermissionManagerPtr}
