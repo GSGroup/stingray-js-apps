@@ -40,6 +40,7 @@ declare namespace stingray {
 		GetDrmSubscription(): IDrmSubscriptionPtr;
 		GetTimeInterval(): (TimeInterval | null);
 		GetState(): number;
+		IsVisible(): boolean;
 		GetPackages(): ISubscriptionLeasePtrEnumerablePtr;
 	}
 	type ISubscriptionLeasePtrEnumerablePtr = IEnumerable<ISubscriptionLeasePtr>;

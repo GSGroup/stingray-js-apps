@@ -57,6 +57,9 @@ class DrmSubscriptionConnection extends SignalConnection {
 				const subscriptions: Array<DrmSubscription> = [];
 
 				subscriptionLeases.forEach((subscriptionLease: stingray.ISubscriptionLeasePtr) => {
+					if (!subscriptionLease.IsVisible())
+						return;
+
 					const drmSubscription: stingray.IDrmSubscriptionPtr = subscriptionLease.GetDrmSubscription();
 					const interval: stingray.TimeInterval = subscriptionLease.GetTimeInterval();
 
