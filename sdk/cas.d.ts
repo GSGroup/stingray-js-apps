@@ -36,8 +36,8 @@ declare namespace stingray {
 	 * Class representing a dre subscription lease
 	 */
 	export interface ISubscriptionLeasePtr {
-		GetDreSubscription(): IDreSubscriptionPtr;
-		GetDrmSubscription(): IDrmSubscriptionPtr;
+		GetDreSubscription(): (IDreSubscriptionPtr | null);
+		GetDrmSubscription(): (IDrmSubscriptionPtr | null);
 		GetTimeInterval(): (TimeInterval | null);
 		GetState(): number;
 		IsVisible(): boolean;

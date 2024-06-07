@@ -77,12 +77,19 @@ class DreSubscriptionConnection extends SignalConnection {
 						return;
 
 					const dreSubscription: stingray.IDreSubscriptionPtr = subscriptionLease.GetDreSubscription();
+					if (!dreSubscription)
+						return;
+
 					const interval: stingray.TimeInterval = subscriptionLease.GetTimeInterval();
 
 					let subscriptionPackages: Array<DrePackage> = [];
 					subscriptionLease.GetPackages().forEach((lease: stingray.ISubscriptionLeasePtr) => {
-						if (lease.IsVisible())
-							subscriptionPackages.push(new DrePackage(lease.GetDreSubscription().GetClassId(), lease.GetState() == SubscriptionState.Active));
+						if (!lease.IsVisible())
+							return;
+
+						const drePackage: stingray.IDreSubscriptionPtr = lease.GetDreSubscription();
+						if (drePackage)
+							subscriptionPackages.push(new DrePackage(drePackage.GetClassId(), lease.GetState() == SubscriptionState.Active));
 					});
 
 					subscriptions.push(new DreSubscription(
