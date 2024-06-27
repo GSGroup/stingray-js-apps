@@ -293,6 +293,13 @@ Item {
 		});
 	}
 
+	function playHls(url) {
+		this.playMedia({
+			info: { url: url },
+			play: () => this._player.playHls(url)
+		});
+	}
+
 	function playRtsp(url, protocol, login, password) {
 		this.playMedia({
 			info: { url: url, protocol: protocol, credentialsHash: md5Hash(md5Hash(login) + md5Hash(password)) },

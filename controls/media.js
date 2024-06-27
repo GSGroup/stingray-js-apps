@@ -41,6 +41,10 @@ Player.prototype = {
 		this.playMedia({ play: () => app.MediaPlayer().PlayUrl(url) });
 	},
 
+	playHls: function(url) {
+		this.playMedia({ play: () => app.MediaPlayer().PlayHls(url) });
+	},
+
 	playRtsp: function(url, protocol, login, password) {
 		this.playMedia({ play: () => app.MediaPlayer().PlayRtsp(url, protocol, login, password) });
 	},
