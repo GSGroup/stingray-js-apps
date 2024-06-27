@@ -165,8 +165,6 @@ Application {
 
 		anchors.fill: mainWindow;
 
-		visible: false;
-
 		onBackPressed: {
 			console.log("player abort");
 			iviPlayer.abort();

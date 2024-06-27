@@ -12,8 +12,6 @@ import "js/constants.js" as constants;
 Player {
 	id: iviPlayer;
 
-	focus: true;
-
 	function playVideoById(id) {
 		var request = new XMLHttpRequest();
 		request.open("POST", "https://api.ivi.ru/light/", true);

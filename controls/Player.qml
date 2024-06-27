@@ -37,6 +37,10 @@ Item {
 	property string curTimeStr: playbackProgress.curTimeStr;
 	property string fullTimeStr: playbackProgress.fullTimeStr;
 
+	focus: true;
+
+	visible: false;
+
 	Timer {
 		id: playIconHideTimer;
 
@@ -210,6 +214,8 @@ Item {
 	pause: { this.togglePause(); }
 
 	abort: {
+		console.log("Player: abort playing");
+
 		this._player.stop();
 		this.paused = false;
 		this.isStopped = true;
