@@ -23,6 +23,7 @@
 
 			["HighlightGridView",				"HighlightGridView.qml"],
 			["HighlightListView",				"HighlightListView.qml"],
+			["HighlightListPanel",				"HighlightListPanel.qml"],
 
 			["PlaybackProgress",				"PlaybackProgress.qml"],
 			["PlaybackProgressDurationText",	"PlaybackProgressDurationText.qml"],
