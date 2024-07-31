@@ -22,7 +22,10 @@
 			["SelectionGradient",				"SelectionGradient.qml"],
 
 			["HighlightGridView",				"HighlightGridView.qml"],
+			["HighlightLeftPanelView",			"HighlightLeftPanelView.qml"],
+			["HighlightLeftPanelViewDelegate",	"HighlightLeftPanelViewDelegate.qml"],
 			["HighlightListView",				"HighlightListView.qml"],
+			["HighlightListViewDelegate",		"HighlightListViewDelegate.qml"],
 			["HighlightListPanel",				"HighlightListPanel.qml"],
 
 			["PlaybackProgress",				"PlaybackProgress.qml"],
