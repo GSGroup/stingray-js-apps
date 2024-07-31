@@ -23,6 +23,7 @@ ListView {
 	property int highlightBorderWidth;
 	property Color highlightBorderColor;
 	property bool highlightOverDelegates;
+	property bool highlightVisible: count;
 
 	property int highlightWidthAnimationDuration: contentXAnimationDuration;
 	property int highlightHeightAnimationDuration: contentYAnimationDuration;
@@ -43,7 +44,7 @@ ListView {
 		borderWidth: highlightListViewProto.highlightBorderWidth;
 		borderColor: highlightListViewProto.highlightBorderColor;
 
-		visible: highlightListViewProto.count;
+		visible: highlightListViewProto.highlightVisible;
 		opacity: highlightListViewProto.activeFocus || highlightListViewProto.showActiveFocus || highlightListViewProto.showPassiveFocus ? 1 : 0;
 		z: highlightListViewProto.highlightOverDelegates ? 100 : 0;
 
