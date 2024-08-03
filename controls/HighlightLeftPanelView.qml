@@ -25,6 +25,7 @@ HighlightListPanel {
 	uniformDelegateSize: true;
 	clip: false;
 	showFocused: true;
+	wrapNavigation: true;
 
 	focusColor: colorTheme.focusablePanelColor;
 	nonFocusColor: colorTheme.globalBackgroundColor;
