@@ -5,6 +5,7 @@
 // IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
 // WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+import controls.FloatingText;
 import controls.HighlightListViewDelegate;
 
 HighlightListViewDelegate {
@@ -38,17 +39,21 @@ HighlightListViewDelegate {
 		Behavior on opacity { animation: Animation { } }
 	}
 
-	SubheadText {
+	FloatingText {
 		anchors.left: menuItemImage.right;
 		anchors.leftMargin: 16hpw;
 		anchors.right: parent.right;
 		anchors.rightMargin: 16hpw;
 		anchors.verticalCenter: parent.verticalCenter;
 
-		color: highlightLeftPanelViewDelegateProto.isActiveFocused ? colorTheme.focusedTextColor : colorTheme.activeTextColor;
-		text: highlightLeftPanelViewDelegateProto.text;
-		opacity: highlightLeftPanelViewDelegateProto.wide || highlightLeftPanelViewDelegateProto.passive ? 1.0 : 0.3;
+		horizontalAlignment: ui.Text.HorizontalAlignment.AlignLeft;
 
-		Behavior on color { animation: Animation { } }
+		floating: parent.activeFocus;
+
+		color: highlightLeftPanelViewDelegateProto.isActiveFocused ? colorTheme.focusedTextColor : colorTheme.activeTextColor;
+
+		text: highlightLeftPanelViewDelegateProto.text;
+
+		opacity: highlightLeftPanelViewDelegateProto.wide || highlightLeftPanelViewDelegateProto.passive ? 1.0 : 0.3;
 	}
 }
