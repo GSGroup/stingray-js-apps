@@ -11,6 +11,7 @@ Delegate {
 	property bool passive: false;
 	property bool isActiveFocused: activeFocus || (focused && showActiveFocus);
 
+	width: parent.width;
 	height: 100hph;
 
 	focus: true;
