@@ -18,7 +18,6 @@
 
 			["FloatingText",					"FloatingText.qml"],
 			["FocusablePanel",					"FocusablePanel.qml"],
-			["Panel",							"Panel.qml"],
 
 			["HighlightGridView",				"HighlightGridView.qml"],
 			["HighlightLeftPanelView",			"HighlightLeftPanelView.qml"],
