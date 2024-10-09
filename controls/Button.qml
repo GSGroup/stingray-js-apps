@@ -15,9 +15,7 @@ ActivePanel {
 	property Color textColor: activeFocus ? colorTheme.focusedTextColor : colorTheme.activeTextColor;
 	property int contentMargin: 12hpw;
 
-	property bool textInCenter: true;
 	property enum { Right, Center, Left } contentAlignment: Center;
-	contentAlignment: textInCenter ? Center : Left;
 
 	width: Math.max(176hpw, iconTextItem.width + contentMargin * 2);
 	height: 53hph;
