@@ -27,16 +27,6 @@ Item {
 	property bool isStopped: true;
 	property bool isMuted;
 
-	property alias isFullscreen: fullscreen;
-	property bool seeking: false;
-	property int duration: playbackProgress.duration;
-	property int cursorPos: 0;
-	property int progress: playbackProgress.progress;
-	property int cursorGain: 1000;
-	property int prevProgress;
-	property string curTimeStr: playbackProgress.curTimeStr;
-	property string fullTimeStr: playbackProgress.fullTimeStr;
-
 	focus: true;
 
 	visible: false;
@@ -79,10 +69,6 @@ Item {
 		onTogglePause: { playerProto.togglePause(); }
 
 		onSeek: { playerProto.seekAbs(position); }
-
-		onSeeked: { playerProto.seekAbs(position); }
-		onPlayPressed: { playerProto.togglePause(); }
-		onPausePressed: { playerProto.togglePause(); }
 	}
 
 	Spinner {
@@ -211,8 +197,6 @@ Item {
 
 	onVisibleChanged: { this.isMuted = AudioOutputManager.Feature.muted; }
 
-	pause: { this.togglePause(); }
-
 	abort: {
 		console.log("Player: abort playing");
 
@@ -233,11 +217,6 @@ Item {
 		this._player.stop();
 		this.visible = false;
 		this.isStopped = true;
-	}
-
-	function seek(msDelta) {
-		if (!this.paused)
-			this._player.seek(msDelta);
 	}
 
 	function seekAbs(position) {

@@ -15,10 +15,6 @@ Item {
 	signal togglePause;
 	signal seek(position);
 
-	signal playPressed;
-	signal pausePressed;
-	signal seeked(position);
-
 	property bool disableAutoShow;
 	property bool showControls: true;
 
@@ -33,9 +29,6 @@ Item {
 
 	property string text;
 	property string additionalText;
-
-	property string curTimeStr: currentProgressText.text;
-	property string fullTimeStr: durationText.text;
 
 	focus: true;
 
@@ -240,16 +233,6 @@ Item {
 		}
 		else
 			this.resetSeek();
-	}
-
-	doFF: { playbackProgressItem.fastForward(); }
-	doRewind: { playbackProgressItem.rewind(); }
-
-	togglePlay: {
-		if (!this.isPlaying)
-			this.playPressed();
-		else
-			this.pausePressed();
 	}
 
 	resetSeek: {
