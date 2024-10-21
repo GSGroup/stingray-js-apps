@@ -29,6 +29,9 @@ BaseEdit {
 	property bool alwaysShowCursor;
 	property bool showUnderLining: !showBackground;
 
+	property alias horizontalAlignment: editText.horizontalAlignment;
+	property alias paintedWidth: editText.paintedWidth;
+
 	property bool isCursorActivated: (editText.text != "") && (alwaysShowCursor || (activeShowCursor && activeFocus));
 
 	width: 100hpw;
