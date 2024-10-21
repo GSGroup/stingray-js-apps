@@ -29,6 +29,8 @@ Application {
 
 				width: safeArea.width - 100hpw;
 
+				horizontalAlignment: paintedWidth > width ? ui.Text.HorizontalAlignment.AlignRight : ui.Text.HorizontalAlignment.AlignHCenter;
+
 				onSelectPressed: {
 					urlKeyboard.initialText = text;
 					urlKeyboard.visible = true;
