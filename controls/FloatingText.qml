@@ -11,6 +11,7 @@ Item {
 	property string text;
 
 	property Color color: colorTheme.activeTextColor;
+	property bool colorAnimable: true;
 
 	property bool floating: false;
 	property int floatingPeriod: 100;
@@ -19,6 +20,8 @@ Item {
 	property enum { AlignLeft, AlignRight, AlignHCenter } horizontalAlignment: AlignLeft;
 
 	height: innerText.height;
+
+	Behavior on color { animation: Animation { duration: floatingTextProto.colorAnimable ? 300 : 0; } }
 
 	Item {
 		anchors.topMargin: -10hph;
