@@ -19,7 +19,7 @@ Item {
 	property int spacing: 5hpw;
 
 	property alias currentIndex: listView.currentIndex;
-	property alias count: listView.count;
+	property int count: listView.count;
 
 	Behavior on opacity { animation: Animation { duration: 300; } }
 

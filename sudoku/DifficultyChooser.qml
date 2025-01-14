@@ -14,7 +14,7 @@ Item {
 	property bool onlyOneItemVisible: true;
 	height: 50hph;
 	property alias currentIndex: listView.currentIndex;
-	property alias count: listView.count;
+	property int count: listView.count;
 
 	ListView {
 		id: listView;
