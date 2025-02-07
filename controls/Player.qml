@@ -21,6 +21,7 @@ Item {
 	property bool fullscreen: true;
 	property bool hideSpinner;
 	property bool disableControls;
+	property bool hideVideo;
 	property string title;
 
 	property bool paused;
@@ -45,7 +46,7 @@ Item {
 	VideoOverlay {
 		anchors.fill: parent;
 
-		visible: !playerProto.isStopped;
+		visible: !playerProto.isStopped && !playerProto.hideVideo;
 	}
 
 	AlphaControl { alphaFunc: MaxAlpha; }
