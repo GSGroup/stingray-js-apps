@@ -46,6 +46,8 @@ Item {
 	VideoOverlay {
 		anchors.fill: parent;
 
+		enabled: playerProto.visible;
+
 		visible: !playerProto.isStopped && !playerProto.hideVideo;
 	}
 
