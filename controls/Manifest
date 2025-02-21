@@ -11,6 +11,7 @@
 			["EnterPinDialog",					"EnterPinDialog.qml"],
 			["PasswordEdit",					"PasswordEdit.qml"],
 			["Chooser",							"Chooser.qml"],
+			["ConfirmDialog",					"ConfirmDialog.qml"],
 			["LabeledChooser",					"LabeledChooser.qml"],
 			["SimpleChooser",					"SimpleChooser.qml"],
 			["MovingArrows",					"MovingArrows.qml"],
