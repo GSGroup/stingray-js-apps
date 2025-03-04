@@ -77,7 +77,7 @@ Rectangle {
 			}
 		}
 	}
-	
+
 	Row {
 		anchors.left: boardRect.left;
 		anchors.bottom: boardRect.top;
@@ -87,7 +87,7 @@ Rectangle {
 		visible: !mainMenu.visible;
 
 		SubheadText {
-			text: tr("White") + " " + game.whiteCounter;
+			text: tr("White %1%", game.whiteCounter);
 		}
 	}
 
@@ -100,7 +100,7 @@ Rectangle {
 		visible: !mainMenu.visible;
 
 		SubheadText {
-			text: tr("Black") + " " + game.blackCounter;
+			text: tr("Black %1%", game.blackCounter);
 		}
 	}
 
@@ -174,7 +174,7 @@ Rectangle {
 		anchors.centerIn: parent;
 
 		visible: !mainMenu.visible;
-		
+
 		GridView {
 			id: gameView;
 
@@ -267,7 +267,7 @@ Rectangle {
 		onTriggered:  {
 			var weight = engine.NextMove(!game.playerWhite, false, gameView.model); //my move
 			game.update(!game.playerWhite, weight);
-			
+
 			if (!engine.NextMove(game.playerWhite, true, gameView.model)) //no next move for player
 			{
 				if (!engine.NextMove(!game.playerWhite, true, gameView.model)) //no next move for ai also, game over

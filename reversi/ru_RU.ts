@@ -4,8 +4,8 @@
 <context>
     <name>Game</name>
     <message>
-        <source>Black</source>
-        <translation>Черные</translation>
+        <source>Black %1%</source>
+        <translation>Черные %1%</translation>
     </message>
     <message>
         <source>Black is moving</source>
@@ -64,8 +64,8 @@
         <translation>Начать белыми</translation>
     </message>
     <message>
-        <source>White</source>
-        <translation>Белые</translation>
+        <source>White %1%</source>
+        <translation>Белые %1%</translation>
     </message>
     <message>
         <source>White is moving</source>
