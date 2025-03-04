@@ -23,8 +23,8 @@ Dialog {
 	height: headerColumnHeight + buttonRow.height + 30hph;
 
 	title: gameDialogProto.mode == gameDialogProto.Pause ? tr("Pause") :
-			gameDialogProto.mode == gameDialogProto.NextLevel ? tr("Level Completed! Score: ") + gameDialogProto.score :
-			tr("Game Over! Score: ") + gameDialogProto.score;
+			gameDialogProto.mode == gameDialogProto.NextLevel ? tr("Level Completed! Score: %1%", gameDialogProto.score) :
+			tr("Game Over! Score: %1%", gameDialogProto.score);
 
 	Row {
 		id: buttonRow;

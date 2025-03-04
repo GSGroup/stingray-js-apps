@@ -31,12 +31,12 @@
         <translation>Выйти</translation>
     </message>
     <message>
-        <source>Game Over! Score: </source>
-        <translation>Конец игры! Счёт: </translation>
+        <source>Game Over! Score: %1%</source>
+        <translation>Конец игры! Счёт: %1%</translation>
     </message>
     <message>
-        <source>Level Completed! Score: </source>
-        <translation>Уровень пройден! Счёт: </translation>
+        <source>Level Completed! Score: %1%</source>
+        <translation>Уровень пройден! Счёт: %1%</translation>
     </message>
     <message>
         <source>Next Level</source>
