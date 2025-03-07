@@ -14,7 +14,10 @@ ListView {
 	property bool showPassiveFocus: true;
 	property Color passiveFocusColor: colorTheme.activePanelColor;
 	property bool showShadow;
+
 	property bool showArrows;
+	property bool showUpArrow: currentIndex > 0;
+	property bool showDownArrow: count > 0 && currentIndex < count - 1;
 
 	property int highlightWidth;
 	property int highlightHeight;
@@ -92,7 +95,11 @@ ListView {
 			}
 		}
 
-		MovingArrows { showArrows: highlightListViewProto.showArrows; }
+		MovingArrows {
+			showArrows: highlightListViewProto.showArrows;
+			showUpArrow: highlightListViewProto.showUpArrow;
+			showDownArrow: highlightListViewProto.showDownArrow;
+		}
 	}
 
 	BorderShadow {
