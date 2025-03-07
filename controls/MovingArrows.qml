@@ -6,7 +6,12 @@
 // WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 Item {
-	property bool showArrows: false;
+	id: movingArrowsProto;
+
+	property bool showArrows;
+	property bool showUpArrow: true;
+	property bool showDownArrow: true;
+
 	property int arrowHeight: upArrow.height + upArrow.anchors.bottomMargin;
 
 	anchors.fill: parent;
@@ -23,6 +28,10 @@ Item {
 		source: colorTheme.pathToStyleFolder + "/up.svg";
 
 		color: colorTheme.activeTextColor;
+
+		opacity: movingArrowsProto.showUpArrow ? 1 : 0;
+
+		Behavior on opacity { animation: Animation { duration: 300; } }
 	}
 
 	Image {
@@ -33,6 +42,10 @@ Item {
 		source: colorTheme.pathToStyleFolder + "/down.svg";
 
 		color: colorTheme.activeTextColor;
+
+		opacity: movingArrowsProto.showDownArrow ? 1 : 0;
+
+		Behavior on opacity { animation: Animation { duration: 300; } }
 	}
 
 	Behavior on opacity { animation: Animation { duration: 300; } }
