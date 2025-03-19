@@ -22,9 +22,20 @@ BaseDialog {
 	property variant pinRequest;
 
 	property int bodyColumnHeight: bodyColumn.height + bodyColumn.anchors.topMargin + 20hph;
+	property string innerTitle: horizontalDialog ? title : message;
 
 	width: pinRow.width + 60hpw;
 	height: bodyColumnHeight;
+
+	JSRemoteControlObject {
+		id: remoteControl;
+
+		parentVisible: enterPinDialogItem.visible;
+
+		updateMessage: { this.setStringAttribute("message", enterPinDialogItem.innerTitle); }
+
+		onCompleted: { this.registerAction("text", enterPinDialogItem.enterPin, ["input"]); }
+	}
 
 	Column {
 		id: bodyColumn;
@@ -107,8 +118,19 @@ BaseDialog {
 		}
 	}
 
+	onInnerTitleChanged: { remoteControl.updateMessage(); }
+
 	onVisibleChanged: {
 		if (visible)
 			pinEdit.clear();
 	}
+
+	function enterPin(args) {
+		if (this.pinRequest && this.pinRequest.setPin(args[0]))
+			this.accepted();
+		else
+			throw "Invalid pin entered";
+	}
+
+	onCompleted: { remoteControl.updateMessage(); }
 }
