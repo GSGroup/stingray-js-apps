@@ -4,6 +4,7 @@
 	"scope": "system",
 	"library": {
 		"imports": [
+			["BigPlaybackIcon",					"BigPlaybackIcon.qml"],
 			["Button",							"Button.qml"],
 			["ButtonWithShadow",				"ButtonWithShadow.qml"],
 			["Edit",							"Edit.qml"],

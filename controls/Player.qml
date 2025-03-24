@@ -5,6 +5,7 @@
 // IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
 // WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+import controls.BigPlaybackIcon;
 import controls.Media;
 import controls.Spinner;
 import "PlaybackProgress.qml";
@@ -31,17 +32,6 @@ Item {
 	focus: true;
 
 	visible: false;
-
-	Timer {
-		id: playIconHideTimer;
-
-		interval: 800;
-
-		onTriggered: {
-			playIcon.animationDuration = pauseIcon.visible ? 100 : 300;
-			playIcon.opacity = 0;
-		}
-	}
 
 	VideoOverlay {
 		anchors.fill: parent;
@@ -160,42 +150,11 @@ Item {
 		Behavior on opacity { animation: Animation { duration: 300; } }
 	}
 
-	Image {
-		id: pauseIcon;
+	BigPlaybackIcon {
+		anchors.fill: parent;
 
-		anchors.centerIn: parent;
-
-		source: "res/common/player/big_pause.svg";
-
-		visible: playerProto.paused && !spinner.visible;
-		opacity: visible ? 0.8 : 0;
-
-		Behavior on opacity { animation: Animation { duration: 100; easingType: ui.Animation.EasingType.InOutQuad; } }
-
-		onVisibleChanged: {
-			if (visible)
-				playIconHideTimer.stopAndTrigger();
-			else
-			{
-				playIcon.animationDuration = 100;
-				playIcon.opacity = 0.8;
-				playIconHideTimer.restart();
-			}
-		}
-	}
-
-	Image {
-		id: playIcon;
-
-		property int animationDuration;
-
-		anchors.centerIn: parent;
-
-		source: "res/common/player/big_play.svg";
-
-		opacity: 0;
-
-		Behavior on opacity { animation: Animation { duration: playIcon.animationDuration; easingType: ui.Animation.EasingType.InQuad; } }
+		showIcons: playerProto.visible;
+		showPause: playerProto.paused && !spinner.visible;
 	}
 
 	onVisibleChanged: { this.isMuted = AudioOutputManager.Feature.muted; }
