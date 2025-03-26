@@ -67,7 +67,7 @@ Dialog {
 		if (!this.visible)
 			return;
 
-		if (defaultButton == confirmDialogProto.Ok || (confirmDialog.unrefusable && defaultButton == confirmDialogProto.Cancel))
+		if (defaultButton == confirmDialogProto.Ok || (confirmDialogProto.unrefusable && defaultButton == confirmDialogProto.Cancel))
 			okButton.setFocus();
 		else if (defaultButton == confirmDialogProto.Cancel)
 			cancelButton.setFocus();
