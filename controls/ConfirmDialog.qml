@@ -20,6 +20,23 @@ Dialog {
 
 	height: headerColumnHeight + buttonRow.height + 30hph;
 
+	JSRemoteControlObject {
+		id: remoteControl;
+
+		parentVisible: confirmDialogProto.visible;
+
+		updateMessage: { this.setStringAttribute("message", confirmDialogProto.message); }
+
+		updateCancelAction: {
+			this.unregisterAction("cancel");
+
+			if (cancelButton.visible)
+				this.registerAction("cancel", confirmDialogProto.refuse, []);
+		}
+
+		onCompleted: { this.registerAction("ok", confirmDialogProto.accept, []); }
+	}
+
 	Row {
 		id: buttonRow;
 
@@ -58,10 +75,16 @@ Dialog {
 			visible: !confirmDialogProto.unrefusable;
 
 			onSelectPressed: { confirmDialogProto.refuse(); }
+
+			onVisibleChanged: { remoteControl.updateCancelAction(); }
+
+			onCompleted: { remoteControl.updateCancelAction(); }
 		}
 	}
 
 	onBackPressed: { confirmDialogProto.refuse(); }
+
+	onMessageChanged: { remoteControl.updateMessage(); }
 
 	onVisibleChanged: {
 		if (!this.visible)
@@ -76,6 +99,11 @@ Dialog {
 		okButton.completePropertyAnimation("color");
 	}
 
+	accept: {
+		this.visible = false;
+		this.accepted();
+	}
+
 	refuse: {
 		if (this.unrefusable)
 			return;
@@ -83,4 +111,6 @@ Dialog {
 		this.visible = false;
 		this.refused();
 	}
+
+	onCompleted: { remoteControl.updateMessage(); }
 }
