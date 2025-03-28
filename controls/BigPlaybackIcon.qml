@@ -10,11 +10,12 @@ Item {
 
 	property bool showIcons;
 	property bool showPause;
+	property int playIconDisplayDuration: 800;
 
 	Timer {
 		id: playIconHideTimer;
 
-		interval: 800;
+		interval: bigPlaybackIconProto.playIconDisplayDuration;
 
 		onTriggered: {
 			playIcon.animationDuration = bigPlaybackIconProto.showPause ? 100 : bigPlaybackIconProto.showIcons ? 300 : 0;
