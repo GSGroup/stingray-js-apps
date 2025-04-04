@@ -4,10 +4,12 @@
 	"scope": "system",
 	"library": {
 		"imports": [
+			["BaseEdit",						"BaseEdit.qml"],
 			["BigPlaybackIcon",					"BigPlaybackIcon.qml"],
 			["Button",							"Button.qml"],
 			["ButtonWithShadow",				"ButtonWithShadow.qml"],
 			["Chooser",							"Chooser.qml"],
+			["ChooserDelegate",					"ChooserDelegate.qml"],
 			["ConfirmDialog",					"ConfirmDialog.qml"],
 			["Edit",							"Edit.qml"],
 			["EnterPinDialog",					"EnterPinDialog.qml"],
@@ -23,17 +25,21 @@
 			["MovingArrows",					"MovingArrows.qml"],
 			["NumberValidator",					"NumberValidator.qml"],
 			["PasswordEdit",					"PasswordEdit.qml"],
+			["PasswordEditDelegate",			"PasswordEditDelegate.qml"],
 			["PlaybackProgress",				"PlaybackProgress.qml"],
 			["PlaybackProgressDurationText",	"PlaybackProgressDurationText.qml"],
 			["Player",							"Player.qml"],
+			["ProgressBar",						"ProgressBar.qml"],
 			["RtspPlayer",						"RtspPlayer.qml"],
 			["SimpleChooser",					"SimpleChooser.qml"],
+			["SimpleChooserDelegate",			"SimpleChooserDelegate.qml"],
 			["Spinner",							"Spinner.qml"],
+			["SpinnerRectangle",				"SpinnerRectangle.qml"],
+			["TopLabel",						"TopLabel.qml"],
 
 			["Media",							"media.js"],
 			["UrlParse",						"urlparse.js"],
-			["Utils",							"utils.js"],
-			["VkAPI",							"vkapi.js"]
+			["Utils",							"utils.js"]
 		]
 	}
 }
