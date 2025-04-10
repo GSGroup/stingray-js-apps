@@ -13,8 +13,8 @@ Dialog {
 	signal accepted;
 	signal refused;
 
-	property string okButtonText: "OK";
-	property string cancelButtonText: "Cancel";
+	property string okButtonText;
+	property string cancelButtonText;
 	property enum { Ok, Cancel, None } defaultButton: Cancel;
 	property bool unrefusable;
 
@@ -57,7 +57,7 @@ Dialog {
 			anchors.left: buttonRow.left;
 			anchors.leftMargin: confirmDialogProto.unrefusable ? (buttonRow.width - okButton.width) / 2 : 0 ;
 
-			text: confirmDialogProto.okButtonText;
+			text: confirmDialogProto.okButtonText != "" ? confirmDialogProto.okButtonText : tr("OK");
 
 			onSelectPressed: {
 				confirmDialogProto.visible = false;
@@ -70,7 +70,7 @@ Dialog {
 
 			width: okButton.width;
 
-			text: confirmDialogProto.cancelButtonText;
+			text: confirmDialogProto.cancelButtonText != "" ? confirmDialogProto.cancelButtonText : tr("Cancel");
 
 			visible: !confirmDialogProto.unrefusable;
 
