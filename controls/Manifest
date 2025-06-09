@@ -3,7 +3,7 @@
 	"display": { "name": "Controls library" },
 	"scope": "system",
 	"library": {
-		"imports": [
+		"exports": [
 			["BaseEdit",						"BaseEdit.qml"],
 			["BigPlaybackIcon",					"BigPlaybackIcon.qml"],
 			["Button",							"Button.qml"],

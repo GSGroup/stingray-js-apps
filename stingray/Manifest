@@ -3,7 +3,7 @@
 	"display": { "name": "Stingray library" },
 	"scope": "system",
 	"library": {
-		"imports": [
+		"exports": [
 			["AudioOutputManager",		"audioOutputManager.js"],
 			["CaSubscriptions",			"caSubscriptions.js"],
 			["Cas",						"cas.js"],
