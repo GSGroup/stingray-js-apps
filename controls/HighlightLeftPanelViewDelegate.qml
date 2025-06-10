@@ -14,7 +14,7 @@ HighlightListViewDelegate {
 	property bool wide;
 	property bool showFocused;
 
-	property string text: model.text != undefined ? tr(model.text) : "";
+	property string text: model.text != undefined ? model.text : "";
 
 	height: 80hph;
 

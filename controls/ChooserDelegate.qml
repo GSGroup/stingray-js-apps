@@ -8,7 +8,7 @@
 Delegate {
 	id: chooserDelegateProto;
 
-	property string text: model.text != undefined ? tr(model.text) : "";
+	property string text: model.text != undefined ? model.text : "";
 	property string icon: model.icon != undefined ? model.icon : "";
 
 	property bool chooserFocused;
