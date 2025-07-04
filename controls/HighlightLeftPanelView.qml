@@ -48,9 +48,7 @@ HighlightListPanel {
 		anchors.top: mainWindow.top;
 		anchors.bottom: parent.top;
 
-		color: highlightLeftPanelViewProto.active ? highlightLeftPanelViewProto.focusColor : highlightLeftPanelViewProto.nonFocusColor;
-
-		Behavior on color { animation: Animation { duration: 300; } }
+		color: highlightLeftPanelViewProto.backgroundColor;
 	}
 
 	Behavior on width {
