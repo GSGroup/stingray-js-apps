@@ -17,9 +17,12 @@ HighlightListView {
 
 	property Color focusColor: colorTheme.activePanelColor;
 	property Color nonFocusColor: colorTheme.focusablePanelColor;
+	property Color backgroundColor: active ? focusColor : nonFocusColor;
 
 	clip: true;
 	highlightVisible: count > 0 && (showFocused || active);
+
+	Behavior on backgroundColor { animation: Animation { duration: 300; } }
 
 	Rectangle {
 		id: background;
@@ -29,12 +32,10 @@ HighlightListView {
 		anchors.top: parent.top;
 		anchors.bottom: parent.bottom;
 
-		color: highlightListPanelProto.active ? highlightListPanelProto.focusColor : highlightListPanelProto.nonFocusColor;
+		color: highlightListPanelProto.backgroundColor;
 
 		visible: highlightListPanelProto.showBackground;
 		z: -1;
-
-		Behavior on color { animation: Animation { duration: 300; } }
 	}
 
 	ScrollBar {
