@@ -33,7 +33,11 @@ GridView {
 	}
 
 	BorderShadow {
-		anchors.fill: highlight;
+		x: highlight.x;
+		y: highlight.y;
+
+		width: highlight.width;
+		height: highlight.height;
 
 		visible: highlightGridViewProto.count && highlightGridViewProto.showShadow;
 		opacity: highlightGridViewProto.activeFocus || highlightGridViewProto.showActiveFocus ? 1 : 0;

@@ -103,7 +103,11 @@ ListView {
 	}
 
 	BorderShadow {
-		anchors.fill: highlight;
+		x: highlight.x;
+		y: highlight.y;
+
+		width: highlight.width;
+		height: highlight.height;
 
 		visible: highlightListViewProto.count && highlightListViewProto.showShadow;
 		opacity: highlightListViewProto.activeFocus || highlightListViewProto.showActiveFocus ? 1 : 0;
