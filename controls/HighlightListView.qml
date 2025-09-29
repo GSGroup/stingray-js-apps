@@ -103,6 +103,8 @@ ListView {
 	}
 
 	BorderShadow {
+		id: borderShadow;
+
 		x: highlight.x;
 		y: highlight.y;
 
