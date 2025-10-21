@@ -4,19 +4,19 @@
 	"scope": "system",
 	"library": {
 		"exports": [
-			["AudioOutputManager",		"audioOutputManager.js"],
-			["CaSubscriptions",			"caSubscriptions.js"],
-			["Cas",						"cas.js"],
-			["ChannelRepository",		"channelRepository.js"],
-			["Config",					"config.js"],
-			["Drm",						"drm.js"],
-			["Permissions",				"permissions.js"],
-			["ReceiverInformation",		"receiverInformation.js"],
-			["StandByMode",				"standByMode.js"],
-			["Statistics",				"statistics.js"],
-			["TimeManager",				"timeManager.js"],
-			["TricolorAccount",			"tricolorAccount.js"],
-			["Utils",					"utils.js"]
+			["AudioOutputManager",		"generated_files/ts/audioOutputManager.js"],
+			["CaSubscriptions",			"generated_files/ts/caSubscriptions.js"],
+			["Cas",						"generated_files/ts/cas.js"],
+			["ChannelRepository",		"generated_files/ts/channelRepository.js"],
+			["Config",					"generated_files/ts/config.js"],
+			["Drm",						"generated_files/ts/drm.js"],
+			["Permissions",				"generated_files/ts/permissions.js"],
+			["ReceiverInformation",		"generated_files/ts/receiverInformation.js"],
+			["StandByMode",				"generated_files/ts/standByMode.js"],
+			["Statistics",				"generated_files/ts/statistics.js"],
+			["TimeManager",				"generated_files/ts/timeManager.js"],
+			["TricolorAccount",			"generated_files/ts/tricolorAccount.js"],
+			["Utils",					"generated_files/ts/utils.js"]
 		]
 	}
 }
