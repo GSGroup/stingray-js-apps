@@ -10,7 +10,6 @@
 import argparse
 import os
 import sys
-import shutil
 
 def main():
     parser = argparse.ArgumentParser(description='Tetris bootstrap')
@@ -23,10 +22,7 @@ def main():
     file_const_template = open(args.target_dir + "/tetrisConsts.templ", "r")
 	
     try:
-        if os.path.exists(args.target_dir + "/generated_files"):
-            shutil.rmtree(args.target_dir + "/generated_files")
         os.mkdir(args.target_dir + "/generated_files")
-
     except OSError as error:
         print("Tetris bootstrap error: " + str(error))
         sys.exit(1)

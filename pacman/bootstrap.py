@@ -10,7 +10,6 @@
 import argparse
 import os
 import sys
-import shutil
 import points_generator
 import walls_generator
 from cell_type import CellType
@@ -42,8 +41,6 @@ def main():
     args = parser.parse_args()
 
     try:
-        if os.path.exists(args.target_dir + "/generated_files"):
-            shutil.rmtree(args.target_dir + "/generated_files")
         os.mkdir(args.target_dir + "/generated_files")
     except OSError as error:
         print("Pacman bootstrap error: " + str(error))
