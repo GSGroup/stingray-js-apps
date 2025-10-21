@@ -9,7 +9,6 @@
 
 import argparse
 import os
-import sys
 
 def main():
     parser = argparse.ArgumentParser(description='Tetris bootstrap')
@@ -23,11 +22,8 @@ def main():
 
     generated_files_path = os.path.join(args.target_dir, "generated_files")
 
-    try:
+    if not os.path.exists(generated_files_path):
         os.mkdir(generated_files_path)
-    except OSError as error:
-        print("Tetris bootstrap error: " + str(error))
-        sys.exit(1)
 
     file_const_result = open(os.path.join(generated_files_path, "tetrisConsts.js"), "w")
     file_result = open(os.path.join(generated_files_path, "RectArray.qml"), "w")

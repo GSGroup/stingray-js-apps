@@ -9,7 +9,6 @@
 
 import argparse
 import os
-import sys
 import points_generator
 import walls_generator
 from cell_type import CellType
@@ -42,11 +41,8 @@ def main():
 
     generated_files_path = os.path.join(args.target_dir, "generated_files")
 
-    try:
+    if not os.path.exists(generated_files_path):
         os.mkdir(generated_files_path)
-    except OSError as error:
-        print("Pacman bootstrap error: " + str(error))
-        sys.exit(1)
 
     grid = walls_generator.generate(args.target_dir, cell_width, cell_height, grid_width, grid_height)
 
