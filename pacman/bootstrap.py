@@ -40,8 +40,10 @@ def main():
     parser.add_argument("target_dir")
     args = parser.parse_args()
 
+    generated_files_path = os.path.join(args.target_dir, "generated_files")
+
     try:
-        os.mkdir(args.target_dir + "/generated_files")
+        os.mkdir(generated_files_path)
     except OSError as error:
         print("Pacman bootstrap error: " + str(error))
         sys.exit(1)
@@ -58,7 +60,7 @@ def main():
 
     grid = points_generator.generate(args.target_dir, cell_width, cell_height, grid, grid_width, grid_height)
 
-    with open(args.target_dir + "/generated_files/pacmanConsts.js", "w") as consts_result_file:
+    with open(os.path.join(generated_files_path, "pacmanConsts.js"), "w") as consts_result_file:
         with open(args.target_dir + "/pacmanConsts.templ", "r") as consts_template:
             consts_template_string = consts_template.read()
 
