@@ -66,6 +66,50 @@ declare function load(key: string): any;
  */
 declare function save(key: string, value: any): void;
 
+/**
+ * Global function that saves application-specific data to persistent storage.
+ * Data is automatically scoped to the current application.
+ *
+ * @param key - Key that identifies the data.
+ * @param value - Value to be stored.
+ */
+declare function storageSaveValue(key: string, value: any): void;
+
+/**
+ * Global function that checks if application-specific data exists in persistent storage.
+ *
+ * @param key - Key that identifies the data
+ * @returns true if the key exists, false otherwise
+ */
+declare function storageHasValue(key: string): boolean;
+
+/**
+ * Global function that loads application-specific data from persistent storage.
+ *
+ * @param key - Key that identifies the data.
+ * @returns The stored value, or undefined if the key doesn't exist.
+ */
+declare function storageLoadValue(key: string): any;
+
+/**
+ * Global function that removes application-specific data from persistent storage.
+ *
+ * @param key - Key that identifies the data to remove.
+ * @returns true if the key was found and removed, false otherwise.
+ */
+declare function storageRemoveValue(key: string): boolean;
+
+/**
+ * Global function that returns the total capacity of the application storage in bytes
+ * @returns Total storage capacity in bytes
+ */
+declare function storageGetCapacity(): number;
+
+/**
+ * Global function that returns the amount of free space available in the application storage in bytes
+ * @returns Free storage space in bytes
+ */
+declare function storageGetFreeSpace(): number;
 
 /**
  * Global function that hashes any string data with md5 algorithm.
