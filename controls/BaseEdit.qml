@@ -12,7 +12,7 @@ Item {
 	signal invalidKeyEntered(key);
 
 	property string text;
-	property string ignoreChars: "#*";
+	property string ignoreChars;
 	property variant validator;
 
 	property int maxLen;
