@@ -45,5 +45,7 @@ ActivePanel {
 		gradientNonFocusColor: labeledChooserProto.nonFocusColor;
 	}
 
+	attachModel: { chooser.attachModel(); }
+
 	completeAnimation: { chooser.completeAnimation(); }
 }
