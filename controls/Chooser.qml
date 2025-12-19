@@ -206,4 +206,9 @@ Item {
 
 	onLeftPressed:	{ listView.moveCurrentIndexBackward(); }
 	onRightPressed:	{ listView.moveCurrentIndexForward(); }
+
+	completeAnimation: {
+		listView.completeContentAnimation();
+		listView.completeHighlightAnimation();
+	}
 }

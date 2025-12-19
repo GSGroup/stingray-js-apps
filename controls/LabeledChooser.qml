@@ -45,8 +45,5 @@ ActivePanel {
 		gradientNonFocusColor: labeledChooserProto.nonFocusColor;
 	}
 
-	completeAnimation: {
-		chooser.listView.completeContentAnimation();
-		chooser.listView.completeHighlightAnimation();
-	}
+	completeAnimation: { chooser.completeAnimation(); }
 }
