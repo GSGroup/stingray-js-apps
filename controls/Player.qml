@@ -41,7 +41,7 @@ Item {
 		visible: !playerProto.isStopped && !playerProto.hideVideo;
 	}
 
-	AlphaControl { alphaFunc: MaxAlpha; }
+	AlphaControl { alphaFunc: ui.AlphaControl.AlphaFunc.MaxAlpha; }
 
 	PlaybackProgress {
 		id: playbackProgress;
