@@ -39,7 +39,7 @@ declare namespace stingray {
 	/**
 	 * Abstraction that can be used to obtain payment form getting success or error using the appropriate {@link Signal}
 	 */
-	export interface IGetPaymentFormResponsePtr {
+	export interface IGetPaymentUriResponsePtr {
 		OnSuccess(): Signal<[transaction: ITricolorPaymentTransactionPtr]>;
 		OnError(): Signal<[error: TranslatedString]>;
 	}
@@ -65,11 +65,11 @@ declare namespace stingray {
 
 	/**
 	 * Abstraction that can be used to pay for selected purchase item. There is two options for this:
-	 * get {@link IGetPaymentFormResponsePtr} or {@link IDirectPaymentResponsePtr}
+	 * get {@link IGetPaymentUriResponsePtr} or {@link IDirectPaymentResponsePtr}
 	 */
 	export interface ITricolorPurchaseTariffPtr {
 		GetInfo(): TricolorPurchaseTariffInfoPtr;
-		GetPaymentForm(createBindingFlag: boolean, phoneNumber: string | null, email: string | null, debtAmount: Decimal | null): IGetPaymentFormResponsePtr;
+		GetPaymentUri(createBindingFlag: boolean, phoneNumber: string | null, email: string | null, debtAmount: Decimal | null): IGetPaymentUriResponsePtr;
 		Pay(cardInfo: TricolorPaymentCardInfoPtr, phoneNumber: string | null, email: string | null, debtAmount: Decimal | null): IDirectPaymentResponsePtr;
 	}
 	type ITricolorPurchaseTariffsPtr = IEnumerable<ITricolorPurchaseTariffPtr>;
