@@ -31,7 +31,7 @@ declare namespace stingray {
 	 * Abstraction that can be used to obtain {@link ITricolorPaymentTransactionApplyResponsePtr}
 	 */
 	export interface ITricolorPaymentTransactionPtr {
-		GetPaymentFormUri(): string;
+		GetPaymentUri(): string;
 		Apply(): ITricolorPaymentTransactionApplyResponsePtr;
 	}
 

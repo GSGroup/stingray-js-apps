@@ -40,7 +40,7 @@ export class TricolorPaymentTransaction {
 	}
 
 	public get uri(): string {
-		return this.nativeTransaction.GetPaymentFormUri();
+		return this.nativeTransaction.GetPaymentUri();
 	}
 
 	public apply(): void {
