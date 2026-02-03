@@ -178,7 +178,8 @@ Item {
 		Image {
 			id: playbackImage;
 
-			anchors.centerIn: parent;
+			x: (parent.width - width) / 2;
+			y: (parent.height - height) / 2;
 
 			color: colorTheme.focusedTextColor;
 
