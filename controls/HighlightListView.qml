@@ -116,22 +116,22 @@ ListView {
 		z: 1;
 	}
 
-	function onRowsInserted(begin, end) {
+	onRowsInserted: (begin, end) {
 		if (this.currentIndex >= begin)
 			this.updateHighlight();
 	}
 
-	function onRowsChanged(begin, end) {
+	onRowsChanged: (begin, end) {
 		if (this.currentIndex >= begin)
 			this.updateHighlight();
 	}
 
-	function onRowsRemoved(begin, end) {
+	onRowsRemoved: (begin, end) {
 		if (this.currentIndex >= begin)
 			this.updateHighlight();
 	}
 
-	function onEnableContentAnimations(enable) {
+	onEnableContentAnimations: (enable) {
 		highlight.disableContentAnimation = !enable;
 	}
 

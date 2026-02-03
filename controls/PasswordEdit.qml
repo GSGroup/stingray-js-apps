@@ -58,7 +58,7 @@ BaseEdit {
 		passwordEditItem.fillModel();
 	}
 
-	function onMaxLenChanged() { passwordEditItem.fillModel(); }
+	onMaxLenChanged: { passwordEditItem.fillModel(); }
 
 	function clearWithDelay() { clearPasswordTimer.restart(); }
 

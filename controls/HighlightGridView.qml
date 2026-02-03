@@ -105,7 +105,7 @@ GridView {
 		}
 	}
 
-	function onEnableContentAnimations(enable) {
+	onEnableContentAnimations: (enable) {
 		highlight.disableContentAnimation = !enable;
 	}
 

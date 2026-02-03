@@ -72,7 +72,7 @@ Application {
 
 				onStopped: { pageStack.currentIndex = 0; }
 
-				function onFinished(finished) { pageStack.currentIndex = 0; }
+				onFinished: (finished) { pageStack.currentIndex = 0; }
 
 				onVisibleChanged: {
 					if (!visible)
@@ -87,7 +87,7 @@ Application {
 
 		savedWordsGroup: "PlayerTestUri";
 
-		function onAccepted(text) { urlEdit.text = text; }
+		onAccepted: (text) { urlEdit.text = text; }
 
 		onVisibleChanged: {
 			if (!visible)

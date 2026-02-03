@@ -238,7 +238,7 @@ Item {
 
 		savedWordsGroup: "GamesNickname";
 
-		function onAccepted(text) {
+		onAccepted: (text) {
 			console.log("set player name" + text);
 			mainMenu.playerChooser.listView.model.setProperty(mainMenu.playerChooser.currentIndex, 'player', text);
 		}
