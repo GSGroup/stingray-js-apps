@@ -12,7 +12,7 @@ export enum AccountCallResult {
 	Error
 }
 
-export enum TricolorAccountPaymentMethod {
+export enum TricolorPaymentMethod {
 	BankCard,
 	Sbp
 }
@@ -106,7 +106,7 @@ export class TricolorPurchaseTariff {
 		})));
 	}
 
-	public requestPaymentUri(method: TricolorAccountPaymentMethod, createBindingFlag, phoneNumber?: string, email?: string, debtAmount?: string): void {
+	public requestPaymentUri(method: TricolorPaymentMethod, createBindingFlag, phoneNumber?: string, email?: string, debtAmount?: string): void {
 		this.requestPaymentUriResponse = this.nativeTariff.GetPaymentUri(method, createBindingFlag, phoneNumber, email, debtAmount ? new stingray.Decimal(debtAmount) : null);
 		this.requestPaymentUriConnections.add(new SignalConnection(this.requestPaymentUriResponse.OnSuccess().connect((nativeTransaction: stingray.ITricolorPaymentTransactionPtr) => {
 			this.requestPaymentUriCallback(AccountCallResult.Success, new TricolorPaymentTransaction(nativeTransaction));
