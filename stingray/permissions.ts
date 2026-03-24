@@ -34,27 +34,28 @@ export class AuthorizationSession {
     private readonly authSession: stingray.IAuthorizationSessionPtr;
     private readonly pinRequestConnection: SignalConnection;
 
-    private permissionCallback: PermissionCallback;
-    private permissionListener: stingray.IPermissionListenerPtr;
-    private permissionConnection: SignalConnection;
+    private permissionCallback: PermissionCallback | null = null;
+    private permissionListener: stingray.IPermissionListenerPtr | null = null;
+    private permissionConnection: SignalConnection | null = null;
 
-    public constructor(name: string, pinRequestCallback: PinRequestCallback, expirationTime?: number) {
+    public constructor(name: string, pinRequestCallback: PinRequestCallback, expirationTime: number | null = null) {
         this.name = name;
         this.pinRequestCallback = pinRequestCallback;
 
         this.authSession = app.UserAccountManager().CreateAuthorizationSession(this.name, expirationTime);
-        this.pinRequestConnection = new SignalConnection(this.authSession.OnPinRequest().connect((pinRequest: stingray.IPinRequestPtr) => {
+        this.pinRequestConnection = new SignalConnection(this.authSession.OnPinRequest().connect((pinRequest: stingray.IPinRequestPtr | null) => {
             this.pinRequestCallback(pinRequest ? new PinRequest(pinRequest) : null);
         }));
     }
 
-    public requestPermission(permissionCallback: PermissionCallback, age?: number): void {
+    public requestPermission(permissionCallback: PermissionCallback, age: number | null = null): void {
         this.cancelRequest();
 
         this.permissionCallback = permissionCallback;
         this.permissionListener = app.PermissionManager().RequestGenericPermission(this.name, this.authSession, age);
         this.permissionConnection = new SignalConnection(this.permissionListener.OnPermissionChanged().connect((result: number) => {
-            this.permissionCallback(AuthorizationSession.permissionRequestResultFromValue(result));
+            if (this.permissionCallback)
+                this.permissionCallback(AuthorizationSession.permissionRequestResultFromValue(result));
         }));
     }
 

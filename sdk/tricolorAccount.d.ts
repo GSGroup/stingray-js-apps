@@ -79,7 +79,7 @@ declare namespace stingray {
 		GetInfo(): TricolorPurchaseTariffInfoPtr;
 		GetPaymentForm(createBindingFlag: boolean, phoneNumber: string | null, email: string | null, debtAmount: Decimal | null): IGetPaymentFormResponsePtr;
 		GetPaymentUri(method: number, createBindingFlag: boolean, phoneNumber: string | null, email: string | null, debtAmount: Decimal | null): IGetPaymentUriResponsePtr;
-		Pay(cardInfo: TricolorPaymentCardInfoPtr, phoneNumber: string | null, email: string | null, debtAmount: Decimal | null): IDirectPaymentResponsePtr;
+		Pay(cardInfo: TricolorPaymentCardInfoPtr | null, phoneNumber: string | null, email: string | null, debtAmount: Decimal | null): IDirectPaymentResponsePtr;
 	}
 	type ITricolorPurchaseTariffsPtr = IEnumerable<ITricolorPurchaseTariffPtr>;
 

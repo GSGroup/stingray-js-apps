@@ -12,8 +12,8 @@ export class DrmSubscription {
 	public name: string;
 	public isActive: boolean;
 	public serviceCode: string;
-	public startTime: Date;
-	public endTime: Date;
+	public startTime: Date | null;
+	public endTime: Date | null;
 
 	public constructor(name: string, isActive: boolean, serviceCode: string, startTime: (Date | null), endTime: (Date | null)) {
 		this.name = name;
@@ -29,11 +29,11 @@ export class DrmSubscription {
 }
 
 class DrmSubscriptionConnection extends SignalConnection {
-	private casInfo: stingray.IConditionalAccessInfoPtr;
-	private slot: (subscriptions: Array<DrmSubscription>) => void;
+	private casInfo: stingray.IConditionalAccessInfoPtr | null;
+	private slot: ((subscriptions: Array<DrmSubscription>) => void) | null;
 
-	private subscriptionsListener: stingray.ISubscriptionsListenerPtr;
-	private subscriptionsListenerConnection: stingray.SignalConnection;
+	private subscriptionsListener: stingray.ISubscriptionsListenerPtr | null = null;
+	private subscriptionsListenerConnection: stingray.SignalConnection | null = null;
 	private casInfoConnection: stingray.SignalConnection;
 
 	public constructor(casInfo: stingray.IConditionalAccessInfoPtr, slot: (subscriptions: Array<DrmSubscription>) => void) {
@@ -48,7 +48,10 @@ class DrmSubscriptionConnection extends SignalConnection {
 				if (this.subscriptionsListenerConnection)
 					this.subscriptionsListenerConnection.disconnect();
 				this.subscriptionsListener = null;
-				this.slot([]);
+
+				if (this.slot)
+					this.slot([]);
+
 				return;
 			}
 
@@ -60,11 +63,13 @@ class DrmSubscriptionConnection extends SignalConnection {
 					if (!subscriptionLease.IsVisible())
 						return;
 
-					const drmSubscription: stingray.IDrmSubscriptionPtr = subscriptionLease.GetDrmSubscription();
+					const drmSubscription: stingray.IDrmSubscriptionPtr | null = subscriptionLease.GetDrmSubscription();
 					if (!drmSubscription)
 						return;
 
-					const interval: stingray.TimeInterval = subscriptionLease.GetTimeInterval();
+					const interval: stingray.TimeInterval | null = subscriptionLease.GetTimeInterval();
+					if (!interval)
+						return;
 
 					subscriptions.push(new DrmSubscription(
 						drmSubscription.GetName().GetAnyTranslation(),
@@ -74,7 +79,8 @@ class DrmSubscriptionConnection extends SignalConnection {
 						new Date(interval.GetEnd().ToIso8601())));
 				});
 
-				this.slot(subscriptions);
+				if (this.slot)
+					this.slot(subscriptions);
 			});
 		});
 	}
@@ -93,7 +99,7 @@ export class Drm extends FeatureHolder<stingray.ICasFeaturePtr> {
 	private id: (string | null) = null;
 
 	private readonly casInfo: stingray.IConditionalAccessInfoPtr;
-	private readonly casInfoConnection: stingray.SignalConnection;
+	private readonly casInfoConnection: stingray.SignalConnection | null = null;
 
 	public constructor() {
 		super(app.Cas());

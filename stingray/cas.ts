@@ -45,11 +45,11 @@ export class DreSubscription {
 }
 
 class DreSubscriptionConnection extends SignalConnection {
-	private casInfo: stingray.IConditionalAccessInfoPtr;
-	private slot: (subscriptions: Array<DreSubscription>) => void;
+	private casInfo: stingray.IConditionalAccessInfoPtr | null;
+	private slot: ((subscriptions: Array<DreSubscription>) => void) | null;
 
-	private subscriptionsListener: stingray.ISubscriptionsListenerPtr;
-	private subscriptionsListenerConnection: stingray.SignalConnection;
+	private subscriptionsListener: stingray.ISubscriptionsListenerPtr | null = null;
+	private subscriptionsListenerConnection: stingray.SignalConnection | null = null;
 	private casInfoConnection: stingray.SignalConnection;
 
 	public constructor(casInfo: stingray.IConditionalAccessInfoPtr, slot: (subscriptions: Array<DreSubscription>) => void) {
@@ -64,7 +64,10 @@ class DreSubscriptionConnection extends SignalConnection {
 				if (this.subscriptionsListenerConnection)
 					this.subscriptionsListenerConnection.disconnect();
 				this.subscriptionsListener = null;
-				this.slot([]);
+
+				if (this.slot)
+					this.slot([]);
+
 				return;
 			}
 
@@ -76,18 +79,18 @@ class DreSubscriptionConnection extends SignalConnection {
 					if (!subscriptionLease.IsVisible())
 						return;
 
-					const dreSubscription: stingray.IDreSubscriptionPtr = subscriptionLease.GetDreSubscription();
+					const dreSubscription: stingray.IDreSubscriptionPtr | null = subscriptionLease.GetDreSubscription();
 					if (!dreSubscription)
 						return;
 
-					const interval: stingray.TimeInterval = subscriptionLease.GetTimeInterval();
+					const interval: stingray.TimeInterval | null = subscriptionLease.GetTimeInterval();
 
 					let subscriptionPackages: Array<DrePackage> = [];
 					subscriptionLease.GetPackages().forEach((lease: stingray.ISubscriptionLeasePtr) => {
 						if (!lease.IsVisible())
 							return;
 
-						const drePackage: stingray.IDreSubscriptionPtr = lease.GetDreSubscription();
+						const drePackage: stingray.IDreSubscriptionPtr | null = lease.GetDreSubscription();
 						if (drePackage)
 							subscriptionPackages.push(new DrePackage(drePackage.GetClassId(), lease.GetState() == SubscriptionState.Active));
 					});
@@ -101,7 +104,8 @@ class DreSubscriptionConnection extends SignalConnection {
 						subscriptionPackages.length ? subscriptionPackages : [ new DrePackage(dreSubscription.GetClassId(), subscriptionLease.GetState() == SubscriptionState.Active) ]));
 				});
 
-				this.slot(subscriptions);
+				if (this.slot)
+					this.slot(subscriptions);
 			});
 		});
 	}
@@ -120,7 +124,7 @@ export class Cas extends FeatureHolder<stingray.ICasFeaturePtr> {
 	private id: (string | null) = null;
 
 	private readonly casInfo: stingray.IConditionalAccessInfoPtr;
-	private readonly casInfoConnection: stingray.SignalConnection;
+	private readonly casInfoConnection: stingray.SignalConnection | null = null;
 
 	public constructor() {
 		super(app.Cas());

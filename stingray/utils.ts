@@ -6,9 +6,9 @@
 // WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 export class SignalConnection {
-	private readonly connection: stingray.SignalConnection;
+	private readonly connection: stingray.SignalConnection | null;
 
-	public constructor(connection: stingray.SignalConnection = null) {
+	public constructor(connection: stingray.SignalConnection | null = null) {
 		this.connection = connection;
 	}
 

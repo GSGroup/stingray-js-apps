@@ -34,7 +34,7 @@ export class TricolorPaymentCardInfo {
 export class TricolorPaymentTransaction {
 	private readonly nativeTransaction: stingray.ITricolorPaymentTransactionPtr;
 
-	private applyResponse: stingray.ITricolorPaymentTransactionApplyResponsePtr;
+	private applyResponse: stingray.ITricolorPaymentTransactionApplyResponsePtr | null = null;
 	private connections: ConnectionPool;
 
 	public applyCallback: (resultType: AccountCallResult, result: string | null) => void
@@ -62,9 +62,9 @@ export class TricolorPaymentTransaction {
 export class TricolorPurchaseTariff {
 	private readonly nativeTariff: stingray.ITricolorPurchaseTariffPtr;
 
-	private payResponse: stingray.IDirectPaymentResponsePtr;
-	private requestPaymentFormResponse: stingray.IGetPaymentFormResponsePtr;
-	private requestPaymentUriResponse: stingray.IGetPaymentUriResponsePtr;
+	private payResponse: stingray.IDirectPaymentResponsePtr | null = null;
+	private requestPaymentFormResponse: stingray.IGetPaymentFormResponsePtr | null = null;
+	private requestPaymentUriResponse: stingray.IGetPaymentUriResponsePtr | null = null;
 	private payConnections: ConnectionPool;
 	private requestPaymentFormConnections: ConnectionPool;
 	private requestPaymentUriConnections: ConnectionPool;
@@ -96,7 +96,7 @@ export class TricolorPurchaseTariff {
 		return this.nativeTariff.GetInfo().GetPrice();
 	}
 
-	public requestPaymentForm(createBindingFlag, phoneNumber?: string, email?: string, debtAmount?: string): void {
+	public requestPaymentForm(createBindingFlag: boolean, phoneNumber: string | null = null, email: string | null = null, debtAmount: string | null = null): void {
 		this.requestPaymentFormResponse = this.nativeTariff.GetPaymentForm(createBindingFlag, phoneNumber, email, debtAmount ? new stingray.Decimal(debtAmount) : null);
 		this.requestPaymentFormConnections.add(new SignalConnection(this.requestPaymentFormResponse.OnSuccess().connect((nativeTransaction: stingray.ITricolorPaymentTransactionPtr) => {
 			this.requestPaymentFormCallback(AccountCallResult.Success, new TricolorPaymentTransaction(nativeTransaction));
@@ -106,7 +106,7 @@ export class TricolorPurchaseTariff {
 		})));
 	}
 
-	public requestPaymentUri(method: TricolorPaymentMethod, createBindingFlag, phoneNumber?: string, email?: string, debtAmount?: string): void {
+	public requestPaymentUri(method: TricolorPaymentMethod, createBindingFlag: boolean, phoneNumber: string | null = null, email: string | null = null, debtAmount: string | null = null): void {
 		this.requestPaymentUriResponse = this.nativeTariff.GetPaymentUri(method, createBindingFlag, phoneNumber, email, debtAmount ? new stingray.Decimal(debtAmount) : null);
 		this.requestPaymentUriConnections.add(new SignalConnection(this.requestPaymentUriResponse.OnSuccess().connect((nativeTransaction: stingray.ITricolorPaymentTransactionPtr) => {
 			this.requestPaymentUriCallback(AccountCallResult.Success, new TricolorPaymentTransaction(nativeTransaction));
@@ -126,9 +126,9 @@ export class TricolorPurchaseTariff {
 		this.requestPaymentUriResponse = null;
 	}
 
-	public pay(cardInfo?: TricolorPaymentCardInfo, phoneNumber?: string, email?: string, debtAmount?: string): void {
-		const nativeCardInfo: stingray.TricolorPaymentCardInfoPtr = cardInfo ? new stingray.TricolorPaymentCardInfoPtr(cardInfo.id, cardInfo.pan, cardInfo.type, cardInfo.isAutoPaymentEnabled) : null;
-		const nativeDebtAmount: stingray.Decimal = debtAmount ? new stingray.Decimal(debtAmount) : null;
+	public pay(cardInfo: TricolorPaymentCardInfo | null, phoneNumber: string | null = null, email: string | null = null, debtAmount: string | null = null): void {
+		const nativeCardInfo: stingray.TricolorPaymentCardInfoPtr | null = cardInfo ? new stingray.TricolorPaymentCardInfoPtr(cardInfo.id, cardInfo.pan, cardInfo.type, cardInfo.isAutoPaymentEnabled) : null;
+		const nativeDebtAmount: stingray.Decimal | null = debtAmount ? new stingray.Decimal(debtAmount) : null;
 
 		this.payResponse = this.nativeTariff.Pay(nativeCardInfo, phoneNumber, email, nativeDebtAmount);
 		this.payConnections.add(new SignalConnection(this.payResponse.OnSuccess().connect((sucessMessage: string) => {
@@ -172,7 +172,7 @@ export class TricolorAccount extends FeatureHolder<stingray.ITricolorAccountPtr>
 		}));
 	}
 
-	public onAbonentPersonalData(slot: (email?: string, phoneNumber?: string) => void): SignalConnection {
+	public onAbonentPersonalData(slot: (email: string | null, phoneNumber: string | null) => void): SignalConnection {
 		return new SignalConnection(this.getPaymentGateway().OnAbonentPersonalData().connect((nativeData: stingray.AbonentPersonalDataPtr) => {
 			slot(nativeData ? nativeData.GetEmail() : null, nativeData ? nativeData.GetPhoneNumber() : null);
 		}));
