@@ -193,7 +193,7 @@ declare const console: Console;
  * Generates an event after a set interval, with an option to generate recurring events.
  */
 declare interface Timer {
-	constructor();
+	new(): Timer;
 
 	/**
 	 * Method that used to call a function or evaluates an expression after a specified number of milliseconds.

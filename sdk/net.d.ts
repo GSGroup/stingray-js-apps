@@ -62,7 +62,7 @@ declare class EventSource {
 	onerror: (error: string) => void;
 
 	/**
-	 * Contructor
+	 * Constructor
 	 *
 	 * @param url - source url
 	 * @param withCredentials - is credentials in use. Default value is false.
@@ -127,7 +127,7 @@ declare class HttpStreamSource {
 	onError: (error: string) => void;
 
 	/**
-	 * Contructor
+	 * Constructor
 	 *
 	 * @param url - source url
 	 */
