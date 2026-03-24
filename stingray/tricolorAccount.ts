@@ -35,7 +35,7 @@ export class TricolorPaymentTransaction {
 	private readonly nativeTransaction: stingray.ITricolorPaymentTransactionPtr;
 
 	private applyResponse: stingray.ITricolorPaymentTransactionApplyResponsePtr | null = null;
-	private connections: ConnectionPool;
+	private connections: ConnectionPool = new ConnectionPool();
 
 	public applyCallback: (resultType: AccountCallResult, result: string | null) => void
 
@@ -65,9 +65,9 @@ export class TricolorPurchaseTariff {
 	private payResponse: stingray.IDirectPaymentResponsePtr | null = null;
 	private requestPaymentFormResponse: stingray.IGetPaymentFormResponsePtr | null = null;
 	private requestPaymentUriResponse: stingray.IGetPaymentUriResponsePtr | null = null;
-	private payConnections: ConnectionPool;
-	private requestPaymentFormConnections: ConnectionPool;
-	private requestPaymentUriConnections: ConnectionPool;
+	private payConnections: ConnectionPool = new ConnectionPool();
+	private requestPaymentFormConnections: ConnectionPool = new ConnectionPool();
+	private requestPaymentUriConnections: ConnectionPool = new ConnectionPool();
 
 	public requestPaymentFormCallback: (resultType: AccountCallResult, result: TricolorPaymentTransaction | string) => void
 	public requestPaymentUriCallback: (resultType: AccountCallResult, result: TricolorPaymentTransaction | string) => void
