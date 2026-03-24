@@ -76,7 +76,7 @@ declare class EventSource {
 	 * @param callback - Function which receives a notification.
 	 * @param useCapture - A Boolean indicating that events of this type will be dispatched to the registered listener before being dispatched to any EventTarget.
 	 */
-	addEventListener(eventName: string, callback: (event:Event) => void, useCapture: boolean);
+	addEventListener(eventName: string, callback: (event:Event) => void, useCapture: boolean): void;
 
 	/**
 	 * Method that used to start listening events.
