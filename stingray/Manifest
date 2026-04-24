@@ -8,7 +8,6 @@
 			["CaSubscriptions",			"generated_files/ts/caSubscriptions.js"],
 			["Cas",						"generated_files/ts/cas.js"],
 			["ChannelRepository",		"generated_files/ts/channelRepository.js"],
-			["Config",					"generated_files/ts/config.js"],
 			["Drm",						"generated_files/ts/drm.js"],
 			["Permissions",				"generated_files/ts/permissions.js"],
 			["ReceiverInformation",		"generated_files/ts/receiverInformation.js"],

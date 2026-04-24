@@ -14,7 +14,6 @@
 		"caSubscriptions.ts",
 		"cas.ts",
 		"channelRepository.ts",
-		"config.ts",
 		"drm.ts",
 		"standByMode.ts",
 		"permissions.ts",
