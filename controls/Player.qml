@@ -143,7 +143,12 @@ Item {
 		anchors.top: mainWindow.top;
 		anchors.topMargin: 130hph;
 
-		source: "res/common/mute.svg";
+		sourceWidth: 96hpw;
+		sourceHeight: 96hph;
+
+		fillMode: ui.Image.FillMode.PreserveAspectFit;
+
+		source: audioManager.deviceMuteIcon;
 
 		opacity: playerProto.isMuted && playerProto.fullscreen ? 0.8 : 0;
 
