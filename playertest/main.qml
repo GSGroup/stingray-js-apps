@@ -97,7 +97,17 @@ Application {
 
 	onBackPressed: { appManager.closeCurrentApp(); }
 
-	onStarted: {
+	onStarted: { this.start(); }
+	onStartedWithHotkey: { this.start(); }
+
+	onStopped: {
+		urlKeyboard.visible = false;
+
+		if (player.visible)
+			player.stop();
+	}
+
+	start: {
 		pageStack.currentIndex = 0;
 		urlEdit.text = "";
 
@@ -105,12 +115,5 @@ Application {
 		urlKeyboard.resetKeyboard();
 
 		urlEdit.setFocus();
-	}
-
-	onStopped: {
-		urlKeyboard.visible = false;
-
-		if (player.visible)
-			player.stop();
 	}
 }

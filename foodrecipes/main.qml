@@ -99,7 +99,10 @@ Application {
 		appPageStack.currentIndex = 1;
 	}
 
-	onStarted: {
+	onStarted: { this.start(); }
+	onStartedWithHotkey: { this.start(); }
+
+	start: {
 		appPageStack.currentIndex = 0;
 		recipesListView.setFocus();
 	}
