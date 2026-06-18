@@ -99,6 +99,7 @@ Application {
 
 	onStarted: { this.start(); }
 	onStartedWithHotkey: { this.start(); }
+	onStartedWithParams: { this.start(); }
 
 	onStopped: {
 		urlKeyboard.visible = false;

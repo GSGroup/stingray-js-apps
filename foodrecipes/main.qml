@@ -101,6 +101,7 @@ Application {
 
 	onStarted: { this.start(); }
 	onStartedWithHotkey: { this.start(); }
+	onStartedWithParams: { this.start(); }
 
 	start: {
 		appPageStack.currentIndex = 0;
