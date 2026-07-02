@@ -225,3 +225,33 @@ declare interface Timer {
 	 */
 	clearInterval(handle: number): void;
 }
+
+/**
+ * Function that used to call a function or evaluates an expression after a specified number of milliseconds.
+ *
+ * @param callback - The function that will be executed.
+ * @param timeoutMilliseconds - The number of milliseconds to wait before executing the code.
+ *
+ * @returns number identifier of async function.
+ */
+declare function setTimeout(callback: () => void, timeoutMilliseconds: number): number;
+
+/**
+ * Function that used to clear a timer set with the {@link setTimeout} function.
+ */
+declare function clearTimeout(handle: number): void;
+
+/**
+ * Function that used to call a function or evaluates an expression at specified intervals (in milliseconds).
+ *
+ * @param callback - The function that will be executed.
+ * @param intervalMilliseconds - The intervals (in milliseconds) on how often to execute the code.
+ *
+ * @returns number identifier of async function.
+ */
+declare function setInterval(callback: () => void, intervalMilliseconds: number): number;
+
+/**
+ * Function that used to clear a timer set with the {@link setInterval} function.
+ */
+declare function clearInterval(handle: number): void;
