@@ -200,7 +200,6 @@ declare interface Timer {
 	 *
 	 * @param callback - The function that will be executed.
 	 * @param timeoutMilliseconds - The number of milliseconds to wait before executing the code.
-	 * If the value is less than 4, the value 4 is used.
 	 *
 	 * @returns number identifier of async function.
 	 */
@@ -216,7 +215,6 @@ declare interface Timer {
 	 *
 	 * @param callback - The function that will be executed.
 	 * @param intervalMilliseconds - The intervals (in milliseconds) on how often to execute the code.
-	 * If the value is less than 4, the value 4 is used.
 	 *
 	 * @returns number identifier of async function.
 	 */
