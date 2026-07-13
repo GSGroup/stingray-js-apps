@@ -200,10 +200,11 @@ declare interface Timer {
 	 *
 	 * @param callback - The function that will be executed.
 	 * @param timeoutMilliseconds - The number of milliseconds to wait before executing the code.
+	 * @param args - The arguments that will be forwarded to the function
 	 *
 	 * @returns number identifier of async function.
 	 */
-	setTimeout(callback: (handle: number) => void, timeoutMilliseconds: number): number;
+	setTimeout(callback: (handle: number) => void, timeoutMilliseconds: number, ...args: any[]): number;
 
 	/**
 	 * Method that used to clear a timer set with the {@link setTimeout} method.
@@ -215,10 +216,11 @@ declare interface Timer {
 	 *
 	 * @param callback - The function that will be executed.
 	 * @param intervalMilliseconds - The intervals (in milliseconds) on how often to execute the code.
+	 * @param args - The arguments that will be forwarded to the function
 	 *
 	 * @returns number identifier of async function.
 	 */
-	setInterval(callback: (handle: number) => void, intervalMilliseconds: number): number;
+	setInterval(callback: (handle: number) => void, intervalMilliseconds: number, ...args: any[]): number;
 
 	/**
 	 * Method that used to clear a timer set with the {@link setInterval} method.
