@@ -6,6 +6,7 @@
 // WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 /// <reference path="feature.d.ts" />
+/// <reference path="signals.d.ts" />
 
 declare namespace stingray {
 
@@ -22,6 +23,16 @@ declare namespace stingray {
          * Function that provides access to STB model name
          */
         GetModelName(): string;
+
+        /**
+         * Function that provides access to STB serial number
+         */
+        GetSerialNumber(): string;
+
+        /**
+         * {@link Signal} that provides access to the STB serial number
+         */
+        OnSerialNumberChanged(): Signal<[serialNumber: string]>
     }
 
 }
