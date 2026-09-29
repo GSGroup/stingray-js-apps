@@ -114,6 +114,15 @@ export class Drm extends FeatureHolder<stingray.ICasFeaturePtr> {
 		);
 	}
 
+	public get hardwareId(): (string | null) {
+		const drm = app.Drm();
+
+		if (!drm.IsFeatureValid())
+			return null;
+
+		return drm.GetHardwareId();
+	}
+
 	public get dreId(): (string | null) {
 		return this.id;
 	}
