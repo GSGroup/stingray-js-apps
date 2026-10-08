@@ -9,6 +9,7 @@ Item {
 	id: floatingTextProto;
 
 	property string text;
+	property var font: subheadFont;
 
 	property Color color: colorTheme.activeTextColor;
 	property bool colorAnimable: true;
@@ -38,7 +39,7 @@ Item {
 			anchors.verticalCenter: parent.verticalCenter;
 
 			color: floatingTextProto.color;
-			font: subheadFont;
+			font: floatingTextProto.font;
 			text: floatingTextProto.text; //TODO onTextChanged doesn't called for non-dynamic instances like Checkbox
 
 			Timer {
