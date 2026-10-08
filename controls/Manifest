@@ -13,6 +13,7 @@
 			["ConfirmDialog",					"ConfirmDialog.qml"],
 			["Edit",							"Edit.qml"],
 			["EnterPinDialog",					"EnterPinDialog.qml"],
+			["FloatingElidedText",				"FloatingElidedText.qml"],
 			["FloatingText",					"FloatingText.qml"],
 			["FocusablePanel",					"FocusablePanel.qml"],
 			["HighlightGridView",				"HighlightGridView.qml"],
