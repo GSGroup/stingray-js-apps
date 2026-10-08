@@ -10,6 +10,7 @@
 			["Button",							"Button.qml"],
 			["ButtonWithShadow",				"ButtonWithShadow.qml"],
 			["CheckIcon",						"CheckIcon.qml"],
+			["Checkbox",						"Checkbox.qml"],
 			["Chooser",							"Chooser.qml"],
 			["ChooserDelegate",					"ChooserDelegate.qml"],
 			["ConfirmDialog",					"ConfirmDialog.qml"],
