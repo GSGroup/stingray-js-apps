@@ -4,6 +4,7 @@
 	"scope": "system",
 	"library": {
 		"exports": [
+			["ActivePanel",						"ActivePanel.qml"],
 			["BaseEdit",						"BaseEdit.qml"],
 			["BigPlaybackIcon",					"BigPlaybackIcon.qml"],
 			["Button",							"Button.qml"],
