@@ -25,6 +25,7 @@
 			["LabeledChooser",					"LabeledChooser.qml"],
 			["MovingArrows",					"MovingArrows.qml"],
 			["NumberValidator",					"NumberValidator.qml"],
+			["Panel",							"Panel.qml"],
 			["PasswordEdit",					"PasswordEdit.qml"],
 			["PasswordEditDelegate",			"PasswordEditDelegate.qml"],
 			["PlaybackProgress",				"PlaybackProgress.qml"],

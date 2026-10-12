@@ -8,6 +8,7 @@
 import controls.Utils;
 import controls.HighlightListView;
 import "ChooserDelegate.qml";
+import "Panel.qml";
 
 Item {
 	id: chooserProto;
